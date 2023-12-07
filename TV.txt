@@ -428,7 +428,7 @@ CCTV 8K,http://us-sjc-bgp-2.openfrp.top:10180/test/test/cctv8k.php
 龙江卫视,http://39.134.168.91/PLTV/1/224/3221225536/index.m3u8
 龙江卫视,http://39.134.168.91/PLTV/1/224/3221225538/index.m3u8
 宁夏卫视,http://39.134.168.91/PLTV/1/224/3221225638/index.m3u8
-内蒙卫视,http://39.134.168.91/PLTV/1/224/3221225626/index.m3u8
+内蒙古卫视,http://39.134.168.91/PLTV/1/224/3221225626/index.m3u8
 西藏卫视,http://39.134.168.91/PLTV/1/224/3221225648/index.m3u8
 四川卫视,http://112.50.243.8/PLTV/88888888/224/3221227006/1.m3u8
 四川卫视,http://ivi.bupt.edu.cn/hls/sctv.m3u8
