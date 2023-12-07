@@ -213,7 +213,6 @@ CCTV-15 音乐,http://ivi.bupt.edu.cn/hls/cctv15.m3u8
 CCTV-16 奥林匹克,http://[2409:8087:2001:20:2800:0:df6e:eb18]/ott.mobaibox.com/PLTV/3/224/3221228127/index.m3u8
 CCTV-17 农业农村,http://39.134.66.66/PLTV/88888888/224/3221225708/index.m3u8
 CCTV-1 综合,http://39.135.138.58:18890/PLTV/88888888/224/3221225618/index.m3u8
-CCTV-1 综合,http://39.134.67.226/PLTV/88888888/224/3221225816/index.m3u8
 CCTV-1 综合,http://39.135.138.58:18890/PLTV/88888888/224/3221225630/index.m3u8
 CCTV-1 综合,http://39.135.138.58:18890/PLTV/88888888/224/3221225642/index.m3u8
 CCTV-1 综合,http://111.40.196.9/PLTV/88888888/224/3221225513/index.m3u8
@@ -231,6 +230,7 @@ CCTV-1 综合,http://39.134.65.175/PLTV/88888888/224/3221225816/1.m3u8
 CCTV-2 财经,http://live.aikan.miguvideo.com/PLTV/88888888/224/3221231678/index.m3u8
 CCTV-2 财经,http://39.135.138.58:18890/PLTV/88888888/224/3221225619/index.m3u8
 CCTV-2 财经,http://39.135.138.60:18890/PLTV/88888910/224/3221225643/index.m3u8
+CCTV-3 综艺,http://111.63.117.13:6060/030000001000/CCTV-3 综艺/CCTV-3 综艺.m3u8
 CCTV-3 综艺,http://39.134.67.226/PLTV/88888888/224/3221225799/index.m3u8
 CCTV-3 综艺,http://39.135.138.58:18890/PLTV/88888888/224/3221225634/index.m3u8
 CCTV-3 综艺,http://39.135.138.58:18890/PLTV/88888888/224/3221225647/index.m3u8
@@ -244,6 +244,7 @@ CCTV-4 中文国际,http://111.20.33.93/PLTV/88888893/224/3221226223/index.m3u8
 CCTV-5 体育,http://live.aikan.miguvideo.com/PLTV/88888888/224/3221233115/index.m3u8
 CCTV-5 体育,http://39.135.138.58:18890/PLTV/88888888/224/3221225633/index.m3u8
 CCTV-5 体育,http://39.134.67.226/PLTV/88888888/224/3221225818/index.m3u8
+CCTV-5 体育,http://111.63.117.13:6060/030000001000/CCTV-5 体育/CCTV-5 体育.m3u8
 CCTV-5 体育,http://39.135.138.58:18890/PLTV/88888888/224/3221225751/index.m3u8
 CCTV-5 体育,http://39.135.138.58:18890/PLTV/88888888/224/3221225752/index.m3u8
 CCTV-5 体育,http://39.135.138.58:18890/PLTV/88888888/224/3221225753/index.m3u8
@@ -716,7 +717,6 @@ CCTV 8K,http://us-sjc-bgp-2.openfrp.top:10180/test/test/cctv8k.php
 康巴卫视,http://39.134.65.166/PLTV/88888888/224/3221225527/1.m3u8
 康巴卫视,http://39.134.65.164/PLTV/88888888/224/3221225527/1.m3u8
 苏州4K,http://liveshowbak2.kan0512.com/ksz-norecord/csztv4k_4k.m3u8
-
 🐘 地方频道 ,#genre#
 河南都市,http://61.163.111.46/tvcdn.stream3.hndt.com/tv/e775d12dd48d4731ae8bdea77dd1e9f9_transios/playlist.m3u8?wsApp=HLS&wsMonitor=0
 河南都市,http://media.hndyjyfw.gov.cn/live/jz-henandushi/live.m3u8
@@ -738,7 +738,6 @@ CCTV 8K,http://us-sjc-bgp-2.openfrp.top:10180/test/test/cctv8k.php
 梨园频道,http://123.6.9.146/live/jz-henanliyuan/live.m3u8
 文物宝库,http://61.163.111.46/tvcdn.stream3.hndt.com/tv/edeb8f0314984727a91a3d6e8c03f59b_transios/playlist.m3u8?wsApp=HLS&wsMonitor=0
 文物宝库,http://123.6.9.146/live/jz-henanwenwu/live.m3u8
-
 🐼 港澳台 ,#genre#
 凤凰中文,http://[2409:8087:2001:20:2800:0:df6e:eb25]:80/wh7f454c46tw2443888236_158039228/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8?icpid=3&RTS=1674369674&from=40&popid=40&hms_devid=2292&prioritypopid=40&vqe=3
 凤凰中文,http://php.17186.eu.org/phtv/fhzw.m3u8
@@ -774,7 +773,6 @@ CCTV 8K,http://us-sjc-bgp-2.openfrp.top:10180/test/test/cctv8k.php
 凤凰资讯,http://117.148.187.12/PLTV/88888888/224/3221226491/index.m3u8
 凤凰资讯,http://117.169.120.138:8080/live/fhzixun/.m3u8
 凤凰香港,http://183.207.249.34/PLTV/3/224/3221226975/index.m3u8
-
 🎬 电影电视剧 ,#genre#
 CHC动作电影,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002055/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 CHC家庭影院,http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002085/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
@@ -889,7 +887,7 @@ NewTV超级电视剧,http://39.134.65.179/PLTV/88888888/224/3221225637/1.m3u8
 NewTV超级电视剧,http://39.134.65.181/PLTV/88888888/224/3221225637/1.m3u8
 NewTV超级电视剧,http://39.134.65.173/PLTV/88888888/224/3221225637/1.m3u8
 NewTV超级电视剧,http://39.134.65.183/PLTV/88888888/224/3221225637/1.m3u8
-🍺 体育竞技,#genre#
+🍺休闲娱乐,#genre#
 黑莓电竞,http://39.135.138.60:18890/PLTV/88888910/224/3221225653/index.m3u8
 黑莓电竞,http://111.40.196.9/PLTV/88888888/224/3221225606/index.m3u8
 黑莓电竞,http://39.135.138.58:18890/PLTV/88888888/224/3221225653/index.m3u8
@@ -926,7 +924,6 @@ NewTV超级电视剧,http://39.134.65.183/PLTV/88888888/224/3221225637/1.m3u8
 极速汽车,http://140.207.241.3:8080/live/program/live/jsqc/1300000/d1.m3u8
 魅力足球,http://140.207.241.3:8080/live/program/live/mlyyhd/4000000/d1.m3u8
 极速汽车,http://140.207.241.3:8080/live/program/live/jsqchd/4000000/d1.m3u8
-
 ☘️少儿频道,#genre#
 央视少儿,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001240/index.m3u8
 卡酷少儿,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001245/index.m3u8
@@ -970,158 +967,3 @@ NewTV超级电视剧,http://39.134.65.183/PLTV/88888888/224/3221225637/1.m3u8
 哈哈炫动,http://39.134.24.162/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226213/index.m3u8
 反转星球,https://newcntv.qcloudcdn.com/asp/hls/1200/0303000a/3/default/3ccdecc7d6e341c1920ad4eac5d82f38/1200.m3u8
 倒霉特熊,https://newcntv.qcloudcdn.com/asp/hls/1200/0303000a/3/default/87f87ba569c147e3805f80e4844d2de9/1200.m3u8
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
