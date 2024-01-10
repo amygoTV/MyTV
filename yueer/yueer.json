@@ -1,5 +1,5 @@
 {
-  "spider": "./spider.jar;md5;06925c578c423744fb4acd1c1806d4d6",
+  "spider": "https://gitee.com/amygotv/tv/raw/master/yueer/spider.jar;md5;06925c578c423744fb4acd1c1806d4d6",
   "wallpaper": "https://tuapi.eees.cc/api.php?category=fengjing&type=302",
   "warningText": "月儿QQ：1281112087",
   "sites": [
@@ -28,7 +28,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/玩偶哥哥.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/玩偶哥哥.json"
     },
     {
       "key": "sohu",
@@ -388,7 +388,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/4KHDR.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/4KHDR.json"
     },
     {
       "key": "Gitcafe",
@@ -444,15 +444,15 @@
       "key": "拳皇争霸",
       "name": "🏋️拳皇争霸",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/quanhuang.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/quanhuang.js"
     },
     {
       "key": "喜马拉雅",
       "name": "👂喜马拉雅",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/ximalaya.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/ximalaya.js"
     },
     {
       "key": "有声小说吧",
@@ -462,14 +462,14 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/youshengxiaoshuoba.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/youshengxiaoshuoba.json"
     },
     {
       "key": "海洋听书",
       "name": "👂海洋听书",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/haiyangtingshu.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/haiyangtingshu.js"
     },
     {
       "key": "兔小贝",
@@ -479,7 +479,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/1076_204858_兔小贝2.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/1076_204858_兔小贝2.json"
     },
     {
       "key": "高中教育",
@@ -489,7 +489,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Blixt.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/Blixt.json"
     },
     {
       "key": "学外语",
@@ -499,7 +499,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/waiyu.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/waiyu.json"
     },
     {
       "key": "哔哩哔哩",
@@ -509,7 +509,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Bili.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/Bili.json"
     },
     {
       "key": "相声小品",
@@ -519,7 +519,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Blixs.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/Blixs.json"
     },
     {
       "key": "戏 曲",
@@ -529,7 +529,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Blixq.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/Blixq.json"
     },
     {
       "key": "csp_XBPQ_短视频",
@@ -539,47 +539,47 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/duanshipin.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/duanshipin.json"
     },
     {
       "key": "88看球",
       "name": "⚽88看球",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/88kanqiu.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/88kanqiu.js"
     },
     {
       "key": "虎牙直播",
       "name": "🐯虎牙直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/huyazhibo.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/huyazhibo.js"
     },
     {
       "key": "斗鱼直播",
       "name": "🐟斗鱼直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/douyu.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/douyu.js"
     },
     {
       "key": "哔哩直播",
       "name": "🅱️哔哩直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/blzb.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/blzb.js"
     }
   ],
   "parses": [
@@ -813,7 +813,7 @@
     {
       "name": "live",
       "type": 0,
-      "url": "./lib/live.txt",
+      "url": "https://gitee.com/amygotv/tv/raw/master/yueer/lib/live.txt",
       "playerType": 1,
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
