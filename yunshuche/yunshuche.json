@@ -1,5 +1,5 @@
 {
-  "spider": "./YSC.jar;md5;e3b13a050567989d1774ae1363baf3bf",
+  "spider": "https://gitee.com/amygotv/tv/raw/master/yunshuche/YSC.jar;md5;e3b13a050567989d1774ae1363baf3bf",
   "wallpaper": "https://tuapi.eees.cc/api.php?category=fengjing&type=302",
   "sites": [
     {
@@ -30,7 +30,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/lezhu.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/lezhu.json"
     },
     {
       "key": "热播之家",
@@ -40,7 +40,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/rebozj.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/rebozj.json"
     },
     {
       "key": "花猫影视",
@@ -50,7 +50,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/huamao.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/huamao.json"
     },
     {
       "key": "笑笑影视",
@@ -60,7 +60,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/xiaoxiao.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/xiaoxiao.json"
     },
     {
       "key": "A8影视",
@@ -80,7 +80,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/xinshijue.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/xinshijue.json"
     },
     {
       "key": "耐看点播",
@@ -91,7 +91,7 @@
       "quickSearch": 1,
       "filterable": 1,
       "playerType": "1",
-      "ext": "./lib/naikan.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/naikan.json"
     },
     {
       "key": "348影视",
@@ -101,7 +101,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/348.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/348.json"
     },
     {
       "key": "Free影视",
@@ -111,14 +111,14 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Free.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Free.json"
     },
     {
       "key": "畅梦",
       "name": "🚛畅梦┃秒播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/changmeng.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/changmeng.js"
     },
     {
       "key": "农民影视",
@@ -128,7 +128,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/nongmin.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/nongmin.json"
     },
     {
       "key": "子子影视",
@@ -138,7 +138,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/zizi.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/zizi.json"
     },
     {
       "key": "厂长",
@@ -148,7 +148,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/changzhang.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/changzhang.json"
     },
     {
       "key": "低端影视",
@@ -158,21 +158,21 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/diduan.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/diduan.json"
     },
     {
       "key": "在线之家",
       "name": "🚛外剧┃秒播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/zaixian.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/zaixian.js"
     },
     {
       "key": "素白白",
       "name": "🚛素白┃秒播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/subaibai.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/subaibai.js"
     },
     {
       "key": "徕米影视",
@@ -183,7 +183,7 @@
       "quickSearch": 1,
       "filterable": 0,
       "playerType": "1",
-      "ext": "./lib/laimi.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/laimi.json"
     },
     {
       "key": "看吧TV",
@@ -193,7 +193,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/dianyinghezi.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/dianyinghezi.json"
     },
     {
       "key": "明帝影视",
@@ -220,7 +220,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/555.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/555.json"
     },
     {
       "key": "爱看影院",
@@ -231,7 +231,7 @@
       "quickSearch": 1,
       "filterable": 1,
       "playerType": "1",
-      "ext": "./lib/aikan.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/aikan.json"
     },
     {
       "key": "策驰影院",
@@ -241,7 +241,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/cechi.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/cechi.json"
     },
     {
       "key": "csp_Voflix",
@@ -251,7 +251,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/voflix.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/voflix.json"
     },
     {
       "key": "🚛宝仙HD",
@@ -261,14 +261,14 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/baoxian.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/baoxian.json"
     },
     {
       "key": "101影院",
       "name": "🚛101影院",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/l0l.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/l0l.js"
     },
     {
       "key": "Vidhub视频",
@@ -278,7 +278,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Vidhub.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Vidhub.json"
     },
     {
       "key": "石榴影视",
@@ -288,7 +288,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/shiliu.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/shiliu.json"
     },
     {
       "key": "两个BT",
@@ -298,14 +298,14 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/bttwo.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/bttwo.json"
     },
     {
       "key": "大师兄影视",
       "name": "🚛大师兄影视",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/dashixiongyingshi.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/dashixiongyingshi.js"
     },
     {
       "key": "七年影视",
@@ -316,7 +316,7 @@
       "quickSearch": 1,
       "filterable": 1,
       "playerType": "1",
-      "ext": "./lib/qinian.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/qinian.json"
     },
     {
       "key": "lzi",
@@ -326,7 +326,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/liangzi.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/liangzi.json"
     },
     {
       "key": "非凡资源",
@@ -336,21 +336,21 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/ffzy.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/ffzy.json"
     },
     {
       "key": "拳皇争霸",
       "name": "🚛拳皇争霸",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/quanhuang.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/quanhuang.js"
     },
     {
       "key": "喜马拉雅",
       "name": "👂喜马拉雅",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/ximalaya.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/ximalaya.js"
     },
     {
       "key": "有声小说吧",
@@ -360,14 +360,14 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/youshengxiaoshuoba.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/youshengxiaoshuoba.json"
     },
     {
       "key": "海洋听书",
       "name": "👂海洋听书",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/haiyangtingshu.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/haiyangtingshu.js"
     },
     {
       "key": "csp_Dm84",
@@ -377,7 +377,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Dm84.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Dm84.json"
     },
     {
       "key": "push_agent",
@@ -393,11 +393,11 @@
       "key": "兔小贝",
       "name": "🐰兔小贝",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/tuxiaobei.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/tuxiaobei.js"
     },
     {
       "key": "高中教育",
@@ -407,7 +407,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Blixt.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Blixt.json"
     },
     {
       "key": "学外语",
@@ -417,7 +417,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/waiyu.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/waiyu.json"
     },
     {
       "key": "软件教程",
@@ -427,7 +427,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/jiaocheng.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/jiaocheng.json"
     },
     {
       "key": "哔哩哔哩",
@@ -437,7 +437,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Bili.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Bili.json"
     },
     {
       "key": "相声小品",
@@ -447,7 +447,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Blixs.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Blixs.json"
     },
     {
       "key": "戏 曲",
@@ -457,7 +457,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/Blixq.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/Blixq.json"
     },
     {
       "key": "女团热舞",
@@ -467,7 +467,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/nvtuanrewu.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/nvtuanrewu.json"
     },
     {
       "key": "演唱会",
@@ -477,7 +477,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/yanchanghui.txt"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/yanchanghui.txt"
     },
     {
       "key": "csp_XBPQ_短视频",
@@ -487,7 +487,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/duanshipin.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/duanshipin.json"
     },
     {
       "key": "JRKAN直播",
@@ -497,37 +497,37 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/jrkan.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/jrkan.json"
     },
     {
       "key": "88看球",
       "name": "⚽88看球",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/88kanqiu.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/88kanqiu.js"
     },
     {
       "key": "虎牙直播",
       "name": "🐯虎牙直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/huyazhibo.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/huyazhibo.js"
     },
     {
       "key": "斗鱼直播",
       "name": "🐟斗鱼直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/douyu.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/douyu.js"
     },
     {
       "key": "csp_Yj1211",
@@ -542,11 +542,11 @@
       "key": "哔哩直播",
       "name": "🅱️哔哩直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/blzb.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/yunshuche/lib/blzb.js"
     },
     {
       "key": "MV_vod",
