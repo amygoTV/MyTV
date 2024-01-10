@@ -1,5 +1,5 @@
 {
-  "spider": "./fan.txt;md5;5aee1ff968a3dc5cbbf225399e9441e9",
+  "spider": "https://gitee.com/amygotv/tv/raw/master/xiaomi/fan.txt;md5;5aee1ff968a3dc5cbbf225399e9441e9",
   "wallpaper": "http://饭太硬.top/深色壁纸/api.php",
   "sites": [
     {
@@ -23,7 +23,7 @@
       "searchable": 1,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/bilibili.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/xiaomi/lib/bilibili.json"
     },
     {
       "key": "csp_Czsapp",
@@ -245,7 +245,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "changeable": 0,
-      "ext": "./lib/nmys.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/xiaomi/lib/nmys.json"
     },
     {
       "key": "乌鸦",
@@ -475,8 +475,8 @@
       "key": "88js",
       "name": "⚽ 88┃看球",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/88看球.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/xiaomi/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/xiaomi/lib/88看球.js",
       "style": {
         "type": "list"
       },
@@ -765,7 +765,7 @@
     {
       "name": "IPv4",
       "type": 0,
-      "url": "./lib/直播挺快.txt",
+      "url": "https://gitee.com/amygotv/tv/raw/master/xiaomi/lib/直播挺快.txt",
       "ua": "okhttp/3.12.13",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
