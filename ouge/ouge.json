@@ -1,12 +1,12 @@
 
 
 {
-"wallpaper":"./t/",
-"spider":"./jar.php?id=ou;md5;d175be843d11d10b9983cceb2d680cc5","warningText":"公众号欧歌app📢公众号欧歌APP，📢长期维护，切勿贩卖",
+"wallpaper":".t/",
+"spider":"https://gitee.com/amygotv/tv/raw/master/ouge/jar.php?id=ou;md5;d175be843d11d10b9983cceb2d680cc5","warningText":"公众号欧歌app📢公众号欧歌APP，📢长期维护，切勿贩卖",
 
 
 "lives":[{"name":"live","type":0,"url":"./tv/live.jpg","playerType":1,"ua": "okhttp/3.12.13","epg":"http://epg.112114.xyz/?ch={name}&date={date}","logo": "https://epg.112114.xyz/logo/{name}.png"},
-{"name":"TV","type":0,"url":"./lib/txt?url=https://live.fanmingming.com/tv/m3u/ipv6.m3u","epg":"http://epg.112114.xyz/?ch={name}&date={date}","logo":"https://epg.112114.xyz/logo/{name}.png"}],
+{"name":"TV","type":0,"url":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/txt?url=https://live.fanmingming.com/tv/m3u/ipv6.m3u","epg":"http://epg.112114.xyz/?ch={name}&date={date}","logo":"https://epg.112114.xyz/logo/{name}.png"}],
 "sites": [
 
 {"key":"豆瓣1","name":"❤更新:1/8❤tv.nxog.top","type":3,"api":"csp_Douban","searchable":0},
@@ -28,10 +28,10 @@
 {"key":"低端","name":"💡低端┃影视","type":3,"api":"csp_Ddys","searchable":1,"quickSearch":1,"filterable":1},
 {"key":"csp_JianPian","name":"💡荐片┃影视","type":3,"api":"csp_JianPian","playerType":1,"searchable":1,"quickSearch":1,"filterable":1,"ext":"https://ownjpykxttjzuhy.jiesiwa.com"},
 
-{"key":"云播","name":"💘云播┃影视","type":3,"api":"csp_Skapp","playerType":2,"ext":"./lib/1.json"},
-{"key":"星星","name":"💘星星┃影视","type":3,"api":"csp_App","playerType":2,"ext":"./lib/5.json"},
-{"key":"嘶哩","name":"💘嘶哩┃动漫","type":3,"api":"csp_Skapp","playerType":2,"ext":"./lib/2.json"},
-{"key":"樱花","name":"💘樱花┃动漫","type":3,"api":"csp_App","searchable":1,"quickSearch":1,"playerType":2,"filterable":1,"ext":"./lib/4.json"},
+{"key":"云播","name":"💘云播┃影视","type":3,"api":"csp_Skapp","playerType":2,"ext":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/1.json"},
+{"key":"星星","name":"💘星星┃影视","type":3,"api":"csp_App","playerType":2,"ext":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/5.json"},
+{"key":"嘶哩","name":"💘嘶哩┃动漫","type":3,"api":"csp_Skapp","playerType":2,"ext":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/2.json"},
+{"key":"樱花","name":"💘樱花┃动漫","type":3,"api":"csp_App","searchable":1,"quickSearch":1,"playerType":2,"filterable":1,"ext":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/4.json"},
 
 
 
@@ -75,15 +75,15 @@
 {"key":"AliPS","name":"❤️盘搜┃4K","type":3,"api":"csp_AliPS","searchable":1,"quickSearch":1,"filterable":0,"ext":"http://127.0.0.1:9978/file/tvbox/token.txt"},
 {"key":"Yisou","name":"❤️易搜┃4K","type":3,"api":"csp_Yisou","searchable":1,"quickSearch":1,"filterable":0,"ext":"http://127.0.0.1:9978/file/TVBox/tok.txt"},
 {"key":"Gitcafe","name":"️❤️小纸条┃4K","type":3,"api":"csp_Gitcafe","searchable":1,"quickSearch":1,"filterable":1,"ext":"http://127.0.0.1:9978/file/tvbox/token.txt"},
-{"key":"玩偶哥哥","name":"❤️玩偶┃4K","type":3,"api":"csp_XYQHikerAL","searchable":1,"quickSearch":1,"filterable":1,"ext":"./lib/gg.json"},
+{"key":"玩偶哥哥","name":"❤️玩偶┃4K","type":3,"api":"csp_XYQHikerAL","searchable":1,"quickSearch":1,"filterable":1,"ext":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/gg.json"},
 
 
 
 
 
 {"key": "py_cctv","name": "🇨🇳CCTV┃PY","type": 3,"api": "py_cctv",
-"searchable": 0,"quickSearch": 0,"filterable": 1,"ext": "./lib/py1.json"},
-{"key":"py_cctvdc","name":"🇨🇳央视片库┃PY","type":3,"api":"py_cctv","searchable":1,"quickSearch":1,"filterable":1,"ext":"./lib/py2.json"},
+"searchable": 0,"quickSearch": 0,"filterable": 1,"ext": "https://gitee.com/amygotv/tv/raw/master/ouge/lib/py1.json"},
+{"key":"py_cctvdc","name":"🇨🇳央视片库┃PY","type":3,"api":"py_cctv","searchable":1,"quickSearch":1,"filterable":1,"ext":"https://gitee.com/amygotv/tv/raw/master/ouge/lib/py2.json"},
 
 
 {"key":"短剧网","name":"🐞短剧1┃短剧","type":3,"api":"csp_Duanjuw","searchable":1,"quickSearch":1,"changeable":1},
