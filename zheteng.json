@@ -2,11 +2,11 @@
   "storeHouse": [
     {
       "sourceName": "💥爱折腾优选仓💥免费接口💥",
-      "sourceUrl": "https://gitee.com/amygotv/tv/raw/master/zheteng.json"
+      "sourceUrl": "https://gitee.com/amygotv/tv/raw/master/aizheteng.json"
     },
     {
       "sourceName": "💥爱折腾备选仓💥严禁贩卖💥",
-      "sourceUrl": "https://raw.githubusercontent.com/amygoTV/MyTV/master/zheteng.json"
+      "sourceUrl": "https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json"
     }
   ]
 }
