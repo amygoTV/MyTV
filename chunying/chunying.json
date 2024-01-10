@@ -1,8 +1,8 @@
-﻿
+
 
 
 {
-"spider": "./fty0101.jar;md5;fd784008ab71d81a178564841059756d",
+"spider": "https://gitee.com/amygotv/tv/raw/master/chunying/fty0101.jar;md5;fd784008ab71d81a178564841059756d",
 
 "lives": [{"group": "redirect","channels": [{"name":"『live","urls": ["proxy://do=live&type=txt&ext=aHR0cHM6Ly93ZHMuZWNzeHMuY29tLzIzMDg2NC5qc29u"]}]}],
 
