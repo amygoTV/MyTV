@@ -1,5 +1,5 @@
 {
-  "spider": "./fix12210.jar;md5;a5c29d1840207b137a855e23526d6e32",
+  "spider": "https://gitee.com/amygotv/tv/raw/master/qiaoji/fix12210.jar;md5;a5c29d1840207b137a855e23526d6e32",
   "wallpaper": "http://www.kf666888.cn/api/tvbox/img",
   "lives": [
     {
@@ -214,7 +214,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/playerconfig.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/qiaoji/lib/playerconfig.js"
     },
     {
       "key": "时常",
@@ -318,7 +318,7 @@
       "searchable": 1,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/bili.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/qiaoji/lib/bili.json"
     },
     {
       "key": "push_agent",
