@@ -1,5 +1,5 @@
 {
-  "spider": "./Yoursmile.jar;md5;564F69FA12A8D491569E9631629E0011",
+  "spider": "https://gitee.com/amygotv/tv/raw/master/nanfeng/Yoursmile.jar;md5;564F69FA12A8D491569E9631629E0011",
   "wallpaper": "https://tuapi.eees.cc/api.php?category=fengjing&type=302",
   "sites": [
     {
@@ -418,12 +418,12 @@
       "key": "dr_荐片",
       "name": "🧲荐片",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy2.min.js",
       "playerType": "1",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/荐片.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/荐片.js"
     },
     {
       "key": "农民",
@@ -433,7 +433,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/农民影视.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/农民影视.json"
     },
     {
       "key": "骚火",
@@ -465,7 +465,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/奇优.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/奇优.json"
     },
     {
       "key": "云播",
@@ -530,62 +530,62 @@
       "key": "drpy_js_短剧网",
       "name": "🗽短剧网",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "./lib/短剧网.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/短剧网.js"
     },
     {
       "key": "drpy_js_虎牙直播",
       "name": "🐯虎牙直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "./lib/虎牙直播.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/虎牙直播.js"
     },
     {
       "key": "drpy_js_斗鱼直播",
       "name": "🐠斗鱼直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "./lib/斗鱼直播.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/斗鱼直播.js"
     },
     {
       "key": "drpy_js_有声小说吧",
       "name": "有声小说吧",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy2.min.js",
       "playerType": "2",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "./lib/有声小说吧.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/有声小说吧.js"
     },
     {
       "key": "drpy_js_88看球",
       "name": "88看球",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy2.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "./lib/88看球.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/88看球.js"
     },
     {
       "key": "drpy_js_JRKAN直播",
       "name": "JRKAN直播",
       "type": 3,
-      "api": "./lib/drpy.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/drpy.min.js",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 0,
-      "ext": "./lib/JRKAN直播.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/JRKAN直播.js"
     },
     {
       "key": "短视频",
@@ -638,7 +638,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/Bili.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/Bili.json"
     },
     {
       "key": "相声小品",
@@ -648,7 +648,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/Blixs.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/Blixs.json"
     },
     {
       "key": "戏曲",
@@ -658,7 +658,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/Blixq.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/Blixq.json"
     },
     {
       "key": "少儿",
@@ -668,7 +668,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/少儿教育.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/少儿教育.json"
     },
     {
       "key": "小学",
@@ -678,7 +678,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/小学课堂.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/小学课堂.json"
     },
     {
       "key": "初中",
@@ -688,7 +688,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/初中课堂.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/初中课堂.json"
     },
     {
       "key": "高中",
@@ -698,7 +698,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/高中课堂.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/高中课堂.json"
     }
   ],
   "parses": [
@@ -856,7 +856,7 @@
     {
       "name": "live",
       "type": 0,
-      "url": "./lib/live.txt",
+      "url": "https://gitee.com/amygotv/tv/raw/master/nanfeng/lib/live.txt",
       "playerType": 1,
       "ua": "okhttp/3.15",
       "epg": "http://diyp.112114.xyz/?ch={name}&date={date}",
