@@ -5,7 +5,7 @@
   "sites":[
     {
       "key":"豆豆",
-      "name":"摸摸🐟｜新年快乐",
+      "name":"摸摸🐟|新年快乐",
       "type":3,
       "api":"csp_DouDou",
       "searchable":0,
@@ -14,7 +14,7 @@
     },
     {
       "key":"csp_JianPian",
-      "name":"摸摸🐟｜12.31接口【公众号：天微科技】",
+      "name":"摸摸🐟|12.31接口【公众号：天微科技】",
       "type":3,
       "api":"csp_JianPian",
       "playerType":1,
@@ -26,7 +26,7 @@
     },
     {
       "key":"csp_KungFu404",
-      "name":"摸摸🐟｜设置token",
+      "name":"摸摸🐟|设置token",
       "type":3,
       "api":"csp_KungFu404",
       "searchable":1,
@@ -37,7 +37,7 @@
     },
     {
       "key":"配置中心",
-      "name":"摸摸🐟｜配置中心",
+      "name":"摸摸🐟|配置中心",
       "type":3,
       "api":"csp_Config",
       "jar":"https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
@@ -51,7 +51,7 @@
     },
     {
       "key":"应用商店",
-      "name":"摸摸🐟｜应用市场",
+      "name":"摸摸🐟|应用市场",
       "type":3,
       "api":"csp_Market",
       "searchable":0,
@@ -1325,7 +1325,7 @@
     },
     {
       "key":"push_agent",
-      "name":"摸摸🐟｜推送",
+      "name":"摸摸🐟|推送",
       "type":3,
       "api":"csp_Push",
       "jar":"https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
@@ -1350,7 +1350,7 @@
     },
     {
       "key":"push_agent0",
-      "name":"数据源于互联网搜索｜仅供测试",
+      "name":"数据源于互联网搜索|仅供测试",
       "type":3,
       "api":"csp_Push",
       "searchable":1,
@@ -1360,7 +1360,7 @@
     },
     {
       "key":"push_agent1",
-      "name":"请于24小时内删除测试内容｜QQ群536992286",
+      "name":"请于24小时内删除测试内容|QQ群536992286",
       "type":3,
       "api":"csp_Push",
       "searchable":1,
