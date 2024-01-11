@@ -1,5 +1,5 @@
 {
-  "spider":"https://gitee.com/amygotv/tv/raw/master/PG./pg.jar",
+  "spider":"https://gitee.com/amygotv/tv/raw/master/PG/pg.jar",
   "sites":[
     {
       "key":"酷狗",
@@ -59,7 +59,7 @@
     },
     {
       "key":"MissAV",
-      "name":"MissAV需挂梯",
+      "name":"MissA*V需挂梯",
       "type":3,
       "api":"csp_Miss",
       "searchable":1
@@ -73,7 +73,7 @@
     },
     {
       "key":"Cable",
-      "name":"CableAV搜主播需挂梯",
+      "name":"CableA*V搜主播需挂梯",
       "type":3,
       "api":"csp_Cable",
       "searchable":1,
@@ -120,7 +120,7 @@
     },
     {
       "key":"PikPakShareJAV",
-      "name":"PikPak分享JAV",
+      "name":"PikPak分享JA*V",
       "type":3,
       "api":"csp_PikPakShare",
       "searchable":0,
@@ -1229,7 +1229,7 @@
         "体育赛事",
         "海外剧"
       ],
-      "jar":"/jar/spider.jar;md5;d1fa24b46f218f455bc3f4b948fd457e"
+      "jar":"https://gitee.com/amygotv/tv/raw/master/PG/spider.jar;md5;d1fa24b46f218f455bc3f4b948fd457e"
     },
     {
       "key":"mino",
@@ -1264,11 +1264,11 @@
       "key":"布蕾影城",
       "name":"布蕾影城（待修复）",
       "type":3,
-      "api":"/js/bulei_open.js",
+      "api":"https://gitee.com/amygotv/tv/raw/master/PG/js/bulei_open.js",
       "searchable":1,
       "quickSearch":1,
       "changeable":1,
-      "ext":"/js/bulei_open.js"
+      "ext":"./js/bulei_open.js"
     },
     {
       "key":"csp_appys_影探",
@@ -1597,7 +1597,7 @@
     },
     {
       "key":"小AV",
-      "name":"小AV",
+      "name":"小A*V",
       "type":0,
       "searchable":0,
       "quickSearch":0,
