@@ -244,7 +244,7 @@
     },
     {
       "key":"bili",
-      "name":"B站 | Bili[jar]",
+      "name":"B站|Bili[jar]",
       "type":3,
       "api":"csp_Bili",
       "searchable":1,
@@ -938,7 +938,7 @@
     },
     {
       "key":"泥巴",
-      "name":"泥巴 | 海外",
+      "name":"泥巴|海外",
       "type":3,
       "api":"csp_NiNi",
       "searchable":1,
@@ -948,7 +948,7 @@
     },
     {
       "key":"星星",
-      "name":"星星 | 海外",
+      "name":"星星|海外",
       "type":3,
       "api":"csp_Star",
       "searchable":1,
@@ -957,7 +957,7 @@
     },
     {
       "key":"獨播",
-      "name":"獨播 | 海外",
+      "name":"獨播|海外",
       "type":3,
       "api":"csp_XPathMacFilter",
       "searchable":1,
@@ -1113,7 +1113,7 @@
     },
     {
       "key":"drpy_js_Alist",
-      "name":"网盘 | Alist[js]",
+      "name":"网盘|Alist[js]",
       "type":3,
       "api":"./lib/alist.min.js",
       "searchable":1,
