@@ -1383,7 +1383,7 @@
     {
       "name": "live",
       "type": 0,
-      "url": "./lib/moyuive.txt",
+      "url": "./lib/TVLives.txt",
       "ua": "okhttp/3.12.13",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
