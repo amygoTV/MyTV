@@ -1430,70 +1430,70 @@
     },
     {
       "key":"bttcj.com",
-      "name":"成人03",
+      "name":"18+03",
       "type":0,
       "api":"http://bttcj.com/inc/sapi.php",
       "searchable":1
     },
     {
       "key":"dadiapi.com",
-      "name":"成人06",
+      "name":"18+06",
       "type":0,
       "api":"http://dadiapi.com/api.php",
       "searchable":1
     },
     {
       "key":"pgxdy.com",
-      "name":"成人33",
+      "name":"18+33",
       "type":0,
       "api":"https://www.pgxdy.com/api/xml.php",
       "searchable":1
     },
     {
       "key":"api.sexnguon.com",
-      "name":"成人34",
+      "name":"18+34",
       "type":1,
       "api":"https://api.sexnguon.com/api.php/provide/vod/",
       "searchable":1
     },
     {
       "key":"kxgav.com",
-      "name":"成人37",
+      "name":"18+37",
       "type":0,
       "api":"https://www.kxgav.com/api/xml.php",
       "searchable":1
     },
     {
       "key":"xrbsp.com",
-      "name":"成人39",
+      "name":"18+39",
       "type":0,
       "api":"https://www.xrbsp.com/api/xml.php",
       "searchable":1
     },
     {
       "key":"lbapi9.com",
-      "name":"成人41",
+      "name":"18+41",
       "type":1,
       "api":"https://lbapi9.com/api.php/provide/vod/",
       "searchable":1
     },
     {
       "key":"apittzy.com",
-      "name":"成人46",
+      "name":"18+46",
       "type":1,
       "api":"https://apittzy.com/api.php/provide/vod/",
       "searchable":1
     },
     {
       "key":"hghhh.com",
-      "name":"成人52",
+      "name":"18+52",
       "type":1,
       "api":"https://hghhh.com/api.php/provide/vod/",
       "searchable":1
     },
     {
       "key":"gdlsp.com",
-      "name":"成人54",
+      "name":"18+54",
       "type":0,
       "api":"https://www.gdlsp.com/api/xml.php",
       "searchable":1
