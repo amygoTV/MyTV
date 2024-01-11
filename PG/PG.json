@@ -48,30 +48,6 @@
       "changeable":1
     },
     {
-      "key":"drpy_js_磁力熊",
-      "name":"磁力熊[js]|索引",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/cilixiongp.js",
-      "playerType":"1",
-      "searchable":0,
-      "quickSearch":0,
-      "changeable":1
-    },
-    {
-      "key":"bili",
-      "name":"B站|Bili[jar]",
-      "type":3,
-      "api":"csp_Bili",
-      "searchable":1,
-      "quickSearch":0,
-      "changeable":0,
-      "ext":{
-        "type":"演唱会#电影#电视剧#帕梅拉#广场舞#纪录片#综艺#鬼畜#音乐#舞蹈#影视#知识#美食#风光#田园#户外#8K#徐云",
-        "cookie":""
-      }
-    },
-    {
       "key":"影视车",
       "name":"🚌影视车┃转存万兆线路",
       "type":3,
@@ -475,124 +451,6 @@
       "quickSearch":1
     },
     {
-      "key":"drpy_js_美剧迷",
-      "name":"美剧迷[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/meijumi.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"drpy_js_KKPANS",
-      "name":"KK盘[js]|夸",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/kkpans.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
-      "key":"drpy_js_meow",
-      "name":"MEOW[js]|搜",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/meow.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
-      "key":"drpy_js_愛盤搜",
-      "name":"爱盘搜[js]|夸",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/aipanso.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
-      "key":"drpy_js_奇妙搜",
-      "name":"奇妙搜[js]|夸",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/qimiao.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
-      "key":"drpy_js_dydhhy",
-      "name":"dydhhy[js]|夸",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/dydhhy.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
-      "key":"drpy_js_人人影视",
-      "name":"人人影视[js]|搜",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/yyets.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
-      "key":"drpy_js_低端影视",
-      "name":"低端影视[js]|夸",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/ddys.js",
-      "changeable":1
-    },
-    {
-      "key":"drpy_js_新版6V",
-      "name":"新版6V[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/xb6v.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"drpy_js_97tvs",
-      "name":"高清MP4吧[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/97tvs.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"drpy_js_rrdyw",
-      "name":"人人電影網[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/rrdyw.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"drpy_js_hotcat",
-      "name":"热剧猫[js]",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/hotcat.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":30
-    },
-    {
       "key":"csp_Sp360",
       "name":"360影视┃弹幕",
       "type":3,
@@ -635,36 +493,6 @@
       "timeout":30
     },
     {
-      "key":"drpy_js_MP4US",
-      "name":"MP4电影[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/mp4us.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"drpy_js_电影港",
-      "name":"电影港[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/dygang.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"drpy_js_极影网",
-      "name":"极影网[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/jiyingwp.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
       "key":"4KHDR",
       "name":"4KHDR|网盘",
       "type":3,
@@ -690,50 +518,6 @@
       "api":"csp_JustLive",
       "searchable":1,
       "changeable":0
-    },
-    {
-      "key":"drpy_js_酷吧",
-      "name":"酷吧[js]|磁",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/drpy2.min.js",
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/kuba.js",
-      "quickSearch":1,
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"BLSGod",
-      "name":"BLSGod|磁",
-      "type":3,
-      "api":"csp_BLSGod",
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"Xunlei8",
-      "name":"Xunlei8|磁",
-      "type":3,
-      "api":"csp_Xunlei8",
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"SeedHub",
-      "name":"SeedHub|磁",
-      "type":3,
-      "api":"csp_SeedHub",
-      "changeable":1,
-      "timeout":60
-    },
-    {
-      "key":"AList",
-      "name":"网盘|Alist[jar]",
-      "type":3,
-      "api":"csp_AList",
-      "searchable":1,
-      "filterable":1,
-      "changeable":1,
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/alistjar.json"
     },
     {
       "key":"快看",
@@ -926,16 +710,6 @@
       "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/ikanbot_open.js",
       "searchable":1,
       "changeable":0
-    },
-    {
-      "key":"drpy_js_Alist",
-      "name":"网盘|Alist[js]",
-      "type":3,
-      "api":"https://gitee.com/amygotv/tv/raw/master/PG/lib/alist.min.js",
-      "searchable":1,
-      "filterable":1,
-      "changeable":1,
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/alist.json"
     },
     {
       "key":"火狐",
@@ -1523,16 +1297,6 @@
       "timeout":30,
       "ext":"http://127.0.0.1:9978/file/tvbox/c3ed20eb-c7f6-437e-84d2-03e3e22f3d15/token.txt"
     },
-    {
-      "key":"應用商店",
-      "name":"應用商店",
-      "type":3,
-      "api":"csp_Market",
-      "searchable":0,
-      "changeable":0,
-      "ext":"https://gitee.com/amygotv/tv/raw/master/PG/lib/market.json"
-    }
-  ],
   "lives":[
     {
       "name":"live.ipv6",
@@ -1547,15 +1311,6 @@
       "name":"live.ipv6.m3u",
       "type":0,
       "url":"https://live.fanmingming.com/tv/m3u/ipv6.m3u",
-      "playerType":1,
-      "ua":"okhttp/3.15",
-      "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
-      "logo":"https://epg.112114.xyz/logo/{name}.png"
-    },
-    {
-      "name":"live.ipv6.local",
-      "type":0,
-      "url":"https://gitee.com/amygotv/tv/raw/master/PG/lib/live.ipv6.txt",
       "playerType":1,
       "ua":"okhttp/3.15",
       "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
