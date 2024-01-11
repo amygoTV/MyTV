@@ -1186,15 +1186,6 @@
       "filterable":1
     },
     {
-      "key":"小AV",
-      "name":"小A*V",
-      "type":0,
-      "searchable":0,
-      "quickSearch":0,
-      "api":"https://www.pgxdy.com/api/xml.php",
-      "playUrl":""
-    },
-    {
       "key":"BT天堂",
       "name":"BT天堂",
       "type":0,
