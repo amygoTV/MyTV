@@ -1,5 +1,5 @@
 {
-  "spider": "./moyuer.jar;md5;be6121b5c37471b191114027123912d2",
+  "spider": "https://gitee.com/amygotv/tv/raw/master/moyuer/moyuer.jar;md5;be6121b5c37471b191114027123912d2",
   "wallpaper": "http://摸鱼儿.xiyan.life/摸鱼壁纸/api.php",
   "warningText": "摸鱼儿：资源来自网络，无盈利，纯技术分享，如有冒犯请联系删除。[所有内容仅供学习使用，请勿用于违法及商业用途，请勿付费购买]",
   "sites": [
@@ -22,7 +22,7 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "https://ownjpykxttjzuhy.jiesiwa.com",
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "csp_KungFu404",
@@ -33,21 +33,21 @@
       "filterable": 0,
       "changeable": 0,
       "ext": "http://127.0.0.1:9978/file/tvmoyu/token.txt",
-      "jar": "./lib/alisz.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/alisz.jar"
     },
     {
       "key": "配置中心",
       "name": "摸摸🐟｜配置中心",
       "type": 3,
       "api": "csp_Config",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "searchable": 0,
       "changeable": 0,
       "style": {
         "type": "rect",
         "ratio": 1
       },
-      "ext": "./lib/PG推送.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json"
     },
     {
       "key": "应用商店",
@@ -56,15 +56,15 @@
       "api": "csp_Market",
       "searchable": 0,
       "changeable": 0,
-      "ext": "./lib/moyuyysc.json",
-      "jar": "./lib/moyu应用市场.jar"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/moyuyysc.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/moyu应用市场.jar"
     },
     {
       "key": "huahai",
       "name": "4K-HDR🐟花海|弹幕",
       "type": 3,
       "api": "csp_Jianpian",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
@@ -87,20 +87,20 @@
       "name": "4K-HDR🐟胖达|弹幕",
       "type": 3,
       "api": "csp_Pan99",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "quickSearch": 1,
       "changeable": 2,
       "filterable": 1,
       "timeout": 30,
-      "ext": "./json/tokenm.json$$$https://pan99.xyz$$$null$$$1"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/tokenm.json$$$https://pan99.xyz$$$null$$$1"
     },
     {
       "key": "团长影视",
       "name": "4K-HDR🐟雪凝|弹幕",
       "type": 3,
       "api": "csp_TZFile",
-      "jar": "./lib/mypg.jar",
-      "ext": "./json/PG推送$$$null$$$1",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送$$$null$$$1",
       "quickSearch": 1,
       "changeable": 2,
       "timeout": 60
@@ -110,7 +110,7 @@
       "name": "4K-HDR🐟夜澜|弹幕",
       "type": 3,
       "api": "csp_PanSearch",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "filterable": 0,
       "changeable": 0,
@@ -131,7 +131,7 @@
         "token": "http://127.0.0.1:9978/file/tvmoyu/token.txt+4k",
         "danmu": true
       },
-      "jar": "./lib/myok.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar"
     },
     {
       "key": "七夜弹幕版",
@@ -145,18 +145,18 @@
         "token": "http://127.0.0.1:9978/file/tvmoyu/token.txt+4k|auto|fhd",
         "danmu": true
       },
-      "jar": "./lib/myok.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar"
     },
     {
       "key": "玩偶mypg",
       "name": "4K-HDR🐟夕颜",
       "type": 3,
       "api": "csp_Wobg",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "searchable": 1,
       "quickSearch": 1,
       "changeable": 2,
-      "ext": "./lib/wogg.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/wogg.json",
       "timeout": 60
     },
     {
@@ -164,11 +164,11 @@
       "name": "4K-HDR🐟影视车",
       "type": 3,
       "api": "csp_Wogg",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "searchable": 1,
       "quickSearch": 1,
       "changeable": 2,
-      "ext": "./lib/wogg.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/wogg.json",
       "timeout": 60
     },
     {
@@ -190,7 +190,7 @@
       "quickSearch": 1,
       "filterable": 0,
       "ext": "http://127.0.0.1:9978/file/tvmoyu/token.txt",
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "yanyu",
@@ -201,7 +201,7 @@
       "quickSearch": 1,
       "filterable": 0,
       "ext": "http://127.0.0.1:9978/file/tvmoyu/token.txt",
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "yumeng",
@@ -212,7 +212,7 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "http://127.0.0.1:9978/file/tvmoyu/token.txt",
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "yinuo",
@@ -222,8 +222,8 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/gg.json",
-      "jar": "./lib/myog.jar"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/gg.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "csp_XYQHikerdyx",
@@ -233,8 +233,8 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": " ./lib/电影港.json",
-      "jar": "./lib/sx.jar"
+      "ext": " https://gitee.com/amygotv/tv/raw/master/moyuer/lib/电影港.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/sx.jar"
     },
     {
       "key": "YiSo",
@@ -304,12 +304,12 @@
       "name": "疏影❤️4K|弹幕",
       "type": 3,
       "api": "csp_UpYun",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/PG推送.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json",
       "timeout": 60
     },
     {
@@ -317,12 +317,12 @@
       "name": "缱绻❤️4K|弹幕",
       "type": 3,
       "api": "csp_XiaoZhiTiao",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/PG推送.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json",
       "timeout": 60
     },
     {
@@ -330,12 +330,12 @@
       "name": "资源❤️4K|弹幕",
       "type": 3,
       "api": "csp_Zhaozy",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./json/PG推送.json$$$ajin0595$$$dear0595",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json$$$ajin0595$$$dear0595",
       "timeout": 60
     },
     {
@@ -350,14 +350,14 @@
         "token": "http://127.0.0.1:9978/file/tvmoyu/token.txt+4k|auto|fhd",
         "danmu": true
       },
-      "jar": "./lib/myok.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar"
     },
     {
       "key": "jingyi",
       "name": "静怡❤️4K|弹幕",
       "type": 3,
       "api": "csp_XiaoZhiTiao",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "filterable": 1,
       "changeable": 0,
@@ -375,41 +375,41 @@
       "quickSearch": 1,
       "filterable": 0,
       "ext": "http://127.0.0.1:9978/file/tvmoyu/token.txt",
-      "jar": "./lib/myog.jar;md5;33d3bd8c68d552c00020abface9ef61b"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar;md5;33d3bd8c68d552c00020abface9ef61b"
     },
     {
       "key": "py_cctv",
       "name": "🇨🇳CCTV┃PY",
       "type": 3,
       "api": "py_cctv",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 0,
       "quickSearch": 0,
       "filterable": 1,
-      "ext": "./lib/py1.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/py1.json"
     },
     {
       "key": "py_cctvdc",
       "name": "🇨🇳央视片库┃PY",
       "type": 3,
       "api": "py_cctv",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/py2.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/py2.json"
     },
     {
       "key": "盘搜索mypg",
       "name": "盘搜💖4K|弹幕",
       "type": 3,
       "api": "csp_PanSearch",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/PG推送.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json",
       "timeout": 60
     },
     {
@@ -417,12 +417,12 @@
       "name": "七夜💖4K|弹幕",
       "type": 3,
       "api": "csp_Dovx",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/PG推送.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json",
       "timeout": 60
     },
     {
@@ -430,12 +430,12 @@
       "name": "盘搜💖4K|弹幕",
       "type": 3,
       "api": "csp_YiSo",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./json/PG推送.json$$$satoken=1aee2366-2ff4-4436-b321-a14db23e8294",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json$$$satoken=1aee2366-2ff4-4436-b321-a14db23e8294",
       "timeout": 60
     },
     {
@@ -443,12 +443,12 @@
       "name": "喵狸💖4K|弹幕",
       "type": 3,
       "api": "csp_PanSou",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "changeable": 2,
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 0,
-      "ext": "./lib/PG推送.json",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json",
       "timeout": 60
     },
     {
@@ -456,7 +456,7 @@
       "name": "趣盘💖4K|弹幕",
       "type": 3,
       "api": "csp_QuPanSou",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "filterable": 1,
       "changeable": 0,
@@ -470,7 +470,7 @@
       "name": "夸克💖4K|弹幕",
       "type": 3,
       "api": "csp_Qkpanso",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "filterable": 1,
       "changeable": 0,
@@ -484,7 +484,7 @@
       "name": "UP💖4K|弹幕",
       "type": 3,
       "api": "csp_Upys",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "filterable": 0,
       "changeable": 0,
@@ -498,7 +498,7 @@
       "name": "YUN💖4K|弹幕",
       "type": 3,
       "api": "csp_Yunpan4k",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 1,
       "filterable": 0,
       "changeable": 0,
@@ -512,7 +512,7 @@
       "name": "1080P💘动漫|弹幕",
       "type": 3,
       "api": "csp_Skapp",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "playerType": 2,
       "changeable": 2,
       "ext": "wf7jTHTllmPx90cSfqYsxOFbNiEn/OOwcQMioXntTCgGo6loj/amsxwUNfJPF2W00I+ZJzSan7pD3OPqeGn1/3CaJLZhzh/OtQFo7cJf/AA/LRGchJ/NNsdu8c3HeY8X3ic+nAYiOFIT7HiLfqFnBom04dCSbujoxb0RoT6iYiZSArenzm5E5lEpGHD/KltmbDpcX9Lkxj+9HnF/okAhK8nsUmta/Jrnk40HP7cZodP3QGeLUpeoOCQZzw++LuS9iYZSentZVKL9q/puBZ78nhjx4fw94cM1SbG0rcAB9vwZr4z9YYNRythGAfNeOsMgRpAOnZH8K5JuWFoADNhHLMA==$$$null$$$1"
@@ -522,7 +522,7 @@
       "name": "1080P💘炖大鹅|弹幕",
       "type": 3,
       "api": "csp_TTian",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "playerType": 1,
       "changeable": 2,
       "ext": "http://op.ysdqjs.cn$$$null$$$1"
@@ -532,19 +532,19 @@
       "name": "1080P💘皮皮虾|弹幕",
       "type": 3,
       "api": "csp_Ppxzy",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "quickSearch": 1,
       "changeable": 2,
       "filterable": 1,
-      "ext": "./json/PG推送.json$$$https://ppxzy.net/$$$null$$$1",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json$$$https://ppxzy.net/$$$null$$$1",
       "timeout": 60
     },
     {
       "key": "rrdyw网盘",
       "name": "1080P💘网盘|弹幕",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/rrdyw.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/rrdyw.js",
       "quickSearch": 1,
       "changeable": 2,
       "timeout": 60
@@ -554,12 +554,12 @@
       "name": "1080P💘校长|弹幕",
       "type": 3,
       "api": "csp_XiaoZhang",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
       "changeable": 2,
-      "ext": "./json/PG推送.json$$$null$$$1",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json$$$null$$$1",
       "timeout": 60
     },
     {
@@ -577,8 +577,8 @@
       "type": 3,
       "api": "csp_Skapp",
       "playerType": 2,
-      "ext": "./lib/yunbo.json",
-      "jar": "./lib/myog.jar"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/yunbo.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "初月",
@@ -586,8 +586,8 @@
       "type": 3,
       "api": "csp_App",
       "playerType": 2,
-      "ext": "./lib/星星.json",
-      "jar": "./lib/myog.jar"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/星星.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "哔嘀",
@@ -597,7 +597,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "嘿嘿",
@@ -624,24 +624,24 @@
       "name": "1080P🐟bttwo",
       "type": 3,
       "playerType": "2",
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/两个BT.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/两个BT.js"
     },
     {
       "key": "虎虎",
       "name": "1080P🐟虎虎",
       "type": 3,
       "api": "csp_Panda",
-      "ext": "./lib/huhu.json",
-      "jar": "./lib/PandaQ231205.jar;md5;9cc29f6286b2fe7910628852929c4bdb"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/huhu.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PandaQ231205.jar;md5;9cc29f6286b2fe7910628852929c4bdb"
     },
     {
       "key": "FREE1OK",
       "name": "1080P🐟free",
       "type": 3,
       "playerType": "1",
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/FreeOK.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/FreeOK.js"
     },
     {
       "key": "一起看 ",
@@ -665,8 +665,8 @@
       "name": "1080P🐟视觉",
       "type": 3,
       "playerType": "2",
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/新视觉.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/新视觉.js"
     },
     {
       "key": "Bili",
@@ -680,7 +680,7 @@
       "searchable": 1,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/bilibili.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/bilibili.json"
     },
     {
       "key": "Biliych",
@@ -694,14 +694,14 @@
       "searchable": 1,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/biliych.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/biliych.json"
     },
     {
       "key": "csp_聚短视频",
       "name": "聚短🐟视频",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/短视频.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/短视频.js",
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0
@@ -710,8 +710,8 @@
       "key": "有声小说js",
       "name": "有声🐟小说",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/有声小说吧.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/有声小说吧.js",
       "style": {
         "type": "rect",
         "ratio": 1
@@ -724,12 +724,12 @@
       "key": "58动漫网",
       "name": "动漫🐟58",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
       "changeable": 1,
-      "ext": "./lib/58动漫.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/58动漫.js"
     },
     {
       "key": "csp_Anime1",
@@ -739,7 +739,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "jar": "./lib/DM1212.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/DM1212.jar"
     },
     {
       "key": "维奇",
@@ -749,8 +749,8 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/维奇.json",
-      "jar": "./lib/fan.jar"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/维奇.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/fan.jar"
     },
     {
       "key": "去看吧",
@@ -760,8 +760,8 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/去看吧.json",
-      "jar": "./lib/fan.jar"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/去看吧.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/fan.jar"
     },
     {
       "key": "zxzj",
@@ -812,7 +812,7 @@
       "quickSearch": 1,
       "filterable": 1,
       "ext": "http://www.miniku.cc/xgapp.php/v2/",
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "Cokemv",
@@ -842,7 +842,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "ext": "http://m.hhssyyss.icu/ruifenglb_api.php/v1.vod",
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "360_spider",
@@ -852,7 +852,7 @@
       "filterable": 1,
       "quickSearch": 1,
       "searchable": 1,
-      "jar": "./lib/myog.jar"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar"
     },
     {
       "key": "DiDuan",
@@ -869,7 +869,7 @@
       "name": "💚短剧搜",
       "type": 3,
       "api": "csp_Duanju",
-      "jar": "./lib/mypg.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/mypg.jar",
       "searchable": 0,
       "changeable": 0
     },
@@ -877,11 +877,11 @@
       "key": "js_DJ5",
       "name": "💚短剧屋",
       "type": 3,
-      "api": "./lib/apiv15drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/apiv15drpy2.min.js",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/短剧网.js"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/短剧网.js"
     },
     {
       "key": "csp_Bili短剧",
@@ -891,8 +891,8 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "jar": "./lib/spider1.txt;md5;A21EA6F5DD3B5F922B3A7F54D3BD0F16",
-      "ext": "./lib/Bili短剧.json"
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/spider1.txt;md5;A21EA6F5DD3B5F922B3A7F54D3BD0F16",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/Bili短剧.json"
     },
     {
       "key": "MV_vod",
@@ -914,8 +914,8 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/alist.json",
-      "jar": "./lib/PandaQ231205.jar;md5;9cc29f6286b2fe7910628852929c4bdb"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/alist.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PandaQ231205.jar;md5;9cc29f6286b2fe7910628852929c4bdb"
     },
     {
       "key": "drpy_js_88看球",
@@ -927,15 +927,15 @@
         "type": "rect",
         "ratio": 1
       },
-      "ext": "./lib/88看球.json",
-      "jar": "./lib/PandaQ231205.jar;md5;9cc29f6286b2fe7910628852929c4bdb"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/88看球.json",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PandaQ231205.jar;md5;9cc29f6286b2fe7910628852929c4bdb"
     },
     {
       "key": "虎牙直播js",
       "name": "🐟虎牙直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/虎牙直播.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/虎牙直播.js",
       "style": {
         "type": "rect",
         "ratio": 1.755
@@ -948,8 +948,8 @@
       "key": "csp_XYQBiu_斗鱼",
       "name": "🐟斗鱼直播",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/斗鱼直播.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/斗鱼直播.js",
       "style": {
         "type": "rect",
         "ratio": 1.755
@@ -963,7 +963,7 @@
       "name": "🧲SeedHub┃磁力",
       "type": 3,
       "api": "csp_SeedHub",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -973,7 +973,7 @@
       "name": "🧲美剧┃磁力",
       "type": 3,
       "api": "csp_MeijuMi",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -983,7 +983,7 @@
       "name": "🧲迅雷┃磁力",
       "type": 3,
       "api": "csp_Xunlei8",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -993,7 +993,7 @@
       "name": "🧲Mp4┃磁力",
       "type": 3,
       "api": "csp_Mp4Mov",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -1003,7 +1003,7 @@
       "name": "🧲酷吧┃磁力",
       "type": 3,
       "api": "csp_KubaCL",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -1013,7 +1013,7 @@
       "name": "🧲美剧┃磁力",
       "type": 3,
       "api": "csp_MeijuTT",
-      "jar": "./lib/myog.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myog.jar",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1
@@ -1148,8 +1148,8 @@
       "quickSearch": 1,
       "changeable": 1,
       "playerType": "1",
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/jp.js"
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/jp.js"
     },
     {
       "key": "csp_SP33",
@@ -1235,30 +1235,30 @@
       "key": "js_baby",
       "name": "👶┃宝宝合集",
       "type": 3,
-      "api": "./lib/apiv15drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/apiv15drpy2.min.js",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/baby.js",
-      "jar": "./lib/ym1130.jar;md5;md5;D42CC8D191481FC9BEEB1BFF4BC747CB"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/baby.js",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/ym1130.jar;md5;md5;D42CC8D191481FC9BEEB1BFF4BC747CB"
     },
     {
       "key": "js_童趣",
       "name": "👶童趣搜视",
       "type": 3,
-      "api": "./lib/apiv15drpy2.min.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/apiv15drpy2.min.js",
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "ext": "./lib/tongqu.js",
-      "jar": "./lib/ym1130.jar;md5;md5;D42CC8D191481FC9BEEB1BFF4BC747CB"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/tongqu.js",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/ym1130.jar;md5;md5;D42CC8D191481FC9BEEB1BFF4BC747CB"
     },
     {
       "key": "dr_兔小贝",
       "name": "📚儿童┃启蒙",
       "type": 3,
-      "api": "./lib/drpy2.min.js",
-      "ext": "./lib/兔小贝.js",
+      "api": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/drpy2.min.js",
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/兔小贝.js",
       "style": {
         "type": "rect",
         "ratio": 1.597
@@ -1279,7 +1279,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/少儿教育.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/少儿教育.json"
     },
     {
       "key": "小学课堂",
@@ -1293,7 +1293,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/小学课堂.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/小学课堂.json"
     },
     {
       "key": "初中课堂",
@@ -1307,7 +1307,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/初中课堂.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/初中课堂.json"
     },
     {
       "key": "高中教育",
@@ -1321,14 +1321,14 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "./lib/高中课堂.json"
+      "ext": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/高中课堂.json"
     },
     {
       "key": "push_agent",
       "name": "摸摸🐟｜推送",
       "type": 3,
       "api": "csp_Push",
-      "jar": "./lib/myok.jar",
+      "jar": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/myok.jar",
       "searchable": 0,
       "filterable": 0,
       "changeable": 0,
@@ -1383,7 +1383,7 @@
     {
       "name": "live",
       "type": 0,
-      "url": "./lib/TVLives.txt",
+      "url": "https://gitee.com/amygotv/tv/raw/master/moyuer/lib/TVLives.txt",
       "ua": "okhttp/3.12.13",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
