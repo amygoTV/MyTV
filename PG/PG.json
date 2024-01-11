@@ -1287,7 +1287,8 @@
       "changeable":0,
       "timeout":30,
       "ext":"http://127.0.0.1:9978/file/tvbox/c3ed20eb-c7f6-437e-84d2-03e3e22f3d15/token.txt"
-    },
+    }
+  ],
   "lives":[
     {
       "name":"live.ipv6",
