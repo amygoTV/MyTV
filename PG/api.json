@@ -1,5 +1,3 @@
-
-
 {
     "spider":"https://gitee.com/amygotv/tv/raw/master/PG/spider.jar",
     "sites":[
@@ -500,83 +498,6 @@
             "filterable":1
         },
         {
-            "key":"csp_YingShi",
-            "name":"影视|海外",
-            "type":3,
-            "api":"csp_YingShi",
-            "ext":""
-        },
-        {
-            "key":"泥巴",
-            "name":"泥巴|海外",
-            "type":3,
-            "api":"csp_NiNi",
-            "searchable":1,
-            "filterable":1,
-            "changeable":0,
-            "ext":"0$$$"
-        },
-        {
-            "key":"星星",
-            "name":"星星|海外",
-            "type":3,
-            "api":"csp_Star",
-            "searchable":1,
-            "changeable":0,
-            "ext":""
-        },
-        {
-            "key":"獨播",
-            "name":"獨播|海外",
-            "type":3,
-            "api":"csp_XPathMacFilter",
-            "searchable":1,
-            "changeable":0,
-            "ext":"https://raw.githubusercontent.com/FongMi/CatVodSpider/main/json/duboku.json$$$"
-        },
-        {
-            "key":"haiwaikan",
-            "name":"海外看",
-            "type":1,
-            "api":"https://haiwaikan.com/api.php/provide/vod",
-            "searchable":1,
-            "changeable":1,
-            "categories":[
-                "日本动漫",
-                "国产动漫",
-                "欧美动漫",
-                "国产剧",
-                "韩剧",
-                "日剧",
-                "台剧",
-                "泰剧",
-                "港剧",
-                "欧美剧",
-                "动画电影",
-                "韩国综艺",
-                "国产综艺",
-                "日本综艺",
-                "欧美综艺",
-                "冒险片",
-                "剧情片",
-                "动作片",
-                "同性片",
-                "喜剧片",
-                "奇幻片",
-                "恐怖片",
-                "悬疑片",
-                "惊悚片",
-                "战争片",
-                "歌舞片",
-                "灾难片",
-                "爱情片",
-                "犯罪片",
-                "科幻片",
-                "纪录片",
-                "经典片"
-            ]
-        },
-        {
             "key":"暴風",
             "name":"暴風",
             "type":1,
@@ -698,18 +619,6 @@
             "changeable":0,
             "timeout":30,
             "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
-        },
-        {
-            "key":"PikPakShare",
-            "name":"PikPak分享",
-            "type":3,
-            "api":"csp_PikPakShare",
-            "searchable":1,
-            "quickSearch":1,
-            "changeable":0,
-            "filterable":0,
-            "timeout":60,
-            "ext":"http://qiqiv.cn/tvbox/pg/lib/tokenm.json$$$http://qiqiv.cn/tvbox/pg/lib/pikpakclass.json$$$http://qiqiv.cn/tvbox/pg/lib/pikpakclass.json.txt.gz"
         }
     ],
     "lives":[
@@ -825,18 +734,6 @@
                 ".*nivod.*",
                 "*.t4tv.hz.cz",
                 ".*ulivetv.*"
-            ]
-        },
-        {
-            "name":"海外看",
-            "hosts":[
-                "haiwaikan"
-            ],
-            "regex":[
-                "8.1748",
-                "10.0099",
-                "10.3333",
-                "16.0599"
             ]
         },
         {
@@ -1000,30 +897,6 @@
             ],
             "script":[
                 "document.getElementsByClassName('swal-button swal-button--confirm')[0].click()"
-            ]
-        },
-        {
-            "name":"磁力广告",
-            "hosts":[
-                "magnet"
-            ],
-            "regex":[
-                "更多",
-                "社 區",
-                "x u u",
-                "最 新",
-                "直 播",
-                "更 新",
-                "社 区",
-                "有 趣",
-                "英皇体育",
-                "全中文AV在线",
-                "澳门皇冠赌场",
-                "哥哥快来",
-                "美女荷官",
-                "裸聊",
-                "新片首发",
-                "UUE29"
             ]
         }
     ],
