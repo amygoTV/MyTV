@@ -50,16 +50,6 @@
       "ext":"https://gitee.com/amygotv/tv/raw/master/moyuer/lib/PG推送.json"
     },
     {
-      "key":"应用商店",
-      "name":"摸摸🐟|应用市场",
-      "type":3,
-      "api":"csp_Market",
-      "searchable":0,
-      "changeable":0,
-      "ext":"https://gitee.com/amygotv/tv/raw/master/moyuer/lib/moyuyysc.json",
-      "jar":"https://gitee.com/amygotv/tv/raw/master/moyuer/lib/moyu应用市场.jar"
-    },
-    {
       "key":"huahai",
       "name":"4K-HDR🐟花海|弹幕",
       "type":3,
@@ -1647,30 +1637,6 @@
       "regex":[
         "#EXT-X-DISCONTINUITY\\r*\\n*#EXTINF:3,[\\s\\S]*?#EXT-X-DISCONTINUITY",
         "#EXTINF.*?\\s+.*?1o.*?\\.ts\\s+"
-      ]
-    },
-    {
-      "name":"磁力广告",
-      "hosts":[
-        "magnet"
-      ],
-      "regex":[
-        "更多",
-        "社 區",
-        "x u u",
-        "最 新",
-        "直 播",
-        "更 新",
-        "社 区",
-        "有 趣",
-        "英皇体育",
-        "全中文AV在线",
-        "澳门皇冠赌场",
-        "哥哥快来",
-        "美女荷官",
-        "裸聊",
-        "新片首发",
-        "UUE29"
       ]
     }
   ],
