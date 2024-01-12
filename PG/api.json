@@ -1,7 +1,7 @@
 
 
 {
-    "spider":"./spider.jar",
+    "spider":"https://gitee.com/amygotv/tv/raw/master/PG/spider.jar",
     "sites":[
         {
             "key":"酷狗",
@@ -16,8 +16,8 @@
             "name":"🐼️┃电视┃直播",
             "type":3,
             "searchable":0,
-            "api":"./api/live2vod.js",
-            "ext":"./json/feimaolive.json"
+            "api":"https://gitee.com/amygotv/tv/raw/master/PG/api/live2vod.js",
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/feimaolive.json"
         },
         {
             "key":"豆瓣",
@@ -26,7 +26,7 @@
             "api":"csp_Douban",
             "searchable":0,
             "changeable":1,
-            "ext":"./json/douban.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/douban.json"
         },
         {
             "key":"996影院",
@@ -53,7 +53,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/wogg.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/wogg.json"
         },
         {
             "key":"影视车",
@@ -64,7 +64,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/wogg.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/wogg.json"
         },
         {
             "key":"Wobg",
@@ -75,7 +75,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/wogg.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/wogg.json"
         },
         {
             "key":"Pan99",
@@ -152,7 +152,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"易搜",
@@ -168,7 +168,7 @@
             "type":3,
             "api":"csp_PanSou",
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"Funletu",
@@ -179,7 +179,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"QuarkPanso",
@@ -190,7 +190,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"Panta",
@@ -234,7 +234,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"YunPanOne",
@@ -245,7 +245,7 @@
             "changeable":1,
             "filterable":1,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"NanGua",
@@ -265,7 +265,7 @@
             "quickSearch":1,
             "filterable":0,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"Gitcafe",
@@ -276,7 +276,7 @@
             "quickSearch":1,
             "filterable":0,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"找資源",
@@ -479,7 +479,7 @@
             "type":3,
             "api":"csp_UpYun",
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"JustLive",
@@ -677,7 +677,7 @@
             "key":"愛看",
             "name":"愛看",
             "type":3,
-            "api":"./api/ikanbot_open.js",
+            "api":"https://gitee.com/amygotv/tv/raw/master/PG/api/ikanbot_open.js",
             "searchable":1,
             "changeable":0
         },
@@ -697,7 +697,7 @@
             "api":"csp_Push",
             "changeable":0,
             "timeout":30,
-            "ext":"./json/tokenm.json"
+            "ext":"https://gitee.com/amygotv/tv/raw/master/PG/json/tokenm.json"
         },
         {
             "key":"PikPakShare",
@@ -716,49 +716,49 @@
         {
             "name":"live.ipv6",
             "type":0,
-            "url":"./lives/live.ipv6.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/live.ipv6.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"live.ipv6.m3u",
             "type":0,
-            "url":"./lives/live.ipv6.m3u.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/live.ipv6.m3u.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"live.ipv6.local",
             "type":0,
-            "url":"./lives/live.ipv6.local.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/live.ipv6.local.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"live.fan",
             "type":0,
-            "url":"./lives/live.fan.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/live.fan.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"直播",
             "type":0,
-            "url":"./lives/直播.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/直播.txt",
             "epg":"https://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"TXT",
             "type":0,
-            "url":"./lives/TXT.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/TXT.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"Json",
             "type":1,
-            "url":"./lives/Json.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/Json.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         },
         {
             "name":"live.feimao",
             "type":0,
-            "url":"./lives/live.feimao.txt",
+            "url":"https://gitee.com/amygotv/tv/raw/master/PG/lives/live.feimao.txt",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
         }
     ],
