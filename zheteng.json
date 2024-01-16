@@ -1,16 +1,16 @@
 {
   "storeHouse": [
     {
-      "sourceName": "💥爱折腾缝合仓💥免费接口💥",
+      "sourceName": "🍽爱折腾缝合仓🍖免费接口🌭",
       "sourceUrl": "https://gitee.com/amygotv/tv/raw/master/aizheteng.json"
     },
  {
-      "sourceName": "💥爱折腾优选仓💥严禁贩卖💥",
+      "sourceName": "🍴爱折腾优选仓🍖严禁贩卖🌭",
       "sourceUrl": "https://jihulab.com/Brave/TV/-/raw/master/aizheteng.json?ref_type=heads"
     },
 
     {
-      "sourceName": "💥爱折腾备选仓💥不做韭菜💥",
+      "sourceName": "🥄爱折腾备选仓🍖不做韭菜🌭",
       "sourceUrl": "https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json"
     }
   ]
