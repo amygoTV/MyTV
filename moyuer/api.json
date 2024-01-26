@@ -1322,17 +1322,7 @@
     },
     {
       "key":"push_agent1",
-      "name":"请于24小时内删除测试内容|QQ群536992286",
-      "type":3,
-      "api":"csp_Push",
-      "searchable":1,
-      "quickSearch":1,
-      "filterable":1,
-      "ext":"http://127.0.0.1:9978/file/tvmoyu/token.txt"
-    },
-    {
-      "key":"push_agent2",
-      "name":"诸多资源更新公告|关注夕颜社区",
+      "name":"请于24小时内删除测试内容",
       "type":3,
       "api":"csp_Push",
       "searchable":1,
