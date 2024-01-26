@@ -1,19 +1,10 @@
 {
     "spider": "./Tong.jar",
+    "warningText": "所有资源均非原创，搬运自互联网，如有侵权请联系删除。仅测试技术，请于测试后24小时内删除，擅自传播造成的法律后果与搬运工鸟叔无关。",
     "sites": [
         {
-            "key": "py_cctv",
-            "name": "🦢CCTV🎈鸟叔整理🎈更新",
-            "type": 3,
-            "api": "py_cctv",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0,
-            "ext": "./libs/py_cctv.py"
-        },
-        {
             "key": "豆瓣",
-            "name": "豆瓣推荐",
+            "name": "🦆鸟叔整理二代包 | 资源共享，请勿贩卖，如有侵权，联系删除",
             "type": 3,
             "api": "csp_Douban",
             "searchable": 0,
@@ -27,6 +18,16 @@
             "api": "csp_Settings",
             "searchable": 0,
             "changeable": 0
+        },
+        {
+            "key": "py_cctv",
+            "name": "🦢CCTV🎈鸟叔整理🎈更新",
+            "type": 3,
+            "api": "py_cctv",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": "./libs/py_cctv.py"
         },
         {
             "key": "py_m1905",
