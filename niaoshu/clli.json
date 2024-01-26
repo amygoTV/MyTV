@@ -6,7 +6,7 @@
       "name": "本地live文件",
       "type": "0",
       "pass": true,
-      "url": "http://127.0.0.1:9978/file/libs/live.txt",
+      "url": "http://127.0.0.1:9978/file/libs/TVLives.txt",
       "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
@@ -14,7 +14,7 @@
       "name": "FMM_IPV6",
       "type": "0",
       "pass": true,
-      "url": "./libs/ipv6.m3u",
+      "url": "./libs/TVLives.txt",
       "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     }
@@ -594,30 +594,6 @@
         "16.0599",
         "8.1748",
         "10.85"
-      ]
-    },
-    {
-      "name": "磁力广告",
-      "hosts": [
-        "magnet"
-      ],
-      "regex": [
-        "更多",
-        "社 區",
-        "x u u",
-        "最 新",
-        "更 新",
-        "社 区",
-        "有趣",
-        "有 趣",
-        "英皇体育",
-        "全中文AV在线",
-        "澳门皇冠赌场",
-        "哥哥快来",
-        "美女荷官",
-        "裸聊",
-        "新片首发",
-        "UUE29"
       ]
     }
   ],
