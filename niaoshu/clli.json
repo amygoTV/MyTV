@@ -1,16 +1,7 @@
 {
   "wallpaper": "https://picsum.photos/1280/720/?blur=2",
   "spider": "./cl.jar",
-   "lives": [
-      {
-     "name": "本地live文件",
-      "type": 0,
-      "url": "./libs/TVLives.txt",
-      "ua": "okhttp/3.12.13",
-      "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
-      "logo": "https://epg.112114.xyz/logo/{name}.png"
-    }
-  ],
+   
   "sites": [
     {
       "key": "drpy_js_豆瓣",
@@ -463,6 +454,16 @@
           "referer": "https://jiejie.uk/"
         }
       }
+    }
+  ],
+  "lives": [
+      {
+     "name": "live",
+      "type": 0,
+      "url": "./libs/TVLives.txt",
+      "ua": "okhttp/3.12.13",
+      "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
+      "logo": "https://epg.112114.xyz/logo/{name}.png"
     }
   ],
   "flags": [
