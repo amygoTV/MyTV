@@ -1,13 +1,13 @@
 {
   "wallpaper": "https://picsum.photos/1280/720/?blur=2",
   "spider": "./cl.jar",
-  "lives": [
+   "lives": [
     {
       "name": "live",
-      "type": "0",
-      "url": "./libs/TVLives.txt",
+      "type": 0,
+      "url": "./TVLives.txt",
       "ua": "okhttp/3.12.13",
-      "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     }
   ],
