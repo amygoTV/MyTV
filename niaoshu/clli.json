@@ -3,7 +3,6 @@
   "spider": "./cl.jar",
    "lives": [
      {
-      {
       "name": "FMM_IPV6",
       "type": 0,
       "url": "./libs/TVLives.txt",
