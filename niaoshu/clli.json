@@ -1,11 +1,11 @@
 {
   "wallpaper": "https://picsum.photos/1280/720/?blur=2",
   "spider": "./cl.jar",
-   
+  "warningText": "所有资源均非原创，搬运自互联网，如有侵权请联系删除。仅测试技术，请于测试后24小时内删除，擅自传播造成的法律后果与搬运工鸟叔无关。",
   "sites": [
     {
       "key": "drpy_js_豆瓣",
-      "name": "豆瓣推荐【致敬香雅情】",
+      "name": "豆瓣推荐【资源共享，请勿贩卖，如有侵权，联系删除】",
       "type": 3,
       "api": "./libs/drpy2.min.js",
       "searchable": 1,
