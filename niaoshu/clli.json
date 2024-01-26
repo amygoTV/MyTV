@@ -3,15 +3,15 @@
   "spider": "./cl.jar",
   "lives": [
     {
-      "name": "本地live文件",
+      "name": "live",
       "type": "0",
       "pass": true,
-      "url": "http://127.0.0.1:9978/file/libs/TVLives.txt",
+      "url": "./libs/TVLives.txt",
       "epg": "https://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
     {
-      "name": "FMM_IPV6",
+      "name": "live",
       "type": "0",
       "pass": true,
       "url": "./libs/TVLives.txt",
