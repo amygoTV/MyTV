@@ -44,15 +44,15 @@
       "ext": "./lib/南瓜.js"
     },
     {
-      "key": "csp_Panda_玩偶哥哥",
-      "name": "👲┃玩偶┃影视",
-      "api": "csp_Panda",
+      "key": "玩偶哥哥",
+      "name": "👽玩偶哥哥┃4K弹幕",
       "type": 3,
+      "api": "csp_WoGG",
+      "jar": "./lib/fty.jar",
       "searchable": 1,
-      "playerType": 2,
-      "timeout": 30,
+      "quickSearch": 1,
       "changeable": 0,
-      "ext": "./lib/玩偶哥哥.json"
+      "ext": "http://127.0.0.1:9978/file/tvbox/token.txt"
     },
     {
       "key": "蜂鸟",
