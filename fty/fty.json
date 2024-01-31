@@ -1,5 +1,5 @@
-﻿{
-  "spider": "https://gitee.com/amygotv/tv/raw/master/fty/fty.jar;md5;5aee1ff968a3dc5cbbf225399e9441e9",
+{
+  "spider": "./fty.jar",
   "wallpaper": "http://饭太硬.top/深色壁纸/api.php",
   "sites": [
     {
@@ -13,7 +13,7 @@
     },
     {
       "key": "玩偶哥哥",
-      "name": "👽玩偶哥哥┃4K弹幕不断流",
+      "name": "👽玩偶哥哥┃4K弹幕",
       "type": 3,
       "api": "csp_WoGG",
       "searchable": 1,
@@ -218,7 +218,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "changeable": 1,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/nmys.json"
+      "ext": "./lib/nmys.json"
     },
     {
       "key": "Cokemv",
@@ -258,8 +258,8 @@
       "quickSearch": 1,
       "changeable": 1,
       "playerType": "1",
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/jp.js"
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/jp.js"
     },
     {
       "key": "新6V",
@@ -333,8 +333,8 @@
       "key": "88js",
       "name": "⚽ 88┃看球",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/88看球.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/88看球.js",
       "style": {
         "type": "list"
       },
@@ -346,8 +346,8 @@
       "key": "csp_qiumi",
       "name": "⚽ Jrs┃球迷",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/jrk.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/jrk.js",
       "style": {
         "type": "list"
       },
@@ -359,8 +359,8 @@
       "key": "csp_310直播",
       "name": "⚽310┃看球",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/310直播.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/310直播.js",
       "style": {
         "type": "list"
       },
@@ -379,14 +379,14 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/企鹅直播.json"
+      "ext": "./lib/企鹅直播.json"
     },
     {
       "key": "酷奇js",
       "name": "🎤酷奇┃MV",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/酷奇MV.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/酷奇MV.js",
       "style": {
         "type": "rect",
         "ratio": 1.597
@@ -407,14 +407,14 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/MTV.json"
+      "ext": "./lib/MTV.json"
     },
     {
       "key": "虎牙直播js",
       "name": "🐯虎牙┃直播",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/虎牙直播.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/虎牙直播.js",
       "style": {
         "type": "rect",
         "ratio": 1.755
@@ -427,8 +427,8 @@
       "key": "csp_XYQBiu_斗鱼",
       "name": "🐟斗鱼┃直播",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/斗鱼直播.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/斗鱼直播.js",
       "style": {
         "type": "rect",
         "ratio": 1.755
@@ -441,8 +441,8 @@
       "key": "csp_聚短视频",
       "name": "📽️聚短┃视频",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/短视频.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/短视频.js",
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0
@@ -451,8 +451,8 @@
       "key": "有声小说js",
       "name": "🎧有声┃小说",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/有声小说吧.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/有声小说吧.js",
       "style": {
         "type": "rect",
         "ratio": 1
@@ -560,7 +560,7 @@
       "searchable": 1,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/bilibili.json"
+      "ext": "./lib/bilibili.json"
     },
     {
       "key": "Biliych",
@@ -574,14 +574,14 @@
       "searchable": 1,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/biliych.json"
+      "ext": "./lib/biliych.json"
     },
     {
       "key": "dr_兔小贝",
       "name": "📚儿童┃启蒙",
       "type": 3,
-      "api": "https://gitee.com/amygotv/tv/raw/master/fty/lib/drpy2.min.js",
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/兔小贝.js",
+      "api": "./lib/drpy2.min.js",
+      "ext": "./lib/兔小贝.js",
       "style": {
         "type": "rect",
         "ratio": 1.597
@@ -602,7 +602,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/少儿教育.json"
+      "ext": "./lib/少儿教育.json"
     },
     {
       "key": "小学课堂",
@@ -616,7 +616,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/小学课堂.json"
+      "ext": "./lib/小学课堂.json"
     },
     {
       "key": "初中课堂",
@@ -630,7 +630,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/初中课堂.json"
+      "ext": "./lib/初中课堂.json"
     },
     {
       "key": "高中教育",
@@ -644,7 +644,7 @@
       "searchable": 0,
       "quickSearch": 0,
       "changeable": 0,
-      "ext": "https://gitee.com/amygotv/tv/raw/master/fty/lib/高中课堂.json"
+      "ext": "./lib/高中课堂.json"
     }
   ],
   "parses": [
@@ -880,7 +880,7 @@
     {
       "name": "SAO0",
       "type": 0,
-      "url": "https://gitee.com/amygotv/tv/raw/master/fty/lib/tvlive.txt",
+      "url": "./lib/tvlive.txt",
       "playerType": 1,
       "ua": "okhttp/3.15",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
@@ -889,7 +889,7 @@
     {
       "name": "IPV6",
       "type": 0,
-      "url": "https://gitee.com/amygotv/tv/raw/master/fty/lib/ipv6.m3u",
+      "url": "./lib/ipv6.m3u",
       "playerType": 1,
       "ua": "okhttp/3.15",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
