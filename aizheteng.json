@@ -1,11 +1,11 @@
 {
   "urls": [
     {
-      "url": "https://gitee.com/amygotv/tv/raw/master/fty/fty.json",
+      "url": "https://gitee.com/amygotv/tv/raw/master/fty/api.json",
       "name": "🍚饭太硬🍚"
     },
     {
-      "url": "https://gitee.com/amygotv/tv/raw/master/feimao/feimao.json",
+      "url": "https://gitee.com/amygotv/tv/raw/master/feimao/api.json",
       "name": "🐼肥猫宝贝🐼"
     },
     {
@@ -21,7 +21,7 @@
       "name": "🐟摸鱼儿🐟"
     },
     {
-      "url": "https://gitee.com/amygotv/tv/raw/master/xiaomi/xiaomi.json",
+      "url": "https://gitee.com/amygotv/tv/raw/master/xiaomi/api.json",
       "name": "🌾小米线路🌾"
     }
   ]
