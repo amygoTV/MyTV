@@ -188,12 +188,12 @@ CHC家庭影院,http://dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226462/in
 哒啵赛事,http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226954/1.m3u8
 哒啵电竞,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226951/index.m3u8
 哒啵赛事,http://dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226954/index.m3u8
-纬来体育,http://198.16.100.90:8278/videolandsport/playlist.m3u8?tid=MF0F9609085796090857&ct=19254&tsum=6bf853a68e195475b4892428199568c7
+纬来体育,https://epg.pw/stream/4f18dfe0593db5c686eb64ae8edaf2a9202d4d46bdc9bbde2cee27708e12ea01.m3u8
 纬来体育,http://50.7.238.114:8278/videolandsport/playlist.m3u8?tid=MD2D5343800653438006&ct=19234&tsum=1be724fb8246abfedaf2bd088ec98f03
 纬来体育,http://198.16.100.90:8278/videolandsport/playlist.m3u8?tid=MA6A1192684511926845&ct=19226&tsum=0b7ca9a61e7371df68108a27dc358c68
-五星体育,https://cntv.lat/tv/live.php?auth=231110&id=wxty
-五星体育,http://[2409:8087:7001:20:1000::95]:6610/000000001000/0000000000001001/1/5000000010000017540/index.m3u8?channel-id=bestzb
-五星体育,https://epg.pw/stream/22245524bde60cc6f805db18f5af17413485ab766670f6cf07e0b23d29358163.ctv
+五星体育,http://zteres.sn.chinamobile.com:6060/000000001000/2000000002000000007/1.m3u8?channel-id=hnbblive&Contentid=2000000002000000007&livemode=1&stbId=3
+五星体育,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001018/index.m3u8
+五星体育,https://live.goodiptv.club/api/bestv.php?id=wxtyhd8m/8000000
 NewTV精品体育,http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225674/index.m3u8
 NewTV超级体育,http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225715/index.m3u8
 NewTV超级体育,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225715/index.m3u8
