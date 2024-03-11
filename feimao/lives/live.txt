@@ -66,7 +66,7 @@ CETV-4 职业教育,http://[2409:8087:7004:20:1000::22]:6610/yinhe/2/ch000000909
 延边卫视,http://[2409:8087:7004:20:1000::22]:6610/yinhe/2/ch00000090990000001307/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 厦门卫视,http://[2409:8087:7004:20:1000::22]:6610/yinhe/2/ch00000090990000001306/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
 
-🐼丨港澳台　,#genre#
+🐼丨港澳台,#genre#
 凤凰中文,http://[2409:8087:2001:20:2800:0:df6e:eb22]:80/ott.mobaibox.com/PLTV/3/224/3221228527/1.m3u8
 凤凰资讯,http://[2409:8087:2001:20:2800:0:df6e:eb19]:80/ott.mobaibox.com/PLTV/3/224/3221228524/1.m3u8
 凤凰香港,http://[2409:8087:2001:20:2800:0:df6e:eb22]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8
@@ -302,7 +302,7 @@ CHC高清电影,http://222.132.191.125:9901/tsfile/live/1010_1.m3u8
 河北影视剧,https://event.pull.hebtv.com/jishi/yingshijupindao.m3u8
 昆明影视,http://wshls.live.migucloud.com/live/KYLNJWFD_C0/playlist.m3u8
 
-🐼丨NewTV　,#genre#
+🐼丨NewTV,#genre#
 NewTV黑莓电影,http://39.134.115.163:8080/PLTV/88888910/224/3221225718/index.m3u8
 NewTV潮妈辣婆,http://39.135.138.58:18890/PLTV/88888888/224/3221225712/index.m3u8
 NewTV爱情喜剧,http://39.135.138.58:18890/PLTV/88888888/224/3221225656/index.m3u8
