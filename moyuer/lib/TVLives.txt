@@ -297,7 +297,7 @@ NewTV明星大片,http://[2409:8087:2001:20:2800:0:df6e:eb18]:80/wh7f454c46tw285
 NewTV东北热剧,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225741/index.m3u8
 NewTV欢乐剧场,http://[2409:8087:1a01:df::7005]:80/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225742/index.m3u8
 
-SITV频道,#genre#
+SITV频道#genre#
 SITV动漫秀场,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001196/index.m3u8
 SITV游戏风云,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001192/index.m3u8
 SITV法治天地,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001195/index.m3u8
