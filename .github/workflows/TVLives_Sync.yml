@@ -1,0 +1,48 @@
+name: MyTV TVLives Sync
+
+on:
+  schedule:
+    # 每 6 小时从 Livelist 同步一次；比 Livelist 的更新晚 20 分钟，
+    # 保证拉取到的已是最新生成的列表（UTC 01:37 / 07:37 / 13:37 / 19:37）
+    - cron: '37 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mytv-tvlives-sync
+  cancel-in-progress: true
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download TVLives.txt from Livelist
+        run: |
+          curl -fsSL --retry 3 --retry-delay 5 \
+            "https://raw.githubusercontent.com/amygoTV/Livelist/main/TVLives.txt" \
+            -o TVLives.txt.new
+          test -s TVLives.txt.new
+          grep -q '#genre#' TVLives.txt.new
+          mv TVLives.txt.new TVLives.txt
+          echo "下载完成: $(wc -l < TVLives.txt) 行 / $(wc -c < TVLives.txt) 字节"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add TVLives.txt
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Sync TVLives.txt from Livelist $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi
