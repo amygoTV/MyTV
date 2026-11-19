@@ -1,36 +1,54 @@
-# TV
+# MyTV
 
-#### Description
-{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}
+Live TV subscriptions and multi-warehouse indexes for TVBox / 影视仓.
 
-#### Software Architecture
-Software architecture description
+## 1. Live TV playlist
 
-#### Installation
+```text
+https://raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt
+```
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+- `TVLives.txt`: TVBox text playlist (`group,#genre#` followed by `name,url`).
+- `scripts/validate_tvlives.py`: concurrent validator; only responsive streams are kept.
+- `scripts/pinned_sources.txt`: manually reviewed extra sources, validated on every sync.
 
-#### Instructions
+GitHub Actions refreshes the playlist from `amygoTV/Livelist` every 6 hours. Nothing is committed when there are no changes.
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## 2. Multi-warehouse index
 
-#### Contribution
+```text
+https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
+```
 
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+Fallback:
 
+```text
+https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
+```
 
-#### Gitee Feature
+The original Gitee repository `amygotv/tv` is blocked (HTTP 423), so the pinned
+entries now point to this repository through `gh-proxy.com`.
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- `pinned`: six in-repo configs (饭太硬, 肥猫, 鸟叔 4K, PG, 摸鱼儿, 小米).
+- `sources`: sixteen entries matched from the public mirror list (南风, 摸鱼 6 线,
+  clun, 小马, 挺好, 动漫, 菜妮丝, 高天流云, 香雅情, 健康家用, 老张, 心魔, 俊宇,
+  东篱, 夏夏影视, 周 J).
+
+### Auto-update
+
+- `.github/workflows/Aizheteng_Sync.yml` runs daily at 11:17 Beijing time.
+- It downloads the latest `list.txt` from the mirror, matches names declared in
+  `scripts/aizheteng_sources.json`, and probes every candidate with a
+  `okhttp/3.15` User-Agent.
+- A candidate is accepted only when it returns HTTP 200 and a non-empty `sites`
+  array. If every candidate fails, the previous working URL is kept; new entries
+  without a previous URL are skipped. The workflow does not commit when
+  `list.txt` cannot be downloaded.
+- To add a source, append `{name, match, fallbacks}` to `sources` in
+  `scripts/aizheteng_sources.json`.
+
+## Notice
+
+All playlists and interfaces come from the public internet. Availability varies
+by time, region and ISP. This repository is for technical research and personal
+legal use only; do not use it commercially.

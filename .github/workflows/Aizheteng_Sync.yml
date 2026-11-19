@@ -1,0 +1,68 @@
+name: MyTV Aizheteng Sync
+
+on:
+  schedule:
+    # 每天北京时间 11:17 更新；备份站通常在北京时间上午生成当日 list.txt
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mytv-aizheteng-sync
+  cancel-in-progress: true
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download latest interface list
+        run: |
+          set -euo pipefail
+          for base in \
+            https://0.12yue.de5.net \
+            https://0.cdz.qzz.io \
+            https://0.wdzb.eu.cc \
+            https://gh-proxy.com/raw.githubusercontent.com/lubin776/tvbox-api-backup/main \
+            https://raw.githubusercontent.com/lubin776/tvbox-api-backup/main
+          do
+            if curl -fsSL --retry 2 --retry-delay 3 \
+              --connect-timeout 10 --max-time 60 \
+              -A 'Mozilla/5.0' "$base/list.txt" -o list.txt \
+              && [ -s list.txt ] \
+              && grep -Fq '.json|' list.txt
+            then
+              echo "Downloaded list.txt from $base"
+              exit 0
+            fi
+          done
+          echo "::error::Failed to download list.txt from all mirrors"
+          exit 1
+
+      - name: Update aizheteng.json
+        run: |
+          python3 scripts/update_aizheteng.py \
+            --list list.txt \
+            --sources scripts/aizheteng_sources.json \
+            --output aizheteng.json \
+            --summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add aizheteng.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Sync aizheteng.json $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi

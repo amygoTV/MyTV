@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "mirrors": [
+    "https://0.12yue.de5.net",
+    "https://0.cdz.qzz.io",
+    "https://0.wdzb.eu.cc",
+    "https://gh-proxy.com/raw.githubusercontent.com/lubin776/tvbox-api-backup/main",
+    "https://raw.githubusercontent.com/lubin776/tvbox-api-backup/main"
+  ],
+  "pinned": [
+    {
+      "name": "🍚饭太硬🍚",
+      "urls": [
+        "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/fty/api.json",
+        "https://raw.githubusercontent.com/amygoTV/MyTV/master/fty/api.json",
+        "https://0.12yue.de5.net/tvbox/%E9%A5%AD%E5%A4%AA%E7%A1%AC.json"
+      ]
+    },
+    {
+      "name": "🐼肥猫宝贝🐼",
+      "urls": [
+        "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/feimao/api.json",
+        "https://raw.githubusercontent.com/amygoTV/MyTV/master/feimao/api.json",
+        "https://0.12yue.de5.net/tvbox/%E8%82%A5%E7%8C%AB.json"
+      ]
+    },
+    {
+      "name": "🕊鸟叔4K🕊",
+      "urls": [
+        "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/niaoshu/tongyong.json",
+        "https://raw.githubusercontent.com/amygoTV/MyTV/master/niaoshu/tongyong.json"
+      ]
+    },
+    {
+      "name": "🍎PG线路🍎",
+      "urls": [
+        "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/PG/api.json",
+        "https://raw.githubusercontent.com/amygoTV/MyTV/master/PG/api.json"
+      ]
+    },
+    {
+      "name": "🐟摸鱼儿🐟",
+      "urls": [
+        "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/moyuer/api.json",
+        "https://raw.githubusercontent.com/amygoTV/MyTV/master/moyuer/api.json"
+      ]
+    },
+    {
+      "name": "🌾小米线路🌾",
+      "urls": [
+        "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/xiaomi/api.json",
+        "https://raw.githubusercontent.com/amygoTV/MyTV/master/xiaomi/api.json"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "name": "🌬南风🌬",
+      "match": [
+        "南风",
+        "南风2线"
+      ],
+      "fallbacks": [
+        "https://0.12yue.de5.net/tvbox/%E5%8D%97%E9%A3%8E.json"
+      ]
+    },
+    {
+      "name": "🐟摸鱼6线🐟",
+      "match": [
+        "摸鱼6线"
+      ],
+      "fallbacks": [
+        "https://fish.y456y.com",
+        "http://www.y456y.com",
+        "https://0.12yue.de5.net/tvbox/%E6%91%B8%E9%B1%BC6%E7%BA%BF.json"
+      ]
+    },
+    {
+      "name": "🍀clun🍀",
+      "match": [
+        "clun"
+      ],
+      "fallbacks": [
+        "https://clun.top/box.json",
+        "https://0.12yue.de5.net/tvbox/clun.json"
+      ]
+    },
+    {
+      "name": "🐎小马🐎",
+      "match": [
+        "小马"
+      ],
+      "fallbacks": [
+        "https://szyyds.cn/tv/x.json"
+      ]
+    },
+    {
+      "name": "👍挺好👍",
+      "match": [
+        "挺好"
+      ],
+      "fallbacks": [
+        "https://ztha.top/TVBox/thdjk.json"
+      ]
+    },
+    {
+      "name": "🎌动漫🎌",
+      "match": [
+        "动漫"
+      ],
+      "fallbacks": [
+        "https://www.yingm.cc/dm/dm.json"
+      ]
+    },
+    {
+      "name": "🐱菜妮丝🐱",
+      "match": [
+        "菜妮丝"
+      ],
+      "fallbacks": [
+        "https://tv.xn--yhqu5zs87a.top"
+      ]
+    },
+    {
+      "name": "☁高天流云☁",
+      "match": [
+        "高天流云js"
+      ],
+      "fallbacks": [
+        "https://gh-proxy.com/raw.githubusercontent.com/gaotianliuyun/gao/master/js.json"
+      ]
+    },
+    {
+      "name": "🌸香雅情🌸",
+      "match": [
+        "香雅情"
+      ],
+      "fallbacks": [
+        "https://play.iptv365.org/%E9%A6%99%E9%9B%85%E6%83%85/api.json",
+        "https://raw.githubusercontent.com/xyq254245/xyqonlinerule/main/XYQTVBox.json"
+      ]
+    },
+    {
+      "name": "🏠健康家用🏠",
+      "match": [
+        "健康家用"
+      ],
+      "fallbacks": [
+        "https://gitlab.com/noimank/tvbox/-/raw/main/tvbox1.json"
+      ]
+    },
+    {
+      "name": "👴老张👴",
+      "match": [
+        "老张"
+      ],
+      "fallbacks": [
+        "https://0.12yue.de5.net/tvbox/%E8%80%81%E5%BC%A0.json"
+      ]
+    },
+    {
+      "name": "😈心魔😈",
+      "match": [
+        "心魔"
+      ],
+      "fallbacks": [
+        "https://gh-proxy.com/raw.githubusercontent.com/yw88075/tvbox/main/yw.json"
+      ]
+    },
+    {
+      "name": "🏡俊宇🏡",
+      "match": [
+        "俊宇"
+      ],
+      "fallbacks": [
+        "https://0.12yue.de5.net/tvbox/%E4%BF%8A%E5%AE%87.json"
+      ]
+    },
+    {
+      "name": "🌇东篱🌇",
+      "match": [
+        "东篱"
+      ],
+      "fallbacks": [
+        "https://0.12yue.de5.net/tvbox/%E4%B8%9C%E7%AF%B1.json"
+      ]
+    },
+    {
+      "name": "🎬夏夏影视🎬",
+      "match": [
+        "夏夏影视"
+      ],
+      "fallbacks": [
+        "https://0.12yue.de5.net/tvbox/%E5%A4%8F%E5%A4%8F%E5%BD%B1%E8%A7%86.json"
+      ]
+    },
+    {
+      "name": "📅周J📅",
+      "match": [
+        "周J"
+      ],
+      "fallbacks": [
+        "https://gh-proxy.com/raw.githubusercontent.com/zhoujck/config/main/box"
+      ]
+    }
+  ]
+}
