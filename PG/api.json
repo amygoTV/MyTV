@@ -625,52 +625,12 @@
     ],
     "lives":[
         {
-            "name":"live.ipv6",
+            "name":"TVLives",
             "type":0,
-            "url":"./lives/live.ipv6.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"live.ipv6.m3u",
-            "type":0,
-            "url":"./lives/live.ipv6.m3u.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"live.ipv6.local",
-            "type":0,
-            "url":"./lives/live.ipv6.local.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"live.fan",
-            "type":0,
-            "url":"./lives/live.fan.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"直播",
-            "type":0,
-            "url":"./lives/直播.txt",
-            "epg":"https://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"TXT",
-            "type":0,
-            "url":"./lives/TXT.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"Json",
-            "type":1,
-            "url":"./lives/Json.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name":"live.feimao",
-            "type":0,
-            "url":"./lives/live.feimao.txt",
-            "epg":"http://epg.112114.xyz/?ch={name}&date={date}"
+            "url":"https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt",
+            "ua":"okhttp/3.15",
+            "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
+            "logo":"https://epg.112114.xyz/logo/{name}.png"
         }
     ],
     "doh":[

@@ -856,16 +856,12 @@
     ],
     "lives": [
         {
-            "name": "SAO0",
+            "name": "TVLives",
             "type": 0,
-            "url": "./lives/SAO0.txt",
-            "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
-        },
-        {
-            "name": "IPV6",
-            "type": 0,
-            "url": "./lives/IPV6.txt",
-            "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
+            "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt",
+            "ua": "okhttp/3.15",
+            "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+            "logo": "https://epg.112114.xyz/logo/{name}.png"
         }
     ]
 }

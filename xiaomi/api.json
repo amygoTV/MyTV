@@ -737,10 +737,12 @@
     ],
     "lives": [
         {
-            "name": "IPv4",
+            "name": "TVLives",
             "type": 0,
-            "url": "./lives/IPv4.txt",
-            "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
+            "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt",
+            "ua": "okhttp/3.15",
+            "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+            "logo": "https://epg.112114.xyz/logo/{name}.png"
         }
     ],
     "doh": [

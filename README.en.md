@@ -30,9 +30,12 @@ The original Gitee repository `amygotv/tv` is blocked (HTTP 423), so the pinned
 entries now point to this repository through `gh-proxy.com`.
 
 - `pinned`: six in-repo configs (饭太硬, 肥猫, 鸟叔 4K, PG, 摸鱼儿, 小米).
+- The `lives` array of these six configs points to this repository's `TVLives.txt`
+  through `gh-proxy.com` instead of their own live lists.
 - `sources`: sixteen entries matched from the public mirror list (南风, 摸鱼 6 线,
   clun, 小马, 挺好, 动漫, 菜妮丝, 高天流云, 香雅情, 健康家用, 老张, 心魔, 俊宇,
-  东篱, 夏夏影视, 周 J).
+  东篱, 夏夏影视, 周 J). Their live sources are controlled by the third-party
+  configs and are not modified here.
 
 ### Auto-update
 
