@@ -41,7 +41,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 ### 线路说明
 
 - `pinned`：本仓库自带的 6 条固定线路（饭太硬、肥猫、鸟叔 4K、PG、摸鱼儿、小米），指向 `github.com/amygoTV/MyTV` 下的单仓配置。
-- 这 6 条固定线路的 `lives` 已统一指向本仓库根目录的 `TVLives.txt`（通过 `gh-proxy.com` 加速），不再各自维护直播源。
+- 这 6 条固定线路的 `lives` 已统一指向本仓库根目录的 `TVLives.txt`（通过 `gh-proxy.com` 加速），不再各自维护直播源；原各线路自带的直播文件已删除。
 - `sources`：从海量接口备份站自动匹配的 16 条线路，包括南风、摸鱼 6 线、clun、小马、挺好、动漫、菜妮丝、高天流云、香雅情、健康家用、老张、心魔、俊宇、东篱、夏夏影视、周 J。这些外部线路的直播源由第三方配置决定，不在本仓库内修改。
 
 ### 自动更新
