@@ -25,15 +25,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download TVLives.txt from Livelist
+      - name: Download and validate TVLives.txt
         run: |
           curl -fsSL --retry 3 --retry-delay 5 \
             "https://raw.githubusercontent.com/amygoTV/Livelist/main/TVLives.txt" \
-            -o TVLives.txt.new
-          test -s TVLives.txt.new
-          grep -q '#genre#' TVLives.txt.new
-          mv TVLives.txt.new TVLives.txt
-          echo "下载完成: $(wc -l < TVLives.txt) 行 / $(wc -c < TVLives.txt) 字节"
+            -o TVLives.raw.txt
+          test -s TVLives.raw.txt
+          grep -q '#genre#' TVLives.raw.txt
+          python3 scripts/validate_tvlives.py \
+            TVLives.raw.txt scripts/pinned_sources.txt \
+            -o TVLives.txt --report validation.json \
+            --workers 24 --timeout 8
+          echo "验活完成: $(wc -l < TVLives.txt) 行 / $(wc -c < TVLives.txt) 字节"
 
       - name: Commit and push
         run: |
