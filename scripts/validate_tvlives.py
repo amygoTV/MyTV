@@ -14,6 +14,7 @@ Standard library only.
 import argparse
 import concurrent.futures
 import json
+import os
 import re
 import sys
 import time
@@ -33,13 +34,27 @@ GROUP_ALIASES = {
 GOODTV_RE = re.compile(r"(good\s*tv|好电视)", re.I)
 BAD_SOURCE_RE = re.compile(r"(voc\.com\.cn|mgtv\.com)", re.I)
 VOD_EXT_RE = re.compile(r"\.(mp4|mkv|avi|mov|webm|wmv|m4v)(\?|$)", re.I)
+DEFAULT_AD_BLACKLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ad_blacklist.txt")
 
 
 def log(message):
     print("[%s] %s" % (time.strftime("%H:%M:%S"), message))
 
 
-def parse_txt(path):
+def load_ad_patterns(path):
+    patterns = []
+    if not path or not os.path.exists(path):
+        return patterns
+    with open(path, "r", encoding="utf-8") as handle:
+        for raw in handle:
+            line = raw.strip()
+            if not line or line.startswith("#"):
+                continue
+            patterns.append(re.compile(line, re.I))
+    return patterns
+
+
+def parse_txt(path, ad_patterns=()):
     items = []
     seen = set()
     group = ""
@@ -64,6 +79,8 @@ def parse_txt(path):
             if GOODTV_RE.search(name) or GOODTV_RE.search(group) or GOODTV_RE.search(url):
                 continue
             if BAD_SOURCE_RE.search(url):
+                continue
+            if any(pattern.search(url) or pattern.search(name) for pattern in ad_patterns):
                 continue
             if VOD_EXT_RE.search(url):
                 continue
@@ -174,6 +191,8 @@ def main():
     parser.add_argument("inputs", nargs="+", help="input TVBox TXT files")
     parser.add_argument("-o", "--output", help="output TXT file (default: overwrite input)")
     parser.add_argument("--report", help="optional JSON report path")
+    parser.add_argument("--ad-blacklist", default=DEFAULT_AD_BLACKLIST,
+                        help="regex file for manually confirmed ad/wrong-channel sources")
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument("--timeout", type=int, default=8)
     parser.add_argument("--max-urls", type=int, default=10)
@@ -182,9 +201,11 @@ def main():
     args = parser.parse_args()
 
     output = args.output or args.inputs[0]
+    ad_patterns = load_ad_patterns(args.ad_blacklist)
+    log("ad blacklist rules: %d" % len(ad_patterns))
     items = []
     for path in args.inputs:
-        items.extend(parse_txt(path))
+        items.extend(parse_txt(path, ad_patterns))
     log("candidate urls: %d / channels: %d" % (
         len(items), len(set((group, name) for group, name, _ in items))
     ))
