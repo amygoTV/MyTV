@@ -35,6 +35,11 @@ GOODTV_RE = re.compile(r"(good\s*tv|好电视)", re.I)
 BAD_SOURCE_RE = re.compile(r"(voc\.com\.cn|mgtv\.com)", re.I)
 VOD_EXT_RE = re.compile(r"\.(mp4|mkv|avi|mov|webm|wmv|m4v)(\?|$)", re.I)
 DEFAULT_AD_BLACKLIST = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ad_blacklist.txt")
+# IPv6 字面量地址用方括号包裹，例如 http://[2409:8087:8:21::18]:6610/...
+IPV6_URL_RE = re.compile(r"^https?://\[[0-9a-fA-F:]+\]", re.I)
+# 本机与 GitHub Actions runner 通常没有 IPv6 出口，无法用 HTTP 探测验证这类源。
+# 它们来自运营商 IPTV（移动/联通/银河），作为备用线路直接保留，排在已验活的 IPv4 之后。
+IPV6_FALLBACK_LATENCY = 10 ** 9
 
 
 def log(message):
@@ -127,12 +132,43 @@ def probe(url, timeout):
     return url, int((time.time() - start) * 1000)
 
 
-def validate(items, workers, timeout):
+def is_ipv6_url(url):
+    return bool(IPV6_URL_RE.match(url))
+
+
+def validate(items, workers, timeout, ipv6_mode="fallback", max_ipv6=6):
+    """Validate URLs. IPv6 literals are kept as fallback sources without probing.
+
+    Most build hosts have no IPv6 egress (or a proxy that rejects IPv6 literals),
+    so probing them always fails.  With ipv6_mode='fallback' they are retained
+    after all successfully probed IPv4 sources; with 'drop' they are discarded;
+    with 'only' only IPv6 sources are retained.
+    """
     valid = {}
     failed = {}
+    ipv6_counter = {}
+    probe_items = []
+    for group, name, url in items:
+        key = (group, name)
+        if is_ipv6_url(url):
+            if ipv6_mode == "drop":
+                failed.setdefault(key, []).append(url)
+            elif ipv6_mode == "only":
+                valid.setdefault(key, []).append((IPV6_FALLBACK_LATENCY, url))
+            else:  # fallback
+                count = ipv6_counter.get(key, 0)
+                if count < max_ipv6:
+                    valid.setdefault(key, []).append((IPV6_FALLBACK_LATENCY + count, url))
+                    ipv6_counter[key] = count + 1
+            continue
+        if ipv6_mode == "only":
+            failed.setdefault(key, []).append(url)
+            continue
+        probe_items.append((group, name, url))
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
         futures = {}
-        for group, name, url in items:
+        for group, name, url in probe_items:
             future = pool.submit(probe, url, timeout)
             futures[future] = (group, name, url)
         total = len(futures)
@@ -164,7 +200,7 @@ def validate(items, workers, timeout):
     return valid, failed
 
 
-def write_txt(path, valid, max_urls, key_order):
+def write_txt(path, valid, max_urls, key_order, ipv6_min=2):
     ordered = list(key_order)
     for key in valid:
         if key not in ordered:
@@ -177,8 +213,16 @@ def write_txt(path, valid, max_urls, key_order):
             handle.write("%s,#genre#\n\n" % group)
             for key in keys:
                 _, name = key
+                ipv4 = [(ms, url) for ms, url in valid[key] if not is_ipv6_url(url)]
+                ipv6 = [(ms, url) for ms, url in valid[key] if is_ipv6_url(url)]
+                ipv6_take = min(len(ipv6), ipv6_min)
+                ipv4_take = min(len(ipv4), max_urls - ipv6_take)
+                selected = ipv4[:ipv4_take] + ipv6[:ipv6_take]
+                remain = max_urls - len(selected)
+                if remain > 0 and ipv6_take < len(ipv6):
+                    selected += ipv6[ipv6_take:ipv6_take + remain]
                 seen = set()
-                for _, url in valid[key][:max_urls]:
+                for _, url in selected:
                     if url in seen:
                         continue
                     seen.add(url)
@@ -198,6 +242,12 @@ def main():
     parser.add_argument("--max-urls", type=int, default=10)
     parser.add_argument("--min-total-urls", type=int, default=40)
     parser.add_argument("--min-channels", type=int, default=20)
+    parser.add_argument("--ipv6-mode", choices=("fallback", "drop", "only"), default="fallback",
+                        help="how to treat IPv6 literal URLs (default: keep as fallback)")
+    parser.add_argument("--max-ipv6", type=int, default=6,
+                        help="max fallback IPv6 URLs per channel (default: 6)")
+    parser.add_argument("--ipv6-min", type=int, default=2,
+                        help="min IPv6 URLs kept per channel when available (default: 2)")
     args = parser.parse_args()
 
     output = args.output or args.inputs[0]
@@ -212,9 +262,12 @@ def main():
     if not items:
         raise SystemExit("no candidate URLs found")
 
-    valid, failed = validate(items, args.workers, args.timeout)
+    valid, failed = validate(items, args.workers, args.timeout,
+                             ipv6_mode=args.ipv6_mode, max_ipv6=args.max_ipv6)
     total_urls = sum(len(value) for value in valid.values())
-    log("valid urls: %d / valid channels: %d" % (total_urls, len(valid)))
+    ipv6_urls = sum(1 for value in valid.values() for _, url in value if is_ipv6_url(url))
+    log("valid urls: %d / valid channels: %d / ipv6 fallback: %d"
+        % (total_urls, len(valid), ipv6_urls))
     if total_urls < args.min_total_urls or len(valid) < args.min_channels:
         raise SystemExit(
             "validation result too small (%d urls, %d channels); refuse to overwrite %s"
@@ -226,7 +279,7 @@ def main():
         key = (group, name)
         if key not in key_order:
             key_order.append(key)
-    write_txt(output, valid, args.max_urls, key_order)
+    write_txt(output, valid, args.max_urls, key_order, ipv6_min=args.ipv6_min)
 
     if args.report:
         report = {

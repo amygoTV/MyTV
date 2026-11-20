@@ -35,8 +35,10 @@ jobs:
           python3 scripts/validate_tvlives.py \
             TVLives.raw.txt scripts/pinned_sources.txt \
             -o TVLives.txt --report validation.json \
-            --workers 24 --timeout 8
+            --workers 24 --timeout 8 \
+            --ipv6-mode fallback --ipv6-min 2 --max-ipv6 6
           echo "验活完成: $(wc -l < TVLives.txt) 行 / $(wc -c < TVLives.txt) 字节"
+          echo "其中 IPv6 备用线路: $(grep -c 'http://\[' TVLives.txt || true) 条"
 
       - name: Commit and push
         run: |
