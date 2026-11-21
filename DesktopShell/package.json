@@ -1,0 +1,17 @@
+{
+  "name": "medi-shell",
+  "version": "1.0.0",
+  "description": "影视舱 - 适合电脑观看的影视资源桌面壳",
+  "main": "main.js",
+  "author": "amygoTV",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "dependencies": {
+    "asar": "^3.2.0",
+    "electron": "^28.3.3"
+  }
+}

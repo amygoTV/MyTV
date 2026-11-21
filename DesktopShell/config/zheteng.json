@@ -1,0 +1,72 @@
+{
+  "storeHouse": [
+    {
+      "sourceName": "🍺爱折腾缝合仓🍖免费接口🌭",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json"
+    },
+    {
+      "sourceName": "🍻爱折腾备选仓🍖严禁贩卖🌭",
+      "sourceUrl": "https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json"
+    },
+    {
+      "sourceName": "💣王炸资源💣",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json"
+    },
+    {
+      "sourceName": "短剧漫剧",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E7%9F%AD%E5%89%A7%E6%BC%AB%E5%89%A7.json"
+    },
+    {
+      "sourceName": "短剧点播",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E7%9F%AD%E5%89%A7%E7%82%B9%E6%92%AD.json"
+    },
+    {
+      "sourceName": "漫剧点播",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E6%BC%AB%E5%89%A7%E7%82%B9%E6%92%AD.json"
+    },
+    {
+      "sourceName": "看球赛事",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E7%9C%8B%E7%90%83%E8%B5%9B%E4%BA%8B.json"
+    },
+    {
+      "sourceName": "吃瓜看球",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E5%90%83%E7%93%9C%E7%9C%8B%E7%90%83.json"
+    },
+    {
+      "sourceName": "比赛回放",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E6%AF%94%E8%B5%9B%E5%9B%9E%E6%94%BE.json"
+    },
+    {
+      "sourceName": "赛事点播",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E8%B5%9B%E4%BA%8B%E7%82%B9%E6%92%AD.json"
+    },
+    {
+      "sourceName": "一直播",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E4%B8%80%E7%9B%B4%E6%92%AD.json"
+    },
+    {
+      "sourceName": "少儿动漫",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E5%B0%91%E5%84%BF%E5%8A%A8%E6%BC%AB.json"
+    },
+    {
+      "sourceName": "少儿动漫点播",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E5%B0%91%E5%84%BF%E5%8A%A8%E6%BC%AB%E7%82%B9%E6%92%AD.json"
+    },
+    {
+      "sourceName": "儿童启蒙",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E5%84%BF%E7%AB%A5%E5%90%AF%E8%92%99.json"
+    },
+    {
+      "sourceName": "小学课堂",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E5%B0%8F%E5%AD%A6%E8%AF%BE%E5%A0%82.json"
+    },
+    {
+      "sourceName": "初中课堂",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E5%88%9D%E4%B8%AD%E8%AF%BE%E5%A0%82.json"
+    },
+    {
+      "sourceName": "高中课堂",
+      "sourceUrl": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/%E9%AB%98%E4%B8%AD%E8%AF%BE%E5%A0%82.json"
+    }
+  ]
+}

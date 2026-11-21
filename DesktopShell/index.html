@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>影视舱 MediaShell</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">▶</span> 影视舱 <small>MediaShell</small></div>
+    <nav class="tabs">
+      <button class="tab active" data-view="home">首页</button>
+      <button class="tab" data-view="search">搜索</button>
+      <button class="tab" data-view="live">直播</button>
+      <button class="tab" data-view="favorite">收藏</button>
+      <button class="tab" data-view="history">历史</button>
+    </nav>
+    <div class="topbar-right">
+      <input id="quickSearch" class="search-input" placeholder="搜索片名 / 演员…" autocomplete="off">
+      <span id="version" class="version"></span>
+    </div>
+  </header>
+
+  <div class="body">
+    <!-- Sidebar: sites -->
+    <aside class="sidebar" id="sidebar">
+      <div class="side-title">采集站 <span id="siteCount"></span></div>
+      <div id="siteList" class="site-list"></div>
+      <div class="side-footer">
+        <button id="btnReload" class="ghost-btn" title="重新加载配置">⟳ 重载配置</button>
+        <button id="btnImport" class="ghost-btn" title="导入订阅地址">＋ 导入订阅</button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main" id="main">
+      <div id="content" class="content"></div>
+    </main>
+  </div>
+
+  <!-- Player overlay -->
+  <div id="player" class="player hidden">
+    <div class="player-head">
+      <div class="player-title" id="playerTitle">播放</div>
+      <div class="player-actions">
+        <button id="btnExternal" class="ghost-btn">系统播放器</button>
+        <button id="btnPlayerClose" class="ghost-btn">✕ 关闭</button>
+      </div>
+    </div>
+    <div class="player-body">
+      <div class="player-stage">
+        <video id="video" controls playsinline></video>
+        <div id="playerMsg" class="player-msg hidden"></div>
+      </div>
+      <div class="player-side">
+        <div class="side-title">选集 <span id="episodeCount"></span></div>
+        <div id="episodeList" class="episode-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import dialog -->
+  <div id="importDialog" class="modal hidden">
+    <div class="modal-card">
+      <h3>导入订阅配置</h3>
+      <p class="muted">填入影视仓 / TVBox 配置地址（JSON），会覆盖当前站点配置。</p>
+      <input id="importUrl" class="search-input wide" placeholder="https://…/YSCSites.json">
+      <div class="modal-actions">
+        <button id="btnImportCancel" class="ghost-btn">取消</button>
+        <button id="btnImportOk" class="primary-btn">导入</button>
+      </div>
+      <div id="importMsg" class="import-msg"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+</div>
+<script src="vendor/hls.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
