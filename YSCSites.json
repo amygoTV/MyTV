@@ -229,12 +229,12 @@
         "综艺片",
         "动漫片",
         "短剧",
+        "体育",
         "AI漫剧",
         "足球",
         "篮球",
         "斯诺克",
         "网球",
-        "体育",
         "伦理片",
         "动画片",
         "国产动漫",
@@ -283,7 +283,6 @@
         "漫剧",
         "足球",
         "篮球",
-        "斯诺克",
         "伦理",
         "擦边短剧",
         "两性课堂",
@@ -342,39 +341,7 @@
       "searchable": 1,
       "quickSearch": 1,
       "filterable": 1,
-      "changeable": 1,
-      "categories": [
-        "动漫/国产动漫",
-        "动漫/日本动漫",
-        "动漫/欧美动漫",
-        "动漫/海外动漫",
-        "电影/冒险片",
-        "电影/剧情片",
-        "电影/动作片",
-        "电影/动画片",
-        "电影/喜剧片",
-        "电影/奇幻片",
-        "电影/恐怖片",
-        "电影/悬疑片",
-        "电影/惊悚片",
-        "电影/战争片",
-        "电影/爱情片",
-        "电影/科幻片",
-        "电影/纪录片",
-        "电视剧/台湾剧",
-        "电视剧/国产剧",
-        "电视剧/日本剧",
-        "电视剧/欧美剧",
-        "电视剧/泰国剧",
-        "电视剧/海外剧",
-        "电视剧/韩国剧",
-        "电视剧/香港剧",
-        "综艺/大陆综艺",
-        "综艺/日韩综艺",
-        "综艺/欧美综艺",
-        "综艺/海外综艺",
-        "综艺/港台综艺"
-      ]
+      "changeable": 1
     }
   ],
   "lives": [
@@ -386,6 +353,20 @@
       "ua": "okhttp/3.15",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
+    },
+    {
+      "name": "🎵抖音/平台直播🎵",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/PlatformLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    {
+      "name": "📺B站直播适配📺",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/BiliLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
   ],
   "rules": [

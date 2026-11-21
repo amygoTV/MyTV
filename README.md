@@ -32,9 +32,16 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 ### 说明
 
 - 影视仓 / TVBox 可直接导入的单仓配置，含 7 个实测可用的 CMS 采集接口（type=1，无需 spider jar）。
-- 影视资源：电影 / 电视剧 / 综艺 / 动漫等完整分类；短剧资源：光速 / 红牛 / 虎牙源内置「短剧」「擦边短剧」分类，搜索关键词「短剧」可直接检索。
-- 内置 `lives` 指向本仓库 `TVLives.txt`，点播 + 直播一个接口搞定。
+- 首页分类导航按各站 `ac=list` + `ac=videolist&t=<id>` 实测校准：影视仓 3.6.1 所需的「电影 / 电视剧 / 综艺 / 动漫 / 短剧」大类标记放在前面，后面补齐所有实测有数据的子分类。采集站里的大类本身是空壳（`t=` 返回 0 条），短剧/漫剧实际内容在子分类：`AI漫剧`（约 936 部）、`擦边短剧`（196 部）、`漫剧`（41 部，闪电影视）、`爽文短剧`，以及 `现代都市`、`古装仙侠`、`反转爽剧`、`言情总裁`、`穿越年代`、`重生民国`、`脑洞悬疑`、`女频恋爱`。点大类标签可能为空，请点具体子分类。
+- 内置 3 条 `lives`：`TVLives.txt`（央视 / 卫视 IPTV）、`PlatformLive.txt`（抖音 / B站 / 虎牙 / 斗鱼 / Twitch 等平台直播）、`BiliLive.txt`（B站直播专线）。
 - 采集接口来自公开采集站，可用性随时间变化；某个源失效时在影视仓内切换其它源即可。
+
+### 平台直播镜像（抖音 / B站）
+
+- `PlatformLive.txt`：由 `https://live.yang-1989.eu.org/Live.m3u` 转换为 TVBox TXT，含抖音（娱乐 / 游戏 / 其他）、哔哩、虎牙、斗鱼、Twitch、SOOP、歪歪等分组，上游约 30 分钟刷新。
+- `BiliLive.txt`：由 `https://sub.ottiptv.cc/bililive.m3u` 转换，纯 B站直播专线，按分区（情感杂谈 / 户外 / 疗愈助眠等）分组。
+- 转换脚本 `scripts/update_platform_live.py`；工作流 `.github/workflows/PlatformLive.yml` 每 30 分钟拉取并转换，有变化才提交。两条订阅都走 `gh-proxy.com` 加速，电视端无需直连海外域名。
+- 说明：快手自 2025 年底起对匿名访问限流，没有稳定的公开直播订阅；若必须看快手直播，需在「纯粹直播」等客户端中填入自己的快手 Cookie，TVBox 的静态订阅无法提供。
 
 ## 二、多仓索引 aizheteng.json
 
@@ -56,9 +63,8 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 
 ### 线路说明
 
-- `pinned`：本仓库自带的 6 条固定线路（饭太硬、肥猫、鸟叔 4K、PG、摸鱼儿、小米），指向 `github.com/amygoTV/MyTV` 下的单仓配置。
-- 这 6 条固定线路的 `lives` 已统一指向本仓库根目录的 `TVLives.txt`（通过 `gh-proxy.com` 加速），不再各自维护直播源；原各线路自带的直播文件已删除。
-- `sources`：从海量接口备份站自动匹配的 16 条线路，包括南风、摸鱼 6 线、clun、小马、挺好、动漫、菜妮丝、高天流云、香雅情、健康家用、老张、心魔、俊宇、东篱、夏夏影视、周 J。这些外部线路的直播源由第三方配置决定，不在本仓库内修改。
+- `urls`：7 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库（饭太硬、肥猫、鸟叔 4K、PG、摸鱼儿、小米、💣王炸资源💣），已移除全部外部站点线路。
+- 各线路的 `lives` 已统一指向本仓库根目录的 `TVLives.txt`（通过 `gh-proxy.com` 加速），不再各自维护直播源。
 
 ### 自动更新
 
