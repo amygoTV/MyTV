@@ -1,0 +1,23 @@
+appId: com.amygotv.mediasshell
+productName: MediaShell
+copyright: Copyright (c) 2026 amygoTV
+directories:
+  app: _stage
+  output: dist-exe3
+  buildResources: build
+files:
+  - "**/*"
+  - "!node_modules/**"
+asar: true
+compression: maximum
+win:
+  target:
+    - target: portable
+      arch: x64
+  artifactName: MediaShell-${version}-portable.${ext}
+  requestedExecutionLevel: asInvoker
+  signAndEditExecutable: false
+portable:
+  unpackDirName: MediaShellData
+electronDist: ./node_modules/electron/dist
+electronVersion: 28.3.3

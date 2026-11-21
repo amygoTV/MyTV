@@ -8,5 +8,7 @@ contextBridge.exposeInMainWorld('MediaShell', {
   httpGet: (url, headers, timeout) => ipcRenderer.invoke('http-get', url, headers, timeout),
   openExternal: (url) => ipcRenderer.invoke('open-external', url),
   openWithPlayer: (url, title) => ipcRenderer.invoke('open-with-player', url, title),
+  detectPlayers: () => ipcRenderer.invoke('detect-players'),
+  playExternal: (playerKey, url, decodeMode) => ipcRenderer.invoke('play-external', playerKey, url, decodeMode),
   appVersion: () => ipcRenderer.invoke('app-version'),
 });

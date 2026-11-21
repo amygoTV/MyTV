@@ -1,16 +1,29 @@
 'use strict';
-try{require('fs').appendFileSync('g:/Model/WorkBuddy/AI编程助手/MyTV_work/MediaShellApp/selftest.log','BOOT '+new Date().toISOString()+' electron='+process.versions.electron+'\n');}catch(e){}
-
 const { app, BrowserWindow, ipcMain, shell, dialog, session, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+const { spawn } = require('child_process');
 const { URL } = require('url');
 
+// ---- 直播播放性能优化：开启 Chromium 硬件解码/GPU 合成 -------------------
+// 手机端直播不卡而电脑卡，多因 Electron 默认未开启硬解、HLS 走 JS 软解。
+for (const sw of [
+  'enable-gpu', 'enable-gpu-rasterization', 'enable-zero-copy',
+  'ignore-gpu-blocklist', 'enable-accelerated-video-decode',
+]) { try { app.commandLine.appendSwitch(sw); } catch (e) {} }
+try {
+  app.commandLine.appendSwitch(
+    'enable-features',
+    'CanvasOopRasterization,PlatformHEVCDecoderSupport,UseSkiaRenderer'
+  );
+} catch (e) {}
+
 const APP_DIR = __dirname;
-// All persistent data stays next to the app on D: drive, never %APPDATA% on C:.
-const DATA_DIR = path.join(APP_DIR, '..', '..', 'userdata');
+// 持久化数据目录：单文件 EXE 每次解压到临时目录，因此允许用 MSHELL_DATA 环境变量固定到 D 盘；
+// 目录版则默认用 APP_DIR 上两级的 userdata。绝不写 %APPDATA%(C 盘)。
+const DATA_DIR = process.env.MSHELL_DATA || path.join(APP_DIR, '..', '..', 'userdata');
 const CONFIG_DIR = path.join(APP_DIR, 'config');
 
 try { fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
@@ -136,6 +149,51 @@ ipcMain.handle('save-config', async (_e, name, content) => {
   const p = path.join(CONFIG_DIR, name);
   fs.writeFileSync(p, content, 'utf8');
   return true;
+});
+
+// ---- lightweight external players (mpv / VLC / PotPlayer) ------------------
+// 浏览器内 HLS 软解在电脑上很卡；调用轻量硬件解码播放器体验接近手机端。
+const PLAYER_CANDIDATES = {
+  mpv: [
+    'C:\\Program Files\\mpv\\mpv.exe',
+    'C:\\Program Files (x86)\\mpv\\mpv.exe',
+    path.join(DATA_DIR, 'players', 'mpv.exe'),
+  ],
+  vlc: [
+    'C:\\Program Files\\VideoLAN\\VLC\\vlc.exe',
+    'C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe',
+  ],
+  potplayer: [
+    'C:\\Program Files\\DAUM\\PotPlayer\\PotPlayerMini64.exe',
+    'C:\\Program Files\\DAUM\\PotPlayer\\PotPlayerMini.exe',
+    'C:\\Program Files (x86)\\DAUM\\PotPlayer\\PotPlayerMini.exe',
+  ],
+};
+ipcMain.handle('detect-players', async () => {
+  const found = {};
+  for (const [key, paths] of Object.entries(PLAYER_CANDIDATES)) {
+    found[key] = paths.find((p) => { try { return fs.existsSync(p); } catch (e) { return false; } }) || null;
+  }
+  return found;
+});
+// 用外部播放器播放：解码方式用参数指定（硬解优先），超时由播放器自身处理
+ipcMain.handle('play-external', async (_e, playerKey, url, decodeMode) => {
+  let exe = (PLAYER_CANDIDATES[playerKey] || []).find((p) => { try { return fs.existsSync(p); } catch (e) { return false; } });
+  if (!exe) return { error: '未找到播放器：' + playerKey };
+  let args;
+  if (playerKey === 'mpv') {
+    args = ['--hwdec=' + (decodeMode === 'software' ? 'no' : 'auto-safe'),
+      '--vo=gpu', '--cache-secs=8', '--profile=fast', url];
+  } else if (playerKey === 'vlc') {
+    args = ['--avcodec-hw=' + (decodeMode === 'software' ? 'none' : 'any'), url];
+  } else {
+    args = [url];
+  }
+  try {
+    const child = spawn(exe, args, { detached: true, stdio: 'ignore' });
+    child.unref();
+    return { ok: true, exe };
+  } catch (err) { return { error: String(err && err.message || err) }; }
 });
 
 // ---- version --------------------------------------------------------------

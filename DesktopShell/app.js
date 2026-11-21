@@ -10,6 +10,7 @@ const state = {
   site: null,        // current selected site
   view: 'home',
   typeMap: {},       // siteKey -> {name:id}
+  catList: {},       // siteKey -> [{id,name,pid}] 站点真实分类(来自 ac=list 的 class 字段)
   favorites: loadLS('ms_favorites', []),
   history: loadLS('ms_history', []),
   playerHls: null,
@@ -67,29 +68,62 @@ async function cmsGet(url, timeout = 15000) {
   try { return JSON.parse(r.body); }
   catch (e) { throw new Error('接口返回非 JSON：' + r.body.slice(0, 60)); }
 }
+// 苹果CMS ac=list 同时返回 list(视频)与 class(分类)。分类在 class，绝不能用 list 当分类。
+// 返回 { map: {name:id}, cats: [{id,name,pid}] }
+async function fetchCats(site) {
+  if (state.catList[site.key]) return state.catList[site.key];
+  let cats = [];
+  try {
+    const d = await cmsGet(join(apiBase(site), { ac: 'list' }), 12000);
+    const arr = d.class || d.type || [];
+    (Array.isArray(arr) ? arr : Object.values(arr)).forEach((x) => {
+      if (x && x.type_name != null && x.type_id != null) {
+        cats.push({ id: x.type_id, name: String(x.type_name), pid: x.type_pid != null ? x.type_pid : 0 });
+      }
+    });
+  } catch (e) {}
+  // 兜底：部分站点 class 为空，则从 videolist 的 list 里去重 type_name/type_id
+  if (!cats.length) {
+    try {
+      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 12000);
+      const seen = {};
+      (d.list || []).forEach((v) => {
+        if (v && v.type_name != null && v.type_id != null && !seen[v.type_name]) {
+          seen[v.type_name] = 1;
+          cats.push({ id: v.type_id, name: String(v.type_name), pid: v.type_id_1 != null ? v.type_id_1 : 0 });
+        }
+      });
+    } catch (e) {}
+  }
+  state.catList[site.key] = cats;
+  return cats;
+}
+
 async function typeMap(site) {
   if (state.typeMap[site.key]) return state.typeMap[site.key];
   const map = {};
-  try {
-    const d = await cmsGet(join(apiBase(site), { ac: 'list' }), 12000);
-    const arr = d.list || d.class || [];
-    (Array.isArray(arr) ? arr : Object.values(arr)).forEach((x) => {
-      if (x && x.type_name) map[x.type_name] = x.type_id;
-    });
-  } catch (e) {}
-  if (!Object.keys(map).length) {
-    try {
-      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 12000);
-      (d.class || []).forEach((x) => { if (x && x.type_name) map[x.type_name] = x.type_id; });
-      (d.list || []).forEach((v) => { if (v && v.type_name) map[v.type_name] = v.type_id; });
-    } catch (e) {}
-  }
+  const cats = await fetchCats(site);
+  cats.forEach((c) => { map[c.name] = c.id; });
   state.typeMap[site.key] = map;
   return map;
 }
 
+// 取某分类的 type_id：优先用配置 categories 里的名字精确匹配，再尝试别名/包含匹配
+function resolveTid(site, name) {
+  const cats = state.catList[site.key] || [];
+  let c = cats.find((x) => x.name === name);
+  if (c) return c.id;
+  // 去括号与空白后再匹配
+  const norm = (s) => String(s).replace(/[（(].*?[)）]/g, '').replace(/\s+/g, '').trim();
+  c = cats.find((x) => norm(x.name) === norm(name));
+  if (c) return c.id;
+  c = cats.find((x) => norm(x.name).indexOf(norm(name)) >= 0 || norm(name).indexOf(norm(x.name)) >= 0);
+  return c ? c.id : null;
+}
+
 // ---------- views ----------
 function setView(v) {
+  if (state.view === 'live' && v !== 'live') { try { liveStop(); } catch (e) {} }
   state.view = v;
   $$('.tab').forEach((b) => b.classList.toggle('active', b.dataset.view === v));
   if (v === 'home') renderHome();
@@ -161,10 +195,25 @@ function buildBanner(site, items) {
   bannerTimer = setInterval(() => show(bannerIdx + 1), 5000);
 }
 
-function bindCatBar(site, cats, items, first) {
+async function bindCatBar(site, cats, items, first) {
   const bar = $('#catBar'); if (!bar) return;
-  const pills = [{ name: '🔥全部', id: null }].concat(cats.map((n) => ({ name: n, id: n })));
-  bar.innerHTML = pills.map((p, i) => '<div class="cat-pill' + (i === 0 ? ' on' : '') + '" data-cat="' + esc(p.id || '') + '">' + esc(p.name) + '</div>').join('');
+  // 以站点 API 真实分类为准，确保每个分类都能取到资源；配置里的分类名排在前面作为精选
+  await typeMap(site);
+  const real = state.catList[site.key] || [];
+  const ordered = [];
+  (cats || []).forEach((n) => {
+    const tid = resolveTid(site, n);
+    if (tid != null && !ordered.some((x) => String(x.id) === String(tid))) {
+      const rc = real.find((c) => String(c.id) === String(tid));
+      ordered.push({ id: tid, name: rc ? rc.name : n });
+    }
+  });
+  real.forEach((c) => {
+    if (!ordered.some((x) => String(x.id) === String(c.id))) ordered.push({ id: c.id, name: c.name });
+  });
+  const pills = [{ name: '🔥全部', id: null }].concat(ordered);
+  bar.innerHTML = pills.map((p, i) => '<div class="cat-pill' + (i === 0 ? ' on' : '') + '" data-cat="' + esc(p.name) + '" data-tid="' + esc(p.id || '') + '">' + esc(p.name) + '</div>').join('') ||
+    '<div class="muted" style="padding:10px">该站未返回可展示分类，可用顶部搜索找片</div>';
   $$('.cat-pill', bar).forEach((el) => el.onclick = async () => {
     $$('.cat-pill', bar).forEach((x) => x.classList.remove('on'));
     el.classList.add('on');
@@ -173,20 +222,34 @@ function bindCatBar(site, cats, items, first) {
     const box = $('#tvRows');
     box.innerHTML = '<div class="tv-row"><div class="row-head"><span class="bar"></span><h3>' + esc(cat) + '</h3>' +
       '<span class="more" id="catMore">更多 ›</span></div><div class="hscroll"><div class="empty"><span class="spinner"></span>加载中…</div></div></div>';
-    let tid;
-    try { tid = (await typeMap(site))[cat]; } catch (e) {}
+    const tid = el.dataset.tid || resolveTid(site, cat);
     if (!tid) {
-      $('.hscroll', box).innerHTML = '<div class="empty">分类「' + esc(cat) + '」未解析到 type_id，可能是空壳父类，请试其它分类或搜索。</div>';
+      $('.hscroll', box).innerHTML = '<div class="empty">分类「' + esc(cat) + '」在当前站点无对应 type_id，请换其它分类或使用搜索。</div>';
       return;
     }
     try {
-      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', t: tid, pg: 1 }), 20000);
-      $('.hscroll', box).innerHTML = (d.list || []).map(posterHTML).join('') || '<div class="empty">该分类暂无数据</div>';
+      const list = await fetchCategoryList(site, tid);
+      $('.hscroll', box).innerHTML = list.length ? list.map(posterHTML).join('') : '<div class="empty">该分类暂无数据</div>';
       bindPosters($('.hscroll', box), site);
-      $('#catMore').onclick = () => openCategory(cat);
-      state._catTid = { [cat]: tid };
+      $('#catMore').onclick = () => openCategory(cat, tid);
     } catch (e) { $('.hscroll', box).innerHTML = '<div class="empty">加载失败：' + esc(e.message) + '</div>'; }
   });
+}
+
+// 取分类资源：父类(type_pid=0且有子类)本身常无数据，聚合其子类；否则直接取该 type_id
+async function fetchCategoryList(site, tid, pg) {
+  pg = pg || 1;
+  const d = await cmsGet(join(apiBase(site), { ac: 'videolist', t: tid, pg }), 20000);
+  let list = d.list || [];
+  if (list.length) return list;
+  const children = (state.catList[site.key] || []).filter((c) => String(c.pid) === String(tid));
+  if (children.length) {
+    const parts = await Promise.all(children.slice(0, 20).map((c) =>
+      cmsGet(join(apiBase(site), { ac: 'videolist', t: c.id, pg: 1 }), 15000).then((x) => x.list || []).catch(() => [])
+    ));
+    list = parts.reduce((a, b) => a.concat(b), []);
+  }
+  return list;
 }
 
 function renderTVRows(site, items, first) {
@@ -224,7 +287,7 @@ function bindPosters(box, site) {
   $$('.poster', box).forEach((el) => el.onclick = () => openDetail(site, el.dataset.id, el.dataset.name));
 }
 
-async function openCategory(name) {
+async function openCategory(name, tidHint) {
   const s = state.site;
   const c = $('#content');
   const isAll = (name === '__all__');
@@ -233,12 +296,9 @@ async function openCategory(name) {
     '<div class="section-title">' + esc(title) + ' <small><span class="spinner"></span>加载中…</small></div><div id="catList" class="poster-grid"></div><div id="catPager" class="pager"></div>';
   $('.crumb').onclick = renderHome;
   if (isAll) { await loadCategoryPage(s, undefined, title, 1); return; }
-  let tid = (state._catTid || {})[name];
+  let tid = tidHint || resolveTid(s, name);
   if (!tid) {
-    try { tid = (await typeMap(s))[name]; } catch (e) {}
-  }
-  if (!tid) {
-    $('#catList').innerHTML = '<div class="empty">无法解析分类「' + esc(name) + '」的 type_id。<br>该分类可能是父级空壳，或站点接口暂不可用。<br>可尝试顶部搜索框找片。</div>';
+    $('#catList').innerHTML = '<div class="empty">无法解析分类「' + esc(name) + '」的 type_id。<br>该分类在当前站点不存在或接口暂不可用。<br>可尝试顶部搜索框找片。</div>';
     return;
   }
   await loadCategoryPage(s, tid, name, 1);
@@ -249,18 +309,26 @@ async function loadCategoryPage(site, tid, name, pg) {
   if (!listBox) return;
   listBox.innerHTML = '<div class="empty"><span class="spinner"></span>加载中…</div>';
   try {
-    const d = await cmsGet(join(apiBase(site), { ac: 'videolist', t: tid, pg }), 20000);
-    listBox.innerHTML = (d.list || []).map(posterHTML).join('') || '<div class="empty">该分类暂无数据</div>';
+    if (tid == null) {
+      // 全部：直接 videolist
+      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg }), 20000);
+      const list = d.list || [];
+      listBox.innerHTML = list.map(posterHTML).join('') || '<div class="empty">暂无数据</div>';
+      bindPosters(listBox, site);
+      const total = Number(d.pagecount || 1) || 1;
+      pager.innerHTML = '<button id="prevPage"' + (pg <= 1 ? ' disabled' : '') + '>‹ 上一页</button>' +
+        '<span class="page-info">第 ' + pg + ' / ' + total + ' 页 · 共 ' + (d.total || 0) + ' 部</span>' +
+        '<button id="nextPage"' + (pg >= total ? ' disabled' : '') + '>下一页 ›</button>';
+      const pv = $('#prevPage'), nv = $('#nextPage');
+      if (pv) pv.onclick = () => loadCategoryPage(site, tid, name, pg - 1);
+      if (nv) nv.onclick = () => loadCategoryPage(site, tid, name, pg + 1);
+      return;
+    }
+    const list = await fetchCategoryList(site, tid, pg);
+    listBox.innerHTML = list.length ? list.map(posterHTML).join('') : '<div class="empty">该分类暂无数据</div>';
     bindPosters(listBox, site);
-    const total = Number(d.pagecount || 1) || 1;
-    pager.innerHTML = '<button id="prevPage"' + (pg <= 1 ? ' disabled' : '') + '>‹ 上一页</button>' +
-      '<span class="page-info">第 ' + pg + ' / ' + total + ' 页 · 共 ' + (d.total || 0) + ' 部</span>' +
-      '<button id="nextPage"' + (pg >= total ? ' disabled' : '') + '>下一页 ›</button>';
-    const pv = $('#prevPage'), nv = $('#nextPage');
-    if (pv) pv.onclick = () => loadCategoryPage(site, tid, name, pg - 1);
-    if (nv) nv.onclick = () => loadCategoryPage(site, tid, name, pg + 1);
-    const st = $('.section-title small', $('#content'));
-    if (st) st.textContent = tid ? ('分类ID ' + tid) : ('共 ' + (d.total || 0) + ' 部');
+    const children = (state.catList[site.key] || []).filter((c) => String(c.pid) === String(tid));
+    pager.innerHTML = '<div class="muted">分类ID ' + tid + (children.length ? '（父类，已聚合 ' + children.length + ' 个子类）' : '') + ' · 本页 ' + list.length + ' 部</div>';
   } catch (e) { listBox.innerHTML = '<div class="empty">加载失败：' + esc(e.message) + '</div>'; }
 }
 
@@ -395,6 +463,28 @@ async function doSearch(kw) {
 
 // ---------- live ----------
 let liveCache = null;
+let liveState = {
+  channels: [],     // 全部频道(已按名称去重、合并线路)
+  cats: [],         // [{source,name,channelIds:[]}]
+  current: null,    // 当前频道对象
+  lineIdx: 0,
+  timeoutSec: +loadLS('ms_live_timeout', 8),
+  decoder: loadLS('ms_live_decoder', 'hardware'),   // hardware | software | auto
+  player: loadLS('ms_live_player', 'builtin'),      // builtin | mpv | vlc | potplayer
+  players: {},      // 检测到的外部播放器路径
+  hls: null,
+  timer: null,
+  playing: false,
+  collapsed: loadLS('ms_live_collapsed', {}),
+  filter: '',
+};
+function saveLiveSettings() {
+  saveLS('ms_live_timeout', liveState.timeoutSec);
+  saveLS('ms_live_decoder', liveState.decoder);
+  saveLS('ms_live_player', liveState.player);
+  saveLS('ms_live_collapsed', liveState.collapsed);
+}
+
 function parseTVLines(text) {
   const groups = []; let cur = null;
   text.split(/\r?\n/).forEach((line) => {
@@ -413,57 +503,241 @@ function parseTVLines(text) {
   return groups.filter((g) => g.items.length);
 }
 function parseM3U(text) {
-  const groups = [{ name: '频道', items: [] }]; let pending = null;
+  const groups = [{ name: '赛事轮播', items: [] }]; let pending = null; let gname = null;
   text.split(/\r?\n/).forEach((line) => {
     line = line.trim();
-    if (/^#EXTINF:/i.test(line)) { pending = line.replace(/^#EXTINF:[^,]*,/i, '').trim(); }
-    else if (line && !/^#/.test(line) && /^https?:\/\//i.test(line)) {
-      groups[0].items.push({ name: pending || ('频道' + (groups[0].items.length + 1)), urls: [line] }); pending = null;
-    } else if (/^#EXTGRP:/i.test(line)) { /* ignore group tag */ }
+    if (/^#EXTGRP:/i.test(line)) { gname = line.replace(/^#EXTGRP:/i, '').trim(); return; }
+    if (/^#EXTINF:/i.test(line)) { pending = line.replace(/^#EXTINF:[^,]*,/i, '').trim(); return; }
+    if (line && !/^#/.test(line) && /^https?:\/\//i.test(line)) {
+      const g = groups[0];
+      g.items.push({ name: (gname ? gname + '·' : '') + (pending || ('频道' + (g.items.length + 1))), urls: [line] });
+      pending = null; gname = null;
+    }
   });
   return groups.filter((g) => g.items.length);
 }
-async function renderLive() {
-  const c = $('#content');
-  c.innerHTML = '<div class="section-title">直播 <small>IPTV / 平台直播 / 赛事</small></div><div class="empty"><span class="spinner"></span>加载直播列表…</div>';
-  if (!liveCache) {
-    liveCache = {};
-    for (const name of ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']) {
-      try { liveCache[name] = parseTVLines(await MS.readConfig(name)); } catch (e) { liveCache[name] = []; }
-    }
-    // 赛事直播为远程 m3u
-    const m3us = [
-      { name: '⚽赛事直播·虎牙', url: 'https://sub.ottiptv.cc/huyayqk.m3u' },
-      { name: '🏀赛事直播·斗鱼', url: 'https://sub.ottiptv.cc/douyuyqk.m3u' },
-      { name: '🎮平台轮播·歪歪', url: 'https://sub.ottiptv.cc/yylunbo.m3u' },
-    ];
-    for (const m of m3us) {
-      try {
-        const r = await MS.httpGet(m.url, { 'User-Agent': 'okHttp/Mod-1.5.0.0' }, 20000);
-        if (r.body) liveCache[m.name] = parseM3U(r.body);
-      } catch (e) {}
-    }
+function normChannel(name) {
+  return String(name || '').toUpperCase().replace(/[\s\-_—]/g, '')
+    .replace(/(高清|超清|蓝光|HD|4K|1080P|720P)$/i, '').trim();
+}
+
+// 构建频道目录：同名频道只保留一个名字，多个源/分组的 URL 合并为“线路”
+function buildLiveCatalog() {
+  const byName = new Map();
+  const cats = [];
+  Object.keys(liveCache || {}).forEach((src) => {
+    (liveCache[src] || []).forEach((g) => {
+      const cat = { source: src, name: g.name, channelIds: [], id: src + '|' + g.name };
+      g.items.forEach((it) => {
+        const key = normChannel(it.name);
+        if (!key) return;
+        let ch = byName.get(key);
+        if (!ch) {
+          ch = { id: 'ch' + byName.size, name: it.name, key, urls: [] };
+          byName.set(key, ch);
+        }
+        it.urls.forEach((u) => { if (ch.urls.indexOf(u) < 0) ch.urls.push(u); });
+        if (cat.channelIds.indexOf(ch.id) < 0) cat.channelIds.push(ch.id);
+      });
+      if (cat.channelIds.length) cats.push(cat);
+    });
+  });
+  liveState.channels = Array.from(byName.values());
+  liveState.cats = cats;
+}
+
+async function ensureLiveData() {
+  if (liveCache) return;
+  liveCache = {};
+  for (const name of ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']) {
+    try { liveCache[name] = parseTVLines(await MS.readConfig(name)); } catch (e) { liveCache[name] = []; }
   }
+  const m3us = [
+    { name: '⚽赛事直播·虎牙', url: 'https://sub.ottiptv.cc/huyayqk.m3u' },
+    { name: '🏀赛事直播·斗鱼', url: 'https://sub.ottiptv.cc/douyuyqk.m3u' },
+    { name: '🎮平台轮播·歪歪', url: 'https://sub.ottiptv.cc/yylunbo.m3u' },
+  ];
+  for (const m of m3us) {
+    try {
+      const r = await MS.httpGet(m.url, { 'User-Agent': 'okHttp/Mod-1.5.0.0' }, 20000);
+      if (r.body) liveCache[m.name] = parseM3U(r.body);
+    } catch (e) {}
+  }
+  try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
+  buildLiveCatalog();
+}
+
+function renderLive() {
+  const c = $('#content');
+  c.innerHTML =
+    '<div class="live-wrap">' +
+      '<aside class="live-cats">' +
+        '<div class="live-cats-head">📺 频道分类 <small id="liveChCount"></small></div>' +
+        '<input id="liveFilter" class="live-filter" placeholder="搜索频道名…" autocomplete="off">' +
+        '<div id="liveTree" class="live-tree"></div>' +
+      '</aside>' +
+      '<section class="live-main">' +
+        '<div class="live-bar">' +
+          '<div class="live-now" id="liveNow">选择一个频道开始观看</div>' +
+          '<div class="live-settings">' +
+            '<label>超时 <select id="setTimeout" class="mini-sel">' +
+              [4, 6, 8, 10, 15, 20].map((n) => '<option value="' + n + '"' + (n === liveState.timeoutSec ? ' selected' : '') + '>' + n + 's</option>').join('') +
+            '</select></label>' +
+            '<label>解码 <select id="setDecoder" class="mini-sel">' +
+              '<option value="hardware"' + (liveState.decoder === 'hardware' ? ' selected' : '') + '>硬件优先</option>' +
+              '<option value="software"' + (liveState.decoder === 'software' ? ' selected' : '') + '>软件兼容</option>' +
+              '<option value="auto"' + (liveState.decoder === 'auto' ? ' selected' : '') + '>自动</option>' +
+            '</select></label>' +
+            '<label>播放器 <select id="setPlayer" class="mini-sel">' +
+              '<option value="builtin"' + (liveState.player === 'builtin' ? ' selected' : '') + '>内置</option>' +
+              (liveState.players.mpv ? '<option value="mpv"' + (liveState.player === 'mpv' ? ' selected' : '') + '>mpv(轻快)</option>' : '') +
+              (liveState.players.vlc ? '<option value="vlc"' + (liveState.player === 'vlc' ? ' selected' : '') + '>VLC</option>' : '') +
+              (liveState.players.potplayer ? '<option value="potplayer"' + (liveState.player === 'potplayer' ? ' selected' : '') + '>PotPlayer</option>' : '') +
+            '</select></label>' +
+          '</div>' +
+        '</div>' +
+        '<div class="live-screen" id="liveScreen">' +
+          '<video id="liveVideo" playsinline></video>' +
+          '<div class="live-msg hidden" id="liveMsg"></div>' +
+          '<div class="live-lines" id="liveLines"></div>' +
+          '<div class="live-center-play" id="liveCenterPlay">▶</div>' +
+        '</div>' +
+        '<div class="live-hint" id="liveHint">同名频道只显示一次，所有线路在画面左下角切换；超时自动跳下一条线路。</div>' +
+      '</section>' +
+    '</div>';
+  $('#liveChCount').textContent = '(' + liveState.channels.length + ')';
+  renderLiveTree();
+
+  $('#liveFilter').addEventListener('input', (e) => { liveState.filter = e.target.value.trim(); renderLiveTree(); });
+  $('#setTimeout').onchange = (e) => { liveState.timeoutSec = +e.target.value; saveLiveSettings(); toast('换线超时设为 ' + liveState.timeoutSec + ' 秒'); };
+  $('#setDecoder').onchange = (e) => { liveState.decoder = e.target.value; saveLiveSettings(); toast('解码方式：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
+  $('#setPlayer').onchange = (e) => { liveState.player = e.target.value; saveLiveSettings(); toast('播放器：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
+  $('#liveCenterPlay').onclick = () => { const v = $('#liveVideo'); if (v && v.src) { v.play().catch(() => {}); $('#liveCenterPlay').classList.add('hidden'); } };
+
+  (async () => {
+    const box = $('#liveTree');
+    if (box && !box.children.length) {
+      box.innerHTML = '<div class="empty"><span class="spinner"></span>加载直播列表…</div>';
+      await ensureLiveData();
+      $('#liveChCount').textContent = '(' + liveState.channels.length + ')';
+      renderLiveTree();
+    }
+  })();
+}
+
+function renderLiveTree() {
+  const box = $('#liveTree'); if (!box) return;
+  const kw = normChannel(liveState.filter);
+  const matches = (ch) => !kw || normChannel(ch.name).indexOf(kw) >= 0;
   let html = '';
-  Object.keys(liveCache).forEach((key) => {
-    const groups = liveCache[key]; if (!groups || !groups.length) return;
-    html += '<div class="live-group"><h3>' + esc(key) + '</h3>';
-    groups.forEach((g) => {
-      html += '<div class="muted" style="margin:8px 0 6px">' + esc(g.name) + ' (' + g.items.length + ')</div><div class="live-grid">';
-      g.items.forEach((it, gi) => {
-        html += '<div class="live-item" data-key="' + esc(key) + '" data-g="' + esc(g.name) + '" data-i="' + gi + '" title="' + esc(it.urls[0]) + '">' + esc(it.name) + '</div>';
+  liveState.cats.forEach((cat, ci) => {
+    const ids = cat.channelIds.filter((id) => matches(liveState.channels.find((x) => x.id === id)));
+    if (!ids.length) return;
+    const collapsed = !!liveState.collapsed[cat.id];
+    html += '<div class="live-cat"><div class="live-cat-head" data-cat="' + esc(cat.id) + '">' +
+      '<span class="caret">' + (collapsed ? '▸' : '▾') + '</span>' + esc(cat.name) +
+      '<small>(' + ids.length + ')</small></div>';
+    if (!collapsed) {
+      html += '<div class="live-ch-list">';
+      ids.forEach((id) => {
+        const ch = liveState.channels.find((x) => x.id === id);
+        if (!ch) return;
+        const active = liveState.current && liveState.current.id === ch.id;
+        html += '<div class="live-ch' + (active ? ' active' : '') + '" data-id="' + ch.id + '" title="' + esc(ch.urls[0] || '') + '">' +
+          esc(ch.name) + '<small>' + ch.urls.length + '路</small></div>';
       });
       html += '</div>';
-    });
+    }
     html += '</div>';
   });
-  c.innerHTML = '<div class="section-title">直播 <small>点击频道播放 · 每条为独立线路</small></div>' + (html || '<div class="empty">直播列表为空</div>');
-  $$('.live-item', c).forEach((el) => el.onclick = () => {
-    const groups = liveCache[el.dataset.key];
-    const g = groups.find((x) => x.name === el.dataset.g);
-    const it = g.items[+el.dataset.i];
-    openPlayer(it.name, it.urls.map((u, i) => ({ name: '线路' + (i + 1), url: u })), 0, { live: true });
+  box.innerHTML = html || '<div class="empty">无匹配频道</div>';
+  $$('.live-cat-head', box).forEach((el) => el.onclick = () => {
+    const id = el.dataset.cat;
+    liveState.collapsed[id] = !liveState.collapsed[id];
+    saveLiveSettings(); renderLiveTree();
   });
+  $$('.live-ch', box).forEach((el) => el.onclick = () => {
+    const ch = liveState.channels.find((x) => x.id === el.dataset.id);
+    if (ch) { liveStop(); livePlayChannel(ch, 0); renderLiveTree(); }
+  });
+}
+
+function livePlay(lineIdx) {
+  if (liveState.current) livePlayChannel(liveState.current, lineIdx);
+}
+function liveStop() {
+  clearTimeout(liveState.timer); liveState.timer = null;
+  const v = $('#liveVideo');
+  if (v) { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) {} }
+  if (liveState.hls) { try { liveState.hls.destroy(); } catch (e) {} liveState.hls = null; }
+  liveState.playing = false;
+  const msg = $('#liveMsg'); if (msg) msg.classList.add('hidden');
+  const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden');
+}
+function liveShowMsg(text) {
+  const msg = $('#liveMsg'); if (!msg) return;
+  msg.textContent = text; msg.classList.remove('hidden');
+}
+function livePlayChannel(ch, lineIdx) {
+  liveStop();
+  liveState.current = ch;
+  liveState.lineIdx = lineIdx;
+  const now = $('#liveNow'); if (now) now.textContent = ch.name;
+  const linesBox = $('#liveLines');
+  if (linesBox) {
+    linesBox.innerHTML = ch.urls.map((u, i) => '<div class="live-line' + (i === lineIdx ? ' active' : '') + '" data-i="' + i + '" title="' + esc(u) + '">线路' + (i + 1) + '</div>').join('');
+    $$('.live-line', linesBox).forEach((el) => el.onclick = (e) => { e.stopPropagation(); livePlayChannel(ch, +el.dataset.i); });
+  }
+  const url = ch.urls[lineIdx];
+  if (!url) { liveShowMsg('该频道无可用线路'); return; }
+  // 外部轻量播放器：交给 mpv/VLC/PotPlayer 硬件解码
+  if (liveState.player !== 'builtin') {
+    MS.playExternal(liveState.player, url, liveState.decoder).then((r) => {
+      if (r && r.error) liveShowMsg('调用失败：' + r.error + '（可切回内置播放器）');
+      else liveShowMsg('已在 ' + liveState.player + ' 中打开（硬解优先）');
+    });
+    return;
+  }
+  // 内置播放器：HLS 用 worker + 低延迟缓冲，硬件解码由 Chromium 承担
+  const v = $('#liveVideo'); if (!v) return;
+  const isHls = /\.m3u8?(\?|$)/i.test(url);
+  const armWatchdog = () => {
+    clearTimeout(liveState.timer);
+    liveState.timer = setTimeout(() => {
+      if (!liveState.playing && ch.urls.length > 1) {
+        liveShowMsg('线路' + (lineIdx + 1) + ' 超时，自动切换下一条…');
+        livePlayChannel(ch, (lineIdx + 1) % ch.urls.length);
+      }
+    }, liveState.timeoutSec * 1000);
+  };
+  liveState.playing = false;
+  v.onplaying = () => { liveState.playing = true; clearTimeout(liveState.timer); const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden'); };
+  v.onerror = () => { if (ch.urls.length > 1) { liveShowMsg('线路' + (lineIdx + 1) + ' 出错，切换下一条…'); livePlayChannel(ch, (lineIdx + 1) % ch.urls.length); } };
+  if (window.Hls && window.Hls.isSupported() && isHls) {
+    const hls = new window.Hls({
+      enableWorker: liveState.decoder !== 'software',
+      lowLatencyMode: true,
+      backBufferLength: 20,
+      maxBufferLength: 12,
+      maxMaxBufferLength: 30,
+      manifestLoadingMaxRetry: 1,
+      levelLoadingMaxRetry: 2,
+      fragLoadingMaxRetry: 2,
+    });
+    hls.loadSource(url); hls.attachMedia(v);
+    hls.on(window.Hls.Events.ERROR, (_e, data) => {
+      if (data && data.fatal && ch.urls.length > 1) {
+        liveShowMsg('线路' + (lineIdx + 1) + ' 播放失败，切换下一条…');
+        livePlayChannel(ch, (lineIdx + 1) % ch.urls.length);
+      }
+    });
+    liveState.hls = hls;
+    v.play().catch(() => {});
+  } else {
+    v.src = url; v.play().catch(() => {});
+  }
+  armWatchdog();
+  const cp = $('#liveCenterPlay'); if (cp) cp.classList.remove('hidden');
 }
 
 // ---------- favorite / history ----------
@@ -493,7 +767,13 @@ $$('.tab').forEach((b) => b.onclick = () => setView(b.dataset.view));
 $('#quickSearch').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { const kw = e.target.value.trim(); if (kw) doSearch(kw); }
 });
-$('#btnReload').onclick = async () => { await loadConfig(); state.typeMap = {}; liveCache = null; toast('配置已重新加载'); };
+$('#btnReload').onclick = async () => {
+  state.typeMap = {}; state.catList = {}; state._catTid = {};
+  await loadConfig();
+  liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
+  if (state.view === 'live') renderLive();
+  toast('配置与分类已重新加载');
+};
 $('#btnImport').onclick = () => $('#importDialog').classList.remove('hidden');
 $('#btnImportCancel').onclick = () => $('#importDialog').classList.add('hidden');
 $('#btnImportOk').onclick = async () => {
