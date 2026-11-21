@@ -210,6 +210,11 @@ function createWindow() {
       try { fs.writeFileSync(logPath, JSON.stringify(data, null, 2), 'utf8'); } catch (e) {}
     };
     stLog('selftest mode on, DATA_DIR=' + DATA_DIR);
+    // 捕获渲染进程 console 输出，便于诊断启动期行为
+    win.webContents.on('console-message', (...args) => {
+      const msg = args.filter((a) => typeof a === 'string').join(' | ');
+      if (/\[boot\]|\[live\]/.test(msg)) stLog('renderer: ' + msg);
+    });
     win.webContents.on('did-finish-load', () => {
       stLog('did-finish-load');
       // 等首页首屏渲染
@@ -220,9 +225,17 @@ function createWindow() {
           out.home = await win.webContents.executeJavaScript(`(async () => {
             const T = window.__msSelfTest;
             if (!T) return { error: 'no hook' };
+            const site = (T.state.site && T.isCMS(T.state.site)) ? T.state.site : T.state.sites.find(s => T.isCMS(s));
+            // 等 init 的启动测速完成（最多 15s），此时 state.site 已是健康站
+            await new Promise(res => {
+              const iv = setInterval(() => {
+                if (T.state.bootReady) { clearInterval(iv); res(); }
+              }, 200);
+              setTimeout(() => { clearInterval(iv); res(); }, 15000);
+            });
+            const autoSite = T.state.site ? T.state.site.name : '-';
             const t0 = performance.now();
-            const site = T.state.sites.find(s => T.isCMS(s));
-            T.state.site = site; T.renderSites(); T.renderHome();
+            T.renderSites(); T.renderHome();
             await new Promise(res => {
               const iv = setInterval(() => {
                 if (document.querySelectorAll('#tvRows .poster').length > 0) { clearInterval(iv); res(); }
@@ -230,14 +243,61 @@ function createWindow() {
               setTimeout(() => { clearInterval(iv); res(); }, 25000);
             });
             const tPosters = performance.now() - t0;
+            // 等分类栏填充完成（分类走独立请求，可能晚于列表）
+            await new Promise(res => {
+              const iv = setInterval(() => {
+                const n = document.querySelectorAll('#catBar .cat-pill:not(.skel-pill)').length;
+                if (n > 1) { clearInterval(iv); res(); }
+              }, 100);
+              setTimeout(() => { clearInterval(iv); res(); }, 20000);
+            });
+            const tCats = performance.now() - t0;
             const catCount = document.querySelectorAll('#catBar .cat-pill:not(.skel-pill)').length;
             const posterCount = document.querySelectorAll('#tvRows .poster').length;
             const catBarText = document.querySelector('#catBar') ? document.querySelector('#catBar').innerText.slice(0, 200) : '';
             const banner = document.querySelector('#banner .btitle');
-            return { site: site && site.name, tPosters: Math.round(tPosters), posterCount, catCount,
-                     catBarText, bannerTitle: banner ? banner.textContent.slice(0,40) : '' };
+            // 实测图片加载：等所有海报图完成（含超时降级）
+            const imgT0 = performance.now();
+            await new Promise(res => {
+              const iv = setInterval(() => {
+                const bad = document.querySelectorAll('#tvRows .thumb.img-bad').length;
+                const loading = document.querySelectorAll('#tvRows .thumb.imgloading').length;
+                if (!loading) { clearInterval(iv); res(); }
+              }, 150);
+              setTimeout(() => { clearInterval(iv); res(); }, 12000);
+            });
+            const imgMs = Math.round(performance.now() - imgT0);
+            const imgTotal = document.querySelectorAll('#tvRows .thumb').length;
+            const imgBad = document.querySelectorAll('#tvRows .thumb.img-bad').length;
+            return { site: autoSite, tPosters: Math.round(tPosters), tCats: Math.round(tCats), posterCount, catCount,
+                     catBarText, bannerTitle: banner ? banner.textContent.slice(0,40) : '',
+                     imgMs, imgTotal, imgBad };
           })()`, true);
           stLog('home done: ' + JSON.stringify(out.home).slice(0, 200));
+          // 详情页实测
+          try {
+            out.detail = await win.webContents.executeJavaScript(`(async () => {
+              const T = window.__msSelfTest;
+              const site = (T.state.site && T.isCMS(T.state.site)) ? T.state.site : T.state.sites.find(s => T.isCMS(s));
+              const raw = await window.MediaShell.httpGet(T.join(T.apiBase(site), {ac:'videolist', pg:1}), {'User-Agent':'okhttp/3.15'}, 12000);
+              const list = (JSON.parse(raw.body).list) || [];
+              if (!list.length) return { error: 'no items' };
+              const v = list[0];
+              const t0 = performance.now();
+              await T.openDetail(site, v.vod_id, v.vod_name);
+              await new Promise(res => {
+                const iv = setInterval(() => {
+                  if (document.querySelectorAll('#epGrid .ep').length) { clearInterval(iv); res(); }
+                  else if (document.querySelector('#content .empty')) { clearInterval(iv); res(); }
+                }, 100);
+                setTimeout(() => { clearInterval(iv); res(); }, 20000);
+              });
+              return { title: String(v.vod_name || '').slice(0,20), tMs: Math.round(performance.now() - t0),
+                       eps: document.querySelectorAll('#epGrid .ep').length,
+                       srcTabs: document.querySelectorAll('#srcTabs .src-tab').length };
+            })()`, true);
+            stLog('detail done: ' + JSON.stringify(out.detail).slice(0, 200));
+          } catch (e) { out.detail = { error: String(e && e.message || e) }; stLog('detail err: ' + (out.detail && out.detail.error)); }
         } catch (e) { out.home = { error: String(e && e.message || e) }; stLog('home err: ' + out.home.error); }
         try {
           out.live = await win.webContents.executeJavaScript(`(async () => {
@@ -252,6 +312,10 @@ function createWindow() {
               setTimeout(() => { clearInterval(iv); res(); }, 40000);
             });
             const t = performance.now() - t0;
+            const firstPass = T.liveState.channels.length;
+            // 等远程源后台补充完成（赛事/轮播 m3u 实测 1~3.5s）
+            await new Promise(res => setTimeout(res, 6000));
+            const afterRemote = T.liveState.channels.length;
             const cats = T.liveState.cats.map(c => ({ name: c.name, n: c.channelIds.length }));
             const cache = T.getLiveCache() || {};
             const srcDetail = {};
@@ -261,8 +325,21 @@ function createWindow() {
               try { const tt = await window.MediaShell.readConfig(f); cfgTest[f] = 'OK:' + tt.length; }
               catch (e) { cfgTest[f] = 'ERR:' + (e && e.message || e); }
             }
-            return { channels: T.liveState.channels.length, cats: cats.length, tMs: Math.round(t),
-                     sources: Object.keys(cache), srcDetail, cfgTest, catList: cats.slice(0, 14) };
+            // 实测 DOM 渲染耗时（重复 5 次取平均）
+            let renderMs = 0, nodeCount = 0;
+            for (let i = 0; i < 5; i++) {
+              const r0 = performance.now();
+              T.renderLiveTree();
+              renderMs += (performance.now() - r0);
+            }
+            nodeCount = document.querySelectorAll('#liveTree .live-ch').length;
+            const catHeadCount = document.querySelectorAll('#liveTree .live-cat-head').length;
+            const moreCount = document.querySelectorAll('#liveTree .live-more').length;
+            return { channels: T.liveState.channels.length, firstPass, afterRemote, cats: cats.length, tMs: Math.round(t),
+                     sources: Object.keys(cache), srcDetail, cfgTest,
+                     renderAvgMs: Math.round(renderMs / 5),
+                     domNodes: nodeCount, catHeads: catHeadCount, moreBtns: moreCount,
+                     catList: cats.slice(0, 14) };
           })()`, true);
           stLog('live done: ' + JSON.stringify(out.live).slice(0, 400));
         } catch (e) { out.live = { error: String(e && e.message || e) }; stLog('live err: ' + out.live.error); }
@@ -297,12 +374,32 @@ ipcMain.handle('read-config', async (_e, name) => {
 ipcMain.handle('list-configs', async () => Array.from(SAFE_FILES));
 
 // ---- HTTP proxy: renderer cannot do cross-origin CMS requests -------------
+// 安全防护：部分采集站域名过期后被拍卖/劫持，实测会 302 跳到博彩类域名
+// （如 683469.online）。这里对重定向目标做黑名单校验，命中即拒绝，
+// 绝不在应用内跟随跳转到可疑站点。
+const BLOCKED_REDIRECT = [
+  /683469\.online/i,
+  /\.(?:online|top|vip|xyz|shop|club)\b/i,
+  /(?:casino|bet|sportsbook|poker|slots|sexy|porn|xxx|av)\b/i,
+];
+
+function isBlockedUrl(u) {
+  try {
+    const url = new URL(u);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return true;
+    const host = url.hostname.toLowerCase();
+    // 只拦可疑的顶级域组合，避免误伤正常站点
+    return BLOCKED_REDIRECT.some((re) => re.test(host));
+  } catch (e) { return true; }
+}
+
 // 修复要点：
 //  1) req.setTimeout 在收到响应头后仍会继续计时，部分服务器（Cloudflare 等）保持
 //     keep-alive 不关闭连接，超时会把「已成功返回」的请求误杀 → 表现为接口偶发失败。
 //     改为：收到响应头即清除超时，仅在「尚未收到响应头」阶段才算超时。
 //  2) 跟随重定向时保留同一个 deadline，避免链式请求无限延长。
 //  3) 加上 gzip 解压与浏览器 UA，减小传输量并绕过部分站点的 UA 拦截。
+//  4) 重定向目标做黑名单校验，防止跟随到博彩/风险站点。
 const DEFAULT_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
 function httpGet(rawUrl, headers, timeout, deadline, depth) {
@@ -336,6 +433,10 @@ function httpGet(rawUrl, headers, timeout, deadline, depth) {
         let next;
         try { next = new URL(res.headers.location, rawUrl).href; }
         catch (e) { return reject(e); }
+        // 安全：拒绝跟随到可疑域名（采集站过期后被拍卖跳转到博彩站）
+        if (isBlockedUrl(next)) {
+          return reject(new Error('目标被重定向到可疑站点，已阻止：' + (new URL(next)).hostname));
+        }
         return httpGet(next, headers, timeout, deadline, depth + 1).then(resolve, reject);
       }
       const chunks = [];
@@ -365,12 +466,19 @@ function httpGet(rawUrl, headers, timeout, deadline, depth) {
 }
 ipcMain.handle('http-get', async (_e, url, headers, timeout) => {
   // 部分采集站首包会挂起（实测虎牙/量子/短剧点播），重试一次即可成功。
-  // 这里做「快速重试」，把偶发超时从 15s 压到 2~3s，大幅改善首页体感。
+  // timeout 语义 = 「总预算」（含重试），而不是单次超时：
+  //   首次用全部剩余预算 → 失败后等 350ms → 二次用剩余预算的一半。
+  // 这样渲染层传入 8s 就真的最多等 8s，不会因为重试翻倍成 15s。
+  const budget = timeout || 15000;
+  const deadline = Date.now() + budget;
   const t0 = Date.now();
   let lastErr = null;
   for (let attempt = 0; attempt < 2; attempt++) {
+    const remain = deadline - Date.now();
+    if (remain <= 0) break;
+    const tmo = attempt === 0 ? remain : Math.max(2500, Math.round(remain / 2));
     try {
-      const r = await httpGet(url, headers, timeout);
+      const r = await httpGet(url, headers, tmo);
       if (r && r.status) return r;
       lastErr = new Error(r && r.error || '空响应');
     } catch (err) { lastErr = err; }
@@ -513,6 +621,10 @@ function proxyFetch(targetUrl, reqHeaders, res, attempt) {
         r.resume();
         try {
           const next = new URL(r.headers.location, finalUrl).href;
+          // 安全：拒绝跟随到可疑域名
+          if (isBlockedUrl(next)) {
+            return res.writeHead(403, { 'Access-Control-Allow-Origin': '*' }) && res.end('blocked redirect');
+          }
           const nu = new URL(next);
           opts.hostname = nu.hostname; opts.port = nu.port || undefined;
           opts.path = nu.pathname + nu.search;

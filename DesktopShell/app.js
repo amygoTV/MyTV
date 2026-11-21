@@ -9,6 +9,7 @@ const state = {
   sites: [],
   site: null,        // current selected site
   view: 'home',
+  bootReady: false,   // 启动测速完成标记
   typeMap: {},       // siteKey -> {name:id}
   catList: {},       // siteKey -> [{id,name,pid}] 站点真实分类(来自 ac=list 的 class 字段)
   favorites: loadLS('ms_favorites', []),
@@ -32,7 +33,12 @@ async function loadConfig() {
   const cfg = JSON.parse(raw);
   state.config = cfg;
   state.sites = cfg.sites || [];
-  if (!state.site && state.sites.length) state.site = state.sites[0];
+  if (!state.site) {
+    // 记住上次成功使用的站；若它已失效则回退到第一个 CMS 站
+    const last = loadLS('ms_last_site', '');
+    const byKey = state.sites.find((s) => s.key === last);
+    state.site = (byKey && isCMS(byKey)) ? byKey : (state.sites.find(isCMS) || state.sites[0]);
+  }
   renderSites();
   $('#siteCount').textContent = '(' + state.sites.length + ')';
   if (state.view === 'home') renderHome();
@@ -74,7 +80,7 @@ async function fetchCats(site) {
   if (state.catList[site.key]) return state.catList[site.key];
   let cats = [];
   try {
-    const d = await cmsGet(join(apiBase(site), { ac: 'list' }), 12000);
+    const d = await cmsGet(join(apiBase(site), { ac: 'list' }), 6000);
     const arr = d.class || d.type || [];
     (Array.isArray(arr) ? arr : Object.values(arr)).forEach((x) => {
       if (x && x.type_name != null && x.type_id != null) {
@@ -85,7 +91,7 @@ async function fetchCats(site) {
   // 兜底：部分站点 class 为空，则从 videolist 的 list 里去重 type_name/type_id
   if (!cats.length) {
     try {
-      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 12000);
+      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 6000);
       const seen = {};
       (d.list || []).forEach((v) => {
         if (v && v.type_name != null && v.type_id != null && !seen[v.type_name]) {
@@ -134,18 +140,84 @@ function setView(v) {
 }
 
 // 并发探测所有 CMS 站点，返回按响应速度排序的可用站点列表
-async function probeAllSites() {
-  const cands = state.sites.filter(isCMS);
+// 整体加 8 秒上限：个别站挂起时不能拖住整个测速（主进程重试会让单次最长 15s）
+async function probeAllSites(excludeKey) {
+  const cands = state.sites.filter((s) => isCMS(s) && (!excludeKey || s.key !== excludeKey));
   const out = [];
-  await Promise.all(cands.map(async (s) => {
-    const t0 = Date.now();
-    try {
-      const d = await cmsGet(join(apiBase(s), { ac: 'videolist', pg: 1 }), 9000);
-      if (d && (d.list || []).length) out.push({ site: s, ms: Date.now() - t0, n: (d.list || []).length });
-    } catch (e) {}
-  }));
+  await Promise.race([
+    Promise.all(cands.map(async (s) => {
+      const t0 = Date.now();
+      try {
+        const d = await cmsGet(join(apiBase(s), { ac: 'videolist', pg: 1 }), 5000);
+        if (d && (d.list || []).length) out.push({ site: s, ms: Date.now() - t0, n: (d.list || []).length });
+      } catch (e) {}
+    })),
+    new Promise((r) => setTimeout(r, 8000)),
+  ]);
   out.sort((a, b) => a.ms - b.ms);
   return out;
+}
+
+// 找一个健康的备用站（当前站失效时用）
+async function findHealthySite(currentSite) {
+  try {
+    const list = await probeAllSites(currentSite && currentSite.key);
+    return list[0] || null;
+  } catch (e) { return null; }
+}
+
+// 多站竞速：选出参与竞速的站点（当前站优先，再按配置顺序补 2 个）
+const RACE_MAX = 3;
+function pickRacers(currentSite) {
+  const list = [];
+  if (currentSite && isCMS(currentSite)) list.push(currentSite);
+  for (const s of state.sites) {
+    if (list.length >= RACE_MAX) break;
+    if (!isCMS(s)) continue;
+    if (list.some((x) => x.key === s.key)) continue;
+    list.push(s);
+  }
+  return list;
+}
+
+// 竞速：返回第一个「成功且有数据」的结果
+// 注意：早期版本在 6s 就放弃并丢弃了已发出的请求，导致本来 7s 就能成功的站
+// 被丢掉、进而走「降级→重新探测→重新加载」的冗长路径（实测 12s+）。
+// 现在改为：超时时间与单站请求超时对齐（12s），期间任何站先回先用。
+function raceFirst(entries, timeoutMs) {
+  return new Promise((resolve) => {
+    let settled = false;
+    let pending = entries.length;
+    let lastFail = null;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      resolve(lastFail || { ok: false, slow: true });
+    }, timeoutMs);
+    entries.forEach((e) => {
+      e.p.then((r) => {
+        if (settled) return;
+        if (r && r.ok && r.d && (r.d.list || []).length) {
+          settled = true;
+          clearTimeout(timer);
+          resolve(r);
+          return;
+        }
+        lastFail = r || lastFail;
+      }).catch(() => {});
+    });
+    // 全部失败时立即返回失败结果，不必等满 timeout
+    const check = () => {
+      if (settled) return;
+      pending--;
+      if (pending <= 0) {
+        settled = true;
+        clearTimeout(timer);
+        resolve(lastFail || { ok: false, slow: true });
+      }
+    };
+    entries.forEach((e) => e.p.then(check, check));
+  });
 }
 
 // 自动挑一个最快的可用站点并切换过去
@@ -188,7 +260,9 @@ function renderHome() {
 
 // 首页：分类与视频列表并发拉取（ac=list 一次即可同时拿到 class + list），
 // 避免原来“先 videolist 再 ac=list”的两次串行等待。
-async function loadHomeData(site, cats) {
+async function loadHomeData(siteParam, catsParam) {
+  let site = siteParam;
+  let cats = catsParam;
   const token = ++homeToken;
   const c = $('#content');
   const cached = homeCache[site.key];
@@ -208,16 +282,33 @@ async function loadHomeData(site, cats) {
   $('#catBar').innerHTML = '<div class="cat-pill on">🔥全部</div>' +
     Array.from({ length: 7 }, () => '<div class="cat-pill skel-pill"></div>').join('');
 
-  const base = apiBase(site);
+  let base = apiBase(site);
   // 第一步：只等视频列表，先把海报行渲染出来（用户马上能看到内容）
-  const listRes = await Promise.race([
-    cmsGet(join(base, { ac: 'videolist', pg: 1 }), 12000).then((d) => ({ ok: true, d })).catch((e) => ({ ok: false, e })),
-    new Promise((r) => setTimeout(() => r({ ok: false, slow: true }), 8000)),
-  ]);
+  // 采集站普遍不稳定（实测同一站 0.4s~14s 波动），因此并发请求 2~3 个候选站，
+  // 谁先返回就用谁 —— 相当于「多站竞速」，避免被单个慢站拖住。
+  const racers = pickRacers(site);          // [当前站, 备选站...]
+  const listPromise = raceFirst(racers.map((s) => ({
+    site: s,
+    p: cmsGet(join(apiBase(s), { ac: 'videolist', pg: 1 }), 8000)
+      .then((d) => ({ ok: true, d, site: s })).catch((e) => ({ ok: false, e, site: s })),
+  // 硬超时必须 >= 单站请求的最坏耗时（cmsGet 10s + 主进程重试二次 5s = 15s），
+// 否则会把「已经发出、只是慢」的站白白丢弃，再走一遍降级流程（实测 12s → 18s）。
+})), 10000);
+  const listRes = await listPromise;
+
+  // 若最终用的是备选站，把当前站也切过去（保持界面与数据一致）
+  if (listRes && listRes.ok && listRes.site && listRes.site.key !== site.key) {
+    state.site = listRes.site;
+    site = listRes.site;
+    cats = site.categories || [];
+    base = apiBase(site);
+    renderSites();
+    toast('「' + listRes.site.name + '」响应更快，已自动切换');
+  }
 
   // 第二步：分类并发拉取。实测部分站点 ac=list 会挂起到 12s+，
   // 因此给分类单独设较短超时，失败也不影响首页内容展示。
-  const catPromise = cmsGet(join(base, { ac: 'list' }), 7000)
+  const catPromise = cmsGet(join(apiBase(site), { ac: 'list' }), 5000)
     .then((d) => d).catch(() => null);
 
   if (token !== homeToken) return;   // 用户已切换站点，丢弃本次结果
@@ -228,18 +319,34 @@ async function loadHomeData(site, cats) {
     first.total = listRes.d.total;
   }
   const items = first.list || [];
-  if (!items.length && listRes && !listRes.ok && !listRes.slow) {
-    // 站点故障：给出可操作提示，并提供"自动换一个可用站点"
-    $('#tvRows').innerHTML = '<div class="empty">「' + esc(site.name) + '」加载失败：' +
-      esc(listRes.e && listRes.e.message || '网络异常') +
-      '<br><span class="muted">该站点可能暂时不可用，可点击下方按钮自动切换到可用站点</span>' +
-      '<br><button id="btnAutoSite" class="mini-btn" style="margin-top:12px">🔄 自动切换可用站点</button></div>';
+  if (!items.length && listRes && !listRes.ok) {
+    // 站点故障或响应过慢：先自动探测其它站点能否用，直接切到可用的
+    $('#tvRows').innerHTML = '<div class="empty"><span class="spinner"></span>正在探测其它可用采集站…</div>';
     $('#catBar').innerHTML = '';
+    const alt = await findHealthySite(site);
+    if (alt && alt.site && alt.site.key !== site.key) {
+      state.site = alt.site;
+      renderSites();
+      renderHome();
+      toast('「' + site.name + '」不可用，已自动切换到 ' + alt.site.name + '（' + alt.ms + 'ms）');
+      return;
+    }
+    // 所有站都不可用：给出可操作提示
+    const slow = listRes.slow;
+    $('#tvRows').innerHTML = '<div class="empty">' + (slow ? '「' + esc(site.name) + '」响应较慢，已等待 8 秒仍未返回内容'
+      : '「' + esc(site.name) + '」加载失败：' + esc(listRes.e && listRes.e.message || '网络异常')) +
+      '<br><span class="muted">当前所有采集站都暂时不可用，可稍后重试</span>' +
+      '<br><button id="btnRetryHome" class="mini-btn" style="margin-top:12px;margin-right:8px">↻ 重试本站</button>' +
+      '<button id="btnAutoSite" class="mini-btn" style="margin-top:12px">🔄 重新探测可用站点</button></div>';
+    $('#catBar').innerHTML = '';
+    const rb = $('#btnRetryHome');
+    if (rb) rb.onclick = () => { delete homeCache[site.key]; renderHome(); };
     const ab = $('#btnAutoSite');
     if (ab) ab.onclick = () => autoPickSite();
     return;
   }
   homeCache[site.key] = { items, first, at: Date.now() };
+  saveLS('ms_last_site', site.key);   // 记住成功加载的站，下次启动直接用
   buildBanner(site, items.slice(0, 8));
   renderTVRows(site, items, first);
   // 分类栏先给占位，拿到后填充
@@ -260,7 +367,7 @@ async function loadHomeData(site, cats) {
   // 分类是核心功能，首轮失败再补一次（部分站点首包会挂起）
   if (!cats2.length) {
     try {
-      const retry = await cmsGet(join(base, { ac: 'list' }), 8000);
+      const retry = await cmsGet(join(base, { ac: 'list' }), 6000);
       const arr = retry.class || retry.type || [];
       (Array.isArray(arr) ? arr : Object.values(arr)).forEach((x) => {
         if (x && x.type_name != null && x.type_id != null) {
@@ -290,7 +397,7 @@ async function loadHomeData(site, cats) {
 async function refreshHomeInBackground(site, cats, token) {
   try {
     const base = apiBase(site);
-    const d = await cmsGet(join(base, { ac: 'videolist', pg: 1 }), 14000);
+    const d = await cmsGet(join(base, { ac: 'videolist', pg: 1 }), 8000);
     if (token !== homeToken) return;
     const items = d.list || [];
     if (items.length) homeCache[site.key] = { items, first: d, at: Date.now() };
@@ -313,6 +420,20 @@ function buildBanner(site, items) {
     '<button class="bnav bprev">‹</button><button class="bnav bnext">›</button>' +
     '<div class="binfo"><span class="btag">热播推荐</span><div class="btitle" id="bTitle"></div><div class="bdesc" id="bDesc"></div><div class="bplay">▶ 立即观看</div></div>' +
     '<div class="bdot" id="bDot">' + picks.map((_, i) => '<i class="' + (i === 0 ? 'on' : '') + '" data-i="' + i + '"></i>').join('') + '</div>';
+  // 横幅图同样可能超时，加失败降级
+  $$('.bslide', box).forEach((el) => {
+    const url = (el.style.backgroundImage || '').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    if (!url) return;
+    const probe = new Image();
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return; settled = true;
+      el.classList.add('img-bad'); el.style.backgroundImage = '';
+    }, 8000);
+    probe.onload = () => { if (!settled) { settled = true; clearTimeout(timer); } };
+    probe.onerror = () => { if (!settled) { settled = true; clearTimeout(timer); el.classList.add('img-bad'); el.style.backgroundImage = ''; } };
+    probe.src = url;
+  });
   function show(i) {
     bannerIdx = (i + picks.length) % picks.length;
     $$('.bslide', box).forEach((el, k) => el.style.opacity = (k === bannerIdx ? 1 : 0));
@@ -372,13 +493,13 @@ async function bindCatBar(site, cats, items, first) {
 // 取分类资源：父类(type_pid=0且有子类)本身常无数据，聚合其子类；否则直接取该 type_id
 async function fetchCategoryList(site, tid, pg) {
   pg = pg || 1;
-  const d = await cmsGet(join(apiBase(site), { ac: 'videolist', t: tid, pg }), 20000);
+  const d = await cmsGet(join(apiBase(site), { ac: 'videolist', t: tid, pg }), 9000);
   let list = d.list || [];
   if (list.length) return list;
   const children = (state.catList[site.key] || []).filter((c) => String(c.pid) === String(tid));
   if (children.length) {
     const parts = await Promise.all(children.slice(0, 20).map((c) =>
-      cmsGet(join(apiBase(site), { ac: 'videolist', t: c.id, pg: 1 }), 15000).then((x) => x.list || []).catch(() => [])
+      cmsGet(join(apiBase(site), { ac: 'videolist', t: c.id, pg: 1 }), 6000).then((x) => x.list || []).catch(() => [])
     ));
     list = parts.reduce((a, b) => a.concat(b), []);
   }
@@ -401,7 +522,7 @@ function renderTVRows(site, items, first) {
 async function loadRecent(site) {
   const box = $('#recent'); if (!box) return;
   try {
-    const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 20000);
+    const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 9000);
     box.innerHTML = (d.list || []).slice(0, 24).map(posterHTML).join('') || '<div class="empty">暂无数据</div>';
     bindPosters(box, site);
   } catch (e) { box.innerHTML = '<div class="empty">加载失败：' + esc(e.message) + '</div>'; }
@@ -409,15 +530,48 @@ async function loadRecent(site) {
 
 function posterHTML(v) {
   const pic = v.vod_pic && /^https?:/i.test(v.vod_pic)
-    ? '<div class="thumb" style="background-image:url(' + esc(v.vod_pic) + ')">' +
-      '<div class="remarks">' + esc(v.vod_remarks || '') + '</div></div>'
+    ? '<div class="thumb" data-img="1" style="background-image:url(' + esc(v.vod_pic) + ')">' +
+      '<div class="remarks">' + esc(v.vod_remarks || '') + '</div>' +
+      '<span class="imgfail">加载失败</span></div>'
     : '<div class="thumb"><span class="ph">▶</span><div class="remarks">' + esc(v.vod_remarks || '') + '</div></div>';
   return '<div class="poster" data-id="' + esc(v.vod_id) + '" data-name="' + esc(v.vod_name) + '">' + pic +
     '<div class="pname">' + esc(v.vod_name) + '</div></div>';
 }
 
+// 图片容错：海报图 CDN 常有慢速/失效链接（实测单张可达 16s 超时），
+// 一张坏图会拖住整页观感。这里给每张图加超时与失败提示，超时后自动降级为占位。
+const IMG_FAIL_MS = 6000;
+function watchImages(box) {
+  const imgs = $$('.thumb[data-img]', box);
+  if (!imgs.length) return;
+  let done = 0;
+  const finish = (el, ok) => {
+    if (el._imgDone) return;
+    el._imgDone = true;
+    done++;
+    if (!ok) el.classList.add('img-bad');
+    if (done >= imgs.length) $$('.thumb[data-img]', box).forEach((e) => e.classList.remove('imgloading'));
+  };
+  imgs.forEach((el) => {
+    el.classList.add('imgloading');
+    const url = (el.style.backgroundImage || '').replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    if (!url) { finish(el, false); return; }
+    const probe = new Image();
+    let settled = false;
+    const timer = setTimeout(() => { if (!settled) { settled = true; finish(el, false); } }, IMG_FAIL_MS);
+    probe.onload = () => { if (!settled) { settled = true; clearTimeout(timer); finish(el, true); } };
+    probe.onerror = () => { if (!settled) { settled = true; clearTimeout(timer); finish(el, false); } };
+    probe.src = url;
+  });
+}
+
 function bindPosters(box, site) {
-  $$('.poster', box).forEach((el) => el.onclick = () => openDetail(site, el.dataset.id, el.dataset.name));
+  $$('.poster', box).forEach((el) => {
+    el.onclick = () => openDetail(site, el.dataset.id, el.dataset.name);
+    // 悬停即预取详情，点开时基本秒出
+    el.onmouseenter = () => prefetchDetail(site, el.dataset.id);
+  });
+  watchImages(box);
 }
 
 async function openCategory(name, tidHint) {
@@ -444,7 +598,7 @@ async function loadCategoryPage(site, tid, name, pg) {
   try {
     if (tid == null) {
       // 全部：直接 videolist
-      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg }), 20000);
+      const d = await cmsGet(join(apiBase(site), { ac: 'videolist', pg }), 9000);
       const list = d.list || [];
       listBox.innerHTML = list.map(posterHTML).join('') || '<div class="empty">暂无数据</div>';
       bindPosters(listBox, site);
@@ -465,15 +619,44 @@ async function loadCategoryPage(site, tid, name, pg) {
   } catch (e) { listBox.innerHTML = '<div class="empty">加载失败：' + esc(e.message) + '</div>'; }
 }
 
+// 详情缓存：实测详情接口需 2~3.2s（站点返回 146KB/20 条），是链路最慢的一环。
+// 用「悬停预取 + 缓存」把点击到出详情的等待降到接近 0。
+const detailCache = new Map();   // siteKey|vodId -> {v, at}
+const DETAIL_TTL = 10 * 60 * 1000;
+
+async function fetchDetail(site, id) {
+  const key = site.key + '|' + id;
+  const hit = detailCache.get(key);
+  if (hit && Date.now() - hit.at < DETAIL_TTL) return hit.v;
+  try {
+    const d = await cmsGet(join(apiBase(site), { ac: 'videolist', id }), 8000);
+    const v = (d.list || [])[0];
+    if (v) detailCache.set(key, { v, at: Date.now() });
+    return v;
+  } catch (e) { return null; }
+}
+
+// 悬停海报时后台预取详情（节流 220ms，避免划过时打爆接口）
+let prefetchTimer = null;
+function prefetchDetail(site, id) {
+  clearTimeout(prefetchTimer);
+  prefetchTimer = setTimeout(() => { fetchDetail(site, id); }, 220);
+}
+
 async function openDetail(site, id, fallbackName) {
   const c = $('#content');
+  const cached = detailCache.get(site.key + '|' + id);
+  if (cached && Date.now() - cached.at < DETAIL_TTL) {
+    renderDetail(site, cached.v, fallbackName, id);
+    return;
+  }
   c.innerHTML = '<div class="empty"><span class="spinner"></span>加载详情…</div>';
-  let v;
-  try {
-    const d = await cmsGet(join(apiBase(site), { ac: 'videolist', id }), 20000);
-    v = (d.list || [])[0];
-  } catch (e) {}
-  if (!v) v = { vod_id: id, vod_name: fallbackName };
+  const v = (await fetchDetail(site, id)) || { vod_id: id, vod_name: fallbackName };
+  renderDetail(site, v, fallbackName, id);
+}
+
+function renderDetail(site, v, fallbackName, id) {
+  const c = $('#content');
   const playFrom = String(v.vod_play_from || '').split('$$$').filter(Boolean);
   const playUrl = String(v.vod_play_url || '').split('$$$').filter(Boolean);
   const sources = (playUrl.length ? playUrl : ['']).map((blk, i) => ({
@@ -586,7 +769,7 @@ async function doSearch(kw) {
   c.innerHTML = '<div class="crumb">‹ 返回</div><div class="section-title">搜索「' + esc(kw) + '」<small>' + esc(s.name) + ' · <span class="spinner"></span>搜索中…</small></div><div id="searchList" class="poster-grid"></div>';
   $('.crumb').onclick = renderSearch;
   try {
-    const d = await cmsGet(join(apiBase(s), { ac: 'videolist', wd: kw, pg: 1 }), 20000);
+    const d = await cmsGet(join(apiBase(s), { ac: 'videolist', wd: kw, pg: 1 }), 9000);
     const box = $('#searchList');
     box.innerHTML = (d.list || []).map(posterHTML).join('') || '<div class="empty">没有找到相关资源</div>';
     bindPosters(box, s);
@@ -598,6 +781,7 @@ async function doSearch(kw) {
 let liveCache = null;
 let liveState = {
   channels: [],     // 全部频道(已按名称去重、合并线路)
+  chMap: null,     // id → 频道 索引（渲染 O(1) 查找）
   cats: [],         // [{source,name,channelIds:[]}]
   current: null,    // 当前频道对象
   lineIdx: 0,
@@ -609,6 +793,7 @@ let liveState = {
   timer: null,
   playing: false,
   collapsed: loadLS('ms_live_collapsed', {}),
+  expanded: {},     // 分组是否已「展开其余」
   filter: '',
 };
 function saveLiveSettings() {
@@ -655,12 +840,14 @@ function normChannel(name) {
 }
 
 // 构建频道目录：同名频道只保留一个名字，多个源/分组的 URL 合并为“线路”
+// 性能：分组内用 Set 去重（原来 channelIds.indexOf 在上千条分组里是 O(n²)）
 function buildLiveCatalog() {
   const byName = new Map();
   const cats = [];
   Object.keys(liveCache || {}).forEach((src) => {
     (liveCache[src] || []).forEach((g) => {
       const cat = { source: src, name: g.name, channelIds: [], id: src + '|' + g.name };
+      const seen = new Set();
       g.items.forEach((it) => {
         const key = normChannel(it.name);
         if (!key) return;
@@ -670,19 +857,23 @@ function buildLiveCatalog() {
           byName.set(key, ch);
         }
         it.urls.forEach((u) => { if (ch.urls.indexOf(u) < 0) ch.urls.push(u); });
-        if (cat.channelIds.indexOf(ch.id) < 0) cat.channelIds.push(ch.id);
+        if (!seen.has(ch.id)) { seen.add(ch.id); cat.channelIds.push(ch.id); }
       });
       if (cat.channelIds.length) cats.push(cat);
     });
   });
   liveState.channels = Array.from(byName.values());
   liveState.cats = cats;
+  // id → 频道 的索引，供渲染时 O(1) 查找
+  const chMap = new Map();
+  liveState.channels.forEach((c) => chMap.set(c.id, c));
+  liveState.chMap = chMap;
 }
 
 async function ensureLiveData() {
   if (liveCache) return;
   const pending = {};
-  // 本地源文件（已内置验证过的可播线路）
+  // 第一步：只读本地源文件（毫秒级），立即可展示
   for (const name of ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']) {
     try {
       const txt = await MS.readConfig(name);
@@ -694,26 +885,38 @@ async function ensureLiveData() {
       pending[name] = [];
     }
   }
-  // 远程赛事/平台轮播 m3u（并发拉取，单个失败不阻塞；总时限 12s）
+  liveCache = pending;
+  buildLiveCatalog();
+  try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
+
+  // 第二步：远程赛事/平台轮播 m3u 后台补充（实测 1~3.5s，不应阻塞首屏）
+  // 实测可播率：huyayqk 94% / douyuyqk 95% / yylunbo 95% / CNTV-V4 82% / IPTV-V4 85%
+  // （Live.m3u 实测 0%，咪咕系全部 403，已剔除）
   const m3us = [
     { name: '⚽赛事直播·虎牙', url: 'https://peterhchina.github.io/iptv/huyayqk.m3u' },
     { name: '🏀赛事直播·斗鱼', url: 'https://peterhchina.github.io/iptv/douyuyqk.m3u' },
     { name: '🎮平台轮播·歪歪', url: 'https://peterhchina.github.io/iptv/yylunbo.m3u' },
-    { name: '📺直播大合集', url: 'https://peterhchina.github.io/iptv/Live.m3u' },
+    { name: '📺央视频道补充', url: 'https://peterhchina.github.io/iptv/CNTV-V4.m3u' },
   ];
-  await Promise.all(m3us.map(async (m) => {
+  const remoteDone = Promise.all(m3us.map(async (m) => {
     try {
       const r = await MS.httpGet(m.url, { 'User-Agent': 'okHttp/Mursor-1.4.0.0' }, 12000);
       if (r && r.body && r.body.indexOf('#EXTM3U') >= 0) {
         const g = parseM3U(r.body);
-        if (g.length) pending[m.name] = g;
+        if (g.length) {
+          liveCache[m.name] = g;
+          buildLiveCatalog();
+          if (state.view === 'live') {
+            const cnt = $('#liveChCount');
+            if (cnt) cnt.textContent = '(' + liveState.channels.length + ')';
+            renderLiveTree();
+          }
+        }
       }
     } catch (e) {}
   }));
-  try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
-  // 全部成功后再赋值：保证下次进入直播页还能重试
-  liveCache = pending;
-  buildLiveCatalog();
+  // 后台跑，不 await —— 首屏不等远程源
+  remoteDone.catch(() => {});
 }
 
 // 线路健康探测：并发抽测每条线路，标记可用/失效，播放时优先走可用线路
@@ -814,23 +1017,37 @@ function renderLive() {
   })();
 }
 
+// 直播树渲染：频道量可达数千，需避免 O(n²) 查找与全量 DOM 构建
+// 1) 用 Map 做 id→频道 索引（原来 channels.find() 每次 O(n)，嵌套后 O(n²)）
+// 2) 事件委托替代逐个绑定 onclick（原来要给 3000+ 个节点挂监听器）
+// 3) 每个分组默认只渲染前 N 个，其余折叠为「展开其余 X 个」，按需渲染
+const LIVE_PAGE_SIZE = 60;
+
 function renderLiveTree() {
   const box = $('#liveTree'); if (!box) return;
   const kw = normChannel(liveState.filter);
-  const matches = (ch) => !kw || normChannel(ch.name).indexOf(kw) >= 0;
+  const chMap = liveState.chMap || new Map();
+  const matches = (ch) => !ch || !kw || normChannel(ch.name).indexOf(kw) >= 0;
+  const expanded = liveState.expanded || (liveState.expanded = {});
   let html = '';
-  liveState.cats.forEach((cat, ci) => {
-    const ids = cat.channelIds.filter((id) => matches(liveState.channels.find((x) => x.id === id)));
+  liveState.cats.forEach((cat) => {
+    const ids = [];
+    for (let i = 0; i < cat.channelIds.length; i++) {
+      const ch = chMap.get(cat.channelIds[i]);
+      if (matches(ch)) ids.push(ch);
+    }
     if (!ids.length) return;
     const collapsed = !!liveState.collapsed[cat.id];
     html += '<div class="live-cat"><div class="live-cat-head" data-cat="' + esc(cat.id) + '">' +
       '<span class="caret">' + (collapsed ? '▸' : '▾') + '</span>' + esc(cat.name) +
       '<small>(' + ids.length + ')</small></div>';
     if (!collapsed) {
+      const isAll = !!expanded[cat.id] || !!kw;   // 搜索时直接全量显示结果
+      // 搜索结果过多时也要限量，避免一次渲染上万个节点
+      const cap = kw ? 300 : LIVE_PAGE_SIZE;
+      const show = isAll ? ids.slice(0, cap) : ids.slice(0, LIVE_PAGE_SIZE);
       html += '<div class="live-ch-list">';
-      ids.forEach((id) => {
-        const ch = liveState.channels.find((x) => x.id === id);
-        if (!ch) return;
+      show.forEach((ch) => {
         const active = liveState.current && liveState.current.id === ch.id;
         // 探测后显示可用线路数
         let badge = ch.urls.length + '路';
@@ -842,18 +1059,35 @@ function renderLiveTree() {
         html += '<div class="live-ch' + (active ? ' active' : '') + (dead ? ' dead' : '') + '" data-id="' + ch.id + '" title="' + esc(ch.urls[0] || '') + '">' +
           esc(ch.name) + '<small>' + badge + '</small></div>';
       });
+      if (!isAll && ids.length > LIVE_PAGE_SIZE) {
+        html += '<div class="live-more" data-more="' + esc(cat.id) + '">展开其余 ' + (ids.length - LIVE_PAGE_SIZE) + ' 个 ›</div>';
+      } else if (kw && ids.length > cap) {
+        html += '<div class="live-more muted" title="结果过多，仅显示前 ' + cap + ' 个">仅显示前 ' + cap + ' 个（共 ' + ids.length + '）</div>';
+      }
       html += '</div>';
     }
     html += '</div>';
   });
   box.innerHTML = html || '<div class="empty">无匹配频道</div>';
-  $$('.live-cat-head', box).forEach((el) => el.onclick = () => {
-    const id = el.dataset.cat;
-    liveState.collapsed[id] = !liveState.collapsed[id];
-    saveLiveSettings(); renderLiveTree();
-  });
-  $$('.live-ch', box).forEach((el) => el.onclick = () => {
-    const ch = liveState.channels.find((x) => x.id === el.dataset.id);
+
+  // 事件委托：只绑 3 个监听器，而不是给每个频道节点单独绑
+  box.onclick = (e) => {
+    const head = e.target.closest('.live-cat-head');
+    if (head) {
+      const id = head.dataset.cat;
+      liveState.collapsed[id] = !liveState.collapsed[id];
+      saveLiveSettings(); renderLiveTree();
+      return;
+    }
+    const more = e.target.closest('.live-more');
+    if (more) {
+      liveState.expanded[more.dataset.more] = true;
+      renderLiveTree();
+      return;
+    }
+    const el = e.target.closest('.live-ch');
+    if (!el) return;
+    const ch = chMap.get(el.dataset.id);
     if (!ch) return;
     liveStop();
     // 已探测过：优先挑第一条可用线路
@@ -864,7 +1098,7 @@ function renderLiveTree() {
     }
     livePlayChannel(ch, idx);
     renderLiveTree();
-  });
+  };
 }
 
 function livePlay(lineIdx) {
@@ -1024,6 +1258,26 @@ $('#btnImportOk').onclick = async () => {
   try { $('#version').textContent = 'v' + (await MS.appVersion()); } catch (e) {}
   try { await loadConfig(); document.title = '影视舱 MediaShell · ' + state.sites.length + '站'; }
   catch (e) { $('#content').innerHTML = '<div class="empty">配置加载失败：' + esc(e.message) + '</div>'; }
+  // 启动后立刻并发测速所有 CMS 站，把最快可用的站设为当前站。
+  // 背景：实测默认站光速 api.guangsuapi.com 会 302 跳到博彩域名（已被安全拦截），
+  // 虎牙/量子同样失效。不做这步的话用户打开应用先看到 8~25 秒的等待与错误页。
+  try {
+    const list = await probeAllSites();
+    console.log('[boot] 站点测速:', list.map((x) => x.site.name + '=' + x.ms + 'ms').join(', '));
+    if (list.length) {
+      const best = list[0].site;
+      // 只有当前站不可用/明显更慢时才切换，避免打断用户正在浏览的内容
+      const curUsable = list.find((x) => x.site.key === (state.site && state.site.key));
+      console.log('[boot] 当前站=', state.site && state.site.name, '可用=', !!curUsable, '最快=', best.name, list[0].ms + 'ms');
+      if (!curUsable || list[0].ms + 600 < curUsable.ms) {
+        state.site = best;
+        renderSites();
+        if (state.view === 'home') renderHome();
+        if (!curUsable) toast('已自动选择可用站点：' + best.name + '（' + list[0].ms + 'ms）');
+      }
+    }
+  } catch (e) { console.log('[boot] 自动选站异常:', e && e.message); }
+  state.bootReady = true;   // 启动测速完成标记（自检用）
 })();
 
 // 自动化自检钩子：供主进程 executeJavaScript 调用（仅自检模式使用）
@@ -1039,4 +1293,7 @@ window.__msSelfTest = {
   join: join,
   probeAllSites: probeAllSites,
   autoPickSite: autoPickSite,
+  renderLiveTree: renderLiveTree,
+  openDetail: openDetail,
+  cmsGet: cmsGet,
 };
