@@ -51,6 +51,19 @@ entries now point to this repository through `gh-proxy.com`.
 - To add a source, append `{name, match, fallbacks}` to `sources` in
   `scripts/aizheteng_sources.json`.
 
+### 影视仓 3.6.1 category adaptation
+
+- The movie/TV discovery pages in 影视仓 3.6.1 read each source's declared
+  `categories` and filters, and recognize movie, TV drama and variety by name.
+- `sites[].categories` acts as an allowlist: names that do not match are hidden,
+  while an empty list means no restriction.
+- The eight sources that already declared `categories` now have a calibrated
+  list: Sony and 非凡 in `PG`; 红牛, Sony, 光速, 极速, 量子 and 非凡 in
+  `moyuer`. Movie, TV, variety, anime and short-drama groups come first, and
+  the original subcategories are preserved.
+- All other sources leave `categories` empty, so 3.6.1 uses the classes returned
+  by the source itself.
+
 ## Notice
 
 All playlists and interfaces come from the public internet. Availability varies
