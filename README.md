@@ -46,6 +46,18 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 - 转换脚本 `scripts/update_platform_live.py`；工作流 `.github/workflows/PlatformLive.yml` 每 30 分钟拉取并转换，有变化才提交。两条订阅都走 `gh-proxy.com` 加速，电视端无需直连海外域名。
 - 说明：快手自 2025 年底起对匿名访问限流，没有稳定的公开直播订阅；若必须看快手直播，需在「纯粹直播」等客户端中填入自己的快手 Cookie，TVBox 的静态订阅无法提供。
 
+## 一之二之二、电脑桌面版（TVBox Desktop）
+
+Windows 桌面客户端 [TVBox Desktop](https://github.com/hgtuj5688/tvbox-desktop) 可直接加载本仓库的桌面专用配置：
+
+```text
+https://raw.githubusercontent.com/amygoTV/MyTV/master/TVBoxDesktop.json
+```
+
+- 该客户端把数字 `type=3` 当苹果 CMS、`type=1` 当网页规则站，与安卓 TVBox 不同；`TVBoxDesktop.json` 已做转换：11 个 CMS 站写为 `type: "cms"`，10 个 `csp_*` Spider 站写为 `type: "spider"`（桌面端会灰显并提示无法运行）。
+- 6 条直播线路原样保留，含 TVLives / PlatformLive / BiliLive 与赛事虎牙 / 斗鱼 / 歪歪 M3U。
+- 需要完整短剧 / 赛事 / 课堂 Spider 体验时，请用安卓影视仓加载 `YSCSites.json`；桌面版主要覆盖影视点播与直播。
+
 ## 一之三、垂直分类独立采集站（YSC/*.json）
 
 每个文件都是一份可直接导入影视仓的单仓配置，只含一个站点，因此首页分类导航天然互相隔离。地址模板：
