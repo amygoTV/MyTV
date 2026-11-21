@@ -31,9 +31,11 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 
 ### 说明
 
-- 影视仓 / TVBox 可直接导入的单仓配置，含 7 个实测可用的 CMS 采集接口（type=1，无需 spider jar）。
-- 首页分类导航按各站 `ac=list` + `ac=videolist&t=<id>` 实测校准：影视仓 3.6.1 所需的「电影 / 电视剧 / 综艺 / 动漫 / 短剧」大类标记放在前面，后面补齐所有实测有数据的子分类。采集站里的大类本身是空壳（`t=` 返回 0 条），短剧/漫剧实际内容在子分类：`AI漫剧`（约 936 部）、`擦边短剧`（196 部）、`漫剧`（41 部，闪电影视）、`爽文短剧`，以及 `现代都市`、`古装仙侠`、`反转爽剧`、`言情总裁`、`穿越年代`、`重生民国`、`脑洞悬疑`、`女频恋爱`。点大类标签可能为空，请点具体子分类。
-- 内置 3 条 `lives`：`TVLives.txt`（央视 / 卫视 IPTV）、`PlatformLive.txt`（抖音 / B站 / 虎牙 / 斗鱼 / Twitch 等平台直播）、`BiliLive.txt`（B站直播专线）。
+- 聚合配置共 **21 个采集站 + 6 条直播线路**：保留原有 7 个实测可用的 CMS 采集接口（type=1），新增 14 个垂直分类独立站（短剧、赛事、直播平台、少儿动漫、四类课堂）。
+- 兼容 **LuckyWDGS/YingShiCang 3.6.1**：该版本按 `sites[].categories` 做每站独立的分类白名单。聚合配置里每个站只声明自己的分类；若只想看某一类，可直接导入下面 `YSC/*.json` 单用途配置（每份只有一个站）。
+- 原有 CMS 7 站分类继续按 `ac=videolist&t=<type_id>&pg=1` 实测校准：大类标记在前、有数据的子分类在后。短剧 / 漫剧真正有内容的是 `AI漫剧`、`擦边短剧`、`漫剧`、`爽文短剧` 等子分类，点空壳父类可能没资源。
+- `spider` 已改为本仓库自托管 `spider/fan.txt`（MD5 `654fb7dcb0aeaaea7dba0e662395f38e`），与影视仓内置 `source-20261022.jar` 完全一致；`csp_AiDjGuard`、`csp_BiliGuard`、`csp_KanqiuGuard`、`csp_LiveGzGuard`、`csp_DoubaoGuard`、`csp_AllliveGuard`、`csp_Dm84Guard` 均可由影视仓内置插件直接加载，不必再依赖第三方 jar 地址。
+- 内置 6 条 `lives`：`TVLives.txt`（央视 / 卫视 IPTV）、`PlatformLive.txt`（抖音 / B站 / 虎牙 / 斗鱼 / Twitch 等平台直播）、`BiliLive.txt`（B站直播专线），以及赛事虎牙 / 赛事斗鱼 / 歪歪轮播三条 M3U。
 - 采集接口来自公开采集站，可用性随时间变化；某个源失效时在影视仓内切换其它源即可。
 
 ### 平台直播镜像（抖音 / B站）
@@ -42,6 +44,34 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 - `BiliLive.txt`：由 `https://sub.ottiptv.cc/bililive.m3u` 转换，纯 B站直播专线，按分区（情感杂谈 / 户外 / 疗愈助眠等）分组。
 - 转换脚本 `scripts/update_platform_live.py`；工作流 `.github/workflows/PlatformLive.yml` 每 30 分钟拉取并转换，有变化才提交。两条订阅都走 `gh-proxy.com` 加速，电视端无需直连海外域名。
 - 说明：快手自 2025 年底起对匿名访问限流，没有稳定的公开直播订阅；若必须看快手直播，需在「纯粹直播」等客户端中填入自己的快手 Cookie，TVBox 的静态订阅无法提供。
+
+## 一之三、垂直分类独立采集站（YSC/*.json）
+
+每个文件都是一份可直接导入影视仓的单仓配置，只含一个站点，因此首页分类导航天然互相隔离。地址模板：
+
+```text
+https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/<文件名>.json
+```
+
+| 文件名 | 采集方式 | 主页分类 |
+|---|---|---|
+| `短剧漫剧.json` | `csp_AiDjGuard`（内置短剧入口） | 插件原生短剧 / 漫剧分类 |
+| `短剧点播.json` | CMS type=1 | AI漫剧、擦边短剧、现代都市、古装仙侠、反转爽剧、言情总裁、穿越年代、重生民国、脑洞悬疑 |
+| `漫剧点播.json` | CMS type=1 | 漫剧、爽文短剧、擦边短剧、女频恋爱、年代穿越、古装仙侠、现代都市 |
+| `看球赛事.json` | `csp_KanqiuGuard` | 插件原生赛事直播分类 |
+| `吃瓜看球.json` | `csp_LiveGzGuard` | 插件原生看球分类 |
+| `比赛回放.json` | `csp_DoubaoGuard` | 插件原生比赛集锦分类 |
+| `赛事点播.json` | CMS type=1 | 足球、篮球、其他赛事 |
+| `一直播.json` | `csp_AllliveGuard` | 插件原生直播平台分类 |
+| `少儿动漫.json` | `csp_Dm84Guard` | 插件原生少儿动漫分类 |
+| `少儿动漫点播.json` | CMS type=1 | 动画片、中国动漫、日本动漫、欧美动漫 |
+| `儿童启蒙.json` | `csp_BiliGuard` + `Edu/kids.json` | 儿童早教、儿童启蒙故事、儿童英语启蒙、儿童歌曲、儿童绘画、睡前故事、儿童动画、儿童音乐、儿童安全教育、贝瓦儿歌、悟空识字、宝宝巴士、儿歌多多、学而思（14 类） |
+| `小学课堂.json` | `csp_BiliGuard` + `Edu/primary.json` | 1–6 年级语文 / 数学 / 英语（18 类） |
+| `初中课堂.json` | `csp_BiliGuard` + `Edu/junior.json` | 7–9 年级语文 / 数学 / 英语 / 历史 / 地理 / 生物 / 物理 / 化学（24 类） |
+| `高中课堂.json` | `csp_BiliGuard` + `Edu/senior.json` | 高一 / 高二 / 高三各科及信息技术（28 类） |
+
+- 四类课堂源各自只读取自己的 `Edu/*.json`，分类从 JSON 的 `class[].type_name` 生成并去重，不会把别的学段分类带进首页。
+- 这 14 个单用途配置已同时加入 `aizheteng.json`（`urls`）和 `zheteng.json`（`storeHouse`），可在多仓索引里逐项导入；也可以只导入你需要的那一条。
 
 ## 二、多仓索引 aizheteng.json
 
@@ -63,16 +93,17 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 
 ### 线路说明
 
-- `urls`：7 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库（饭太硬、肥猫、鸟叔 4K、PG、摸鱼儿、小米、💣王炸资源💣），已移除全部外部站点线路。
-- 各线路的 `lives` 已统一指向本仓库根目录的 `TVLives.txt`（通过 `gh-proxy.com` 加速），不再各自维护直播源。
+- `urls`：21 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库：原有 6 条 + `💣王炸资源💣` 聚合配置 + 14 条垂直分类单用途配置；外部站点线路已移除，`scripts/aizheteng_sources.json` 也已同步清理，避免定时任务再把外部仓写回。
+- `zheteng.json` 的 `storeHouse` 同步扩展为 17 条（原有 3 条 + 14 条垂直分类配置）。
+- 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`PlatformLive.txt`、`BiliLive.txt`（均通过 `gh-proxy.com` 加速）。
 
 ### 自动更新
 
 - `.github/workflows/Aizheteng_Sync.yml`：每天北京时间 11:17 运行。
-- 先从备份站镜像下载当日 `list.txt`，再按 `scripts/aizheteng_sources.json` 中的 `match` 名称匹配最新地址。
+- `scripts/aizheteng_sources.json` 的 `pinned` 列表逐条验活，包含原有 6 条、`💣王炸资源💣` 和 14 条垂直分类单用途配置；`sources` 列表已清空，避免外部站点接口被定时任务重新写回。
 - `scripts/update_aizheteng.py` 使用 `okhttp/3.15` UA 逐个请求，只有返回 200 且能解析出非空 `sites` 数组的地址才会写入。
 - 所有候选都失败时保留上一条可用地址；没有历史地址的新线路会跳过。下载不到 `list.txt` 时不提交，避免误删。
-- 新增线路：在 `scripts/aizheteng_sources.json` 的 `sources` 中添加 `name`、`match`（对应 `list.txt` 第一列去掉 `.json`）和可选的 `fallbacks` 即可。
+- 新增自有线路：在 `scripts/aizheteng_sources.json` 的 `pinned` 中添加 `name` 和 `urls`（gh-proxy + raw 双地址）即可。
 
 ### 影视仓 3.6.1 分类适配
 

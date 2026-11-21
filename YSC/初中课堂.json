@@ -1,0 +1,72 @@
+{
+  "spider": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/spider/fan.txt;md5;654fb7dcb0aeaaea7dba0e662395f38e",
+  "sites": [
+    {
+      "key": "初中课堂",
+      "name": "🎓初中课堂｜哔哩",
+      "type": 3,
+      "api": "csp_BiliGuard",
+      "searchable": 0,
+      "quickSearch": 0,
+      "changeable": 0,
+      "ext": {
+        "json": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/Edu/junior.json"
+      },
+      "style": {
+        "type": "rect",
+        "ratio": 1.597
+      },
+      "categories": [
+        "7年级语文",
+        "7年级数学",
+        "7年级英语",
+        "7年级历史",
+        "7年级地理",
+        "7年级生物",
+        "7年级物理",
+        "7年级化学",
+        "8年级语文",
+        "8年级数学",
+        "8年级英语",
+        "8年级历史",
+        "8年级地理",
+        "8年级生物",
+        "8年级物理",
+        "8年级化学",
+        "9年级语文",
+        "9年级数学",
+        "9年级英语",
+        "9年级历史",
+        "9年级地理",
+        "9年级生物",
+        "9年级物理",
+        "9年级化学"
+      ]
+    }
+  ],
+  "lives": [
+    {
+      "name": "💣王炸直播💣",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt",
+      "playerType": 1,
+      "ua": "okhttp/3.15",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+      "logo": "https://epg.112114.xyz/logo/{name}.png"
+    },
+    {
+      "name": "🎵抖音/平台直播🎵",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/PlatformLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    {
+      "name": "📺B站直播适配📺",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/BiliLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+  ]
+}

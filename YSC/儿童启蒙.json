@@ -1,0 +1,62 @@
+{
+  "spider": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/spider/fan.txt;md5;654fb7dcb0aeaaea7dba0e662395f38e",
+  "sites": [
+    {
+      "key": "儿童启蒙",
+      "name": "🧒儿童启蒙｜哔哩",
+      "type": 3,
+      "api": "csp_BiliGuard",
+      "searchable": 0,
+      "quickSearch": 0,
+      "changeable": 0,
+      "ext": {
+        "json": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/Edu/kids.json"
+      },
+      "style": {
+        "type": "rect",
+        "ratio": 1.597
+      },
+      "categories": [
+        "儿童早教",
+        "儿童启蒙故事",
+        "儿童英语启蒙",
+        "儿童歌曲",
+        "儿童绘画",
+        "睡前故事",
+        "儿童动画",
+        "儿童音乐",
+        "儿童安全教育",
+        "贝瓦儿歌",
+        "悟空识字",
+        "宝宝巴士",
+        "儿歌多多",
+        "学而思"
+      ]
+    }
+  ],
+  "lives": [
+    {
+      "name": "💣王炸直播💣",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt",
+      "playerType": 1,
+      "ua": "okhttp/3.15",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+      "logo": "https://epg.112114.xyz/logo/{name}.png"
+    },
+    {
+      "name": "🎵抖音/平台直播🎵",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/PlatformLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    {
+      "name": "📺B站直播适配📺",
+      "type": 0,
+      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/BiliLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+  ]
+}
