@@ -21,6 +21,21 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt
 
 GitHub Actions 每 6 小时从 `amygoTV/Livelist` 拉取最新候选源，与本仓库固定补充源合并、并发验活后，只把可用源写入 `TVLives.txt`。无变化不提交。每个频道若存在 IPv6 备用源，至少保留 2 条，其余按 IPv4 实测延迟优先排序。
 
+## 一之二、影视仓单仓配置 YSCSites.json
+
+### 订阅地址
+
+```text
+https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
+```
+
+### 说明
+
+- 影视仓 / TVBox 可直接导入的单仓配置，含 7 个实测可用的 CMS 采集接口（type=1，无需 spider jar）。
+- 影视资源：电影 / 电视剧 / 综艺 / 动漫等完整分类；短剧资源：光速 / 红牛 / 虎牙源内置「短剧」「擦边短剧」分类，搜索关键词「短剧」可直接检索。
+- 内置 `lives` 指向本仓库 `TVLives.txt`，点播 + 直播一个接口搞定。
+- 采集接口来自公开采集站，可用性随时间变化；某个源失效时在影视仓内切换其它源即可。
+
 ## 二、多仓索引 aizheteng.json
 
 `aizheteng.json` 是影视仓 / 宝盒使用的多仓索引（`urls` 数组），每个子项都是一份单仓配置。
