@@ -4,7 +4,7 @@
   "sites": [
     {
       "key": "光速影视",
-      "name": "光速影视",
+      "name": "⚡光速影视｜CMS",
       "type": 1,
       "api": "https://api.guangsuapi.com/api.php/provide/vod/",
       "searchable": 1,
@@ -57,7 +57,7 @@
     },
     {
       "key": "红牛影视",
-      "name": "红牛影视",
+      "name": "🐂红牛影视｜CMS",
       "type": 1,
       "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
       "searchable": 1,
@@ -110,7 +110,7 @@
     },
     {
       "key": "虎牙采集",
-      "name": "虎牙采集",
+      "name": "🐯虎牙采集｜CMS",
       "type": 1,
       "api": "https://www.huyaapi.com/api.php/provide/vod/",
       "searchable": 1,
@@ -163,7 +163,7 @@
     },
     {
       "key": "虎牙HLS",
-      "name": "虎牙HLS",
+      "name": "🐅虎牙HLS｜HLS",
       "type": 1,
       "api": "https://www.huyaapi.com/api.php/provide/vod/from/hym3u8",
       "searchable": 1,
@@ -216,7 +216,7 @@
     },
     {
       "key": "量子资源",
-      "name": "量子资源",
+      "name": "⚛️量子资源｜CMS",
       "type": 1,
       "api": "https://lzizy1.com/api.php/provide/vod/",
       "searchable": 1,
@@ -267,7 +267,7 @@
     },
     {
       "key": "闪电影视",
-      "name": "闪电影视",
+      "name": "💫闪电影视｜CMS",
       "type": 1,
       "api": "http://sdzyapi.com/api.php/provide/vod/",
       "searchable": 1,
@@ -335,7 +335,7 @@
     },
     {
       "key": "淘片采集",
-      "name": "淘片采集",
+      "name": "🎞️淘片采集｜CMS",
       "type": 1,
       "api": "https://taopianapi.com/cjapi/mc/vod/json.html",
       "searchable": 1,
