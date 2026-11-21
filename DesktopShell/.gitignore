@@ -3,3 +3,5 @@ _stage/
 package-lock.json
 *.log
 userdata/
+
+dist-exe*/
