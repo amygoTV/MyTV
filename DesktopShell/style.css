@@ -188,6 +188,23 @@ body{
   padding:7px 13px; border-radius:8px; cursor:pointer; font-size:12px; backdrop-filter:blur(4px);}
 .live-line:hover{border-color:var(--accent2); color:#fff;}
 .live-line.active{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600;}
+.live-line.bad{opacity:.45; border-color:rgba(255,92,122,.6); text-decoration:line-through;}
+.mini-btn{background:var(--panel2); color:var(--text); border:1px solid var(--line); border-radius:6px;
+  padding:5px 10px; font-size:12px; cursor:pointer; outline:none;}
+.mini-btn:hover{border-color:var(--accent2); color:#fff;}
+.mini-btn:disabled{opacity:.5; cursor:default;}
+.live-ch.dead{opacity:.42;}
+.live-ch.dead small{color:var(--accent2);}
+
+/* home skeleton */
+.skel-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px;}
+.skel-card{pointer-events:none;}
+.skel-img{aspect-ratio:3/4; border-radius:8px; background:linear-gradient(100deg,#171b24 30%,#1f2530 50%,#171b24 70%);
+  background-size:220% 100%; animation:skelshim 1.2s infinite linear;}
+.skel-line{height:11px; border-radius:5px; margin-top:8px; background:linear-gradient(100deg,#171b24 30%,#1f2530 50%,#171b24 70%);
+  background-size:220% 100%; animation:skelshim 1.2s infinite linear;}
+.skel-pill{width:64px; height:26px; flex:none;}
+@keyframes skelshim{0%{background-position:120% 0}100%{background-position:-120% 0}}
 .live-center-play{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:64px; height:64px;
   border-radius:50%; background:rgba(0,0,0,.5); border:2px solid rgba(255,255,255,.5); color:#fff;
   font-size:24px; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:4;}

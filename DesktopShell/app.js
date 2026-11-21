@@ -133,10 +133,44 @@ function setView(v) {
   else if (v === 'history') renderStore('history');
 }
 
+// 并发探测所有 CMS 站点，返回按响应速度排序的可用站点列表
+async function probeAllSites() {
+  const cands = state.sites.filter(isCMS);
+  const out = [];
+  await Promise.all(cands.map(async (s) => {
+    const t0 = Date.now();
+    try {
+      const d = await cmsGet(join(apiBase(s), { ac: 'videolist', pg: 1 }), 9000);
+      if (d && (d.list || []).length) out.push({ site: s, ms: Date.now() - t0, n: (d.list || []).length });
+    } catch (e) {}
+  }));
+  out.sort((a, b) => a.ms - b.ms);
+  return out;
+}
+
+// 自动挑一个最快的可用站点并切换过去
+async function autoPickSite() {
+  const btn = $('#btnAutoSite');
+  if (btn) { btn.disabled = true; btn.textContent = '检测中…'; }
+  const list = await probeAllSites();
+  if (!list.length) {
+    toast('所有采集站当前都不可用，请稍后重试');
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 自动切换可用站点'; }
+    return;
+  }
+  const best = list[0].site;
+  state.site = best;
+  renderSites();
+  renderHome();
+  toast('已切换到 ' + best.name + '（' + list[0].ms + 'ms）');
+}
+
 // ---------- TV-style home ----------
 let bannerTimer = null;
 let bannerItems = [];
 let bannerIdx = 0;
+let homeToken = 0;          // 防止切换站点时旧请求回写覆盖新页面
+let homeCache = {};         // siteKey -> {items, at} 首页内容缓存（减少重复请求）
 
 function renderHome() {
   const s = state.site;
@@ -152,15 +186,115 @@ function renderHome() {
   loadHomeData(s, cats);
 }
 
+// 首页：分类与视频列表并发拉取（ac=list 一次即可同时拿到 class + list），
+// 避免原来“先 videolist 再 ac=list”的两次串行等待。
 async function loadHomeData(site, cats) {
+  const token = ++homeToken;
   const c = $('#content');
-  let first = { list: [] };
-  try { first = await cmsGet(join(apiBase(site), { ac: 'videolist', pg: 1 }), 20000); }
-  catch (e) {}
+  const cached = homeCache[site.key];
+  // 缓存 5 分钟内直接秒开，后台静默刷新
+  if (cached && Date.now() - cached.at < 5 * 60 * 1000) {
+    buildBanner(site, cached.items.slice(0, 8));
+    bindCatBar(site, cats, cached.items, cached.first);
+    renderTVRows(site, cached.items, cached.first);
+    refreshHomeInBackground(site, cats, token);
+    return;
+  }
+  // 骨架屏：立刻给出视觉反馈，不让用户盯空白
+  $('#tvRows').innerHTML = '<div class="tv-row"><div class="row-head"><span class="bar"></span><h3>最近更新</h3></div>' +
+    '<div class="hscroll"><div class="skel-grid">' +
+    Array.from({ length: 8 }, () => '<div class="skel-card"><div class="skel-img"></div><div class="skel-line"></div></div>').join('') +
+    '</div></div></div>';
+  $('#catBar').innerHTML = '<div class="cat-pill on">🔥全部</div>' +
+    Array.from({ length: 7 }, () => '<div class="cat-pill skel-pill"></div>').join('');
+
+  const base = apiBase(site);
+  // 第一步：只等视频列表，先把海报行渲染出来（用户马上能看到内容）
+  const listRes = await Promise.race([
+    cmsGet(join(base, { ac: 'videolist', pg: 1 }), 12000).then((d) => ({ ok: true, d })).catch((e) => ({ ok: false, e })),
+    new Promise((r) => setTimeout(() => r({ ok: false, slow: true }), 8000)),
+  ]);
+
+  // 第二步：分类并发拉取。实测部分站点 ac=list 会挂起到 12s+，
+  // 因此给分类单独设较短超时，失败也不影响首页内容展示。
+  const catPromise = cmsGet(join(base, { ac: 'list' }), 7000)
+    .then((d) => d).catch(() => null);
+
+  if (token !== homeToken) return;   // 用户已切换站点，丢弃本次结果
+
+  const first = { list: [] };
+  if (listRes && listRes.ok) {
+    first.list = listRes.d.list || [];
+    first.total = listRes.d.total;
+  }
   const items = first.list || [];
+  if (!items.length && listRes && !listRes.ok && !listRes.slow) {
+    // 站点故障：给出可操作提示，并提供"自动换一个可用站点"
+    $('#tvRows').innerHTML = '<div class="empty">「' + esc(site.name) + '」加载失败：' +
+      esc(listRes.e && listRes.e.message || '网络异常') +
+      '<br><span class="muted">该站点可能暂时不可用，可点击下方按钮自动切换到可用站点</span>' +
+      '<br><button id="btnAutoSite" class="mini-btn" style="margin-top:12px">🔄 自动切换可用站点</button></div>';
+    $('#catBar').innerHTML = '';
+    const ab = $('#btnAutoSite');
+    if (ab) ab.onclick = () => autoPickSite();
+    return;
+  }
+  homeCache[site.key] = { items, first, at: Date.now() };
   buildBanner(site, items.slice(0, 8));
-  bindCatBar(site, cats, items, first);
   renderTVRows(site, items, first);
+  // 分类栏先给占位，拿到后填充
+  $('#catBar').innerHTML = '<div class="cat-pill on">🔥全部</div>' +
+    Array.from({ length: 7 }, () => '<div class="cat-pill skel-pill"></div>').join('');
+
+  const catRes = await catPromise;
+  if (token !== homeToken) return;
+  let cats2 = [];
+  if (catRes) {
+    const arr = catRes.class || catRes.type || [];
+    (Array.isArray(arr) ? arr : Object.values(arr)).forEach((x) => {
+      if (x && x.type_name != null && x.type_id != null) {
+        cats2.push({ id: x.type_id, name: String(x.type_name), pid: x.type_pid != null ? x.type_pid : 0 });
+      }
+    });
+  }
+  // 分类是核心功能，首轮失败再补一次（部分站点首包会挂起）
+  if (!cats2.length) {
+    try {
+      const retry = await cmsGet(join(base, { ac: 'list' }), 8000);
+      const arr = retry.class || retry.type || [];
+      (Array.isArray(arr) ? arr : Object.values(arr)).forEach((x) => {
+        if (x && x.type_name != null && x.type_id != null) {
+          cats2.push({ id: x.type_id, name: String(x.type_name), pid: x.type_pid != null ? x.type_pid : 0 });
+        }
+      });
+    } catch (e) {}
+  }
+  // 兜底：从视频列表里的 type_name/type_id 反推
+  if (!cats2.length && items.length) {
+    const seen = {};
+    items.forEach((v) => {
+      if (v && v.type_name != null && v.type_id != null && !seen[v.type_name]) {
+        seen[v.type_name] = 1;
+        cats2.push({ id: v.type_id, name: String(v.type_name), pid: v.type_id_1 != null ? v.type_id_1 : 0 });
+      }
+    });
+  }
+  state.catList[site.key] = cats2;
+  const map = {};
+  cats2.forEach((x) => { map[x.name] = x.id; });
+  state.typeMap[site.key] = map;
+  bindCatBar(site, cats, items, first);
+}
+
+// 后台静默刷新缓存，不打断当前界面
+async function refreshHomeInBackground(site, cats, token) {
+  try {
+    const base = apiBase(site);
+    const d = await cmsGet(join(base, { ac: 'videolist', pg: 1 }), 14000);
+    if (token !== homeToken) return;
+    const items = d.list || [];
+    if (items.length) homeCache[site.key] = { items, first: d, at: Date.now() };
+  } catch (e) {}
 }
 
 function buildBanner(site, items) {
@@ -197,8 +331,7 @@ function buildBanner(site, items) {
 
 async function bindCatBar(site, cats, items, first) {
   const bar = $('#catBar'); if (!bar) return;
-  // 以站点 API 真实分类为准，确保每个分类都能取到资源；配置里的分类名排在前面作为精选
-  await typeMap(site);
+  // 分类已在 loadHomeData 中并发取回，直接用；避免二次请求造成等待
   const real = state.catList[site.key] || [];
   const ordered = [];
   (cats || []).forEach((n) => {
@@ -548,23 +681,64 @@ function buildLiveCatalog() {
 
 async function ensureLiveData() {
   if (liveCache) return;
-  liveCache = {};
+  const pending = {};
+  // 本地源文件（已内置验证过的可播线路）
   for (const name of ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']) {
-    try { liveCache[name] = parseTVLines(await MS.readConfig(name)); } catch (e) { liveCache[name] = []; }
-  }
-  const m3us = [
-    { name: '⚽赛事直播·虎牙', url: 'https://sub.ottiptv.cc/huyayqk.m3u' },
-    { name: '🏀赛事直播·斗鱼', url: 'https://sub.ottiptv.cc/douyuyqk.m3u' },
-    { name: '🎮平台轮播·歪歪', url: 'https://sub.ottiptv.cc/yylunbo.m3u' },
-  ];
-  for (const m of m3us) {
     try {
-      const r = await MS.httpGet(m.url, { 'User-Agent': 'okHttp/Mod-1.5.0.0' }, 20000);
-      if (r.body) liveCache[m.name] = parseM3U(r.body);
-    } catch (e) {}
+      const txt = await MS.readConfig(name);
+      const g = parseTVLines(txt);
+      pending[name] = g;
+      if (!g.length) console.warn('[live] ' + name + ' 解析出 0 个分组，原始长度=' + (txt || '').length);
+    } catch (e) {
+      console.warn('[live] 读取 ' + name + ' 失败: ' + (e && e.message || e));
+      pending[name] = [];
+    }
   }
+  // 远程赛事/平台轮播 m3u（并发拉取，单个失败不阻塞；总时限 12s）
+  const m3us = [
+    { name: '⚽赛事直播·虎牙', url: 'https://peterhchina.github.io/iptv/huyayqk.m3u' },
+    { name: '🏀赛事直播·斗鱼', url: 'https://peterhchina.github.io/iptv/douyuyqk.m3u' },
+    { name: '🎮平台轮播·歪歪', url: 'https://peterhchina.github.io/iptv/yylunbo.m3u' },
+    { name: '📺直播大合集', url: 'https://peterhchina.github.io/iptv/Live.m3u' },
+  ];
+  await Promise.all(m3us.map(async (m) => {
+    try {
+      const r = await MS.httpGet(m.url, { 'User-Agent': 'okHttp/Mursor-1.4.0.0' }, 12000);
+      if (r && r.body && r.body.indexOf('#EXTM3U') >= 0) {
+        const g = parseM3U(r.body);
+        if (g.length) pending[m.name] = g;
+      }
+    } catch (e) {}
+  }));
   try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
+  // 全部成功后再赋值：保证下次进入直播页还能重试
+  liveCache = pending;
   buildLiveCatalog();
+}
+
+// 线路健康探测：并发抽测每条线路，标记可用/失效，播放时优先走可用线路
+async function probeLiveLines() {
+  const all = [];
+  liveState.channels.forEach((ch) => ch.urls.forEach((u) => all.push({ ch, u })));
+  if (!all.length) return;
+  liveState.probing = true;
+  const CONC = 8;
+  let idx = 0;
+  const worker = async () => {
+    while (idx < all.length) {
+      const item = all[idx++];
+      let ok = false;
+      try {
+        const r = await MS.probeStream(item.u);
+        ok = !!(r && r.ok && !r.is404 && !r.isHtml);
+      } catch (e) { ok = false; }
+      item.ch.good = item.ch.good || {};
+      item.ch.good[item.u] = ok;
+    }
+  };
+  await Promise.all(Array.from({ length: CONC }, worker));
+  liveState.probing = false;
+  renderLiveTree();
 }
 
 function renderLive() {
@@ -594,6 +768,7 @@ function renderLive() {
               (liveState.players.vlc ? '<option value="vlc"' + (liveState.player === 'vlc' ? ' selected' : '') + '>VLC</option>' : '') +
               (liveState.players.potplayer ? '<option value="potplayer"' + (liveState.player === 'potplayer' ? ' selected' : '') + '>PotPlayer</option>' : '') +
             '</select></label>' +
+            '<button id="btnProbe" class="mini-btn" title="并发探测每条线路是否可播">🔍 检测线路</button>' +
           '</div>' +
         '</div>' +
         '<div class="live-screen" id="liveScreen">' +
@@ -612,11 +787,25 @@ function renderLive() {
   $('#setTimeout').onchange = (e) => { liveState.timeoutSec = +e.target.value; saveLiveSettings(); toast('换线超时设为 ' + liveState.timeoutSec + ' 秒'); };
   $('#setDecoder').onchange = (e) => { liveState.decoder = e.target.value; saveLiveSettings(); toast('解码方式：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
   $('#setPlayer').onchange = (e) => { liveState.player = e.target.value; saveLiveSettings(); toast('播放器：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
+  const bp = $('#btnProbe');
+  if (bp) bp.onclick = async () => {
+    if (liveState.probing) return;
+    bp.disabled = true; bp.textContent = '检测中…';
+    await probeLiveLines();
+    bp.disabled = false; bp.textContent = '🔍 检测线路';
+    const total = liveState.channels.reduce((a, c) => a + c.urls.length, 0);
+    let ok = 0;
+    liveState.channels.forEach((c) => c.urls.forEach((u) => { if (c.good && c.good[u]) ok++; }));
+    toast('检测完成：' + ok + '/' + total + ' 条线路可播');
+  };
   $('#liveCenterPlay').onclick = () => { const v = $('#liveVideo'); if (v && v.src) { v.play().catch(() => {}); $('#liveCenterPlay').classList.add('hidden'); } };
 
   (async () => {
     const box = $('#liveTree');
-    if (box && !box.children.length) {
+    // 注意：不能用「box.children.length」判断是否已加载 —— renderLiveTree() 早已写入
+    // 「无匹配频道」占位符，会让该条件恒为 false，导致 ensureLiveData() 永远不执行
+    // （表现为直播列表匹配不到任何资源）。这里改用 liveCache 是否已初始化来判断。
+    if (box && !liveCache) {
       box.innerHTML = '<div class="empty"><span class="spinner"></span>加载直播列表…</div>';
       await ensureLiveData();
       $('#liveChCount').textContent = '(' + liveState.channels.length + ')';
@@ -643,8 +832,15 @@ function renderLiveTree() {
         const ch = liveState.channels.find((x) => x.id === id);
         if (!ch) return;
         const active = liveState.current && liveState.current.id === ch.id;
-        html += '<div class="live-ch' + (active ? ' active' : '') + '" data-id="' + ch.id + '" title="' + esc(ch.urls[0] || '') + '">' +
-          esc(ch.name) + '<small>' + ch.urls.length + '路</small></div>';
+        // 探测后显示可用线路数
+        let badge = ch.urls.length + '路';
+        if (ch.good) {
+          const okN = ch.urls.filter((u) => ch.good[u]).length;
+          badge = okN + '/' + ch.urls.length + '路';
+        }
+        const dead = ch.good && ch.urls.every((u) => !ch.good[u]);
+        html += '<div class="live-ch' + (active ? ' active' : '') + (dead ? ' dead' : '') + '" data-id="' + ch.id + '" title="' + esc(ch.urls[0] || '') + '">' +
+          esc(ch.name) + '<small>' + badge + '</small></div>';
       });
       html += '</div>';
     }
@@ -658,7 +854,16 @@ function renderLiveTree() {
   });
   $$('.live-ch', box).forEach((el) => el.onclick = () => {
     const ch = liveState.channels.find((x) => x.id === el.dataset.id);
-    if (ch) { liveStop(); livePlayChannel(ch, 0); renderLiveTree(); }
+    if (!ch) return;
+    liveStop();
+    // 已探测过：优先挑第一条可用线路
+    let idx = 0;
+    if (ch.good) {
+      const goodIdx = ch.urls.findIndex((u) => ch.good[u]);
+      if (goodIdx >= 0) idx = goodIdx;
+    }
+    livePlayChannel(ch, idx);
+    renderLiveTree();
   });
 }
 
@@ -685,22 +890,24 @@ function livePlayChannel(ch, lineIdx) {
   const now = $('#liveNow'); if (now) now.textContent = ch.name;
   const linesBox = $('#liveLines');
   if (linesBox) {
-    linesBox.innerHTML = ch.urls.map((u, i) => '<div class="live-line' + (i === lineIdx ? ' active' : '') + '" data-i="' + i + '" title="' + esc(u) + '">线路' + (i + 1) + '</div>').join('');
+    linesBox.innerHTML = ch.urls.map((u, i) =>
+      '<div class="live-line' + (i === lineIdx ? ' active' : '') + (ch.good && ch.good[u] === false ? ' bad' : '') +
+      '" data-i="' + i + '" title="' + esc(u) + '">' + '线路' + (i + 1) + (ch.good && ch.good[u] === false ? ' ✕' : '') + '</div>').join('');
     $$('.live-line', linesBox).forEach((el) => el.onclick = (e) => { e.stopPropagation(); livePlayChannel(ch, +el.dataset.i); });
   }
-  const url = ch.urls[lineIdx];
-  if (!url) { liveShowMsg('该频道无可用线路'); return; }
-  // 外部轻量播放器：交给 mpv/VLC/PotPlayer 硬件解码
+  const rawUrl = ch.urls[lineIdx];
+  if (!rawUrl) { liveShowMsg('该频道无可用线路'); return; }
+  // 外部轻量播放器：交给 mpv/VLC/PotPlayer 硬件解码（直连原地址，不经代理）
   if (liveState.player !== 'builtin') {
-    MS.playExternal(liveState.player, url, liveState.decoder).then((r) => {
+    MS.playExternal(liveState.player, rawUrl, liveState.decoder).then((r) => {
       if (r && r.error) liveShowMsg('调用失败：' + r.error + '（可切回内置播放器）');
       else liveShowMsg('已在 ' + liveState.player + ' 中打开（硬解优先）');
     });
     return;
   }
-  // 内置播放器：HLS 用 worker + 低延迟缓冲，硬件解码由 Chromium 承担
+  // 内置播放器：经主进程代理取流，绕过 IPTV 源普遍缺失的 CORS 头
   const v = $('#liveVideo'); if (!v) return;
-  const isHls = /\.m3u8?(\?|$)/i.test(url);
+  const isHls = /\.m3u8?(\?|$)/i.test(rawUrl);
   const armWatchdog = () => {
     clearTimeout(liveState.timer);
     liveState.timer = setTimeout(() => {
@@ -713,29 +920,42 @@ function livePlayChannel(ch, lineIdx) {
   liveState.playing = false;
   v.onplaying = () => { liveState.playing = true; clearTimeout(liveState.timer); const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden'); };
   v.onerror = () => { if (ch.urls.length > 1) { liveShowMsg('线路' + (lineIdx + 1) + ' 出错，切换下一条…'); livePlayChannel(ch, (lineIdx + 1) % ch.urls.length); } };
-  if (window.Hls && window.Hls.isSupported() && isHls) {
-    const hls = new window.Hls({
-      enableWorker: liveState.decoder !== 'software',
-      lowLatencyMode: true,
-      backBufferLength: 20,
-      maxBufferLength: 12,
-      maxMaxBufferLength: 30,
-      manifestLoadingMaxRetry: 1,
-      levelLoadingMaxRetry: 2,
-      fragLoadingMaxRetry: 2,
-    });
-    hls.loadSource(url); hls.attachMedia(v);
-    hls.on(window.Hls.Events.ERROR, (_e, data) => {
-      if (data && data.fatal && ch.urls.length > 1) {
-        liveShowMsg('线路' + (lineIdx + 1) + ' 播放失败，切换下一条…');
-        livePlayChannel(ch, (lineIdx + 1) % ch.urls.length);
-      }
-    });
-    liveState.hls = hls;
-    v.play().catch(() => {});
-  } else {
-    v.src = url; v.play().catch(() => {});
-  }
+  MS.proxyUrl(rawUrl).then((url) => {
+    if (window.Hls && window.Hls.isSupported() && isHls) {
+      const hls = new window.Hls({
+        enableWorker: liveState.decoder !== 'software',
+        lowLatencyMode: true,
+        backBufferLength: 20,
+        maxBufferLength: 12,
+        maxMaxBufferLength: 30,
+        manifestLoadingMaxRetry: 1,
+        levelLoadingMaxRetry: 2,
+        fragLoadingMaxRetry: 2,
+        // 关键：把 hls.js 内部的清单/分片请求也改写到本地代理，
+        // 否则 m3u8 里的分片相对路径仍会直连远端并被 CORS 拦截
+        xhrSetup: function (xhr, u) {
+          try { xhr.open('GET', MS.localProxy(u), true); } catch (e) {}
+        },
+      });
+      hls.loadSource(url); hls.attachMedia(v);
+      hls.on(window.Hls.Events.ERROR, (_e, data) => {
+        if (data && data.fatal && ch.urls.length > 1) {
+          liveShowMsg('线路' + (lineIdx + 1) + ' 播放失败，切换下一条…');
+          livePlayChannel(ch, (lineIdx + 1) % ch.urls.length);
+        }
+      });
+      liveState.hls = hls;
+      v.play().catch(() => {});
+    } else {
+      // 非 m3u8（flv / 无扩展名流 / mp4）：先按原生方式尝试，
+      // flv 在 Chromium 不支持，失败后交给外部播放器（mpv/VLC）处理
+      v.src = url; v.play().catch(() => {
+        liveShowMsg('该线路为 FLV 等格式，浏览器无法直接播放，请把「播放器」切换为 mpv/VLC');
+      });
+    }
+  }).catch(() => {
+    v.src = rawUrl; v.play().catch(() => {});
+  });
   armWatchdog();
   const cp = $('#liveCenterPlay'); if (cp) cp.classList.remove('hidden');
 }
@@ -768,11 +988,20 @@ $('#quickSearch').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { const kw = e.target.value.trim(); if (kw) doSearch(kw); }
 });
 $('#btnReload').onclick = async () => {
-  state.typeMap = {}; state.catList = {}; state._catTid = {};
+  state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
   await loadConfig();
   liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
   if (state.view === 'live') renderLive();
   toast('配置与分类已重新加载');
+};
+const bas = $('#btnAutoSite');
+if (bas) bas.onclick = async () => {
+  bas.disabled = true; bas.textContent = '检测中…';
+  try {
+    await autoPickSite();
+  } finally {
+    bas.disabled = false; bas.textContent = '⚡ 自动选站';
+  }
 };
 $('#btnImport').onclick = () => $('#importDialog').classList.remove('hidden');
 $('#btnImportCancel').onclick = () => $('#importDialog').classList.add('hidden');
@@ -796,3 +1025,18 @@ $('#btnImportOk').onclick = async () => {
   try { await loadConfig(); document.title = '影视舱 MediaShell · ' + state.sites.length + '站'; }
   catch (e) { $('#content').innerHTML = '<div class="empty">配置加载失败：' + esc(e.message) + '</div>'; }
 })();
+
+// 自动化自检钩子：供主进程 executeJavaScript 调用（仅自检模式使用）
+window.__msSelfTest = {
+  state: state,
+  liveState: liveState,
+  getLiveCache: () => liveCache,
+  renderSites: renderSites,
+  renderHome: renderHome,
+  setView: setView,
+  isCMS: isCMS,
+  apiBase: apiBase,
+  join: join,
+  probeAllSites: probeAllSites,
+  autoPickSite: autoPickSite,
+};

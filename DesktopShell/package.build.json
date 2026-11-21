@@ -1,0 +1,14 @@
+{
+  "name": "medi-shell",
+  "version": "1.4.2",
+  "description": "影视舱 MediaShell - 适合电脑观看的影视资源桌面壳",
+  "main": "main.js",
+  "author": "amygoTV",
+  "license": "MIT",
+  "private": true,
+  "scripts": {},
+  "keywords": [],
+  "devDependencies": {
+    "electron": "28.3.3"
+  }
+}

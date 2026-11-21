@@ -3,7 +3,7 @@ productName: MediaShell
 copyright: Copyright (c) 2026 amygoTV
 directories:
   app: _stage
-  output: dist-exe3
+  output: dist-exe-v142
   buildResources: build
 files:
   - "**/*"
