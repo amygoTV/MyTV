@@ -65,12 +65,12 @@ def check_child(item):
 
 def local_path_for(url):
     """Map self-hosted CDN URLs to local repo files; return None for external."""
-    marker = "@master/"
-    tagged = "@v1.4.8/"
-    for m in (tagged, marker):
-        if m in url and "amygoTV/MyTV" in url:
-            from urllib.parse import unquote
-            return unquote(url.split(m, 1)[1].split("?", 1)[0])
+    import re
+    # 匹配 @<任意分支或tag>/ 形式（如 @master/、@v1.4.9/）
+    m = re.search(r"amygoTV/MyTV@[^/]+/(.+)$", url)
+    if m:
+        from urllib.parse import unquote
+        return unquote(m.group(1).split("?", 1)[0])
     return None
 
 
