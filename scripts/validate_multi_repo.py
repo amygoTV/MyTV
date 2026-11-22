@@ -8,8 +8,9 @@ Checks (fail fast, no commit on failure):
   2. Every child URL in aizheteng.json still returns a strict-valid JSON
      config with a non-empty sites array. This catches the regression where
      a self-hosted config got a leading // comment and broke parsing.
-  3. zheteng.json keeps its primary + backup entry (cdn.jsdelivr.net +
-     fastly.jsdelivr.net) pointing at aizheteng.json, and both URLs are live.
+  3. zheteng.json contains exactly two entries -- the primary (cdn.jsdelivr.net)
+     and backup (fastly.jsdelivr.net) aizheteng.json URLs -- and both are live.
+     No extra storeHouse entries are allowed.
 """
 import concurrent.futures
 import json
@@ -101,22 +102,27 @@ def main():
         if not ok:
             bad.append("aizheteng child %s: %s" % (name, detail))
 
-    # 3) zheteng primary + backup entries must both be present and live
+    # 3) zheteng must be exactly the primary + backup aizheteng entries
     houses = zhet.get("storeHouse", [])
-    aiz_urls = [h.get("sourceUrl", "") for h in houses if "aizheteng.json" in h.get("sourceUrl", "")]
-    if len(aiz_urls) < 2:
-        bad.append("zheteng.json missing primary+backup aizheteng entries (got %d)" % len(aiz_urls))
-    else:
-        for u in aiz_urls[:2]:
-            try:
-                local = local_path_for(u)
-                raw = Path(local).read_bytes() if local and Path(local).exists() else fetch(u)
-                data = json.loads(raw.decode("utf-8-sig"))
-                if not data.get("urls"):
-                    raise ValueError("empty urls")
-                log("  zheteng entry OK: %s" % u)
-            except Exception as exc:
-                bad.append("zheteng entry %s: %s" % (u, str(exc)[:120]))
+    if len(houses) != 2:
+        bad.append("zheteng.json must contain exactly 2 entries (got %d)" % len(houses))
+    aiz_urls = [h.get("sourceUrl", "") for h in houses if isinstance(h, dict)]
+    if not all("aizheteng.json" in u for u in aiz_urls):
+        bad.append("zheteng.json entries must all point to aizheteng.json: %s" % aiz_urls)
+    elif len(aiz_urls) == 2:
+        if "cdn.jsdelivr.net" not in aiz_urls[0] or "fastly.jsdelivr.net" not in aiz_urls[1]:
+            bad.append("zheteng.json primary/backup order or host mismatch: %s" % aiz_urls)
+        else:
+            for u in aiz_urls:
+                try:
+                    local = local_path_for(u)
+                    raw = Path(local).read_bytes() if local and Path(local).exists() else fetch(u)
+                    data = json.loads(raw.decode("utf-8-sig"))
+                    if not data.get("urls"):
+                        raise ValueError("empty urls")
+                    log("  zheteng entry OK: %s" % u)
+                except Exception as exc:
+                    bad.append("zheteng entry %s: %s" % (u, str(exc)[:120]))
 
     if bad:
         log("VALIDATION FAILED:")

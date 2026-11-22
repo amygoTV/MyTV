@@ -84,7 +84,7 @@ https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/YSC/<文件名>.json
 | `高中课堂.json` | `csp_BiliGuard` + `Edu/senior.json` | 高一 / 高二 / 高三各科及信息技术（28 类） |
 
 - 四类课堂源各自只读取自己的 `Edu/*.json`，分类从 JSON 的 `class[].type_name` 生成并去重，不会把别的学段分类带进首页。
-- 这 14 个单用途配置已同时加入 `aizheteng.json`（`urls`）和 `zheteng.json`（`storeHouse`），可在多仓索引里逐项导入；也可以只导入你需要的那一条。
+- 这 14 个单用途配置已加入 `aizheteng.json`（`urls`），可在多仓索引里逐项导入；也可以只导入你需要的那一条。`zheteng.json` 仅保留 `aizheteng.json` 主备入口，不再逐条列出单用途配置。
 
 ## 二、多仓索引 aizheteng.json
 
@@ -109,7 +109,7 @@ https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ### 线路说明
 
 - `urls`：21 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库：原有 6 条 + `💣王炸资源💣` 聚合配置 + 14 条垂直分类单用途配置；**实际输出不含外部站点**，`scripts/aizheteng_sources.json` 里保留的少数外部地址仅作 CI 验活兜底（自托管节点都挂时才可能启用）。
-- `zheteng.json` 的 `storeHouse` 同步扩展为 17 条（原有 3 条 + 14 条垂直分类配置）。
+- `zheteng.json` 的 `storeHouse` 只保留 2 条：主节点 `cdn.jsdelivr.net` 与备节点 `fastly.jsdelivr.net`，均指向 `aizheteng.json`；不再放入 `YSCSites.json` 或各垂直分类配置。
 - 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`BiliLive.txt`（均通过 `cdn.jsdelivr.net` 加速）。
 
 ### 自动更新
