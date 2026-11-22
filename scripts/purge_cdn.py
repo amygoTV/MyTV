@@ -36,6 +36,8 @@ DEFAULT_PATHS = [
     # multi-repo entry points
     "zheteng.json",
     "aizheteng.json",
+    "zheteng_v2.json",
+    "aizheteng_v2.json",
     # standalone interfaces users subscribe directly
     "YSCSites.json",
     "TVBoxDesktop.json",
@@ -64,6 +66,22 @@ DEFAULT_PATHS = [
     "YSCv2/初中课堂.json",
     "YSCv2/高中课堂.json",
     # disguised spider jars (real .jar gets HTTP 403 on jsdelivr)
+    # cache-busted aggregate + vertical configs (v3 = current, v2 kept for compat)
+    "YSCv3/YSCSites.json",
+    "YSCv3/一直播.json",
+    "YSCv3/儿童启蒙.json",
+    "YSCv3/初中课堂.json",
+    "YSCv3/吃瓜看球.json",
+    "YSCv3/小学课堂.json",
+    "YSCv3/少儿动漫.json",
+    "YSCv3/少儿动漫点播.json",
+    "YSCv3/比赛回放.json",
+    "YSCv3/漫剧点播.json",
+    "YSCv3/看球赛事.json",
+    "YSCv3/短剧漫剧.json",
+    "YSCv3/短剧点播.json",
+    "YSCv3/赛事点播.json",
+    "YSCv3/高中课堂.json",
     "spider/fan.txt",
     "spider/fan_v2.txt",
     "spider/fty.txt",

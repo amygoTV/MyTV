@@ -2,11 +2,11 @@
   "storeHouse": [
     {
       "sourceName": "🍺爱折腾缝合仓🍖免费接口🌭",
-      "sourceUrl": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json"
+      "sourceUrl": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json"
     },
     {
       "sourceName": "🍻爱折腾备选仓🍖严禁贩卖🌭",
-      "sourceUrl": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json"
+      "sourceUrl": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json"
     }
   ]
 }

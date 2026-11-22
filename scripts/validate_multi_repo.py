@@ -3,21 +3,22 @@
 """Validate multi-warehouse indexes before CI commits them.
 
 Checks (fail fast, no commit on failure):
-  1. aizheteng.json / zheteng.json are strict-valid JSON (no // comments,
-     no trailing commas) -- exactly what TVBox/影视仓 clients require.
-  2. Every child URL in aizheteng.json still returns a strict-valid JSON
-     config with a non-empty sites array. This catches the regression where
+  1. aizheteng.json / aizheteng_v2.json / zheteng.json / zheteng_v2.json are
+     strict-valid JSON (no // comments, no trailing commas) -- exactly what
+     TVBox/影视仓 clients require.
+  2. Every child URL in the index still returns a strict-valid JSON config
+     with a non-empty sites array. This catches the regression where
      a self-hosted config got a leading // comment and broke parsing.
-  3. zheteng.json contains exactly two entries -- the primary (cdn.jsdelivr.net)
-     and backup (gcore.jsdelivr.net) aizheteng.json URLs -- and both are live.
-     No extra storeHouse entries are allowed.
-  4. Every aizheteng.json entry name contains an emoji (user-required format).
+  3. zheteng_v2.json contains exactly two entries -- the primary
+     (cdn.jsdelivr.net) and backup (gcore.jsdelivr.net) aizheteng_v2.json
+     URLs -- and both are live. No extra storeHouse entries are allowed.
+  4. Every index entry name contains an emoji (user-required format).
   5. Every self-hosted config's spider field is an absolute jsdelivr URL with
      a ;md5;<32hex> suffix whose md5 matches the local .txt jar. Dead hosts
      (gh-proxy.com / raw.githubusercontent.com), relative ./spider.jar paths
      and real .jar extensions (jsdelivr 403) are rejected outright.
-  6. The 14 vertical YSC entries in aizheteng.json must point at YSCv2/ --
-     cache-busted copies, so clients never receive the stale gh-proxy config.
+  6. The 15 vertical self-hosted entries must point at YSCv3/ -- cache-busted
+     copies, so clients never receive the stale gh-proxy config.
 """
 import concurrent.futures
 import hashlib
@@ -50,7 +51,7 @@ def fetch(url):
 EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
 SPIDER_OK_RE = re.compile(
     r"^https://cdn\.jsdelivr\.net/gh/amygoTV/MyTV@master/spider/[A-Za-z0-9_]+\.txt;md5;[0-9a-f]{32}$")
-VERTICAL_RE = re.compile(r"/YSC(?:v2)?/(?!YSCSites\.json)[^/]+\.json")
+VERTICAL_RE = re.compile(r"/YSC(?:v2|v3)?/(?!YSCSites\.json)[^/]+\.json")
 DEAD_HOSTS = ("gh-proxy.com", "raw.githubusercontent.com")
 
 
@@ -126,38 +127,39 @@ def local_path_for(url):
 
 def main():
     bad = []
+    parsed = {}
+    for name in ("aizheteng.json", "aizheteng_v2.json",
+                 "zheteng.json", "zheteng_v2.json"):
+        try:
+            parsed[name] = strict_json(name)
+        except Exception as exc:
+            log("%s strict parse FAILED: %s" % (name, exc))
+            return 1
+        log("%s strict parse OK" % name)
 
-    # 1) strict parse both indexes
-    try:
-        aiz = strict_json("aizheteng.json")
-    except Exception as exc:
-        log("aizheteng.json strict parse FAILED: %s" % exc)
-        return 1
-    log("aizheteng.json strict parse OK (%d entries)" % len(aiz.get("urls", [])))
-    vertical = [x for x in aiz.get("urls", [])
-                if isinstance(x, dict) and VERTICAL_RE.search(x.get("url", ""))]
-    stale_vertical = [x.get("name", "?") for x in vertical
-                      if "/YSCv2/" not in x.get("url", "")]
-    if stale_vertical:
-        bad.append("vertical entries must use cache-busted YSCv2/: %s" % stale_vertical)
-    else:
-        log("vertical entries use YSCv2/ OK (%d entries)" % len(vertical))
-    no_emoji = [x.get("name", "?") for x in aiz.get("urls", [])
-                if isinstance(x, dict) and not has_emoji(x.get("name", ""))]
-    if no_emoji:
-        bad.append("aizheteng names missing emoji: %s" % no_emoji)
-    else:
-        log("aizheteng names emoji OK (%d entries)" % len(aiz.get("urls", [])))
+    # 1) emoji 规则（用户要求所有线路名带 emoji）
+    for name in ("aizheteng.json", "aizheteng_v2.json"):
+        entries = [x for x in parsed[name].get("urls", []) if isinstance(x, dict)]
+        no_emoji = [x.get("name", "?") for x in entries if not has_emoji(x.get("name", ""))]
+        if no_emoji:
+            bad.append("%s names missing emoji: %s" % (name, no_emoji))
+        else:
+            log("%s names emoji OK (%d entries)" % (name, len(entries)))
 
-    try:
-        zhet = strict_json("zheteng.json")
-    except Exception as exc:
-        log("zheteng.json strict parse FAILED: %s" % exc)
-        return 1
-    log("zheteng.json strict parse OK (%d entries)" % len(zhet.get("storeHouse", [])))
-
-    # 2) every aizheteng child must parse strictly online
+    # 2) 主索引取 aizheteng_v2.json（配置与用户订阅都指向这个新路径）
+    aiz = parsed["aizheteng_v2.json"]
     items = [x for x in aiz.get("urls", []) if isinstance(x, dict) and x.get("url")]
+
+    # 3) 垂直线路必须走 YSCv3/（全新路径，避开 CDN 陈旧缓存）
+    vertical = [x for x in items if VERTICAL_RE.search(x.get("url", ""))]
+    stale_vertical = [x.get("name", "?") for x in vertical
+                      if "/YSCv3/" not in x.get("url", "")]
+    if stale_vertical:
+        bad.append("vertical entries must use cache-busted YSCv3/: %s" % stale_vertical)
+    else:
+        log("vertical entries use YSCv3/ OK (%d entries)" % len(vertical))
+
+    # 4) 每个子配置都必须严格可解析且 sites 非空
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
         results = list(pool.map(check_child, items))
     for name, ok, detail in results:
@@ -165,27 +167,29 @@ def main():
         if not ok:
             bad.append("aizheteng child %s: %s" % (name, detail))
 
-    # 3) zheteng must be exactly the primary + backup aizheteng entries
-    houses = zhet.get("storeHouse", [])
+    # 5) zheteng_v2.json 必须恰好是主 cdn + 备 gcore 两条，且都指向 aizheteng_v2.json
+    houses = parsed["zheteng_v2.json"].get("storeHouse", [])
     if len(houses) != 2:
-        bad.append("zheteng.json must contain exactly 2 entries (got %d)" % len(houses))
-    aiz_urls = [h.get("sourceUrl", "") for h in houses if isinstance(h, dict)]
-    if not all("aizheteng.json" in u for u in aiz_urls):
-        bad.append("zheteng.json entries must all point to aizheteng.json: %s" % aiz_urls)
-    elif len(aiz_urls) == 2:
-        if "cdn.jsdelivr.net" not in aiz_urls[0] or "gcore.jsdelivr.net" not in aiz_urls[1]:
-            bad.append("zheteng.json primary/backup order or host mismatch: %s" % aiz_urls)
+        bad.append("zheteng_v2.json must contain exactly 2 entries (got %d)" % len(houses))
+    house_urls = [h.get("sourceUrl", "") for h in houses if isinstance(h, dict)]
+    if not all("aizheteng_v2.json" in u for u in house_urls):
+        bad.append("zheteng_v2.json entries must all point to aizheteng_v2.json: %s"
+                   % house_urls)
+    elif len(house_urls) == 2:
+        if "cdn.jsdelivr.net" not in house_urls[0] or "gcore.jsdelivr.net" not in house_urls[1]:
+            bad.append("zheteng_v2.json primary/backup order or host mismatch: %s"
+                       % house_urls)
         else:
-            for u in aiz_urls:
+            for u in house_urls:
                 try:
                     local = local_path_for(u)
                     raw = Path(local).read_bytes() if local and Path(local).exists() else fetch(u)
                     data = json.loads(raw.decode("utf-8-sig"))
                     if not data.get("urls"):
                         raise ValueError("empty urls")
-                    log("  zheteng entry OK: %s" % u)
+                    log("  zheteng_v2 entry OK: %s" % u)
                 except Exception as exc:
-                    bad.append("zheteng entry %s: %s" % (u, str(exc)[:120]))
+                    bad.append("zheteng_v2 entry %s: %s" % (u, str(exc)[:120]))
 
     if bad:
         log("VALIDATION FAILED:")

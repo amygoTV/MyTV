@@ -1,0 +1,14 @@
+{
+  "storeHouse": [
+    {
+      "sourceUrl": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json",
+      "sourceName": "🍺爱折腾主仓🍺",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json"
+    },
+    {
+      "sourceUrl": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json",
+      "sourceName": "🍻爱折腾备选仓🍻",
+      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json"
+    }
+  ]
+}

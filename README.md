@@ -93,13 +93,13 @@ https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/YSC/<文件名>.json
 ### 订阅地址
 
 ```text
-https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
+https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json
 ```
 
 备用：
 
 ```text
-https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
+https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json
 ```
 
 > 原 Gitee 仓库 `amygotv/tv` 已被封禁（HTTP 423），因此原有固定线路改用本仓库 GitHub 内容的 `cdn.jsdelivr.net` 加速地址。

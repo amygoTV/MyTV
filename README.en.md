@@ -17,13 +17,13 @@ GitHub Actions refreshes the playlist from `amygoTV/Livelist` every 6 hours. Not
 ## 2. Multi-warehouse index
 
 ```text
-https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
+https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json
 ```
 
 Fallback:
 
 ```text
-https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
+https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng_v2.json
 ```
 
 The original Gitee repository `amygotv/tv` is blocked (HTTP 423), so the pinned
