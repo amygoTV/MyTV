@@ -31,14 +31,26 @@ for stream in (sys.stdout, sys.stderr):
     if hasattr(stream, "reconfigure"):
         stream.reconfigure(encoding="utf-8", errors="replace")
 
-GROUPS = ["央视频道", "卫视频道", "港澳台频道", "电影频道", "体育频道"]
-MOVIE_KEYS = ("超级电影", "明星大片", "动作电影", "爱情喜剧", "惊悚悬疑",
-              "黑莓电影", "海外剧场", "欢乐剧场", "古装剧场", "家庭剧场",
-              "潮妈辣婆", "精品大剧", "东北热剧", "军旅剧场", "超级电视剧")
-SPORT_KEYS = ("超级体育", "精品体育", "哒啵赛事", "哒啵电竞",
-              "武搏世界", "中国功夫")
+GROUPS = ["央视频道", "卫视频道", "港澳台频道", "影视轮播", "体育频道"]
+MOVIE_RE = re.compile(r"(电影|影视|影院|剧场|剧集|电视剧|动画|动漫|大片|老片|相声|评书|戏曲|综艺|晚会|动作片|喜剧片|科幻|枪战片|战争片|动画片|纪录片)", re.I)
+SPORT_RE = re.compile(r"(体育|足球|篮球|NBA|赛事|奥运|网球|羽毛球|赛车|排球|乒乓|台球|游泳|田径|西甲|英超|中超|欧冠|冰壶|冰球)")
 EXTRA_FILES = ("BiliLive.txt", "LiveSports.txt")
 AD_RE = re.compile(r"(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)", re.I)
+BLACKLIST_FILE = Path("scripts/ad_blacklist.txt")
+
+
+def load_blacklist():
+    pats = []
+    if BLACKLIST_FILE.exists():
+        for line in BLACKLIST_FILE.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            try:
+                pats.append(re.compile(line))
+            except re.error:
+                pass
+    return pats
 
 
 def log(msg):
@@ -120,7 +132,9 @@ def main():
         if len(v6) < 2:
             few6.append((n, len(v6)))
     if few4:
-        bad.append("IPv4 不足 3 条的频道 %d 个: %s" % (len(few4), few4[:20]))
+        # 剔除广告源后，部分频道公网 IPv4 客观不足 3 条；宁缺毋滥，不塞广告源
+        warn.append("IPv4 少于 3 条的频道 %d 个（已剔除广告源，不再凑数）: %s"
+                    % (len(few4), few4[:20]))
     else:
         log("全部 71 个保底频道均有 >= 3 条 IPv4")
     if few6:
@@ -147,6 +161,17 @@ def main():
     else:
         log("港澳台组顺序 OK（%d 个频道）" % len(hktw_expect))
 
+    # 人工确认的广告台/错台源不得出现在任何直播源文件里
+    blacklist = load_blacklist()
+    for f in ("TVLives.txt", "TVLives_v2.txt") + EXTRA_FILES:
+        if not Path(f).exists():
+            continue
+        for ln, line in enumerate(Path(f).read_text(encoding="utf-8-sig").splitlines(), 1):
+            for u in [x.strip() for x in line.split(",")[-1].split("#") if x.strip()]:
+                if any(p.search(u) for p in blacklist):
+                    bad.append("%s:%d 命中广告黑名单: %s" % (f, ln, u[:90]))
+    log("广告黑名单校验完成（%d 条规则）" % len(blacklist))
+
     # 广告残留（与旧 CI 内联校验一致）
     for f in ("TVLives.txt",) + EXTRA_FILES:
         if not Path(f).exists():
@@ -155,17 +180,17 @@ def main():
             if AD_RE.search(line):
                 bad.append("%s:%d 广告残留 %r" % (f, ln, line.strip()[:50]))
 
-    for g, keys in (("电影频道", MOVIE_KEYS), ("体育频道", SPORT_KEYS)):
+    for g, kw in (("影视轮播", MOVIE_RE), ("体育频道", SPORT_RE)):
         chans = groups.get(g, {})
         if not chans:
             bad.append("%s 分组为空" % g)
             continue
-        wrong = [n for n in chans
-                 if not n.startswith("NewTV") or not any(k in n for k in keys)]
+        wrong = [n for n in chans if not kw.search(n)]
         if wrong:
-            bad.append("%s 含名不副实的频道: %s" % (g, wrong))
+            bad.append("%s 含名不副实的频道: %s" % (g, wrong[:12]))
         else:
-            log("%s OK（%d 个 NewTV 轮播频道，名称与内容匹配）" % (g, len(chans)))
+            pub = sum(1 for us in chans.values() for u in us if not is_v6(u))
+            log("%s OK（%d 个频道，名称与内容匹配；公网线路 %d 条）" % (g, len(chans), pub))
 
     # *_v2.txt 是配置实际引用的新路径，必须与主文件逐字节一致
     for f in ("TVLives.txt", "BiliLive.txt", "LiveSports.txt"):

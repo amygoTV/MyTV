@@ -3,7 +3,7 @@
     "央视频道",
     "卫视频道",
     "港澳台频道",
-    "电影频道",
+    "影视轮播",
     "体育频道"
   ],
   "cctv_order": [
@@ -80,9 +80,10 @@
       "group": "央视频道",
       "order": 0,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv1hd.m3u8",
         "http://107.150.60.122/live/cctv1hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv1hd"
+        "http://198.204.228.26/live/cctv1hd.m3u8",
+        "http://192.151.150.154/live/cctv1hd.m3u8",
+        "http://204.12.221.218:8181/3m1080p/cctv1.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226895/1.m3u8?",
@@ -93,9 +94,7 @@
       "group": "央视频道",
       "order": 1,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv2hd.m3u8",
-        "http://107.150.60.122/live/cctv2hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv2hd"
+        "http://198.204.228.26/live/cctv2hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226893/1.m3u8?",
@@ -106,9 +105,9 @@
       "group": "央视频道",
       "order": 2,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv3hd.m3u8",
-        "http://107.150.60.122/live/cctv3hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv3hd"
+        "http://198.204.228.26/live/cctv3hd.m3u8",
+        "http://192.151.150.154/live/cctv3hd.m3u8",
+        "http://173.208.212.130:8181/720p/cctv3.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226471/1.m3u8?",
@@ -119,9 +118,10 @@
       "group": "央视频道",
       "order": 3,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv4hd.m3u8",
         "http://107.150.60.122/live/cctv4hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv4hd"
+        "http://198.204.228.26/live/cctv4hd.m3u8",
+        "http://192.151.150.154/live/cctv4hd.m3u8",
+        "http://173.208.212.130:8181/720p/cctv4.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226335/1.m3u8?",
@@ -132,9 +132,8 @@
       "group": "央视频道",
       "order": 4,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv5hd.m3u8",
-        "http://107.150.60.122/live/cctv5hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv5hd"
+        "http://198.204.228.26/live/cctv5.m3u8",
+        "http://192.151.150.154/live/cctv5hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226469/1.m3u8?",
@@ -145,9 +144,9 @@
       "group": "央视频道",
       "order": 6,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv6hd.m3u8",
         "http://107.150.60.122/live/cctv6hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv6hd"
+        "http://198.204.228.26/live/cctv6hd.m3u8",
+        "http://192.151.150.154/live/cctv6hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226468/1.m3u8?",
@@ -158,9 +157,8 @@
       "group": "央视频道",
       "order": 7,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv7hd.m3u8",
         "http://107.150.60.122/live/cctv7hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv7hd"
+        "http://192.151.150.154/live/cctv7hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226946/1.m3u8?",
@@ -171,9 +169,10 @@
       "group": "央视频道",
       "order": 8,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv8hd.m3u8",
         "http://107.150.60.122/live/cctv8hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv8hd"
+        "http://198.204.228.26/live/cctv8hd.m3u8",
+        "http://192.151.150.154/live/cctv8hd.m3u8",
+        "http://173.208.212.130:8181/720p/cctv8.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226485/1.m3u8?",
@@ -184,9 +183,9 @@
       "group": "央视频道",
       "order": 9,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv9hd.m3u8",
         "http://107.150.60.122/live/cctv9hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv9hd"
+        "http://192.151.150.154/live/cctv9hd.m3u8",
+        "https://xykt-fix.github.io/Y77.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226944/1.m3u8?",
@@ -197,9 +196,8 @@
       "group": "央视频道",
       "order": 10,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv10hd.m3u8",
         "http://107.150.60.122/live/cctv10hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv10hd"
+        "http://192.151.150.154/live/cctv10hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226937/1.m3u8?",
@@ -210,9 +208,7 @@
       "group": "央视频道",
       "order": 11,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv11hd.m3u8",
-        "http://107.150.60.122/live/cctv11hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv11hd"
+        "http://107.150.60.122/live/cctv11hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226334/1.m3u8?",
@@ -223,9 +219,8 @@
       "group": "央视频道",
       "order": 12,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv12hd.m3u8",
         "http://107.150.60.122/live/cctv12hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv12hd"
+        "http://198.204.228.26/live/cctv12hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226942/1.m3u8?",
@@ -236,9 +231,7 @@
       "group": "央视频道",
       "order": 13,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv13hd.m3u8",
-        "http://107.150.60.122/live/cctv13hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv13hd"
+        "http://192.151.150.154/live/cctv13hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226316/1.m3u8?",
@@ -249,9 +242,10 @@
       "group": "央视频道",
       "order": 14,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv14hd.m3u8",
         "http://107.150.60.122/live/cctv14hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv14hd"
+        "http://198.204.228.26/live/cctv14hd.m3u8",
+        "http://192.151.150.154/live/cctv14hd.m3u8",
+        "http://204.12.221.218:8181/3m1080p/cctv14.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226947/1.m3u8?",
@@ -262,9 +256,9 @@
       "group": "央视频道",
       "order": 15,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv15hd.m3u8",
         "http://107.150.60.122/live/cctv15hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv15hd"
+        "http://198.204.228.26/live/cctv15hd.m3u8",
+        "http://192.151.150.154/live/cctv15hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226333/1.m3u8?",
@@ -275,9 +269,9 @@
       "group": "央视频道",
       "order": 16,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv16hd.m3u8",
         "http://107.150.60.122/live/cctv16hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv16hd"
+        "http://198.204.228.26/live/cctv16hd.m3u8",
+        "http://173.208.212.130:8181/720p/cctv16.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227002/1.m3u8?",
@@ -288,9 +282,10 @@
       "group": "央视频道",
       "order": 17,
       "ipv4": [
-        "http://74.91.26.218:82/live/cctv17hd.m3u8",
         "http://107.150.60.122/live/cctv17hd.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv17hd"
+        "http://198.204.228.26/live/cctv17hd.m3u8",
+        "http://173.208.212.130:8181/720p/cctv17.m3u8",
+        "http://192.151.150.154/live/cctv17hd.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226318/1.m3u8?",
@@ -302,7 +297,6 @@
       "order": 5,
       "ipv4": [
         "http://107.150.60.122/live/cctv5plus.m3u8",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv5phd",
         "http://39.134.24.166/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225761/1.m3u8"
       ],
       "ipv6": [
@@ -665,7 +659,6 @@
       "group": "卫视频道",
       "order": 17,
       "ipv4": [
-        "http://221.7.175.154:8445/tsfile/live/1014_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://api3.52tb.xyz/info?id=40&token=20230227aesvnb",
         "http://111.59.63.32:9901/tsfile/live/1043_1.m3u8"
       ],
@@ -743,7 +736,6 @@
       "group": "卫视频道",
       "order": 23,
       "ipv4": [
-        "http://m3u8.channel.wsrtv.com.cn/cms/videos/nmip-media/channellive/channel7/playlist.m3u8",
         "http://119.39.9.8:9901/tsfile/live/0118_1.m3u8",
         "http://111.59.63.32:9901/tsfile/live/1046_1.m3u8"
       ],

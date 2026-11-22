@@ -10,9 +10,9 @@
    - 卫视组：31 省级卫视 + 深圳卫视，按 2024-2025 黄金时段收视率排名
    - 每个频道最多 3 条 IPv4 + 2 条 IPv6
 2. IPv4 逐条实测可播性；IPv6（移动 IPTV 2409:8087）无出口不探测，作为备用源保留。
-3. 不再生成 PlatformLive（已移除）；地方频道全部剔除。旧的「电影频道/体育频道」
-   因内容与分类不符已废弃，改由 scripts/newtv_plan.json 驱动：只放名副其实的
-   NewTV 电影轮播（超级电影/动作电影/惊悚悬疑…）与体育轮播（超级体育/精品体育…）。
+3. 不再生成 PlatformLive（已移除）；地方频道全部剔除。「影视轮播/体育频道」
+   两个分组改由上游公网影视房间驱动（虎牙/斗鱼/YY/B站一起看），每晚重新拉取并
+   逐条实测，失效自动剔除；NewTV 轮播因公网不可达已于 v1.6.8 移除。
 4. 广告/错台/静态录像/分组噪音过滤全部保留。
 5. 探测不足时保留上一版（防止 CI 上游抖动清空源文件）；保底频道即使单条探测失败
    也保留原始线路，确保每频道 3 条 IPv4 + 2 条 IPv6。
@@ -39,7 +39,6 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
-NEW_PLAN = os.path.join(HERE, 'newtv_plan.json')
 
 UA_PLAYER = 'okHttp/Mursor-1.4.0.0'
 
@@ -54,12 +53,23 @@ SPORTS_SOURCES = [
     'https://peterhchina.github.io/iptv/yylunbo.m3u',
     'https://peterhchina.github.io/iptv/CNTV-V4.m3u',
 ]
+# 影视轮播 / 体育分组的上游（虎牙、斗鱼、YY、B 站一起看）
+SPECIAL_SOURCES = [
+    ('https://peterhchina.github.io/iptv/huyayqk.m3u', UA_PLAYER),
+    ('https://peterhchina.github.io/iptv/douyuyqk.m3u', UA_PLAYER),
+    ('https://peterhchina.github.io/iptv/yylunbo.m3u', UA_PLAYER),
+    ('https://peterhchina.github.io/iptv/bililive.m3u', UA_PLAYER),
+]
 
 # ---------------------------------------------------------------- 过滤规则
 AD_NAME_RE = re.compile(
     r'(支持作者|感谢|订阅|广告|推广|二维码|扫码|公众号|更多资源|获取资源|'
     r'请\s*user|请查看最新|请访问|请到|失效|版权|声明|免责|'
     r'列表更新时间|更新时间|维护中?|暫無|暂无主播|温馨|提示|'
+    r'答疑|教程|招聘|兼职|赚钱|赚米|卖货|厂价|厂家|优惠|团购|工厂直销|'
+    r'官方直播间|需求度|求购|招商|加盟|福利|抽奖|秒杀|特价|批发|货源|'
+    r'下单|客服|咨询|办理|开户|彩票|贷款|回收|二手|装修|培训|招生|'
+    r'年货|特卖|清仓|库存|拿货|正品|代购|微商|私信|加微信|福利彩票|'
     r'测试|測試|test|^\d+$|^\d{4}[-/]\d{1,2})', re.I)
 AD_HOST_RE = re.compile(
     r'(vd\d*\.bdstatic\.com|bdstatic\.com|\.upic\.|\.kwimgs\.com|'
@@ -67,9 +77,35 @@ AD_HOST_RE = re.compile(
 STATIC_EXT_RE = re.compile(r'\.(mp4|flv|mp3|aac|m4a|mkv|avi)(\?|$)', re.I)
 GROUP_NOISE_RE = re.compile(r'(列表更新时间|更新时间|4K频道|溫馨|温馨|提示|维护)')
 NORM_RE = re.compile(r'[\s\-_—·・]+')
+# 人工抽帧确认过的广告台/错台源（scripts/ad_blacklist.txt），必须过滤
+BLACKLIST_FILE = os.path.join(HERE, 'ad_blacklist.txt')
+
+
+def load_blacklist():
+    pats = []
+    try:
+        with open(BLACKLIST_FILE, encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                try:
+                    pats.append(re.compile(line))
+                except re.error:
+                    pass
+    except OSError:
+        pass
+    return pats
+
+
+AD_BLACKLIST = load_blacklist()
+
+
+def is_blacklisted(url):
+    return any(p.search(url) for p in AD_BLACKLIST)
 SUFFIX_RE = re.compile(r'(高清|超清|蓝光|超高清|HD|FHD|4K|1080P|720P|标清|标高清)+$', re.I)
-SPORTS_RE = re.compile(r'(体育|足球|篮球|NBA|CCTV-?5|赛事|奥运|网球|羽毛球|F1|赛车|排球|乒乓|台球|游泳|田径|西甲|英超|中超|欧冠)', re.I)
-MOVIE_RE = re.compile(r'(电影|影院|影厅|剧场|CCTV-?6|动作片|喜剧片|经典电影|影视)', re.I)
+SPORTS_RE = re.compile(r'(体育|足球|篮球|NBA|CCTV-?5|赛事|奥运|网球|羽毛球|F1|赛车|排球|乒乓|台球|游泳|田径|西甲|英超|中超|欧冠|冰壶|冰球)', re.I)
+MOVIE_RE = re.compile(r'(电影|影院|影厅|剧场|CCTV-?6|经典电影|影视|动画|动漫|大片|老片|相声|评书|戏曲|综艺|晚会|动作片|喜剧片|科幻|枪战片|战争片|动画片|纪录片)', re.I)
 
 
 def norm_key(name):
@@ -131,9 +167,18 @@ def playable(url, timeout=8):
             if r.status not in (200, 206):
                 return False
             body = r.read(8192)
+            if not body:
+                return False
             if b'#EXTM3U' in body:
                 return True
-            return ('mpegurl' in str(r.headers.get('Content-Type', '')).lower()) and len(body) > 40
+            # FLV 直流（虎牙/斗鱼/YY 一起看房间返回的就是 FLV，不是 m3u8）
+            if body[:3] == b'FLV':
+                return True
+            # TS 分片直链
+            if body[:1] == b'\x47' and len(body) > 188:
+                return True
+            ctype = str(r.headers.get('Content-Type', '')).lower()
+            return ('mpegurl' in ctype or 'x-flv' in ctype or 'mp2t' in ctype) and len(body) > 40
     except Exception:
         return False
 
@@ -196,8 +241,62 @@ def format_txt(group_items, groups_order):
     return lines
 
 
+def build_special_lives(out_dir, workers, probe_limit):
+    """影视轮播 / 体育频道分组。
+
+    公网影视轮播源（虎牙/斗鱼/YY/B站）每晚重新拉取并逐条实测，失效的自动剔除，
+    避免把死链写进订阅。NewTV 轮播因实测 IPv4 全部超时、IPv6 只在移动网络可用，
+    已于 v1.6.8 整体移除。
+    """
+    print('\n=== 构建 影视轮播 / 体育频道 分组 ===', flush=True)
+    raw = []
+    for url, ua in SPECIAL_SOURCES:
+        try:
+            got = parse_m3u(fetch(url, 30, ua))
+            raw.extend(got)
+            print('  拉取 %-40s %4d 条' % (url.split('/')[-1], len(got)), flush=True)
+        except Exception as e:
+            print('  拉取失败 %-40s %s' % (url.split('/')[-1], str(e)[:36]), flush=True)
+
+    cand = []
+    for group, name, url in raw:
+        if GROUP_NOISE_RE.search(group) or AD_NAME_RE.search(name) or AD_HOST_RE.search(url):
+            continue
+        if STATIC_EXT_RE.search(url) or is_ipv6(url) or not norm_key(name):
+            continue
+        if is_blacklisted(url):
+            continue
+        if SPORTS_RE.search(name):
+            cand.append(('sports', clean_name(name), url))
+        elif MOVIE_RE.search(name):
+            cand.append(('movie', clean_name(name), url))
+
+    by = {}
+    for kind, name, url in cand:
+        key = (kind, name)
+        by.setdefault(key, [])
+        if url not in by[key] and len(by[key]) < 3:
+            by[key].append(url)
+    picks = [(kind, name, u) for (kind, name), urls in by.items() for u in urls]
+    if probe_limit > 0 and len(picks) > probe_limit:
+        picks = picks[:probe_limit]
+    alive = set(probe_many([u for _, _, u in picks], workers, '影视/体育'))
+
+    out = {'movie': {}, 'sports': {}}
+    for kind, name, u in picks:
+        if u not in alive:
+            continue
+        out[kind].setdefault(name, [])
+        if u not in out[kind][name]:
+            out[kind][name].append(u)
+    print('  => 影视轮播 %d 频道 / 体育 %d 频道（公网存活 %d 条）' % (
+        len(out['movie']), len(out['sports']),
+        sum(1 for k in out for v in out[k].values() for u in v if not is_ipv6(u))), flush=True)
+    return out
+
+
 def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, prev_content=None):
-    print('\n=== 构建 TVLives.txt（权威频道表 + NewTV 分组） ===', flush=True)
+    print('\n=== 构建 TVLives.txt（权威频道表 + 影视轮播/体育分组） ===', flush=True)
     channels = plan['channels']
     groups_order = plan['groups_order']
 
@@ -219,13 +318,14 @@ def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, pr
         v4_all = [clean_url(u) for u in meta['ipv4'] if not is_ipv6(u)]
         alive = [u for u in v4_all if u in alive_urls]
         rest = [u for u in v4_all if u not in alive_urls]
-        urls = (alive + rest)[:3] + v6_map.get(name, [])[:2]
+        urls = [u for u in (alive + rest)[:3] + v6_map.get(name, [])[:2]
+                if not is_blacklisted(u)]
         if len(urls) < 3:
             urls = [clean_url(u) for u in meta['ipv4'][:3]]
         group_items[meta['group']].append({'name': name, 'urls': urls, 'order': meta['order']})
 
     # 3) NewTV 电影/体育分组：名称与内容严格对应，替换旧的名不副实附加组
-    for key, gname in (('movie', '电影频道'), ('sports', '体育频道')):
+    for key, gname in (('movie', '影视轮播'), ('sports', '体育频道')):
         for i, (name, urls) in enumerate(newtv.get(key, {}).items()):
             group_items[gname].append({
                 'name': name,
@@ -268,6 +368,8 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
         if GROUP_NOISE_RE.search(group) or AD_NAME_RE.search(n) or AD_HOST_RE.search(u):
             continue
         if STATIC_EXT_RE.search(u) or is_ipv6(u) or not norm_key(n):
+            continue
+        if is_blacklisted(u):
             continue
         if filter_fn and not filter_fn(n, u):
             continue
@@ -324,6 +426,8 @@ def build_live_sports(out_dir, workers, probe_limit):
             continue
         if STATIC_EXT_RE.search(u) or is_ipv6(u) or not norm_key(n):
             continue
+        if is_blacklisted(u):
+            continue
         kept.append((clean_name(n), n, u))
     if probe_limit > 0 and len(kept) > probe_limit:
         kept = kept[:probe_limit]
@@ -349,6 +453,8 @@ def build_live_sports(out_dir, workers, probe_limit):
     path = os.path.join(out_dir, 'LiveSports.txt')
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines).rstrip('\n') + '\n')
+    with open(os.path.join(out_dir, 'LiveSports_v2.txt'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write('\n'.join(lines).rstrip('\n') + '\n')
     print('  => LiveSports.txt：%d 频道 / %d bytes' % (len(by), os.path.getsize(path)), flush=True)
     return {'file': 'LiveSports.txt', 'channels': len(by), 'lines': sum(len(v['urls']) for v in by.values())}
 
@@ -369,6 +475,10 @@ def restore(out_dir, name, content):
         return
     with open(os.path.join(out_dir, name), 'w', encoding='utf-8', newline='\n') as f:
         f.write(content)
+    # v2 副本必须与主文件保持一致（配置引用的是 v2）
+    v2 = os.path.join(out_dir, name[:-4] + '_v2.txt')
+    with open(v2, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(content)
 
 
 def main():
@@ -377,17 +487,18 @@ def main():
     ap.add_argument('--probe-limit', type=int, default=0)
     ap.add_argument('--workers', type=int, default=16)
     ap.add_argument('--max-per-source', type=int, default=400)
-    ap.add_argument('--min-channels', type=int, default=40)
+    ap.add_argument('--min-channels', type=int, default=25)
     args = ap.parse_args()
 
     with open(os.path.join(HERE, 'channel_plan.json'), encoding='utf-8') as f:
         plan = json.load(f)
-    with open(NEW_PLAN, encoding='utf-8') as f:
-        newtv = json.load(f)
+
+    # 影视轮播 / 体育：每晚重新拉取并实测（公网源易失效）
+    special = build_special_lives(args.out_dir, args.workers, args.probe_limit)
 
     summary, failed, built = {}, [], []
     jobs = [
-        ('TVLives.txt', lambda: build_tvlives(plan, newtv, args.out_dir, args.workers,
+        ('TVLives.txt', lambda: build_tvlives(plan, special, args.out_dir, args.workers,
                         args.probe_limit, args.max_per_source)),
         ('BiliLive.txt', lambda: build_simple('BiliLive.txt', BILI_SOURCES, args.out_dir,
                         args.workers, args.probe_limit, args.max_per_source)),
