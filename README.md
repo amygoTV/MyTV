@@ -7,7 +7,7 @@ TVBox / 影视仓可用的直播订阅与多仓索引仓库。
 ### 订阅地址
 
 ```text
-https://raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt
 ```
 
 ### 文件说明
@@ -27,7 +27,7 @@ GitHub Actions 每天北京时间 02:17 运行一次（`.github/workflows/LiveSo
 ### 订阅地址
 
 ```text
-https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/YSCSites.json
 ```
 
 ### 说明
@@ -51,7 +51,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 Windows 桌面客户端 [TVBox Desktop](https://github.com/hgtuj5688/tvbox-desktop) 可直接加载本仓库的桌面专用配置：
 
 ```text
-https://raw.githubusercontent.com/amygoTV/MyTV/master/TVBoxDesktop.json
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVBoxDesktop.json
 ```
 
 - 该客户端把数字 `type=3` 当苹果 CMS、`type=1` 当网页规则站，与安卓 TVBox 不同；`TVBoxDesktop.json` 已做转换：11 个 CMS 站写为 `type: "cms"`，10 个 `csp_*` Spider 站写为 `type: "spider"`（桌面端会灰显并提示无法运行）。
@@ -99,14 +99,14 @@ https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 备用：
 
 ```text
-https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 > 原 Gitee 仓库 `amygotv/tv` 已被封禁（HTTP 423），因此原有固定线路改用本仓库 GitHub 内容的 `cdn.jsdelivr.net` 加速地址。
 
 ### 线路说明
 
-- `urls`：21 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库：原有 6 条 + `💣王炸资源💣` 聚合配置 + 14 条垂直分类单用途配置；外部站点线路已移除，`scripts/aizheteng_sources.json` 也已同步清理，避免定时任务再把外部仓写回。
+- `urls`：21 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库：原有 6 条 + `💣王炸资源💣` 聚合配置 + 14 条垂直分类单用途配置；**实际输出不含外部站点**，`scripts/aizheteng_sources.json` 里保留的少数外部地址仅作 CI 验活兜底（自托管节点都挂时才可能启用）。
 - `zheteng.json` 的 `storeHouse` 同步扩展为 17 条（原有 3 条 + 14 条垂直分类配置）。
 - 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`BiliLive.txt`（均通过 `cdn.jsdelivr.net` 加速）。
 
@@ -116,7 +116,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 - `scripts/aizheteng_sources.json` 的 `pinned` 列表逐条验活，包含原有 6 条、`💣王炸资源💣` 和 14 条垂直分类单用途配置；`sources` 列表已清空，避免外部站点接口被定时任务重新写回。
 - `scripts/update_aizheteng.py` 使用 `okhttp/3.15` UA 逐个请求，只有返回 200 且能解析出非空 `sites` 数组的地址才会写入。
 - 所有候选都失败时保留上一条可用地址；没有历史地址的新线路会跳过。下载不到 `list.txt` 时不提交，避免误删。
-- 新增自有线路：在 `scripts/aizheteng_sources.json` 的 `pinned` 中添加 `name` 和 `urls`（gh-proxy + raw 双地址）即可。
+- 新增自有线路：在 `scripts/aizheteng_sources.json` 的 `pinned` 中添加 `name` 和 `urls`（jsdelivr + fastly 双节点）即可；不要用 `raw.githubusercontent.com`，国内/电视端会超时。
 
 ### 影视仓 3.6.1 分类适配
 

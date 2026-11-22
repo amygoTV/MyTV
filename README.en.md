@@ -5,7 +5,7 @@ Live TV subscriptions and multi-warehouse indexes for TVBox / 影视仓.
 ## 1. Live TV playlist
 
 ```text
-https://raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt
 ```
 
 - `TVLives.txt`: TVBox text playlist (`group,#genre#` followed by `name,url`).
@@ -23,7 +23,7 @@ https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 Fallback:
 
 ```text
-https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 The original Gitee repository `amygotv/tv` is blocked (HTTP 423), so the pinned
