@@ -16,9 +16,9 @@ on:
   workflow_dispatch:
     inputs:
       probe_limit:
-        description: '每个文件最多探测多少条（0=全部）'
+        description: '探测总量上限（0=全部，默认500；保底频道不受影响）'
         required: false
-        default: '0'
+        default: '500'
 
 permissions:
   contents: write
@@ -44,7 +44,8 @@ jobs:
 
       - name: Rebuild live sources (plan + probe + filter + merge)
         run: |
-          python3 scripts/build_live_sources.py --out-dir . --workers 20 --probe-limit "${{ inputs.probe_limit || '0' }}"
+          # probe-limit 控制探测总量，避免 CI 上全量(800+)探测超时；权威频道表保底不受影响
+          python3 scripts/build_live_sources.py --out-dir . --workers 32 --probe-limit "${{ inputs.probe_limit || '500' }}"
 
       - name: Validate output (format / ad / must-have channels / order)
         run: |
