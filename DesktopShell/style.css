@@ -3,6 +3,16 @@
   --bg:#0d0f14; --panel:#151922; --panel2:#1c212d; --line:#262d3b;
   --text:#e8ebf2; --muted:#8b94a7; --accent:#ff5c7a; --accent2:#6ea8ff;
   --ok:#3ecf8e; --shadow:0 8px 30px rgba(0,0,0,.45);
+  --skel-a:#171b24; --skel-b:#1f2530; --thumb-fallback:#222833;
+  --player-bg:#05070a; --scroll:#333b4b;
+}
+/* 浅色主题 */
+body.light{
+  --bg:#f4f6fa; --panel:#ffffff; --panel2:#eef1f7; --line:#dde3ee;
+  --text:#1b2130; --muted:#69738a; --accent:#e33f61; --accent2:#2f7de1;
+  --ok:#1f9d63; --shadow:0 8px 30px rgba(30,40,70,.14);
+  --skel-a:#e8ecf3; --skel-b:#f2f5fa; --thumb-fallback:#dfe5ef;
+  --player-bg:#0b0e14; --scroll:#c3ccdd;
 }
 html,body{height:100%;}
 body{
@@ -272,5 +282,105 @@ body{
   border:1px solid var(--accent2); color:var(--text); padding:11px 22px; border-radius:24px;
   z-index:80; box-shadow:var(--shadow); font-size:13px;}
 ::-webkit-scrollbar{width:9px;height:9px;}
-::-webkit-scrollbar-thumb{background:#333b4b; border-radius:5px;}
+::-webkit-scrollbar-thumb{background:var(--scroll); border-radius:5px;}
 ::-webkit-scrollbar-track{background:transparent;}
+
+/* ===== 浅色主题下需要反色的固定深色块 ===== */
+body.light .skel-img, body.light .skel-line{
+  background:linear-gradient(100deg,var(--skel-a) 30%,var(--skel-b) 50%,var(--skel-a) 70%);}
+body.light .thumb.imgloading::after{
+  background:linear-gradient(100deg,var(--skel-a) 30%,var(--skel-b) 50%,var(--skel-a) 70%);}
+body.light .thumb.img-bad{background:var(--thumb-fallback);}
+body.light .thumb.img-bad::after{background:linear-gradient(135deg,#e9edf4,#f4f7fb);}
+body.light .bslide.img-bad{background:linear-gradient(135deg,#e7ecf4,#f3f6fa);}
+body.light .row-item .rthumb{background:var(--thumb-fallback);}
+body.light .live-center-play{border-color:rgba(0,0,0,.35); color:#333;}
+
+/* ===== 图标按钮 ===== */
+.icon-btn{background:none; border:1px solid transparent; color:var(--muted); font-size:16px;
+  width:32px; height:32px; border-radius:8px; cursor:pointer; line-height:1;}
+.icon-btn:hover{color:var(--text); background:var(--panel2); border-color:var(--line);}
+
+/* ===== 空壳引导页 ===== */
+.shell-hero{max-width:620px; margin:8vh auto 0; text-align:center;}
+.shell-hero .sh-logo{font-size:54px; color:var(--accent); line-height:1; margin-bottom:14px;}
+.shell-hero h2{font-size:24px; margin-bottom:10px;}
+.shell-hero p{color:var(--muted); font-size:13px; line-height:1.9; margin-bottom:22px;}
+.shell-steps{text-align:left; display:inline-block; margin-bottom:26px;}
+.shell-steps div{font-size:13px; color:var(--muted); line-height:2.1;}
+.shell-steps b{color:var(--text); margin-right:6px;}
+.shell-steps .num{display:inline-block; width:20px; height:20px; border-radius:50%;
+  background:var(--accent); color:#fff; font-size:11px; text-align:center; line-height:20px; margin-right:8px;}
+.shell-actions{display:flex; gap:10px; justify-content:center;}
+.shell-actions .primary-btn{padding:10px 26px;}
+.shell-actions .ghost-btn{padding:10px 20px; font-size:13px;}
+
+/* ===== 播放器：新交互 ===== */
+.player{background:var(--player-bg);}
+.player-stage{cursor:pointer;}
+.player-stage video{width:100%; height:100%; max-height:100%; outline:none; background:#000;}
+/* 播放/暂停时的中央图标：仅在暂停态短暂显示，不再常驻悬停 */
+.play-overlay{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  pointer-events:none; z-index:3; opacity:0; transition:opacity .18s;}
+.play-overlay.show{opacity:1;}
+.play-overlay .po-icon{width:78px; height:78px; border-radius:50%;
+  background:rgba(0,0,0,.55); border:2px solid rgba(255,255,255,.55); color:#fff;
+  font-size:30px; display:flex; align-items:center; justify-content:center;
+  text-indent:4px; padding-left:4px;}
+/* 自定义控制条 */
+.player-controls{position:absolute; left:0; right:0; bottom:0; z-index:4;
+  display:flex; align-items:center; gap:10px; padding:10px 14px;
+  background:linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,0));
+  opacity:0; transform:translateY(6px); transition:.18s; pointer-events:none;}
+.player-stage:hover .player-controls, .player-controls.show{opacity:1; transform:none; pointer-events:auto;}
+.pc-btn{background:none; border:none; color:#fff; font-size:16px; cursor:pointer; padding:2px 6px;
+  border-radius:5px; line-height:1;}
+.pc-btn:hover{background:rgba(255,255,255,.16);}
+.pc-time{color:#e6e9f0; font-size:12px; min-width:96px; text-align:center; font-variant-numeric:tabular-nums;}
+.pc-seek{flex:1; height:4px; -webkit-appearance:none; appearance:none; background:rgba(255,255,255,.28);
+  border-radius:3px; outline:none; cursor:pointer;}
+.pc-seek::-webkit-slider-thumb{-webkit-appearance:none; width:13px; height:13px; border-radius:50%;
+  background:var(--accent); cursor:pointer;}
+.pc-rate{background:rgba(255,255,255,.14); border:none; color:#fff; font-size:12px;
+  border-radius:5px; padding:3px 5px; cursor:pointer; outline:none;}
+.pc-rate option{background:#1c212d; color:#fff;}
+#btnDanmaku.on{background:var(--accent); border-color:var(--accent); color:#fff;}
+.danger-btn{background:transparent; border:1px solid #d6455f; color:#ff8098; padding:7px 14px;
+  border-radius:7px; cursor:pointer; font-size:12px;}
+.danger-btn:hover{background:#d6455f; color:#fff;}
+
+/* ===== 弹幕层 ===== */
+.danmaku-layer{position:absolute; inset:0; pointer-events:none; z-index:2; overflow:hidden;}
+.danmaku-item{position:absolute; white-space:nowrap; font-weight:600; color:#fff;
+  text-shadow:0 1px 3px rgba(0,0,0,.85), 0 0 6px rgba(0,0,0,.5); will-change:transform;}
+
+/* ===== 设置面板 ===== */
+.modal-card.wide-card{width:520px;}
+.set-group{margin:16px 0; border:1px solid var(--line); border-radius:10px; padding:12px 14px;}
+.set-title{font-size:12px; color:var(--muted); letter-spacing:1px; margin-bottom:8px;}
+.set-row{display:flex; align-items:center; gap:12px; min-height:34px; font-size:13px;}
+.set-row > span:first-child{width:96px; color:var(--muted); flex:0 0 96px;}
+.set-row.btns{gap:8px;}
+.set-row.btns > span:first-child{width:auto; flex:none;}
+.set-range{flex:1; -webkit-appearance:none; appearance:none; height:4px; background:var(--line);
+  border-radius:3px; outline:none; cursor:pointer;}
+.set-range::-webkit-slider-thumb{-webkit-appearance:none; width:13px; height:13px; border-radius:50%;
+  background:var(--accent); cursor:pointer;}
+.set-val{width:56px; text-align:right; color:var(--muted); font-size:12px;}
+.set-path{font-size:11px; color:var(--muted); word-break:break-all; line-height:1.5;}
+.seg{display:inline-flex; border:1px solid var(--line); border-radius:7px; overflow:hidden;}
+.seg button{background:var(--panel2); border:none; color:var(--muted); padding:6px 16px;
+  cursor:pointer; font-size:12px;}
+.seg button.on{background:var(--accent); color:#fff;}
+.switch{position:relative; display:inline-block; width:40px; height:21px; flex:0 0 40px;}
+.switch input{opacity:0; width:0; height:0; position:absolute;}
+.switch i{position:absolute; inset:0; background:var(--line); border-radius:21px; transition:.18s; cursor:pointer;}
+.switch i:before{content:''; position:absolute; height:15px; width:15px; left:3px; top:3px;
+  background:#fff; border-radius:50%; transition:.18s;}
+.switch input:checked + i{background:var(--accent);}
+.switch input:checked + i:before{transform:translateX(19px);}
+
+/* ===== 历史页续播标记 ===== */
+.row-item .rinfo span .badge{display:inline-block; background:var(--accent2); color:#08111f;
+  font-size:10px; padding:1px 6px; border-radius:4px; margin-left:6px; font-weight:600;}
+.row-item .rinfo span .badge.live{background:var(--ok);}

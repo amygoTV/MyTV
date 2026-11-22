@@ -20,6 +20,8 @@
     </nav>
     <div class="topbar-right">
       <input id="quickSearch" class="search-input" placeholder="搜索片名 / 演员…" autocomplete="off">
+      <button id="btnTheme" class="icon-btn" title="切换明暗主题">◐</button>
+      <button id="btnSettings" class="icon-btn" title="设置">⚙</button>
       <span id="version" class="version"></span>
     </div>
   </header>
@@ -47,14 +49,33 @@
     <div class="player-head">
       <div class="player-title" id="playerTitle">播放</div>
       <div class="player-actions">
+        <button id="btnDanmaku" class="ghost-btn" title="弹幕开关（对当前点播源生效）">弹</button>
+        <button id="btnPiP" class="ghost-btn" title="小窗播放（画中画）">⧉ 小窗</button>
+        <button id="btnFullscreen" class="ghost-btn" title="全屏播放">⛶ 全屏</button>
         <button id="btnExternal" class="ghost-btn">系统播放器</button>
         <button id="btnPlayerClose" class="ghost-btn">✕ 关闭</button>
       </div>
     </div>
     <div class="player-body">
-      <div class="player-stage">
-        <video id="video" controls playsinline></video>
+      <div class="player-stage" id="playerStage">
+        <video id="video" playsinline></video>
+        <div id="danmakuLayer" class="danmaku-layer"></div>
+        <div id="playOverlay" class="play-overlay hidden">
+          <div class="po-icon">▶</div>
+        </div>
         <div id="playerMsg" class="player-msg hidden"></div>
+        <div id="playerControls" class="player-controls">
+          <button id="btnPP" class="pc-btn" title="播放 / 暂停">⏸</button>
+          <span id="pcTime" class="pc-time">00:00 / 00:00</span>
+          <input id="pcSeek" class="pc-seek" type="range" min="0" max="1000" value="0" step="1">
+          <select id="pcRate" class="pc-rate" title="倍速">
+            <option value="1">1.0x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2.0x</option>
+          </select>
+          <button id="pcVol" class="pc-btn" title="静音">🔊</button>
+        </div>
       </div>
       <div class="player-side">
         <div class="side-title">选集 <span id="episodeCount"></span></div>
@@ -67,13 +88,90 @@
   <div id="importDialog" class="modal hidden">
     <div class="modal-card">
       <h3>导入订阅配置</h3>
-      <p class="muted">填入影视仓 / TVBox 配置地址（JSON），会覆盖当前站点配置。</p>
+      <p class="muted">填入影视仓 / TVBox 配置地址（JSON），导入后本机将自动保存，下次打开无需重复导入。</p>
       <input id="importUrl" class="search-input wide" placeholder="https://…/YSCSites.json">
       <div class="modal-actions">
         <button id="btnImportCancel" class="ghost-btn">取消</button>
         <button id="btnImportOk" class="primary-btn">导入</button>
       </div>
       <div id="importMsg" class="import-msg"></div>
+    </div>
+  </div>
+
+  <!-- Settings dialog -->
+  <div id="settingsDialog" class="modal hidden">
+    <div class="modal-card wide-card">
+      <h3>设置</h3>
+
+      <div class="set-group">
+        <div class="set-title">外观</div>
+        <div class="set-row">
+          <span>主题</span>
+          <div class="seg" id="segTheme">
+            <button data-theme="dark" class="on">深色</button>
+            <button data-theme="light">浅色</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-title">弹幕</div>
+        <div class="set-row">
+          <span>启用弹幕</span>
+          <label class="switch"><input type="checkbox" id="swDanmaku"><i></i></label>
+        </div>
+        <div class="set-row">
+          <span>不透明度</span>
+          <input type="range" id="rgDanmakuOpacity" min="20" max="100" value="85" class="set-range">
+          <span class="set-val" id="vlDanmakuOpacity">85%</span>
+        </div>
+        <div class="set-row">
+          <span>字号</span>
+          <input type="range" id="rgDanmakuFont" min="14" max="40" value="22" class="set-range">
+          <span class="set-val" id="vlDanmakuFont">22px</span>
+        </div>
+        <div class="set-row">
+          <span>显示区域</span>
+          <input type="range" id="rgDanmakuArea" min="20" max="100" value="50" class="set-range">
+          <span class="set-val" id="vlDanmakuArea">50%</span>
+        </div>
+        <div class="set-row">
+          <span>速度</span>
+          <input type="range" id="rgDanmakuSpeed" min="2" max="20" value="8" class="set-range">
+          <span class="set-val" id="vlDanmakuSpeed">8</span>
+        </div>
+      </div>
+
+      <div class="set-group">
+        <div class="set-title">配置管理</div>
+        <div class="set-row">
+          <span>配置存储位置</span>
+          <code class="set-path" id="setPath">—</code>
+        </div>
+        <div class="set-row btns">
+          <button id="btnExport" class="ghost-btn">⬇ 导出备份</button>
+          <button id="btnImportCfg" class="ghost-btn">⬆ 导入配置</button>
+          <button id="btnReset" class="danger-btn">⟲ 重置</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnSettingsCancel" class="ghost-btn">关闭</button>
+        <button id="btnSettingsOk" class="primary-btn">保存</button>
+      </div>
+      <div id="settingsMsg" class="import-msg"></div>
+    </div>
+  </div>
+
+  <!-- Reset confirm dialog -->
+  <div id="resetDialog" class="modal hidden">
+    <div class="modal-card">
+      <h3>确认重置？</h3>
+      <p class="muted">将清除本机的<strong>全部配置</strong>：导入的影视接口、主题与弹幕设置、收藏与观看历史。操作<strong>不可撤销</strong>，应用会恢复到初始空壳状态。</p>
+      <div class="modal-actions">
+        <button id="btnResetNo" class="ghost-btn">取消</button>
+        <button id="btnResetYes" class="danger-btn">确认清除</button>
+      </div>
     </div>
   </div>
 

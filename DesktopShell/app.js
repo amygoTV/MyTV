@@ -16,6 +16,8 @@ const state = {
   history: loadLS('ms_history', []),
   playerHls: null,
   currentPlay: null, // {title, episodes, srcIdx}
+  settings: {},      // 用户设置（主题/弹幕等），由主进程持久化
+  shellMode: true,   // 空壳模式：还没导入任何影视接口
 };
 
 function loadLS(k, def) { try { return JSON.parse(localStorage.getItem(k)) || def; } catch (e) { return def; } }
@@ -27,21 +29,69 @@ function toast(msg) {
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function isCMS(site) { return /^https?:\/\//i.test(String(site.api || '')); }
 
+// ---------- 设置（主题 / 弹幕）----------
+function applyTheme(theme) {
+  const t = theme === 'light' ? 'light' : 'dark';
+  document.body.classList.toggle('light', t === 'light');
+  document.body.classList.toggle('dark', t !== 'light');
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', t === 'light' ? '#f4f6fa' : '#0d0f14');
+}
+async function saveSettings(patch) {
+  try { state.settings = await MS.saveSettings(patch) || Object.assign({}, state.settings, patch); }
+  catch (e) { state.settings = Object.assign({}, state.settings, patch); }
+  return state.settings;
+}
+
 // ---------- config load ----------
 async function loadConfig() {
-  const raw = await MS.readConfig('YSCSites.json');
-  const cfg = JSON.parse(raw);
+  // 订阅来自用户存储（导入一次即持久化，重开自动加载）；不再读应用内置资源
+  let cfg = null;
+  try { cfg = await MS.getSubscription(); } catch (e) { cfg = null; }
+  if (!cfg || !Array.isArray(cfg.sites) || !cfg.sites.length) {
+    state.shellMode = true;
+    state.config = null;
+    state.sites = [];
+    state.site = null;
+    renderShell();
+    return;
+  }
+  state.shellMode = false;
   state.config = cfg;
   state.sites = cfg.sites || [];
   if (!state.site) {
     // 记住上次成功使用的站；若它已失效则回退到第一个 CMS 站
-    const last = loadLS('ms_last_site', '');
+    const last = state.settings.lastSite || loadLS('ms_last_site', '');
     const byKey = state.sites.find((s) => s.key === last);
     state.site = (byKey && isCMS(byKey)) ? byKey : (state.sites.find(isCMS) || state.sites[0]);
   }
   renderSites();
   $('#siteCount').textContent = '(' + state.sites.length + ')';
   if (state.view === 'home') renderHome();
+}
+
+// 空壳引导页：首次启动没有任何影视资源，引导用户导入订阅
+function renderShell() {
+  $('#siteCount').textContent = '(0)';
+  $('#siteList').innerHTML = '<div class="empty" style="font-size:12px;padding:10px 6px;">尚未导入影视接口</div>';
+  const c = $('#content');
+  c.innerHTML =
+    '<div class="shell-hero">' +
+      '<div class="sh-logo">▶</div>' +
+      '<h2>欢迎使用影视舱 MediaShell</h2>' +
+      '<p>本应用不内置任何影视资源。<br>请先导入影视仓 / TVBox 的 JSON 接口配置，之后本机会自动保存，下次打开直接使用。</p>' +
+      '<div class="shell-steps">' +
+        '<div><span class="num">1</span>准备一个 <b>影视仓 / TVBox 配置地址</b>（JSON 格式，含 sites 字段）</div>' +
+        '<div><span class="num">2</span>点击下方 <b>导入订阅</b> 粘贴该地址</div>' +
+        '<div><span class="num">3</span>导入成功后 <b>分类与资源自动适配</b> 该接口提供的站点</div>' +
+      '</div>' +
+      '<div class="shell-actions">' +
+        '<button id="btnShellImport" class="primary-btn">＋ 导入订阅</button>' +
+        '<button id="btnShellBackup" class="ghost-btn">⬆ 导入配置备份</button>' +
+      '</div>' +
+    '</div>';
+  const bi = $('#btnShellImport'); if (bi) bi.onclick = () => $('#importDialog').classList.remove('hidden');
+  const bb = $('#btnShellBackup'); if (bb) bb.onclick = importBackupFile;
 }
 
 function renderSites() {
@@ -132,6 +182,11 @@ function setView(v) {
   if (state.view === 'live' && v !== 'live') { try { liveStop(); } catch (e) {} }
   state.view = v;
   $$('.tab').forEach((b) => b.classList.toggle('active', b.dataset.view === v));
+  if (state.shellMode && v !== 'home') {
+    $('#content').innerHTML = '<div class="empty">尚未导入影视接口。<br>请点击左下角「导入订阅」后即可使用' +
+      esc({ search: '搜索', live: '直播', favorite: '收藏', history: '历史' }[v] || '该功能') + '。</div>';
+    return;
+  }
   if (v === 'home') renderHome();
   else if (v === 'search') renderSearch();
   else if (v === 'live') renderLive();
@@ -247,6 +302,7 @@ let homeCache = {};         // siteKey -> {items, at} 首页内容缓存（减�
 function renderHome() {
   const s = state.site;
   const c = $('#content');
+  if (state.shellMode) { renderShell(); return; }
   if (!s || !isCMS(s)) { c.innerHTML = '<div class="empty">请从左侧选择一个 CMS 采集站</div>'; return; }
   if (bannerTimer) { clearInterval(bannerTimer); bannerTimer = null; }
   const cats = s.categories || [];
@@ -347,6 +403,7 @@ async function loadHomeData(siteParam, catsParam) {
   }
   homeCache[site.key] = { items, first, at: Date.now() };
   saveLS('ms_last_site', site.key);   // 记住成功加载的站，下次启动直接用
+  if (state.settings) saveSettings({ lastSite: site.key });
   buildBanner(site, items.slice(0, 8));
   renderTVRows(site, items, first);
   // 分类栏先给占位，拿到后填充
@@ -452,22 +509,31 @@ function buildBanner(site, items) {
 
 async function bindCatBar(site, cats, items, first) {
   const bar = $('#catBar'); if (!bar) return;
-  // 分类已在 loadHomeData 中并发取回，直接用；避免二次请求造成等待
+  // 分类自适应：以站点 ac=list 返回的真实分类（class 字段）为准。
+  // 配置里写死的 categories 只作排序参考，绝不直接当分类名展示 —— 名字与站点
+  // 的 type_name 不一致时会出现「点了没数据」的死标签。
   const real = state.catList[site.key] || [];
+  if (!real.length) {
+    bar.innerHTML = '<div class="muted" style="padding:10px">该站未返回可展示分类，可用顶部搜索找片</div>';
+    return;
+  }
+
+  // 1) 父类（有子类的）在前，无子类的在后；同级保持站点返回顺序
+  const hasChild = (c) => real.some((x) => String(x.pid) === String(c.id));
+  const parents = real.filter((c) => hasChild(c));
+  const leaves = real.filter((c) => !hasChild(c));
+  // 2) 配置里声明的分类优先（按配置顺序），其余按站点顺序
+  const prefer = (cats || []).map((n) => real.find((c) => c.name === n)).filter(Boolean);
   const ordered = [];
-  (cats || []).forEach((n) => {
-    const tid = resolveTid(site, n);
-    if (tid != null && !ordered.some((x) => String(x.id) === String(tid))) {
-      const rc = real.find((c) => String(c.id) === String(tid));
-      ordered.push({ id: tid, name: rc ? rc.name : n });
-    }
-  });
-  real.forEach((c) => {
-    if (!ordered.some((x) => String(x.id) === String(c.id))) ordered.push({ id: c.id, name: c.name });
-  });
+  const push = (c) => { if (c && !ordered.some((x) => String(x.id) === String(c.id))) ordered.push(c); };
+  prefer.forEach(push);
+  parents.forEach(push);
+  leaves.forEach(push);
+
   const pills = [{ name: '🔥全部', id: null }].concat(ordered);
-  bar.innerHTML = pills.map((p, i) => '<div class="cat-pill' + (i === 0 ? ' on' : '') + '" data-cat="' + esc(p.name) + '" data-tid="' + esc(p.id || '') + '">' + esc(p.name) + '</div>').join('') ||
-    '<div class="muted" style="padding:10px">该站未返回可展示分类，可用顶部搜索找片</div>';
+  bar.innerHTML = pills.map((p, i) =>
+    '<div class="cat-pill' + (i === 0 ? ' on' : '') + '" data-cat="' + esc(p.name) + '" data-tid="' + esc(p.id || '') + '">' + esc(p.name) + '</div>'
+  ).join('');
   $$('.cat-pill', bar).forEach((el) => el.onclick = async () => {
     $$('.cat-pill', bar).forEach((x) => x.classList.remove('on'));
     el.classList.add('on');
@@ -698,10 +764,14 @@ function renderDetail(site, v, fallbackName, id) {
     if (!eps.length) { toast('没有可播放地址'); return; }
     openPlayer(v.vod_name || fallbackName, eps, 0, { site: site.name, id });
   };
-  addHistory({ name: v.vod_name || fallbackName, id, site: site.name, pic: v.vod_pic, type: 'vod' });
+  addHistory({ name: v.vod_name || fallbackName, id, site: site.name, siteKey: site.key, pic: v.vod_pic, type: 'vod' });
 }
 
 // ---------- player ----------
+// 交互要点（对齐影视仓习惯）：
+//  · 单击画面 = 暂停/恢复；不再有常驻的中央播放按钮（仅暂停/恢复时短暂显示图标）
+//  · 双击画面 = 全屏
+//  · 独立按钮：全屏 / 小窗(画中画) / 弹幕开关 / 系统播放器
 function openPlayer(title, episodes, idx, meta) {
   state.currentPlay = { title, episodes, idx };
   $('#player').classList.remove('hidden');
@@ -714,7 +784,7 @@ function openPlayer(title, episodes, idx, meta) {
     el.classList.add('active');
     idx = +el.dataset.i;
     if (state.currentPlay) state.currentPlay.idx = idx;
-    $('#playerTitle').textContent = title + (episodes.length > 1 ? ' · ' + (episodes[idx] ? episodes[idx].name : '') : '');
+    $('#playerTitle').textContent = title + ' · ' + (episodes[idx] ? episodes[idx].name : '');
     playEpisode(episodes[idx], title);
   });
   $('#btnExternal').onclick = () => {
@@ -722,15 +792,29 @@ function openPlayer(title, episodes, idx, meta) {
     if (!ep) return;
     MS.openWithPlayer(ep.url, title + '_' + ep.name).then((r) => toast(r && r.error ? '调用失败' : '已用系统播放器打开'));
   };
+  syncDanmakuButton();
   playEpisode(episodes[idx], title);
 }
+
+function fmtTime(sec) {
+  if (!isFinite(sec) || sec < 0) sec = 0;
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.floor(sec % 60);
+  const mm = h ? String(m).padStart(2, '0') : String(m);
+  return (h ? h + ':' : '') + mm + ':' + String(s).padStart(2, '0');
+}
+
 function playEpisode(ep, title) {
   if (!ep || !ep.url) return;
   const video = $('#video'); const msg = $('#playerMsg');
   msg.classList.add('hidden');
   if (state.playerHls) { state.playerHls.destroy(); state.playerHls = null; }
   video.pause();
+  danmakuStop();
   const url = ep.url;
+  // 记录当前源，弹幕开关按源记忆状态
+  state.currentPlay = state.currentPlay || {};
+  state.currentPlay.source = url;
+  state.currentPlay.title = title;
   const isHls = /\.m3u8?(\?|$)/i.test(url);
   if (isHls && window.Hls && window.Hls.isSupported()) {
     const hls = new window.Hls({ enableWorker: true, lowLatencyMode: false });
@@ -750,11 +834,228 @@ function playEpisode(ep, title) {
     msg.classList.remove('hidden');
   }
 }
+
+// ---- 播放 / 暂停 ----
+function togglePlay() {
+  const v = $('#video');
+  if (!v) return;
+  if (v.paused) { v.play().catch(() => {}); showPlayIcon(false); }
+  else { v.pause(); showPlayIcon(true); }
+}
+function showPlayIcon(paused) {
+  const ov = $('#playOverlay');
+  if (!ov) return;
+  const icon = ov.querySelector('.po-icon');
+  if (icon) icon.textContent = paused ? '▶' : '⏸';
+  ov.classList.remove('hidden');
+  ov.classList.add('show');
+  clearTimeout(ov._t);
+  ov._t = setTimeout(() => { ov.classList.remove('show'); }, paused ? 900 : 420);
+}
+
+// ---- 全屏 / 小窗 ----
+function toggleFullscreen() {
+  const stage = $('#playerStage');
+  if (!stage) return;
+  try {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (stage.requestFullscreen) stage.requestFullscreen();
+    else toast('当前环境不支持全屏');
+  } catch (e) { toast('全屏切换失败：' + (e && e.message || e)); }
+}
+async function togglePiP() {
+  const v = $('#video');
+  if (!v) return;
+  try {
+    if (document.pictureInPictureElement) { await document.exitPictureInPicture(); return; }
+    if (!document.pictureInPictureEnabled) { toast('当前环境不支持小窗播放'); return; }
+    await v.requestPictureInPicture();
+  } catch (e) { toast('小窗播放失败：' + (e && e.message || e)); }
+}
+
+// ---- 播放器控制条绑定 ----
+function bindPlayerControls() {
+  const video = $('#video');
+  const stage = $('#playerStage');
+  if (!video || !stage) return;
+
+  // 单击画面：暂停/恢复（点控制条不触发）
+  stage.addEventListener('click', (e) => {
+    if (e.target.closest('.player-controls')) return;
+    togglePlay();
+  });
+  // 双击画面：全屏
+  stage.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.player-controls')) return;
+    toggleFullscreen();
+  });
+
+  $('#btnPP').onclick = () => togglePlay();
+  $('#btnFullscreen').onclick = () => toggleFullscreen();
+  $('#btnPiP').onclick = () => togglePiP();
+  $('#btnDanmaku').onclick = () => toggleDanmaku();
+
+  $('#pcVol').onclick = () => {
+    video.muted = !video.muted;
+    $('#pcVol').textContent = video.muted ? '🔇' : '🔊';
+  };
+  $('#pcRate').onchange = (e) => { video.playbackRate = parseFloat(e.target.value) || 1; };
+  $('#pcSeek').oninput = (e) => {
+    if (!video.duration || !isFinite(video.duration)) return;
+    video.currentTime = (e.target.value / 1000) * video.duration;
+  };
+  video.addEventListener('timeupdate', () => {
+    const cur = $('#pcTime'); const seek = $('#pcSeek');
+    if (cur) cur.textContent = fmtTime(video.currentTime) + ' / ' + fmtTime(video.duration);
+    if (seek && video.duration && isFinite(video.duration)) {
+      seek.value = Math.round((video.currentTime / video.duration) * 1000);
+    }
+    // 观看进度写回历史（节流：每 5 秒一次）
+    const now = Date.now();
+    if (now - (video._lastProg || 0) > 5000) {
+      video._lastProg = now;
+      const ep = state.currentPlay && state.currentPlay.episodes && state.currentPlay.idx != null
+        ? (state.currentPlay.episodes[state.currentPlay.idx] || {}).name : '';
+      updateHistoryProgress(state.currentPlay && state.currentPlay.title, video.currentTime, ep);
+    }
+  });
+  video.addEventListener('play', () => { const b = $('#btnPP'); if (b) b.textContent = '⏸'; });
+  video.addEventListener('pause', () => { const b = $('#btnPP'); if (b) b.textContent = '▶'; });
+}
+
 $('#btnPlayerClose').onclick = () => {
   const v = $('#video'); v.pause(); v.removeAttribute('src'); v.load();
   if (state.playerHls) { state.playerHls.destroy(); state.playerHls = null; }
+  danmakuStop();
   $('#player').classList.add('hidden');
 };
+
+// ---------- 弹幕 ----------
+// 设计（对齐影视仓习惯）：
+//  · 总开关在设置面板；播放器右上角的「弹」按钮是当前播放源的独立开关
+//  · 每个源的开关状态单独记忆（按源 URL 哈希存本地），切源自动切换
+//  · 弹幕数据源：优先用配置里的 danmaku 字段；否则尝试常见的公开弹幕接口
+//    （https://api.danmu.icu/?title=片名 或第三方弹幕接口），失败静默降级
+const DANMAKU_APIS = [
+  (name) => 'https://api.danmu.icu/?title=' + encodeURIComponent(name),
+];
+const danmakuState = {
+  enabled: false,
+  timer: null,
+  items: [],
+  idx: 0,
+  layer: null,
+  loadedFor: '',
+};
+
+function danmakuSourceKey(url) {
+  const s = String(url || '');
+  let h = 0;
+  for (let i = 0; i < s.length; i++) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; }
+  return 'dm_' + (h >>> 0).toString(36);
+}
+
+// 每个源单独记忆开关状态
+function danmakuPerSource() { return loadLS('ms_danmaku_sources', {}); }
+function isDanmakuOnFor(url) {
+  const map = danmakuPerSource();
+  if (Object.prototype.hasOwnProperty.call(map, danmakuSourceKey(url))) return !!map[danmakuSourceKey(url)];
+  return !!(state.settings && state.settings.danmaku);
+}
+function setDanmakuForSource(url, on) {
+  const map = danmakuPerSource();
+  map[danmakuSourceKey(url)] = !!on;
+  saveLS('ms_danmaku_sources', map);
+}
+function syncDanmakuButton() {
+  const btn = $('#btnDanmaku');
+  if (!btn) return;
+  const url = state.currentPlay && state.currentPlay.source;
+  const on = !!url && isDanmakuOnFor(url);
+  btn.classList.toggle('on', on);
+  btn.textContent = on ? '弹 开' : '弹 关';
+  btn.title = on ? '关闭当前片源的弹幕' : '开启当前片源的弹幕';
+}
+function toggleDanmaku() {
+  const url = state.currentPlay && state.currentPlay.source;
+  if (!url) { toast('尚未开始播放'); return; }
+  const now = !isDanmakuOnFor(url);
+  setDanmakuForSource(url, now);
+  syncDanmakuButton();
+  if (now) danmakuStart(url); else danmakuStop();
+  toast(now ? '已开启弹幕' : '已关闭弹幕');
+}
+
+function danmakuStop() {
+  if (danmakuState.timer) { clearInterval(danmakuState.timer); danmakuState.timer = null; }
+  danmakuState.items = [];
+  danmakuState.idx = 0;
+  const layer = $('#danmakuLayer');
+  if (layer) layer.innerHTML = '';
+}
+
+async function danmakuStart(url) {
+  danmakuStop();
+  const title = (state.currentPlay && state.currentPlay.title) || '';
+  if (!title) return;
+  const layer = $('#danmakuLayer');
+  if (!layer) return;
+  danmakuState.layer = layer;
+
+  let list = [];
+  // 1) 配置里显式指定的弹幕接口
+  const cfgDm = state.config && state.config.danmaku;
+  if (cfgDm && typeof cfgDm === 'string') {
+    try {
+      const r = await MS.httpGet(cfgDm.replace('{title}', encodeURIComponent(title)), { 'User-Agent': 'okhttp/3.15' }, 8000);
+      const j = JSON.parse(r.body);
+      list = (j.danmu || j.comments || j.data || []).map((d) => d.text || d.content || d.m || '').filter(Boolean);
+    } catch (e) {}
+  }
+  // 2) 兜底：公开弹幕接口
+  if (!list.length) {
+    for (const mk of DANMAKU_APIS) {
+      try {
+        const r = await MS.httpGet(mk(title), { 'User-Agent': 'okhttp/3.15' }, 8000);
+        const j = JSON.parse(r.body);
+        list = (j.danmu || j.comments || j.data || []).map((d) => d.text || d.content || d.m || '').filter(Boolean);
+        if (list.length) break;
+      } catch (e) {}
+    }
+  }
+  if (!list.length) { toast('未获取到弹幕数据'); syncDanmakuButton(); return; }
+
+  danmakuState.items = list;
+  danmakuState.loadedFor = url;
+  const speed = Math.max(2, (state.settings && state.settings.danmakuSpeed) || 8);
+  danmakuState.timer = setInterval(() => {
+    if (danmakuState.idx >= danmakuState.items.length) danmakuState.idx = 0;
+    danmakuEmit(danmakuState.items[danmakuState.idx++], speed);
+  }, 900);
+}
+
+function danmakuEmit(text, speed) {
+  const layer = danmakuState.layer || $('#danmakuLayer');
+  if (!layer || !text) return;
+  const s = state.settings || {};
+  const stage = $('#playerStage');
+  const W = stage ? stage.clientWidth : 900;
+  const H = stage ? stage.clientHeight : 500;
+  const el = document.createElement('div');
+  el.className = 'danmaku-item';
+  el.textContent = text;
+  el.style.fontSize = (s.danmakuFontSize || 22) + 'px';
+  el.style.opacity = String(s.danmakuOpacity != null ? s.danmakuOpacity : 0.85);
+  const area = s.danmakuArea != null ? s.danmakuArea : 0.5;
+  const top = 8 + Math.random() * Math.max(0, (H * area - 40));
+  el.style.top = top + 'px';
+  el.style.left = W + 'px';
+  layer.appendChild(el);
+  const dur = (W + 260) / (speed * 12);
+  el.style.transition = 'transform ' + dur + 's linear';
+  requestAnimationFrame(() => { el.style.transform = 'translateX(-' + (W + 260) + 'px)'; });
+  setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, dur * 1000 + 400);
+}
 
 // ---------- search ----------
 function renderSearch() {
@@ -801,6 +1102,12 @@ function saveLiveSettings() {
   saveLS('ms_live_decoder', liveState.decoder);
   saveLS('ms_live_player', liveState.player);
   saveLS('ms_live_collapsed', liveState.collapsed);
+  // 同步到主进程设置，跨重启保留
+  saveSettings({
+    liveTimeout: liveState.timeoutSec,
+    liveDecoder: liveState.decoder,
+    livePlayer: liveState.player,
+  });
 }
 
 function parseTVLines(text) {
@@ -880,48 +1187,47 @@ function buildLiveCatalog() {
 async function ensureLiveData() {
   if (liveCache) return;
   const pending = {};
-  // 本地源文件（已内置验证过的可播线路）
-  // LiveSports.txt 由 GitHub Actions 预生成（赛事/轮播/央视频道补充），
-  // 运行时只读本地，避免每次启动拉取上千条未验证的 URL。
-  for (const name of ['TVLives.txt', 'BiliLive.txt', 'LiveSports.txt']) {
-    try {
-      const txt = await MS.readConfig(name);
-      const g = parseTVLines(txt);
-      if (g.length) pending[name] = g;
-      else console.warn('[live] ' + name + ' 解析出 0 个分组，原始长度=' + (txt || '').length);
-    } catch (e) {
-      // LiveSports.txt 可能尚未生成（旧版本），忽略即可
-      if (name !== 'LiveSports.txt') console.warn('[live] 读取 ' + name + ' 失败: ' + (e && e.message || e));
+
+  // 直播源来自订阅配置的 lives（type=0 + url 指向 TXT / M3U 地址）。
+  // 应用不再内置任何直播资源文件，因此必须从订阅里取；取不到就如实提示。
+  const lives = (state.config && Array.isArray(state.config.lives)) ? state.config.lives : [];
+  const tasks = [];
+  lives.forEach((lv) => {
+    if (!lv || !lv.url) return;
+    if (lv.type != null && Number(lv.type) !== 0) return;   // 只有 type=0 的 TXT 直播源
+    tasks.push((async () => {
+      try {
+        const r = await MS.httpGet(lv.url, { 'User-Agent': 'okhttp/3.15' }, 20000);
+        if (!r || !r.body) return;
+        const text = r.body;
+        let groups = [];
+        if (/^﻿?\s*#EXTM3U/i.test(text) || text.indexOf('#EXTINF') >= 0) groups = parseM3U(text);
+        else groups = parseTVLines(text);
+        if (groups.length) {
+          pending[lv.name || lv.url] = groups;
+        }
+      } catch (e) {
+        console.warn('[live] 拉取失败', lv.name || lv.url, e && e.message);
+      }
+    })());
+  });
+
+  if (tasks.length) await Promise.all(tasks);
+
+  // 订阅里没有 lives 或全部拉取失败时，退回本地 config 目录（若用户手动放了文件）
+  if (!Object.keys(pending).length) {
+    for (const name of ['TVLives.txt', 'BiliLive.txt', 'LiveSports.txt']) {
+      try {
+        const txt = await MS.readConfig(name);
+        const g = parseTVLines(txt);
+        if (g.length) pending[name] = g;
+      } catch (e) {}
     }
   }
+
   liveCache = pending;
   buildLiveCatalog();
   try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
-
-  // 远程赛事源后台补充（可选：拉取最新的 m3u，失败不影响已展示内容）
-  const m3us = [
-    { name: '⚽赛事直播·虎牙', url: 'https://peterhchina.github.io/iptv/huyayqk.m3u' },
-    { name: '🏀赛事直播·斗鱼', url: 'https://peterhchina.github.io/iptv/douyuyqk.m3u' },
-  ];
-  const remoteDone = Promise.all(m3us.map(async (m) => {
-    try {
-      const r = await MS.httpGet(m.url, { 'User-Agent': 'okHttp/Mursor-1.4.0.0' }, 12000);
-      if (r && r.body && r.body.indexOf('#EXTM3U') >= 0) {
-        const g = parseM3U(r.body);
-        if (g.length) {
-          liveCache[m.name] = g;
-          buildLiveCatalog();
-          if (state.view === 'live') {
-            const cnt = $('#liveChCount');
-            if (cnt) cnt.textContent = '(' + liveState.channels.length + ')';
-            renderLiveTree();
-          }
-        }
-      }
-    } catch (e) {}
-  }));
-  // 后台跑，不 await —— 首屏不等远程源
-  remoteDone.catch(() => {});
 }
 
 // 线路健康探测：并发抽测每条线路，标记可用/失效，播放时优先走可用线路
@@ -1073,7 +1379,9 @@ function renderLiveTree() {
     }
     html += '</div>';
   });
-  box.innerHTML = html || '<div class="empty">无匹配频道</div>';
+  box.innerHTML = html || (liveState.cats.length
+    ? '<div class="empty">无匹配频道</div>'
+    : '<div class="empty" style="line-height:2">当前订阅未提供直播源。<br>可在影视仓配置中增加 <b>lives</b>（type=0，url 指向 TXT/M3U 直播列表）。</div>');
 
   // 事件委托：只绑 3 个监听器，而不是给每个频道节点单独绑
   box.onclick = (e) => {
@@ -1203,21 +1511,53 @@ function livePlayChannel(ch, lineIdx) {
 function renderStore(kind) {
   const arr = kind === 'favorite' ? state.favorites : state.history;
   const c = $('#content');
-  c.innerHTML = '<div class="section-title">' + (kind === 'favorite' ? '我的收藏' : '观看历史') + ' <small>' + arr.length + ' 条</small></div>' +
-    (arr.length ? '<div class="row-list">' + arr.map((x, i) =>
-      '<div class="row-item" data-i="' + i + '"><div class="rthumb"' + (x.pic && /^https?:/i.test(x.pic) ? ' style="background-image:url(' + esc(x.pic) + ')"' : '') + '></div>' +
-      '<div class="rinfo"><b>' + esc(x.name) + '</b><span>' + esc(x.site || '') + ' · ' + esc(x.type === 'live' ? '直播' : '点播') + '</span></div>' +
-      '<button class="del" data-del="' + i + '">✕</button></div>').join('') + '</div>'
-      : '<div class="empty">' + (kind === 'favorite' ? '还没有收藏，播放时可加入收藏' : '还没有观看记录') + '</div>');
+  const isFav = kind === 'favorite';
+  c.innerHTML = '<div class="section-title">' + (isFav ? '我的收藏' : '观看历史') + ' <small>' + arr.length + ' 条</small></div>' +
+    (arr.length ? '<div class="row-list">' + arr.map((x, i) => {
+      const live = x.type === 'live';
+      const badge = live ? '<span class="badge live">直播</span>' : '<span class="badge">点播</span>';
+      const time = x.at ? ' · ' + new Date(x.at).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+      const prog = (!live && x.pos) ? ' · 已看到 ' + fmtTime(x.pos) : '';
+      const ep = x.ep ? ' · 第 ' + esc(String(x.ep)) + ' 集' : '';
+      return '<div class="row-item" data-i="' + i + '">' +
+        '<div class="rthumb"' + (x.pic && /^https?:/i.test(x.pic) ? ' style="background-image:url(' + esc(x.pic) + ')"' : '') + '></div>' +
+        '<div class="rinfo"><b>' + esc(x.name) + '</b><span>' + esc(x.site || '') + badge + esc(time) + esc(prog) + esc(ep) + '</span></div>' +
+        '<button class="del" data-del="' + i + '">✕</button></div>';
+    }).join('') + '</div>'
+      : '<div class="empty">' + (isFav ? '还没有收藏，播放时可加入收藏' : '还没有观看记录') + '</div>');
+
+  // 点播记录：点击可重新打开详情并续播（影视仓习惯）
+  $$('.row-item', c).forEach((row) => {
+    const item = arr[+row.dataset.i];
+    if (!item || item.type === 'live') return;
+    row.onclick = () => {
+      const site = state.sites.find((s) => s.name === item.site || s.key === item.siteKey);
+      if (!site) { toast('原站点已不在当前订阅中'); return; }
+      state.site = site; renderSites();
+      openDetail(site, item.id, item.name);
+    };
+  });
+
   $$('.del', c).forEach((b) => b.onclick = (ev) => {
     ev.stopPropagation(); const i = +b.dataset.del; arr.splice(i, 1);
-    if (kind === 'favorite') { state.favorites = arr; saveLS('ms_favorites', arr); } else { state.history = arr; saveLS('ms_history', arr); }
+    if (isFav) { state.favorites = arr; saveLS('ms_favorites', arr); } else { state.history = arr; saveLS('ms_history', arr); }
     renderStore(kind);
   });
 }
 function addHistory(item) {
+  item.at = Date.now();
   state.history = state.history.filter((x) => !(x.id === item.id && x.site === item.site));
   state.history.unshift(item); state.history = state.history.slice(0, 60);
+  saveLS('ms_history', state.history);
+}
+
+// 播放进度写入历史（供历史页显示"已看到 xx:xx"）
+function updateHistoryProgress(title, pos, epName) {
+  const key = state.currentPlay && state.currentPlay.title;
+  if (!key) return;
+  const h = state.history.find((x) => x.name === key);
+  if (!h) return;
+  h.pos = pos; if (epName) h.ep = epName; h.at = Date.now();
   saveLS('ms_history', state.history);
 }
 
@@ -1226,7 +1566,120 @@ $$('.tab').forEach((b) => b.onclick = () => setView(b.dataset.view));
 $('#quickSearch').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { const kw = e.target.value.trim(); if (kw) doSearch(kw); }
 });
+
+// ---- 主题切换 ----
+$('#btnTheme').onclick = () => {
+  const next = (state.settings.theme === 'light') ? 'dark' : 'light';
+  applyTheme(next);
+  saveSettings({ theme: next });
+  toast(next === 'light' ? '已切换到浅色主题' : '已切换到深色主题');
+};
+
+// ---- 设置面板 ----
+function openSettings() {
+  const s = state.settings || {};
+  $('#segTheme').querySelectorAll('button').forEach((b) => b.classList.toggle('on', b.dataset.theme === (s.theme || 'dark')));
+  $('#swDanmaku').checked = !!s.danmaku;
+  $('#rgDanmakuOpacity').value = s.danmakuOpacity != null ? Math.round(s.danmakuOpacity * 100) : 85;
+  $('#vlDanmakuOpacity').textContent = Math.round((s.danmakuOpacity != null ? s.danmakuOpacity : 0.85) * 100) + '%';
+  $('#rgDanmakuFont').value = s.danmakuFontSize || 22;
+  $('#vlDanmakuFont').textContent = (s.danmakuFontSize || 22) + 'px';
+  $('#rgDanmakuArea').value = Math.round((s.danmakuArea != null ? s.danmakuArea : 0.5) * 100);
+  $('#vlDanmakuArea').textContent = Math.round((s.danmakuArea != null ? s.danmakuArea : 0.5) * 100) + '%';
+  $('#rgDanmakuSpeed').value = s.danmakuSpeed || 8;
+  $('#vlDanmakuSpeed').textContent = String(s.danmakuSpeed || 8);
+  $('#settingsMsg').textContent = '';
+  $('#settingsDialog').classList.remove('hidden');
+  MS.storeInfo().then((i) => { if (i && i.dir) $('#setPath').textContent = i.dir; }).catch(() => {});
+}
+$('#btnSettings').onclick = openSettings;
+$('#btnSettingsCancel').onclick = () => $('#settingsDialog').classList.add('hidden');
+$('#segTheme').querySelectorAll('button').forEach((b) => b.onclick = () => {
+  $('#segTheme').querySelectorAll('button').forEach((x) => x.classList.remove('on'));
+  b.classList.add('on');
+});
+const bindRange = (id, valId, fmt, scale) => {
+  const el = $(id); if (!el) return;
+  el.oninput = () => { $(valId).textContent = fmt(el.value, scale); };
+};
+bindRange('#rgDanmakuOpacity', '#vlDanmakuOpacity', (v) => v + '%');
+bindRange('#rgDanmakuFont', '#vlDanmakuFont', (v) => v + 'px');
+bindRange('#rgDanmakuArea', '#vlDanmakuArea', (v) => v + '%');
+bindRange('#rgDanmakuSpeed', '#vlDanmakuSpeed', (v) => v);
+
+$('#btnSettingsOk').onclick = async () => {
+  const theme = ($('#segTheme').querySelector('button.on') || {}).dataset
+    ? $('#segTheme').querySelector('button.on').dataset.theme : 'dark';
+  const patch = {
+    theme: theme,
+    danmaku: $('#swDanmaku').checked,
+    danmakuOpacity: parseInt($('#rgDanmakuOpacity').value, 10) / 100,
+    danmakuFontSize: parseInt($('#rgDanmakuFont').value, 10),
+    danmakuArea: parseInt($('#rgDanmakuArea').value, 10) / 100,
+    danmakuSpeed: parseInt($('#rgDanmakuSpeed').value, 10),
+  };
+  applyTheme(patch.theme);
+  await saveSettings(patch);
+  $('#settingsDialog').classList.add('hidden');
+  toast('设置已保存');
+};
+
+// ---- 导出 / 导入备份 ----
+$('#btnExport').onclick = async () => {
+  try {
+    const r = await MS.exportBackup(null);
+    if (r && r.canceled) return;
+    if (r && r.error) { $('#settingsMsg').textContent = '导出失败：' + r.error; return; }
+    toast('已导出备份：' + (r && r.file ? r.file : ''));
+  } catch (e) { $('#settingsMsg').textContent = '导出失败：' + e.message; }
+};
+$('#btnImportCfg').onclick = () => importBackupFile();
+
+async function importBackupFile() {
+  try {
+    const r = await MS.importBackup();
+    if (r && r.canceled) return;
+    if (r && r.error) { toast('导入失败：' + r.error); return; }
+    // 恢复设置并重载订阅
+    state.settings = await MS.getSettings();
+    applyTheme(state.settings.theme);
+    state.site = null; state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
+    liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
+    await loadConfig();
+    $('#settingsDialog').classList.add('hidden');
+    toast('配置已导入');
+  } catch (e) { toast('导入失败：' + (e && e.message || e)); }
+}
+
+// ---- 重置（弹框确认，选否则不做任何操作）----
+$('#btnReset').onclick = () => {
+  $('#settingsDialog').classList.add('hidden');
+  $('#resetDialog').classList.remove('hidden');
+};
+$('#btnResetNo').onclick = () => { $('#resetDialog').classList.add('hidden'); };
+$('#btnResetYes').onclick = async () => {
+  $('#resetDialog').classList.add('hidden');
+  try {
+    await MS.resetUserData();
+    // 清空本地缓存并回到空壳状态
+    ['ms_favorites', 'ms_history', 'ms_last_site', 'ms_danmaku_sources', 'ms_live_collapsed'].forEach((k) => {
+      try { localStorage.removeItem(k); } catch (e) {}
+    });
+    state.favorites = []; state.history = []; state.site = null;
+    state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
+    liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
+    state.settings = await MS.getSettings();
+    applyTheme(state.settings.theme);
+    state.shellMode = true;
+    renderShell();
+    setView('home');
+    toast('已清除全部配置，恢复到初始状态');
+  } catch (e) { toast('重置失败：' + (e && e.message || e)); }
+};
+
+// ---- 采集站 ----
 $('#btnReload').onclick = async () => {
+  if (state.shellMode) { toast('尚未导入订阅'); return; }
   state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
   await loadConfig();
   liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
@@ -1235,13 +1688,13 @@ $('#btnReload').onclick = async () => {
 };
 const bas = $('#btnAutoSite');
 if (bas) bas.onclick = async () => {
+  if (state.shellMode) { toast('尚未导入订阅'); return; }
   bas.disabled = true; bas.textContent = '检测中…';
-  try {
-    await autoPickSite();
-  } finally {
-    bas.disabled = false; bas.textContent = '⚡ 自动选站';
-  }
+  try { await autoPickSite(); }
+  finally { bas.disabled = false; bas.textContent = '⚡ 自动选站'; }
 };
+
+// ---- 导入订阅 ----
 $('#btnImport').onclick = () => $('#importDialog').classList.remove('hidden');
 $('#btnImportCancel').onclick = () => $('#importDialog').classList.add('hidden');
 $('#btnImportOk').onclick = async () => {
@@ -1250,22 +1703,60 @@ $('#btnImportOk').onclick = async () => {
   msg.textContent = '正在拉取…';
   try {
     const r = await MS.httpGet(url, { 'User-Agent': 'okhttp/3.15' }, 25000);
+    if (r.error || !r.body) throw new Error(r.error || '空响应');
     const cfg = JSON.parse(r.body);
     if (!Array.isArray(cfg.sites) || !cfg.sites.length) throw new Error('配置中没有 sites');
-    await MS.saveConfig('YSCSites.json', JSON.stringify(cfg, null, 2));
+    await MS.saveSubscription(cfg);
+    // 重置站点选择，让新配置生效
+    state.site = null; state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
+    liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
     await loadConfig();
     $('#importDialog').classList.add('hidden');
+    $('#importUrl').value = '';
+    setView('home');
     toast('已导入 ' + cfg.sites.length + ' 个站点');
   } catch (e) { msg.textContent = '导入失败：' + e.message; }
 };
 
 (async function init() {
   try { $('#version').textContent = 'v' + (await MS.appVersion()); } catch (e) {}
-  try { await loadConfig(); document.title = '影视舱 MediaShell · ' + state.sites.length + '站'; }
-  catch (e) { $('#content').innerHTML = '<div class="empty">配置加载失败：' + esc(e.message) + '</div>'; }
+
+  // 先加载用户设置（主题等），保证首屏就是用户上次的主题
+  try {
+    state.settings = await MS.getSettings();
+    applyTheme(state.settings.theme);
+  } catch (e) {
+    state.settings = {};
+    applyTheme('dark');
+  }
+
+  // 设置加载完成后再套用到直播偏好（liveState 在模块期初始化，那时还没有设置）
+  if (state.settings.liveTimeout) liveState.timeoutSec = state.settings.liveTimeout;
+  if (state.settings.liveDecoder) liveState.decoder = state.settings.liveDecoder;
+  if (state.settings.livePlayer) liveState.player = state.settings.livePlayer;
+
+  bindPlayerControls();
+
+  // 加载订阅：没有就是空壳（首次启动或已重置）
+  try {
+    await loadConfig();
+    document.title = state.shellMode
+      ? '影视舱 MediaShell'
+      : '影视舱 MediaShell · ' + state.sites.length + '站';
+  } catch (e) {
+    state.shellMode = true;
+    renderShell();
+  }
+
+  if (state.shellMode) {
+    state.bootReady = true;
+    return;   // 空壳不做任何网络请求
+  }
+
   // 启动后立刻并发测速所有 CMS 站，把最快可用的站设为当前站。
   // 背景：实测默认站光速 api.guangsuapi.com 会 302 跳到博彩域名（已被安全拦截），
   // 虎牙/量子同样失效。不做这步的话用户打开应用先看到 8~25 秒的等待与错误页。
+  if (state.settings.autoSite === false) { state.bootReady = true; return; }
   try {
     const list = await probeAllSites();
     console.log('[boot] 站点测速:', list.map((x) => x.site.name + '=' + x.ms + 'ms').join(', '));
@@ -1301,4 +1792,19 @@ window.__msSelfTest = {
   renderLiveTree: renderLiveTree,
   openDetail: openDetail,
   cmsGet: cmsGet,
+  renderShell: renderShell,
+  applyTheme: applyTheme,
+  saveSettings: saveSettings,
+  togglePlay: togglePlay,
+  toggleFullscreen: toggleFullscreen,
+  togglePiP: togglePiP,
+  toggleDanmaku: toggleDanmaku,
+  isDanmakuOnFor: isDanmakuOnFor,
+  setDanmakuForSource: setDanmakuForSource,
+  loadConfig: loadConfig,
+  parseTVLines: parseTVLines,
+  parseM3U: parseM3U,
+  addHistory: addHistory,
+  renderStore: renderStore,
+  fmtTime: fmtTime,
 };

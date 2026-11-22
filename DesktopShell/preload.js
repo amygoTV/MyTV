@@ -2,6 +2,18 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('MediaShell', {
+  // ---- 用户配置存储（订阅 / 设置 / 备份 / 重置）----
+  getSubscription: () => ipcRenderer.invoke('get-subscription'),
+  getSettings: () => ipcRenderer.invoke('get-settings'),
+  saveSettings: (patch) => ipcRenderer.invoke('save-settings', patch),
+  saveSubscription: (cfg) => ipcRenderer.invoke('save-subscription', cfg),
+  hasSubscription: () => ipcRenderer.invoke('has-subscription'),
+  storeInfo: () => ipcRenderer.invoke('store-info'),
+  exportBackup: (payload) => ipcRenderer.invoke('export-backup', payload),
+  importBackup: () => ipcRenderer.invoke('import-backup'),
+  resetUserData: () => ipcRenderer.invoke('reset-userdata'),
+
+  // ---- 本地文件（辅助）----
   readConfig: (name) => ipcRenderer.invoke('read-config', name),
   listConfigs: () => ipcRenderer.invoke('list-configs'),
   saveConfig: (name, content) => ipcRenderer.invoke('save-config', name, content),

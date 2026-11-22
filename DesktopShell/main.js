@@ -16,6 +16,7 @@ const https = require('https');
 const { spawn } = require('child_process');
 const { URL } = require('url');
 const zlib = require('zlib');
+const { UserStore } = require('./user-store');
 
 // ---- 直播播放性能优化：开启 Chromium 硬件解码/GPU 合成 -------------------
 // 手机端直播不卡而电脑卡，多因 Electron 默认未开启硬解、HLS 走 JS 软解。
@@ -38,6 +39,9 @@ const CONFIG_DIR = path.join(APP_DIR, 'config');
 
 try { fs.mkdirSync(DATA_DIR, { recursive: true }); } catch (e) {}
 app.setPath('userData', DATA_DIR);
+
+// 用户配置存储：订阅/设置都存在 DATA_DIR，应用本身不内置任何影视资源（空壳首启）
+const userStore = new UserStore(DATA_DIR);
 
 // ---- 内置自检：electron.exe --selftest -------------------------------------
 // 在主进程内直接复现「首页取数」与「直播目录构建」两条链路，输出真实耗时与可用性。
@@ -363,6 +367,8 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
 
 // ---- Safe local file reader (config only) --------------------------------
+// 说明：影视资源不再内置于 config/（空壳首启）。这里保留的只读名单用于读取
+// 用户导入后落盘的辅助文件（如直播源 TXT），主订阅走 user-store。
 const SAFE_FILES = new Set([
   'YSCSites.json', 'TVBoxDesktop.json', 'aizheteng.json', 'zheteng.json',
   'TVLives.txt', 'BiliLive.txt', 'LiveSports.txt',
@@ -373,6 +379,52 @@ ipcMain.handle('read-config', async (_e, name) => {
   return fs.readFileSync(p, 'utf8');
 });
 ipcMain.handle('list-configs', async () => Array.from(SAFE_FILES));
+
+// ---- 用户配置存储（订阅 / 设置 / 备份 / 重置）------------------------------
+// 空壳首启：get-subscription 返回 null 表示用户还没导入任何影视接口。
+ipcMain.handle('get-subscription', async () => userStore.getSubscription());
+ipcMain.handle('get-settings', async () => userStore.getSettings());
+ipcMain.handle('save-settings', async (_e, patch) => userStore.saveSettings(patch || {}));
+ipcMain.handle('save-subscription', async (_e, cfg) => userStore.saveSubscription(cfg));
+ipcMain.handle('has-subscription', async () => userStore.hasSubscription());
+ipcMain.handle('store-info', async () => userStore.info());
+
+// 导出备份：写到用户选择的路径
+ipcMain.handle('export-backup', async (_e, payload) => {
+  const data = payload && payload.subscription ? payload : userStore.exportBackup();
+  const r = await dialog.showSaveDialog({
+    title: '导出配置备份',
+    defaultPath: path.join(app.getPath('documents') || DATA_DIR, 'MediaShell-backup-' + new Date().toISOString().slice(0, 10) + '.json'),
+    filters: [{ name: 'JSON 配置文件', extensions: ['json'] }],
+  });
+  if (r.canceled || !r.filePath) return { canceled: true };
+  fs.writeFileSync(r.filePath, JSON.stringify(data, null, 2), 'utf8');
+  return { ok: true, file: r.filePath };
+});
+
+// 导入备份：从用户选择的文件读回
+ipcMain.handle('import-backup', async () => {
+  const r = await dialog.showOpenDialog({
+    title: '导入配置备份',
+    properties: ['openFile'],
+    filters: [{ name: 'JSON 配置文件', extensions: ['json'] }],
+  });
+  if (r.canceled || !r.filePaths || !r.filePaths.length) return { canceled: true };
+  try {
+    const raw = fs.readFileSync(r.filePaths[0], 'utf8');
+    const payload = JSON.parse(raw);
+    const applied = userStore.importBackup(payload);
+    return { ok: true, file: r.filePaths[0], applied };
+  } catch (e) {
+    return { error: String(e && e.message || e) };
+  }
+});
+
+// 重置：清空所有用户配置，恢复到空壳状态
+ipcMain.handle('reset-userdata', async () => {
+  const removed = userStore.resetAll();
+  return { ok: true, removed };
+});
 
 // ---- HTTP proxy: renderer cannot do cross-origin CMS requests -------------
 // 安全防护：部分采集站域名过期后被拍卖/劫持，实测会 302 跳到博彩类域名
