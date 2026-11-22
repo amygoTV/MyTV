@@ -1,5 +1,5 @@
 {
-  "spider":"./moyuer.jar;md5;be6121b5c37471b191114027123912d2",
+  "spider":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/spider/moyuer.txt;md5;33734d22fd197a2a80d3dc5cb4dfede2",
   "wallpaper":"http://摸鱼儿.xiyan.life/摸鱼壁纸/api.php",
   "warningText":"摸鱼儿：资源来自网络，无盈利，纯技术分享，如有冒犯请联系删除。[所有内容仅供学习使用，请勿用于违法及商业用途，请勿付费购买]",
   "sites":[
@@ -506,7 +506,7 @@
       "key":"rrdyw网盘",
       "name":"1080P💘网盘|弹幕",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/rrdyw.js",
       "quickSearch":1,
       "changeable":2,
@@ -587,7 +587,7 @@
       "name":"1080P🐟bttwo",
       "type":3,
       "playerType":"2",
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/两个BT.js"
     },
     {
@@ -603,7 +603,7 @@
       "name":"1080P🐟free",
       "type":3,
       "playerType":"1",
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/FreeOK.js"
     },
     {
@@ -628,7 +628,7 @@
       "name":"1080P🐟视觉",
       "type":3,
       "playerType":"2",
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/新视觉.js"
     },
     {
@@ -663,7 +663,7 @@
       "key":"csp_聚短视频",
       "name":"聚短🐟视频",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/短视频.js",
       "searchable":0,
       "quickSearch":0,
@@ -673,7 +673,7 @@
       "key":"有声小说js",
       "name":"有声🐟小说",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/有声小说吧.js",
       "style":{
         "type":"rect",
@@ -687,7 +687,7 @@
       "key":"58动漫网",
       "name":"动漫🐟58",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "searchable":1,
       "quickSearch":1,
       "filterable":1,
@@ -840,7 +840,7 @@
       "key":"js_DJ5",
       "name":"💚短剧屋",
       "type":3,
-      "api":"./lib/apiv15drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/apiv15drpy2.min.js",
       "searchable":1,
       "quickSearch":1,
       "filterable":1,
@@ -897,7 +897,7 @@
       "key":"虎牙直播js",
       "name":"🐟虎牙直播",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/虎牙直播.js",
       "style":{
         "type":"rect",
@@ -911,7 +911,7 @@
       "key":"csp_XYQBiu_斗鱼",
       "name":"🐟斗鱼直播",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/斗鱼直播.js",
       "style":{
         "type":"rect",
@@ -1173,7 +1173,7 @@
       "quickSearch":1,
       "changeable":1,
       "playerType":"1",
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/jp.js"
     },
     {
@@ -1271,7 +1271,7 @@
       "key":"js_baby",
       "name":"👶┃宝宝合集",
       "type":3,
-      "api":"./lib/apiv15drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/apiv15drpy2.min.js",
       "searchable":1,
       "quickSearch":1,
       "filterable":1,
@@ -1282,7 +1282,7 @@
       "key":"js_童趣",
       "name":"👶童趣搜视",
       "type":3,
-      "api":"./lib/apiv15drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/apiv15drpy2.min.js",
       "searchable":1,
       "quickSearch":1,
       "filterable":1,
@@ -1293,7 +1293,7 @@
       "key":"dr_兔小贝",
       "name":"📚儿童┃启蒙",
       "type":3,
-      "api":"./lib/drpy2.min.js",
+      "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/lib/drpy2.min.js",
       "ext":"./lib/兔小贝.js",
       "style":{
         "type":"rect",
@@ -1409,7 +1409,7 @@
     {
       "name":"TVLives",
       "type":0,
-      "url":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "url":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
       "ua":"okhttp/3.15",
       "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
       "logo":"https://epg.112114.xyz/logo/{name}.png"
@@ -1417,7 +1417,7 @@
     {
       "name":"TVLives(备)",
       "type":0,
-      "url":"https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "url":"https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
       "ua":"okhttp/3.15",
       "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
       "logo":"https://epg.112114.xyz/logo/{name}.png"

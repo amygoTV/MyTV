@@ -1,5 +1,5 @@
 {
-    "spider": "./spider.jar",
+    "spider": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/spider/fty.txt;md5;87d5916b7bb5c8acacac5490e802828e",
     "wallpaper": "http://www.饭太硬.top/深色壁纸/api.php",
     "sites": [
         {
@@ -207,7 +207,7 @@
             "quickSearch": 1,
             "changeable": 1,
             "playerType": "1",
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/jp.js"
         },
         {
@@ -272,7 +272,7 @@
             "key": "Jrsjs",
             "name": "⚽ Jrs┃球迷",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/jrk.js",
             "style": {
                 "type": "list"
@@ -285,7 +285,7 @@
             "key": "310js",
             "name": "⚽310┃看球",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/310直播.js",
             "style": {
                 "type": "list"
@@ -311,7 +311,7 @@
             "key": "酷奇js",
             "name": "🎤酷奇┃MV",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/酷奇MV.js",
             "style": {
                 "type": "rect",
@@ -359,7 +359,7 @@
             "key": "虎牙直播js",
             "name": "🐯虎牙┃直播",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/huyazhibo.js",
             "style": {
                 "type": "rect",
@@ -374,7 +374,7 @@
             "key": "斗鱼js",
             "name": "🐟斗鱼┃直播",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/斗鱼直播.js",
             "style": {
                 "type": "rect",
@@ -389,7 +389,7 @@
             "key": "聚短视频js",
             "name": "📽️聚短┃视频",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/短视频.js",
             "searchable": 0,
             "quickSearch": 0,
@@ -399,7 +399,7 @@
             "key": "有声小说js",
             "name": "🎧有声┃小说",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/有声小说吧.js",
             "style": {
                 "type": "rect",
@@ -513,7 +513,7 @@
             "key": "dr_兔小贝",
             "name": "📚儿童┃启蒙",
             "type": 3,
-            "api": "./api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api/drpy2.min.js",
             "ext": "./js/兔小贝.js",
             "style": {
                 "type": "rect",
@@ -856,7 +856,7 @@
         {
             "name": "TVLives",
             "type": 0,
-            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
@@ -864,7 +864,7 @@
         {
             "name": "TVLives(备)",
             "type": 0,
-            "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+            "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"

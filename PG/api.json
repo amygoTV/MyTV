@@ -1,5 +1,5 @@
 {
-    "spider":"./spider.jar",
+    "spider":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/spider/PG.txt;md5;7656cb92b192feec801b9c554ff91892",
     "sites":[
         
         {
@@ -24,7 +24,7 @@
             "name":"🐼️┃电视┃直播",
             "type":3,
             "searchable":0,
-            "api":"./api/live2vod.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/PG/api/live2vod.js",
             "ext":"./json/feimaolive.json"
         },
         {
@@ -607,7 +607,7 @@
             "key":"愛看",
             "name":"愛看",
             "type":3,
-            "api":"./api/ikanbot_open.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/PG/api/ikanbot_open.js",
             "searchable":1,
             "changeable":0
         },
@@ -634,7 +634,7 @@
         {
             "name":"TVLives",
             "type":0,
-            "url":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+            "url":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
             "ua":"okhttp/3.15",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
             "logo":"https://epg.112114.xyz/logo/{name}.png"
@@ -642,7 +642,7 @@
         {
             "name":"TVLives(备)",
             "type":0,
-            "url":"https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+            "url":"https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
             "ua":"okhttp/3.15",
             "epg":"http://epg.112114.xyz/?ch={name}&date={date}",
             "logo":"https://epg.112114.xyz/logo/{name}.png"

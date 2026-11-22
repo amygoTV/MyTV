@@ -1,27 +1,27 @@
 {
   "urls": [
     {
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.0/fty/api.json",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/fty/api.json",
       "name": "🍚饭太硬🍚"
     },
     {
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.0/feimao/api.json",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/feimao/api.json",
       "name": "🐼肥猫宝贝🐼"
     },
     {
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/niaoshu/tongyong.json",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/niaoshu/tongyong.json",
       "name": "🕊鸟叔4K🕊"
     },
     {
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/PG/api.json",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/PG/api.json",
       "name": "🍎PG线路🍎"
     },
     {
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/moyuer/api.json",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/moyuer/api.json",
       "name": "🐟摸鱼儿🐟"
     },
     {
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.0/xiaomi/api.json",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/xiaomi/api.json",
       "name": "🌾小米线路🌾"
     },
     {
