@@ -47,7 +47,10 @@ const documentStub = {
   querySelector(s) {
     const m = String(s).replace('#', '');
     if (m === 'body') return documentStub.body;
-    return els[m] || mkEl(m);
+    // 动态创建的节点（直播页的 liveScreen / liveStateChip 等）也要缓存，
+    // 否则每次 querySelector 返回新实例，测试改不动 app.js 拿到的那个元素
+    if (!els[m]) els[m] = mkEl(m);
+    return els[m];
   },
   querySelectorAll: () => [],
   createElement: () => mkEl('new'),
@@ -368,6 +371,80 @@ t('pickLivePlayer: 设定有效用它；builtin/无效回退可用播放器；�
     ls.players = {};
     if (pick() !== null) throw new Error('无播放器应返回 null');
   } finally { ls.player = oldPlayer; ls.players = oldPlayers; }
+});
+
+// ---- v1.12：直播内嵌播放（mpv --wid 挂进壳内播放区）----
+t('liveStageRect: 采集播放区相对客户区的偏移与尺寸', () => {
+  const st = sandbox.window.__msSelfTest;
+  const screen = els['liveScreen'] || documentStub.querySelector('#liveScreen');
+  const old = screen.getBoundingClientRect;
+  try {
+    screen.getBoundingClientRect = () => ({ left: 474, top: 112, width: 850.4, height: 580.6 });
+    const r = st.liveStageRect();
+    if (r.relX !== 474 || r.relY !== 112) throw new Error('偏移不对: ' + JSON.stringify(r));
+    if (r.width !== 850 || r.height !== 581) throw new Error('尺寸不对: ' + JSON.stringify(r));
+  } finally { screen.getBoundingClientRect = old; }
+});
+
+t('liveStageRect: 播放区缺失时给出安全兜底尺寸', () => {
+  const st = sandbox.window.__msSelfTest;
+  const old = els['liveScreen'];
+  try {
+    delete els['liveScreen'];
+    const r = st.liveStageRect();
+    if (!r.width || !r.height) throw new Error('兜底尺寸缺失');
+  } finally { if (old) els['liveScreen'] = old; }
+});
+
+t('内嵌模式: 暂停反馈走 mpv OSD + 区外状态条，不依赖被遮挡的中央图标', () => {
+  const st = sandbox.window.__msSelfTest;
+  const ls = st.liveState;
+  const cmds = [];
+  const oldEmbed = MS.liveEmbedCmd, oldEmb = ls.embedded, oldPlaying = ls.playing;
+  try {
+    MS.liveEmbedCmd = (cmd) => { cmds.push(cmd); return Promise.resolve({ ok: true }); };
+    ls.embedded = true; ls.playing = true; ls.paused = false;
+    st.liveFlashIcon(true);
+    if (!cmds.some((c) => c[0] === 'show-text' && c[1] === '已暂停')) throw new Error('未发 show-text: ' + JSON.stringify(cmds));
+    const chip = els['liveStateChip'];
+    if (chip.textContent.indexOf('已暂停') < 0) throw new Error('状态条未显示暂停: ' + chip.textContent);
+  } finally {
+    MS.liveEmbedCmd = oldEmbed; ls.embedded = oldEmb; ls.playing = oldPlaying;
+  }
+});
+
+t('内嵌模式: 状态条在停止播放后隐藏', () => {
+  const st = sandbox.window.__msSelfTest;
+  const ls = st.liveState;
+  const oldEmb = ls.embedded, oldPlaying = ls.playing;
+  try {
+    ls.embedded = false; ls.playing = false;
+    st.liveUpdateStateChip(false);
+    const chip = els['liveStateChip'];
+    if (!chip.classList.contains('hidden')) throw new Error('停止后状态条应隐藏');
+  } finally { ls.embedded = oldEmb; ls.playing = oldPlaying; }
+});
+
+t('内嵌模式: 双击全屏同时恢复播放', () => {
+  const st = sandbox.window.__msSelfTest;
+  const ls = st.liveState;
+  const cmds = [];
+  const oldEmbed = MS.liveEmbedCmd, oldEmb = ls.embedded, oldFs = ls.fullscreen, oldPaused = ls.paused;
+  try {
+    MS.liveEmbedCmd = (cmd) => { cmds.push(cmd); return Promise.resolve({ ok: true }); };
+    ls.embedded = true; ls.fullscreen = false; ls.paused = true;
+    st.liveToggleFullscreen();
+  } finally {
+    MS.liveEmbedCmd = oldEmbed; ls.embedded = oldEmb; ls.fullscreen = oldFs; ls.paused = oldPaused;
+  }
+  return Promise.resolve().then(() => {
+    if (!cmds.some((c) => c[0] === 'set' && c[1] === 'fullscreen' && c[2] === 'yes')) {
+      throw new Error('未进全屏: ' + JSON.stringify(cmds));
+    }
+    if (!cmds.some((c) => c[0] === 'set' && c[1] === 'pause' && c[2] === 'no')) {
+      throw new Error('进全屏未恢复播放: ' + JSON.stringify(cmds));
+    }
+  });
 });
 
 chain.then(() => {

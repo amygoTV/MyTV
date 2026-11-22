@@ -179,7 +179,11 @@ function resolveTid(site, name) {
 
 // ---------- views ----------
 function setView(v) {
-  if (state.view === 'live' && v !== 'live') { try { liveStop(); } catch (e) {} }
+  if (state.view === 'live' && v !== 'live') {
+    try { liveStop(); } catch (e) {}
+    // v1.12：清理直播页的 resize 监听与 ResizeObserver
+    try { if (liveState._cleanup) { liveState._cleanup(); liveState._cleanup = null; } } catch (e) {}
+  }
   state.view = v;
   $$('.tab').forEach((b) => b.classList.toggle('active', b.dataset.view === v));
   if (state.shellMode && v !== 'home') {
@@ -1248,6 +1252,7 @@ async function doSearch(kw) {
 
 // ---------- live ----------
 let liveCache = null;
+let liveStageObserver = null;   // v1.12：监听播放区尺寸变化
 let liveState = {
   channels: [],     // 全部频道(已按名称去重、合并线路)
   chMap: null,     // id → 频道 索引（渲染 O(1) 查找）
@@ -1264,6 +1269,9 @@ let liveState = {
   collapsed: loadLS('ms_live_collapsed', {}),
   expanded: {},     // 分组是否已「展开其余」
   filter: '',
+  embedded: false,  // v1.12：当前是否以内嵌方式播放（mpv 挂在壳内播放区）
+  paused: false,    // 内嵌播放的暂停状态
+  fullscreen: false,// 内嵌播放的全屏状态
 };
 function saveLiveSettings() {
   saveLS('ms_live_timeout', liveState.timeoutSec);
@@ -1486,12 +1494,17 @@ function renderLive() {
           '<video id="liveVideo" playsinline class="hidden"></video>' +
           '<div class="live-external-panel">' +
             '<div class="live-external-icon">▶️</div>' +
-            '<div class="live-external-title">外部播放器模式</div>' +
-            '<div class="live-external-desc" id="liveMsg">点左侧频道，即用 mpv 独立窗口硬解播放</div>' +
+            '<div class="live-external-title">播放器未启动</div>' +
+            '<div class="live-external-desc">点左侧频道，即在下方播放区用 mpv 硬解播放（不弹窗）</div>' +
           '</div>' +
-          '<div class="live-lines" id="liveLines"></div>' +
         '</div>' +
-        '<div class="live-hint" id="liveHint">直播由 mpv 独立窗口播放（硬解、不卡顿）。同名频道的多条线路在下方切换；播放/暂停/全屏请在 mpv 窗口内操作。</div>' +
+        // v1.12：播放区被原生承载窗口覆盖，区内 DOM 不可见 → 状态提示一律放到区外
+        '<div class="live-msgline">' +
+          '<span id="liveMsg" class="live-msg-inline">点左侧频道，即在下方播放区用 mpv 硬解播放（不弹窗）</span>' +
+          '<span class="live-state-chip hidden" id="liveStateChip"></span>' +
+        '</div>' +
+        '<div class="live-lines" id="liveLines"></div>' +
+        '<div class="live-hint" id="liveHint">直播画面直接显示在本页播放区内（mpv 硬解、不弹窗）。同名频道的多条线路在上方切换。</div>' +
       '</section>' +
     '</div>';
   $('#liveChCount').textContent = '(' + liveState.channels.length + ')';
@@ -1517,6 +1530,22 @@ function renderLive() {
     toast('检测完成：' + ok + '/' + total + ' 条线路可播');
   };
   bindLiveControls();
+
+  // v1.12：播放区尺寸/位置变化时同步给主进程，让内嵌视频跟着播放区走
+  if (window.ResizeObserver) {
+    try {
+      const ro = new ResizeObserver(() => { reportLiveStageRect(); });
+      const sc = $('#liveScreen');
+      if (sc) ro.observe(sc);
+      liveStageObserver = ro;
+    } catch (e) {}
+  }
+  window.addEventListener('resize', reportLiveStageRect);
+  // 离开直播页时关掉内嵌播放器
+  liveState._cleanup = () => {
+    window.removeEventListener('resize', reportLiveStageRect);
+    if (liveStageObserver) { try { liveStageObserver.disconnect(); } catch (e) {} liveStageObserver = null; }
+  };
 
   (async () => {
     const box = $('#liveTree');
@@ -1625,16 +1654,32 @@ function liveStop() {
   clearTimeout(liveState.timer); liveState.timer = null;
   // 关掉本壳启动的外部播放器窗口，避免换频道/离开直播页后 mpv 残留、多个窗口并存
   try { if (MS.stopExternal) MS.stopExternal(); } catch (e) {}
+  // v1.12：同时销毁内嵌承载窗口与内嵌的 mpv（否则会留下一个空的黑框）
+  try { if (MS.liveEmbedStop) MS.liveEmbedStop(); } catch (e) {}
+  stopEmbedStatePoll();
+  liveState.embedded = false;
+  liveState.paused = false;
+  liveState.fullscreen = false;
   const v = $('#liveVideo');
   if (v) { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) {} }
   if (liveState.hls) { try { liveState.hls.destroy(); } catch (e) {} liveState.hls = null; }
   liveState.playing = false;
   const msg = $('#liveMsg'); if (msg) msg.classList.add('hidden');
   const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden');
+  const chip = $('#liveStateChip'); if (chip) { chip.classList.add('hidden'); chip.textContent = ''; }
+  const panel = $('.live-external-panel');
+  if (panel) panel.classList.remove('hidden');
 }
 // ---- 直播播放器控制（对齐点播体验：单击暂停/恢复、双击全屏、⛶全屏/⧉小窗）----
 // 中央图标不再常驻：仅暂停瞬间短暂闪现，播放中自动隐藏。
 function liveFlashIcon(paused) {
+  // v1.12 内嵌模式：承载窗口是原生层，会盖住播放区内的所有 DOM，
+  // 画面上的反馈交给 mpv 自己的 OSD（show-text），壳内只更新区外的状态条。
+  if (liveState.embedded) {
+    liveUpdateStateChip(paused);
+    try { if (MS.liveEmbedCmd) MS.liveEmbedCmd(['show-text', paused ? '已暂停' : '继续播放', 900]); } catch (e) {}
+    return;
+  }
   const cp = $('#liveCenterPlay'); if (!cp) return;
   cp.textContent = paused ? '▶' : '⏸';
   cp.classList.remove('hidden');
@@ -1642,12 +1687,68 @@ function liveFlashIcon(paused) {
   clearTimeout(cp._t);
   cp._t = setTimeout(() => { cp.classList.remove('show'); cp.classList.add('hidden'); }, paused ? 900 : 420);
 }
+// v1.12：播放区外的播放状态条（内嵌模式下唯一可见的播放反馈）
+function liveUpdateStateChip(paused) {
+  const chip = $('#liveStateChip');
+  if (!chip) return;
+  if (!liveState.playing || !liveState.embedded) { chip.classList.add('hidden'); chip.textContent = ''; return; }
+  chip.classList.remove('hidden');
+  const fs = liveState.fullscreen ? ' · 全屏' : '';
+  chip.textContent = paused ? '⏸ 已暂停（单击画面恢复）' : '▶ 播放中 · mpv 硬解内嵌' + fs;
+}
+
+// 轮询内嵌 mpv 的真实状态：全屏/暂停由 mpv 自己说了算（比如用户按 ESC 退全屏），
+// 壳里的状态条必须跟着变，否则会误导用户。
+function startEmbedStatePoll() {
+  stopEmbedStatePoll();
+  liveState._poll = setInterval(async () => {
+    if (!liveState.embedded || !MS.liveEmbedQuery) return;
+    try {
+      const f = await MS.liveEmbedQuery('fullscreen');
+      if (f && f.value != null) liveState.fullscreen = !!f.value;
+      const p = await MS.liveEmbedQuery('pause');
+      if (p && p.value != null) liveState.paused = !!p.value;
+      liveUpdateStateChip(liveState.paused);
+    } catch (e) {}
+  }, 1500);
+}
+function stopEmbedStatePoll() {
+  if (liveState._poll) { clearInterval(liveState._poll); liveState._poll = null; }
+}
 function liveTogglePlay() {
+  // v1.12 内嵌模式：控制命令通过 IPC 转给内嵌的 mpv
+  if (liveState.embedded && MS.liveEmbedCmd) {
+    const paused = !liveState.paused;
+    MS.liveEmbedCmd(['set', 'pause', paused ? 'yes' : 'no']).then((r) => {
+      if (r && r.error) { toast('控制内嵌播放器失败：' + r.error); return; }
+      liveState.paused = paused;
+      liveFlashIcon(paused);
+    });
+    return;
+  }
   const v = $('#liveVideo'); if (!v || !v.src) return;
   if (v.paused) { v.play().catch(() => {}); liveFlashIcon(false); }
   else { v.pause(); liveFlashIcon(true); }
 }
 function liveToggleFullscreen() {
+  // v1.12 内嵌模式：全屏交给 mpv（它会把画面撑满整个屏幕）
+  if (liveState.embedded && MS.liveEmbedCmd) {
+    const fs = !!(document.fullscreenElement || liveState.fullscreen);
+    const p = Promise.all([
+      MS.liveEmbedCmd(['set', 'fullscreen', fs ? 'no' : 'yes']),
+      // 双击时 click 会先触发一次暂停，进全屏时顺手恢复播放
+      fs ? Promise.resolve({ ok: true }) : MS.liveEmbedCmd(['set', 'pause', 'no']),
+    ]);
+    p.then((rs) => {
+      const err = (rs || []).filter(Boolean).find((r) => r && r.error);
+      if (err) { toast('全屏切换失败：' + err.error); return; }
+      liveState.fullscreen = !fs;
+      if (!fs) liveState.paused = false;
+      liveUpdateStateChip(liveState.paused);
+      toast(fs ? '已退出全屏' : '已全屏播放（按 Esc 或双击退出）');
+    }).catch(() => {});
+    return;
+  }
   const screen = $('#liveScreen'); if (!screen) return;
   try {
     if (document.fullscreenElement) document.exitFullscreen();
@@ -1700,8 +1801,7 @@ function livePlayChannel(ch, lineIdx) {
   }
   const rawUrl = ch.urls[lineIdx];
   if (!rawUrl) { liveShowMsg('该频道无可用线路'); return; }
-  // v1.11 起直播彻底走外部播放器（mpv/VLC/PotPlayer），不再用内置 hls.js：
-  // 内置只解 m3u8、FLV/TS 无能为力且软解卡；外部播放器独立窗口硬解、格式通吃。
+  // v1.12：直播优先内嵌到壳内播放区（mpv --wid 挂进透明承载窗口），不再弹出独立窗口。
   // 选用户设定的播放器；若设定值无效（如旧存档的 builtin）则回退到本机可用播放器。
   const pick = pickLivePlayer();
   if (!pick) {
@@ -1709,10 +1809,64 @@ function livePlayChannel(ch, lineIdx) {
     return;
   }
   liveShowMsg('正在用 ' + pick + ' 打开：' + ch.name + '（线路' + (lineIdx + 1) + '）…');
-  MS.playExternal(pick, rawUrl, liveState.decoder).then((r) => {
-    if (r && r.error) liveShowMsg('调用 ' + pick + ' 失败：' + r.error + '（可在「播放器」里换一个）');
-    else liveShowMsg('已用 ' + pick + ' 打开：' + ch.name + ' · 线路' + (lineIdx + 1) + '（独立窗口硬解）');
+
+  // 采集播放区屏幕坐标（相对主窗口客户区），供主进程定位承载窗口
+  const rect = liveStageRect();
+
+  // 先试内嵌；不支持内嵌的播放器（VLC/PotPlayer）或失败时回退到独立窗口
+  const doEmbed = MS.liveEmbed ? MS.liveEmbed(pick, rawUrl, liveState.decoder, rect) : Promise.resolve({ error: 'no-api' });
+  doEmbed.then((r) => {
+    if (r && r.embedded) {
+      liveState.embedded = true;
+      liveState.playing = true;
+      liveState.paused = false;
+      liveState.fullscreen = false;
+      const panel = $('.live-external-panel');
+      if (panel) panel.classList.add('hidden');
+      liveUpdateStateChip(false);
+      startEmbedStatePoll();
+      liveShowMsg('已在播放区播放：' + ch.name + ' · 线路' + (lineIdx + 1) + '（mpv 硬解内嵌）');
+      return;
+    }
+    // 回退：独立窗口播放
+    liveState.embedded = false;
+    const panel = $('.live-external-panel');
+    if (panel) panel.classList.remove('hidden');
+    MS.playExternal(pick, rawUrl, liveState.decoder).then((r2) => {
+      if (r2 && r2.error) liveShowMsg('调用 ' + pick + ' 失败：' + r2.error + '（可在「播放器」里换一个）');
+      else liveShowMsg('已用 ' + pick + ' 打开：' + ch.name + ' · 线路' + (lineIdx + 1) + '（独立窗口硬解）');
+    });
+  }).catch(() => {
+    liveState.embedded = false;
+    MS.playExternal(pick, rawUrl, liveState.decoder).then((r2) => {
+      if (r2 && r2.error) liveShowMsg('调用 ' + pick + ' 失败：' + r2.error);
+      else liveShowMsg('已用 ' + pick + ' 打开：' + ch.name + '（独立窗口）');
+    });
   });
+}
+
+// 采集直播播放区在屏幕上的位置与尺寸（相对主窗口客户区左上角）
+function liveStageRect() {
+  const screen = $('#liveScreen');
+  const fallback = { relX: 0, relY: 0, width: 640, height: 360 };
+  if (!screen) return fallback;
+  try {
+    const r = screen.getBoundingClientRect();
+    return {
+      relX: r.left,
+      relY: r.top,
+      width: Math.max(64, Math.round(r.width)),
+      height: Math.max(64, Math.round(r.height)),
+    };
+  } catch (e) { return fallback; }
+}
+
+// 播放区几何变化时同步给主进程（承载窗口跟随）
+function reportLiveStageRect() {
+  if (!MS.liveEmbedRect) return;
+  const screen = $('#liveScreen');
+  if (!screen || !screen.offsetParent) return;   // 不在直播页就别报
+  try { MS.liveEmbedRect(liveStageRect()); } catch (e) {}
 }
 
 // ---------- favorite / history ----------
@@ -2242,6 +2396,11 @@ window.__msSelfTest = {
   liveTogglePlay: liveTogglePlay,
   liveToggleFullscreen: liveToggleFullscreen,
   liveTogglePiP: liveTogglePiP,
+  // v1.12 内嵌播放：播放区几何采集 / 状态条 / 轮询
+  liveStageRect: liveStageRect,
+  liveUpdateStateChip: liveUpdateStateChip,
+  liveShowMsg: liveShowMsg,
+  liveStop: liveStop,
   openDetail: openDetail,
   cmsGet: cmsGet,
   renderShell: renderShell,

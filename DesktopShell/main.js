@@ -204,6 +204,16 @@ function createWindow() {
     win.focus();
   });
   win.on('closed', () => { win = null; });
+  // v1.12：主窗口移动/缩放时同步内嵌播放器承载窗口，保证视频始终贴在播放区
+  try {
+    win.on('move', () => { try { syncEmbedCarrier(); } catch (e) {} });
+    win.on('resize', () => { try { syncEmbedCarrier(); } catch (e) {} });
+    win.on('maximize', () => { try { syncEmbedCarrier(); } catch (e) {} });
+    win.on('unmaximize', () => { try { syncEmbedCarrier(); } catch (e) {} });
+    win.on('minimize', () => { try { if (embedCarrier && !embedCarrier.isDestroyed()) embedCarrier.hide(); } catch (e) {} });
+    win.on('restore', () => { try { if (embedCarrier && !embedCarrier.isDestroyed()) embedCarrier.showInactive(); } catch (e) {} });
+  } catch (e) {}
+
 
   // 自动化自检模式：MSHELL_SELFTEST=1 时，渲染进程把关键耗时写入 userdata/selftest.json
   if (process.env.MSHELL_SELFTEST === '1') {
@@ -607,6 +617,306 @@ function killExternalPlayer() {
   } catch (e) {}
 }
 
+// ---- v1.12 直播内嵌播放 ---------------------------------------------------
+// 需求：mpv 画面留在壳内的播放区，不要弹出独立窗口。
+// 原理：mpv 支持 --wid=<HWND>，会把视频窗口挂成父窗口的子窗口；
+//   但 Chromium 渲染层(Chrome_RenderWidgetHostHWND)会盖住原生子窗口，
+//   所以承载窗口必须 transparent:true —— 此时不创建渲染层，mpv 直接可见。
+// 承载窗口尺寸/位置 = 渲染进程上报的播放区屏幕坐标，随主窗口移动而同步。
+let embedCarrier = null;
+let embedChild = null;
+let embedPipeName = null;
+let embedSock = null;
+let embedMpvLogPath = null;
+
+// 生成 mpv 的 input.conf（必须放在纯 ASCII 路径，否则 mpv 打不开）
+// 注意：--input-conf 只是替换「用户配置文件」，mpv 内置键位仍生效
+//   （ESC → cycle fullscreen、空格 → pause 等都还在）
+function embedInputConf() {
+  try {
+    const dir = path.join(process.env.TEMP || process.env.TMP || 'C:\\Windows\\Temp', 'MediaShell');
+    fs.mkdirSync(dir, { recursive: true });
+    const p = path.join(dir, 'input.conf');
+    const body = [
+      '# MediaShell 内嵌播放键位（v1.12）',
+      '# 画面挂在壳内播放区，双击切全屏；禁止 q/Q 直接退出整条直播',
+      'q ignore',
+      'Q ignore',
+      'MBTN_LEFT ignore',
+      'MBTN_LEFT_DBL cycle fullscreen',
+      '',
+    ].join('\n');
+    fs.writeFileSync(p, body, 'utf8');
+    return p;
+  } catch (e) { return ''; }
+}
+
+// 连接 mpv 的 IPC 命名管道（用于转发暂停/全屏等控制命令）
+function connectEmbedIpc(pipeName) {
+  return new Promise((resolve) => {
+    let net = null;
+    try { net = require('net'); } catch (e) { resolve(null); return; }
+    let sock = null;
+    try {
+      sock = net.connect(pipeName);
+    } catch (e) { resolve(null); return; }
+    let done = false;
+    const finish = (v) => { if (!done) { done = true; resolve(v); } };
+    sock.on('connect', () => finish(sock));
+    sock.on('error', () => finish(null));
+    setTimeout(() => finish(null), 2500);
+  });
+}
+
+// ---- mpv IPC 请求/响应（get_property 用来同步 fullscreen/pause 状态到壳内状态条）----
+let embedReqSeq = 0;
+const embedPending = new Map();   // request_id -> resolve
+
+function parseEmbedIpc(buf) {
+  const text = buf.toString('utf8');
+  let idx = 0;
+  while (true) {
+    const nl = text.indexOf('\n', idx);
+    if (nl < 0) break;
+    const line = text.slice(idx, nl).trim();
+    idx = nl + 1;
+    if (!line) continue;
+    let obj = null;
+    try { obj = JSON.parse(line); } catch (e) { continue; }
+    if (obj && obj.request_id != null && embedPending.has(obj.request_id)) {
+      const r = embedPending.get(obj.request_id);
+      embedPending.delete(obj.request_id);
+      try { r(obj); } catch (e) {}
+    }
+  }
+}
+
+// 取到可用的 IPC socket（必要时新建）
+async function ensureEmbedSock() {
+  if (embedSock && !embedSock.destroyed) return embedSock;
+  if (!embedPipeName) return null;
+  const s = await connectEmbedIpc(embedPipeName);
+  if (!s) return null;
+  embedSock = s;
+  s.on('data', parseEmbedIpc);
+  s.on('error', () => { if (embedSock === s) embedSock = null; });
+  s.on('close', () => { if (embedSock === s) embedSock = null; });
+  return s;
+}
+
+// 向内嵌 mpv 发送一条 IPC 命令
+ipcMain.handle('live-embed-cmd', async (_e, cmd) => {
+  const s = await ensureEmbedSock();
+  if (!s) return { error: embedPipeName ? 'ipc-connect-failed' : 'no-pipe' };
+  try {
+    s.write(JSON.stringify({ command: cmd }) + '\n');
+    return { ok: true };
+  } catch (e) { return { error: String(e && e.message || e) }; }
+});
+
+// 查询内嵌 mpv 的属性（fullscreen / pause / time-pos …），用于把状态同步到壳内状态条
+ipcMain.handle('live-embed-query', async (_e, prop) => {
+  const s = await ensureEmbedSock();
+  if (!s) return { error: embedPipeName ? 'ipc-connect-failed' : 'no-pipe' };
+  const id = ++embedReqSeq;
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => { embedPending.delete(id); resolve({ error: 'timeout' }); }, 1500);
+    embedPending.set(id, (obj) => {
+      clearTimeout(timer);
+      if (obj && obj.error === 'success') resolve({ value: obj.data });
+      else resolve({ error: String((obj && obj.error) || 'bad-response') });
+    });
+    try { s.write(JSON.stringify({ command: ['get_property', String(prop)], request_id: id }) + '\n'); }
+    catch (e) { clearTimeout(timer); embedPending.delete(id); resolve({ error: String(e && e.message || e) }); }
+  });
+});
+
+// 关闭承载窗口与内嵌播放器
+function closeEmbed() {
+  if (embedSock) { try { embedSock.destroy(); } catch (e) {} embedSock = null; }
+  embedPipeName = null;
+  embedMpvLogPath = null;
+  if (embedChild) {
+    const c = embedChild;
+    embedChild = null;
+    try {
+      if (process.platform === 'win32' && c.pid) {
+        spawn('taskkill', ['/PID', String(c.pid), '/T', '/F'], { stdio: 'ignore' });
+      } else { c.kill('SIGTERM'); }
+    } catch (e) {}
+  }
+  if (embedCarrier) {
+    const w = embedCarrier;
+    embedCarrier = null;
+    try { w.destroy(); } catch (e) {}
+  }
+}
+
+// 依据播放区屏幕坐标重建承载窗口（首次创建或几何变化时）
+// 注意：rect.relX/relY 是相对**主窗口客户区**左上角的偏移（getBoundingClientRect 坐标系），
+// 而窗口坐标原点是窗口边框左上角 —— 必须用 contentBounds 的原点，否则会差一个标题栏高度。
+function ensureEmbedCarrier(rect) {
+  const cb = win.getContentBounds();
+  const x = Math.round(cb.x + rect.relX), y = Math.round(cb.y + rect.relY);
+  const width = Math.max(64, Math.round(rect.width));
+  const height = Math.max(64, Math.round(rect.height));
+  if (embedCarrier && !embedCarrier.isDestroyed()) {
+    try {
+      const b = embedCarrier.getBounds();
+      if (b.x === x && b.y === y && b.width === width && b.height === height) return embedCarrier;
+      embedCarrier.setBounds({ x, y, width, height });
+      return embedCarrier;
+    } catch (e) {}
+  }
+  if (embedCarrier) { try { embedCarrier.destroy(); } catch (e) {} embedCarrier = null; }
+  embedCarrier = new BrowserWindow({
+    x, y, width, height,
+    frame: false, transparent: true, backgroundColor: '#00000000',
+    show: false, skipTaskbar: true, hasShadow: false,
+    resizable: false, movable: false, minimizable: false, maximizable: false,
+    fullscreenable: false, focusable: false, roundedCorners: false,
+    // parent = 主窗口 → owned window：始终浮在主窗口之上，主窗口最小化时一起隐藏，
+    // 也不会盖住其它应用（比 alwaysOnTop 更贴近“贴在播放区里”的直觉）。
+    parent: win,
+    webPreferences: { contextIsolation: true, nodeIntegration: false, backgroundThrottling: false },
+  });
+  // 关键：**绝不能 loadURL**。一旦加载任何页面，Chromium 会在承载窗口里创建
+  // Chrome_RenderWidgetHostHWND 渲染层，它会盖住 mpv 的原生子窗口 → 播放区全黑。
+  // 保持空白（不加载）就没有渲染层，mpv 视频窗口直接可见（已用 4 变体对照实测确认）。
+  // 鼠标穿透：让承载窗口不拦截点击，主窗口渲染层才能收到单击/双击事件，
+  // 再通过 mpv IPC 转发暂停/全屏等命令给内嵌播放器。
+  try { embedCarrier.setIgnoreMouseEvents(true, { forward: true }); } catch (e) {}
+  return embedCarrier;
+}
+
+// 在承载窗口内启动 mpv（--wid 嵌入，不再弹出独立窗口）
+ipcMain.handle('live-embed', async (_e, playerKey, url, decodeMode, rect) => {
+  let exe = (PLAYER_CANDIDATES[playerKey] || []).find((p) => { try { return fs.existsSync(p); } catch (e) { return false; } });
+  if (!exe) return { error: '未找到播放器：' + playerKey };
+  if (!rect || !rect.width || !rect.height) return { error: '播放区尺寸无效' };
+
+  closeEmbed();
+  const carrier = ensureEmbedCarrier(rect);
+  try { carrier.showInactive(); } catch (e) { try { carrier.show(); } catch (e2) {} }
+
+  // 等承载窗口 HWND 就绪后取句柄
+  let hwnd = null;
+  for (let i = 0; i < 30; i++) {
+    try {
+      const buf = carrier.getNativeWindowHandle();
+      if (buf && buf.length) {
+        hwnd = buf.length >= 8 ? buf.readBigUInt64LE(0) : BigInt(buf.readUInt32LE(0));
+        break;
+      }
+    } catch (e) {}
+    await new Promise((r) => setTimeout(r, 60));
+  }
+  if (!hwnd) { closeEmbed(); return { error: '无法获取承载窗口句柄' }; }
+
+  let args;
+  let mpvLogPath = null;
+  if (playerKey === 'mpv') {
+    // IPC 管道：主进程用它转发暂停/全屏等控制命令（渲染层的鼠标事件在主窗口上）
+    embedPipeName = '\\\\.\\pipe\\mshell-mpv-' + Date.now().toString(36);
+    // mpv 自己写日志：直播黑屏/硬解失败时可直接查原因
+    // 注意：mpv 用 ANSI 文件 API，路径含中文会静默失败 → 日志必须放纯 ASCII 路径
+    try {
+      const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+      const logDir = path.join(process.env.TEMP || process.env.TMP || 'C:\\Windows\\Temp', 'MediaShell');
+      mpvLogPath = path.join(logDir, 'mpv-embed-' + stamp + '.log');
+      embedMpvLogPath = mpvLogPath;
+      fs.mkdirSync(logDir, { recursive: true });
+      // 只保留最近 5 份，避免日志堆积
+      try {
+        fs.readdirSync(logDir)
+          .filter((f) => /^mpv-embed-.*\.log$/.test(f))
+          .sort().reverse().slice(5)
+          .forEach((f) => { try { fs.unlinkSync(path.join(logDir, f)); } catch (e) {} });
+      } catch (e) {}
+    } catch (e) { mpvLogPath = null; }
+    const inputConf = embedInputConf();
+    args = ['--wid=' + hwnd.toString(),
+      '--hwdec=' + (decodeMode === 'software' ? 'no' : 'auto-safe'),
+      '--vo=gpu', '--cache-secs=8', '--profile=fast',
+      '--force-window=yes', '--no-osc', '--title-bar=no',
+      '--input-ipc-server=' + embedPipeName];
+    // 自定义键位：保留 mpv 内置键位（ESC 退出全屏 / 空格暂停），
+    // 但禁止 q/Q 直接退出进程（会连累整条直播），并让双击画面切换全屏。
+    if (inputConf) args.push('--input-conf=' + inputConf);
+    if (mpvLogPath) args.push('--log-file=' + mpvLogPath);
+    args.push(url);
+  } else {
+    // VLC / PotPlayer 不支持 --wid，仍走独立窗口
+    closeEmbed();
+    return { error: 'not_embeddable' };
+  }
+
+  try {
+    // 记录每次启动的参数摘要，方便复盘是哪条线路/哪个参数出的问题
+    const child = spawn(exe, args, { detached: true, stdio: ['ignore', 'pipe', 'pipe'] });
+    child.unref();
+    embedChild = child;
+    try {
+      const idx = path.join(DATA_DIR, 'mpv-embed-index.log');
+      fs.mkdirSync(path.dirname(idx), { recursive: true });
+      fs.appendFileSync(idx, '[' + new Date().toISOString() + '] ' + playerKey +
+        ' exe=' + exe + '\n  args=' + args.join(' ') + '\n', 'utf8');
+    } catch (e) {}
+    child.on('exit', () => { if (embedChild === child) embedChild = null; });
+    return { ok: true, exe, embedded: true };
+  } catch (err) { closeEmbed(); return { error: String(err && err.message || err) }; }
+});
+
+// 主窗口移动/缩放 → 同步承载窗口位置
+function syncEmbedCarrier() {
+  if (!embedCarrier || embedCarrier.isDestroyed()) return;
+  try {
+    const rect = lastEmbedRect;
+    if (!rect) return;
+    const cb = win.getContentBounds();
+    embedCarrier.setBounds({
+      x: Math.round(cb.x + rect.relX), y: Math.round(cb.y + rect.relY),
+      width: Math.round(rect.width), height: Math.round(rect.height),
+    });
+  } catch (e) {}
+}
+let lastEmbedRect = null;
+// 渲染进程上报播放区相对主窗口客户区左上角的偏移与尺寸
+ipcMain.on('live-embed-rect', (_e, rect) => {
+  lastEmbedRect = rect;
+  if (!embedCarrier || embedCarrier.isDestroyed()) return;
+  try {
+    const cb = win.getContentBounds();
+    embedCarrier.setBounds({
+      x: Math.round(cb.x + rect.relX), y: Math.round(cb.y + rect.relY),
+      width: Math.round(rect.width), height: Math.round(rect.height),
+    });
+  } catch (e) {}
+});
+
+// 主动停止内嵌播放（切台/离开直播页/退出）
+ipcMain.handle('live-embed-stop', async () => { closeEmbed(); return { ok: true }; });
+
+// 排障接口：返回承载窗口句柄与位置，用于检查 mpv 子窗口是否挂对、层级是否正确
+ipcMain.handle('live-embed-info', async () => {
+  if (!embedCarrier || embedCarrier.isDestroyed()) return { error: 'no-carrier' };
+  try {
+    const buf = embedCarrier.getNativeWindowHandle();
+    const hwnd = buf && buf.length
+      ? (buf.length >= 8 ? buf.readBigUInt64LE(0) : BigInt(buf.readUInt32LE(0)))
+      : 0n;
+    return {
+      hwnd: hwnd.toString(),
+      bounds: embedCarrier.getBounds(),
+      visible: embedCarrier.isVisible(),
+      pipe: embedPipeName,
+      childPid: embedChild ? embedChild.pid : null,
+      logPath: embedMpvLogPath || null,
+    };
+  } catch (e) { return { error: String(e && e.message || e) }; }
+});
+
+
 // 用外部播放器播放：解码方式用参数指定（硬解优先），超时由播放器自身处理
 ipcMain.handle('play-external', async (_e, playerKey, url, decodeMode) => {
   let exe = (PLAYER_CANDIDATES[playerKey] || []).find((p) => { try { return fs.existsSync(p); } catch (e) { return false; } });
@@ -633,6 +943,8 @@ ipcMain.handle('play-external', async (_e, playerKey, url, decodeMode) => {
 
 // 主动停止当前外部播放器（切回内置/离开直播页/换播放器时调用）
 ipcMain.handle('stop-external', async () => { killExternalPlayer(); return { ok: true }; });
+// 同时清掉内嵌承载窗口，避免留下空壳窗口
+ipcMain.handle('stop-all-players', async () => { killExternalPlayer(); closeEmbed(); return { ok: true }; });
 
 // ---- version --------------------------------------------------------------
 ipcMain.handle('app-version', async () => app.getVersion());
@@ -837,6 +1149,8 @@ ipcMain.handle('probe-stream', async (_e, url) => {
 app.on('before-quit', () => {
   // 关闭壳时一并结束由本壳启动的外部播放器，避免关掉应用后 mpv 仍在后台播、有声音
   killExternalPlayer();
+  // v1.12：同时销毁内嵌承载窗口与内嵌的 mpv
+  try { closeEmbed(); } catch (e) {}
   if (proxyServer) { try { proxyServer.close(); } catch (e) {} }
 });
 
