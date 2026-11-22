@@ -386,3 +386,23 @@ body.light .live-center-play{border-color:rgba(0,0,0,.35); color:#333;}
 .row-item .rinfo span .badge{display:inline-block; background:var(--accent2); color:#08111f;
   font-size:10px; padding:1px 6px; border-radius:4px; margin-left:6px; font-weight:600;}
 .row-item .rinfo span .badge.live{background:var(--ok);}
+
+/* ===== 线路选择弹窗 ===== */
+.line-list{max-height:52vh; overflow-y:auto; display:flex; flex-direction:column; gap:7px;
+  margin:14px 0; padding-right:4px;}
+.line-row{background:var(--panel2); border:1px solid var(--line); border-radius:9px;
+  padding:10px 12px; cursor:pointer; transition:.12s;}
+.line-row:hover{border-color:var(--accent2); background:var(--panel);}
+.line-row.disabled{opacity:.5;}
+.line-row-main{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+.line-name{font-size:14px; font-weight:600; color:var(--text); word-break:break-all;}
+.line-badge{font-size:10px; padding:2px 8px; border-radius:10px; flex:none; color:#fff;
+  background:var(--muted);}
+.line-badge.best{background:var(--ok);}
+.line-badge.ok{background:var(--accent2); color:#08111f;}
+.line-badge.next{background:#a879ff;}
+.line-badge.cur{background:var(--accent);}
+.line-row-sub{display:flex; flex-wrap:wrap; gap:12px; margin-top:6px;
+  font-size:11px; color:var(--muted);}
+.line-url{margin-left:auto; max-width:60%; overflow:hidden; text-overflow:ellipsis;
+  white-space:nowrap; direction:rtl;}

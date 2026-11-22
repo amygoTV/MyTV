@@ -230,6 +230,59 @@ t('pickBestLine: 站点数相同选有效直播源多的', async () => {
   MS._mock = null; MS._delay = null;
 });
 
+t('probeCandidates: 返回全部候选及质量元数据', async () => {
+  MS._mock = {
+    'https://x/dead.json': {},
+    'https://x/main.json': { sites: Array.from({ length: 30 }, (_, i) => ({ key: 'm' + i, api: 'https://m' })), lives: [{ url: 'https://x/TVLives_v2.m3u' }] },
+    'https://x/next.json': { urls: [{ url: 'https://x/main.json' }] },
+  };
+  const c = await sandbox.window.__msSelfTest.probeCandidates([
+    { url: 'https://x/dead.json', name: '坏线' },
+    { url: 'https://x/main.json', name: '主线' },
+    { url: 'https://x/next.json', name: '下级' },
+  ]);
+  if (c.length !== 3) throw new Error('应返回 3 个候选');
+  if (c[0].ok !== false || c[0].next !== '') throw new Error('坏线应判无效');
+  if (c[1].ok !== true || c[1].sites !== 30 || c[1].goodLives !== 1) throw new Error('主线元数据错误');
+  if (c[2].ok !== false || c[2].next !== 'urls') throw new Error('下级索引应标记 next=urls');
+  MS._mock = null;
+});
+t('expandInteractive: 用户选择指定线路而非自动选', async () => {
+  MS._mock = {
+    'https://x/z.json': { urls: [{ url: 'https://x/small.json', name: '小线路' }, { url: 'https://x/big.json', name: '大线路' }] },
+    'https://x/small.json': { sites: [{ key: 's', api: 'https://s' }] },
+    'https://x/big.json': { sites: Array.from({ length: 20 }, (_, i) => ({ key: 'b' + i, api: 'https://b' })) },
+  };
+  // choose 永远选第 0 个（小线路），验证走的是用户选择而不是质量排序
+  const r = await sandbox.window.__msSelfTest.expandInteractive('https://x/z.json', MS._mock['https://x/z.json'], (d) => {
+    if (d.kind !== 'urls') throw new Error('kind 应为 urls');
+    return 0;
+  });
+  if (!r.cfg.sites || r.cfg.sites.length !== 1 || r.cfg.sites[0].key !== 's') throw new Error('未按用户选择返回小线路');
+  if (!r.trail || r.trail.length !== 1 || r.trail[0].url !== 'https://x/small.json') throw new Error('trail 未记录选择');
+  MS._mock = null;
+});
+t('expandInteractive: ' + 'auto 走质量最优线路', async () => {
+  MS._mock = {
+    'https://x/z2.json': { storeHouse: [{ sourceUrl: 'https://x/mid.json', name: '仓库A' }] },
+    'https://x/mid.json': { urls: [{ url: 'https://x/s2.json' }, { url: 'https://x/b2.json' }] },
+    'https://x/s2.json': { sites: [{ key: 's', api: 'https://s' }] },
+    'https://x/b2.json': { sites: Array.from({ length: 40 }, (_, i) => ({ key: 'b' + i, api: 'https://b' })) },
+  };
+  const r = await sandbox.window.__msSelfTest.expandInteractive('https://x/z2.json', MS._mock['https://x/z2.json'], () => 'auto');
+  if (!r.cfg.sites || r.cfg.sites.length !== 40) throw new Error('auto 应选站点多的线路');
+  if (!r.trail || r.trail.length !== 2) throw new Error('两级索引应记录两次选择');
+  MS._mock = null;
+});
+t('expandInteractive: 取消返回 null 时抛已取消', async () => {
+  MS._mock = { 'https://x/c.json': { urls: [{ url: 'https://x/s3.json' }] }, 'https://x/s3.json': { sites: [{ key: 's' }] } };
+  let canceled = false;
+  try { await sandbox.window.__msSelfTest.expandInteractive('https://x/c.json', MS._mock['https://x/c.json'], () => null); }
+  catch (e) { canceled = /取消/.test(e.message); }
+  if (!canceled) throw new Error('取消未抛出已取消');
+  MS._mock = null;
+});
+
 t('parseM3U: 一个 EXTINF 后多条 URL 合并为同一频道的多线路', () => {
   const m3u = '#EXTM3U\n' +
     '#EXTINF:-1 group-title="央视",CCTV-1\n' +

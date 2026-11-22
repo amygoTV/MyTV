@@ -1855,6 +1855,16 @@ if (bas) bas.onclick = async () => {
   try { await autoPickSite(); }
   finally { bas.disabled = false; bas.textContent = '⚡ 自动选站'; }
 };
+const bsl = $('#btnSwitchLine');
+if (bsl) bsl.onclick = () => {
+  if (state.shellMode) { toast('尚未导入订阅'); return; }
+  switchLine();
+};
+const bsl2 = $('#btnSwitchLineSet');
+if (bsl2) bsl2.onclick = () => {
+  $('#settingsDialog').classList.add('hidden');
+  setTimeout(() => { if (!state.shellMode) switchLine(); else toast('尚未导入订阅'); }, 120);
+};
 
 // ---- 影视仓多级索引展开 ----
 // 影视仓配置有三种形态，导入时统一展开成含 sites 的扁平配置：
@@ -1873,30 +1883,172 @@ async function fetchJsonCfg(u, timeout) {
 // 实测教训：曾纯按响应速度排序，结果 sites=1 的短剧/课堂/赛事空壳线路（体积小、CDN 命中快，
 // ~180ms）总比主线路（~280ms）快而被选中 —— 表现为站点几乎为空、直播源指向失效的
 // PlatformLive.txt / 旧 TXT，用户看到「多仓解析混乱 + 直播无法播放」。
-async function pickBestLine(urls) {
-  const probes = await Promise.all((urls || []).map(async (ln) => {
-    const u = ln && (ln.url || ln.sourceUrl);
-    if (!u || !/^https?:\/\//i.test(u)) return null;
+function compareLineQuality(a, b) {
+  if (b.sites !== a.sites) return b.sites - a.sites;
+  if (b.goodLives !== a.goodLives) return b.goodLives - a.goodLives;
+  return a.ms - b.ms;
+}
+// 并发探测一组候选（storeHouse / urls 通用），返回每个候选的元数据 + 配置体。
+// ok=命中含 sites 的末级；next=指向下一级索引（storeHouse/urls）；两者都不是=无效线路。
+async function probeCandidates(items) {
+  return await Promise.all((items || []).map(async (item) => {
+    const u = item && (item.url || item.sourceUrl);
+    const entry = {
+      name: (item && item.name) || '', url: u || '', cfg: null,
+      ms: 0, sites: 0, goodLives: 0, livesTotal: 0, next: '', ok: false,
+    };
+    if (!u || !/^https?:\/\//i.test(u)) return entry;
     const t0 = Date.now();
     const c = await fetchJsonCfg(u, 12000);
-    if (!c || !Array.isArray(c.sites) || !c.sites.length) return null;
-    const lives = Array.isArray(c.lives) ? c.lives : [];
-    // 有效直播源：url 指向 m3u8/m3u/txt 且不是已知失效的 PlatformLive
-    const goodLives = lives.filter((l) => {
-      const lu = l && l.url;
-      return lu && /\.(m3u8?|txt)(\?|$)/i.test(lu) && !/PlatformLive/i.test(lu);
-    }).length;
-    return { cfg: c, ms: Date.now() - t0, name: ln.name || '', sites: c.sites.length, goodLives };
+    entry.ms = Date.now() - t0;
+    if (!c) return entry;
+    entry.cfg = c;
+    if (Array.isArray(c.sites) && c.sites.length) {
+      entry.ok = true;
+      entry.sites = c.sites.length;
+      const lives = Array.isArray(c.lives) ? c.lives : [];
+      entry.livesTotal = lives.length;
+      // 有效直播源：url 指向 m3u8/m3u/txt 且不是已知失效的 PlatformLive
+      entry.goodLives = lives.filter((l) => {
+        const lu = l && l.url;
+        return lu && /\.(m3u8?|txt)(\?|$)/i.test(lu) && !/PlatformLive/i.test(lu);
+      }).length;
+    } else if (Array.isArray(c.storeHouse) && c.storeHouse.length) entry.next = 'storeHouse';
+    else if (Array.isArray(c.urls) && c.urls.length) entry.next = 'urls';
+    return entry;
   }));
-  const ok = probes.filter(Boolean);
+}
+async function pickBestLine(urls) {
+  const ok = (await probeCandidates(urls)).filter((x) => x.ok);
   if (!ok.length) throw new Error('所有线路均不可用（配置可能已失效）');
-  // 质量优先：站点数降序 → 有效直播源降序 → 速度升序（影视仓「选最快可用」习惯）
-  ok.sort((a, b) => {
-    if (b.sites !== a.sites) return b.sites - a.sites;
-    if (b.goodLives !== a.goodLives) return b.goodLives - a.goodLives;
-    return a.ms - b.ms;
-  });
+  ok.sort(compareLineQuality);
   return ok[0].cfg;
+}
+
+// 影视仓式「自己选线路」：逐级展开，遇到 storeHouse / urls 就回调 choose 让用户挑。
+// choose({kind, candidates}) -> 索引 | 'auto'(自动选质量最好) | null(取消)
+// 返回 { cfg, trail }；trail 记录每级选择，供持久化与「切换线路」复用。
+async function expandInteractive(url, rootCfg, choose) {
+  let cur = rootCfg;
+  const visited = Object.create(null);
+  if (url) visited[url] = 1;
+  const trail = [];
+  for (let depth = 0; depth < 6; depth++) {
+    if (!cur || typeof cur !== 'object') break;
+    if (Array.isArray(cur.sites) && cur.sites.length) return { cfg: cur, trail };
+    let items = null; let kind = '';
+    if (Array.isArray(cur.storeHouse) && cur.storeHouse.length) { items = cur.storeHouse; kind = 'storeHouse'; }
+    else if (Array.isArray(cur.urls) && cur.urls.length) { items = cur.urls; kind = 'urls'; }
+    else break;
+    const cands = await probeCandidates(items.map((i) => {
+      const iu = i && (i.url || i.sourceUrl);
+      return iu && visited[iu] ? Object.assign({}, i, { _visited: true }) : i;
+    }));
+    const pick = await choose({ kind: kind, candidates: cands });
+    if (pick == null) throw new Error('已取消选线');
+    let chosen;
+    if (pick === 'auto') {
+      const avail = cands.filter((c) => !c._visited && (c.ok || c.next));
+      // 优先末级站点配置（按质量排序）；全是中间索引时取第一条继续往下展开
+      const leaves = avail.filter((c) => c.ok).sort(compareLineQuality);
+      const pool = leaves.length ? leaves : avail.filter((c) => c.next);
+      if (!pool.length) throw new Error('没有可用的线路');
+      chosen = pool[0];
+    } else {
+      chosen = cands[pick];
+      if (!chosen || !chosen.url) throw new Error('无效的选择');
+      if (!chosen.ok && !chosen.next) throw new Error('该线路不可用');
+    }
+    visited[chosen.url] = 1;
+    trail.push({ kind: kind, url: chosen.url, name: chosen.name });
+    if (!chosen.cfg) throw new Error('线路无有效内容');
+    cur = chosen.cfg;
+  }
+  if (cur && Array.isArray(cur.sites) && cur.sites.length) return { cfg: cur, trail: trail };
+  throw new Error('无法从该配置展开出站点（sites）');
+}
+
+// ---- 线路选择弹窗 ----
+function shortHost(u) {
+  try {
+    const x = new URL(u);
+    return x.hostname.replace(/^www\./, '') + (x.pathname && x.pathname !== '/' ? x.pathname.slice(0, 22) : '');
+  } catch (e) { return String(u || '').slice(0, 34); }
+}
+// 返回 Promise：用户点某行=该行索引，点「自动选最优」='auto'，点取消=null
+function showLineDialog(kind, candidates, currentUrl) {
+  return new Promise((resolve) => {
+    const dlg = $('#lineDialog');
+    const list = $('#lineList');
+    $('#lineDialogTitle').textContent = kind === 'storeHouse' ? '选择仓库' : '选择线路';
+    $('#lineDialogTip').textContent = kind === 'storeHouse'
+      ? '检测到多个仓库，请选择要使用的仓库：'
+      : '检测到多条线路，选站点多、直播源全的通常更完整：';
+    list.innerHTML = '';
+    const bestSites = Math.max.apply(null, [0].concat(candidates.map((c) => c.sites || 0)));
+    const order = candidates.map((c, i) => ({ c: c, i: i })).sort((a, b) => {
+      if (a.c.ok !== b.c.ok) return a.c.ok ? -1 : 1;
+      if (!!a.c.next !== !!b.c.next) return a.c.next ? -1 : 1;
+      if (a.c.ok && b.c.ok) return compareLineQuality(a.c, b.c);
+      return a.i - b.i;
+    });
+    const cleanup = () => {
+      dlg.classList.add('hidden');
+      $('#btnLineAuto').onclick = null;
+      $('#btnLineCancel').onclick = null;
+    };
+    order.forEach((o) => {
+      const c = o.c; const i = o.i;
+      let badge = '失效'; let cls = 'bad';
+      if (c._visited) { badge = '已访问'; }
+      else if (currentUrl && c.url === currentUrl) { badge = '当前'; cls = 'cur'; }
+      else if (c.ok && c.sites === bestSites && bestSites > 0) { badge = '推荐'; cls = 'best'; }
+      else if (c.ok) { badge = '可用'; cls = 'ok'; }
+      else if (c.next) { badge = '下级索引'; cls = 'next'; }
+      const row = document.createElement('div');
+      row.className = 'line-row' + (c.ok || c.next ? '' : ' disabled');
+      row.innerHTML =
+        '<div class="line-row-main"><span class="line-name">' + esc(c.name || shortHost(c.url)) + '</span>' +
+        '<span class="line-badge ' + cls + '">' + badge + '</span></div>' +
+        '<div class="line-row-sub"><span>站点 ' + (c.sites || 0) + '</span>' +
+        '<span>直播源 ' + (c.goodLives || 0) + (c.livesTotal ? '/' + c.livesTotal : '') + '</span>' +
+        '<span>' + (c.ms || 0) + 'ms</span>' +
+        '<span class="line-url" title="' + esc(c.url) + '">' + esc(shortHost(c.url)) + '</span></div>';
+      row.onclick = () => { cleanup(); resolve(i); };
+      list.appendChild(row);
+    });
+    $('#btnLineAuto').onclick = () => { cleanup(); resolve('auto'); };
+    $('#btnLineCancel').onclick = () => { cleanup(); resolve(null); };
+    dlg.classList.remove('hidden');
+  });
+}
+// 供「切换线路」复用：重新拉取原始订阅地址，弹窗让用户另选一条
+async function switchLine() {
+  const url = state.settings.subscriptionUrl;
+  if (!url) { toast('当前订阅未记录源地址，请重新导入一次订阅'); return; }
+  try {
+    const r = await MS.httpGet(url, { 'User-Agent': 'okhttp/3.15' }, 25000);
+    if (r.error || !r.body) throw new Error(r.error || '空响应');
+    const root = JSON.parse(r.body);
+    const trail = state.settings.lineTrail || [];
+    const curUrl = trail.length ? trail[trail.length - 1].url : '';
+    let cfg; let newTrail = [];
+    if (!Array.isArray(root.sites) && (Array.isArray(root.storeHouse) || Array.isArray(root.urls))) {
+      const res = await expandInteractive(url, root, (d) => showLineDialog(d.kind, d.candidates, curUrl));
+      cfg = res.cfg; newTrail = res.trail;
+    } else { cfg = root; }
+    if (!Array.isArray(cfg.sites) || !cfg.sites.length) throw new Error('配置中没有 sites');
+    await MS.saveSubscription(cfg);
+    await saveSettings({ lineTrail: newTrail });
+    state.site = null; state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
+    liveCache = null; liveState.channels = []; liveState.cats = []; liveState.current = null;
+    await loadConfig();
+    setView('home');
+    toast('线路已切换：' + cfg.sites.length + ' 个站点');
+  } catch (e) {
+    if (e && e.message === '已取消选线') return;
+    toast('切换失败：' + (e && e.message || e));
+  }
 }
 async function expandSubscription(url, rootCfg) {
   let cur = rootCfg;
@@ -1939,11 +2091,19 @@ $('#btnImportOk').onclick = async () => {
     if (r.error || !r.body) throw new Error(r.error || '空响应');
     let root;
     try { root = JSON.parse(r.body); } catch (e) { throw new Error('配置不是合法 JSON'); }
-    // 影视仓多级索引（storeHouse / urls）需逐级展开到含 sites 的末级
+    // 影视仓多级索引（storeHouse / urls）：先探测各级候选，弹窗让用户自己选线路
     const isIndex = !Array.isArray(root.sites) && (Array.isArray(root.storeHouse) || Array.isArray(root.urls));
-    if (isIndex) msg.textContent = '检测到多仓/多线路索引，正在展开并测速选线（约 10 秒）…';
-    const cfg = await expandSubscription(url, root);
+    let cfg; let trail = [];
+    if (isIndex) {
+      msg.textContent = '检测到多仓/多线路索引，正在探测各线路质量（约 10 秒）…';
+      const res = await expandInteractive(url, root, (d) => showLineDialog(d.kind, d.candidates, null));
+      cfg = res.cfg; trail = res.trail;
+    } else {
+      cfg = root;
+    }
     if (!Array.isArray(cfg.sites) || !cfg.sites.length) throw new Error('配置中没有 sites');
+    // 记住源地址与选线路径，供「切换线路」随时重选
+    await saveSettings({ subscriptionUrl: url, lineTrail: trail });
     await MS.saveSubscription(cfg);
     // 重置站点选择，让新配置生效
     state.site = null; state.typeMap = {}; state.catList = {}; state._catTid = {}; homeCache = {};
@@ -2041,6 +2201,9 @@ window.__msSelfTest = {
   setDanmakuForSource: setDanmakuForSource,
   loadConfig: loadConfig,
   pickBestLine: pickBestLine,
+  probeCandidates: probeCandidates,
+  compareLineQuality: compareLineQuality,
+  expandInteractive: expandInteractive,
   expandSubscription: expandSubscription,
   parseTVLines: parseTVLines,
   parseM3U: parseM3U,
