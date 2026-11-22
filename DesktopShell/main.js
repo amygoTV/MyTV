@@ -591,6 +591,22 @@ ipcMain.handle('detect-players', async () => {
   }
   return found;
 });
+// 当前由本壳启动的外部播放器进程（单实例：换台/换线/退出时先关掉，避免多窗口 + 后台残留声音）
+let externalChild = null;
+function killExternalPlayer() {
+  if (!externalChild) return;
+  const c = externalChild;
+  externalChild = null;
+  try {
+    if (process.platform === 'win32' && c.pid) {
+      // detached 进程需用 /T 连带子进程一起结束，否则 mpv 可能残留后台音频
+      spawn('taskkill', ['/PID', String(c.pid), '/T', '/F'], { stdio: 'ignore' });
+    } else {
+      c.kill('SIGTERM');
+    }
+  } catch (e) {}
+}
+
 // 用外部播放器播放：解码方式用参数指定（硬解优先），超时由播放器自身处理
 ipcMain.handle('play-external', async (_e, playerKey, url, decodeMode) => {
   let exe = (PLAYER_CANDIDATES[playerKey] || []).find((p) => { try { return fs.existsSync(p); } catch (e) { return false; } });
@@ -605,11 +621,18 @@ ipcMain.handle('play-external', async (_e, playerKey, url, decodeMode) => {
     args = [url];
   }
   try {
+    // 单实例：启动新线路前先关掉上一个播放器窗口，避免换线累积多个 mpv
+    killExternalPlayer();
     const child = spawn(exe, args, { detached: true, stdio: 'ignore' });
     child.unref();
+    externalChild = child;
+    child.on('exit', () => { if (externalChild === child) externalChild = null; });
     return { ok: true, exe };
   } catch (err) { return { error: String(err && err.message || err) }; }
 });
+
+// 主动停止当前外部播放器（切回内置/离开直播页/换播放器时调用）
+ipcMain.handle('stop-external', async () => { killExternalPlayer(); return { ok: true }; });
 
 // ---- version --------------------------------------------------------------
 ipcMain.handle('app-version', async () => app.getVersion());
@@ -811,7 +834,11 @@ ipcMain.handle('probe-stream', async (_e, url) => {
   });
 });
 
-app.on('before-quit', () => { if (proxyServer) { try { proxyServer.close(); } catch (e) {} } });
+app.on('before-quit', () => {
+  // 关闭壳时一并结束由本壳启动的外部播放器，避免关掉应用后 mpv 仍在后台播、有声音
+  killExternalPlayer();
+  if (proxyServer) { try { proxyServer.close(); } catch (e) {} }
+});
 
 // ---- 自检入口 --------------------------------------------------------------
 // 触发方式（任一）：环境变量 MSHELL_SELFTEST=1，或命令行含 selftest 字样。

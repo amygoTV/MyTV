@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld('MediaShell', {
   openWithPlayer: (url, title) => ipcRenderer.invoke('open-with-player', url, title),
   detectPlayers: () => ipcRenderer.invoke('detect-players'),
   playExternal: (playerKey, url, decodeMode) => ipcRenderer.invoke('play-external', playerKey, url, decodeMode),
+  stopExternal: () => ipcRenderer.invoke('stop-external'),
   proxyUrl: (url) => ipcRenderer.invoke('proxy-url', url),
   proxyBulk: (urls) => ipcRenderer.invoke('proxy-bulk', urls),
   probeStream: (url) => ipcRenderer.invoke('probe-stream', url),

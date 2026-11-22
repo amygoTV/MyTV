@@ -84,6 +84,9 @@ const MS = {
   appVersion: async () => '1.9.0',
   openWithPlayer: async () => ({}),
   detectPlayers: async () => ({}),
+  playExternal: async () => ({ ok: true }),
+  stopExternal: async () => ({ ok: true }),
+  proxyUrl: async (u) => u,
 };
 
 const localStorageStub = {
@@ -152,13 +155,16 @@ t('播放控制不抛异常（无 video 元素时安全降级）', () => {
   sandbox.window.__msSelfTest.togglePlay();
   sandbox.window.__msSelfTest.toggleFullscreen();
 });
-t('直播控件: 中央播放按钮默认隐藏且非常驻', () => {
+t('直播: v1.11 彻底走外部播放器，livePlayChannel 内无内置 hls/video 播放路径', () => {
   const app = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
-  const css = fs.readFileSync(path.join(ROOT, 'style.css'), 'utf8');
-  if (!/live-center-play hidden/.test(app)) throw new Error('中央按钮未默认 hidden');
-  if (!/\.live-center-play\.hidden[^}]*display:none/.test(css) && !/,\.live-center-play\.hidden/.test(css)) throw new Error('hidden 规则未覆盖 live-center-play');
-  // 不再有播放开始后 remove('hidden') 让按钮常驻的旧逻辑
-  if (/cp\.classList\.remove\('hidden'\);\s*\n?\s*\}/.test(app)) throw new Error('仍存在让中央按钮常驻的逻辑');
+  const start = app.indexOf('function livePlayChannel');
+  const end = app.indexOf('\nfunction ', start + 10);
+  const body = app.slice(start, end);
+  if (!/pickLivePlayer\(\)/.test(body)) throw new Error('直播应通过 pickLivePlayer 选播放器');
+  if (!/MS\.playExternal\(/.test(body)) throw new Error('直播应调用 playExternal');
+  if (/new window\.Hls|armWatchdog|v\.src\s*=|\.loadSource\(/.test(body)) throw new Error('直播链路仍残留内置 hls/video 播放');
+  // 状态面板存在（取代原内置画面 + 中央按钮）
+  if (app.indexOf('live-external-panel') < 0) throw new Error('缺外部播放器状态面板');
 });
 t('直播控件: 全屏/小窗按钮与单击暂停逻辑存在', () => {
   const app = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
@@ -343,6 +349,25 @@ t('isFlvUrl: 正确识别 FLV 及其变体，不误判 m3u8', () => {
   if (!f('http://a/flv/channel')) throw new Error('/flv/ 路径应识别');
   if (f('http://a/live.m3u8')) throw new Error('m3u8 不应误判为 flv');
   if (f('http://a/live.ts')) throw new Error('ts 不应误判为 flv');
+});
+
+t('pickLivePlayer: 设定有效用它；builtin/无效回退可用播放器；无播放器返回 null', () => {
+  const ls = sandbox.window.__msSelfTest.liveState;
+  const pick = sandbox.window.__msSelfTest.pickLivePlayer;
+  const oldPlayer = ls.player, oldPlayers = ls.players;
+  try {
+    ls.players = { mpv: 'D:\\mpv.exe', vlc: 'D:\\vlc.exe' };
+    ls.player = 'mpv';
+    if (pick() !== 'mpv') throw new Error('设定 mpv 应用 mpv');
+    ls.player = 'vlc';
+    if (pick() !== 'vlc') throw new Error('设定 vlc 应用 vlc');
+    ls.player = 'builtin';  // 旧存档：内置已移除，应回退 mpv
+    if (pick() !== 'mpv') throw new Error('builtin 应回退到 mpv');
+    ls.player = 'potplayer'; // 设定了本机没有的播放器，回退
+    if (pick() !== 'mpv') throw new Error('无效设定应回退 mpv');
+    ls.players = {};
+    if (pick() !== null) throw new Error('无播放器应返回 null');
+  } finally { ls.player = oldPlayer; ls.players = oldPlayers; }
 });
 
 chain.then(() => {

@@ -945,6 +945,13 @@ function isFlvUrl(url) {
 function availableExternalPlayer() {
   return ['mpv', 'vlc', 'potplayer'].find((k) => liveState.players && liveState.players[k]) || null;
 }
+// v1.11：直播选播放器——用户设定有效就用它，否则回退到本机可用播放器。
+// 旧存档里的 'builtin' 现在一律视为无效（内置播放器已从直播链路移除）。
+function pickLivePlayer() {
+  const chosen = liveState.player;
+  if (chosen && chosen !== 'builtin' && liveState.players && liveState.players[chosen]) return chosen;
+  return availableExternalPlayer();
+}
 
 // 统一的 hls.js「流畅优先」基础配置。IPTV / 采集站源多为普通 HLS（非 LL-HLS），
 // 低延迟模式只会把缓冲压到很小、网络一抖就反复卡顿；这里宁可多缓冲几秒换稳定播放。
@@ -1249,7 +1256,7 @@ let liveState = {
   lineIdx: 0,
   timeoutSec: +loadLS('ms_live_timeout', 8),
   decoder: loadLS('ms_live_decoder', 'hardware'),   // hardware | software | auto
-  player: loadLS('ms_live_player', 'builtin'),      // builtin | mpv | vlc | potplayer
+  player: loadLS('ms_live_player', 'mpv'),          // mpv | vlc | potplayer（v1.11 起直播彻底走外部播放器，无内置）
   players: {},      // 检测到的外部播放器路径
   hls: null,
   timer: null,
@@ -1460,61 +1467,42 @@ function renderLive() {
         '<div class="live-bar">' +
           '<div class="live-now" id="liveNow">选择一个频道开始观看</div>' +
           '<div class="live-settings">' +
-            '<label>超时 <select id="setTimeout" class="mini-sel">' +
-              [4, 6, 8, 10, 15, 20].map((n) => '<option value="' + n + '"' + (n === liveState.timeoutSec ? ' selected' : '') + '>' + n + 's</option>').join('') +
-            '</select></label>' +
             '<label>解码 <select id="setDecoder" class="mini-sel">' +
               '<option value="hardware"' + (liveState.decoder === 'hardware' ? ' selected' : '') + '>硬件优先</option>' +
               '<option value="software"' + (liveState.decoder === 'software' ? ' selected' : '') + '>软件兼容</option>' +
               '<option value="auto"' + (liveState.decoder === 'auto' ? ' selected' : '') + '>自动</option>' +
             '</select></label>' +
             '<label>播放器 <select id="setPlayer" class="mini-sel">' +
-              '<option value="builtin"' + (liveState.player === 'builtin' ? ' selected' : '') + '>内置</option>' +
               (liveState.players.mpv ? '<option value="mpv"' + (liveState.player === 'mpv' ? ' selected' : '') + '>mpv(轻快)</option>' : '') +
               (liveState.players.vlc ? '<option value="vlc"' + (liveState.player === 'vlc' ? ' selected' : '') + '>VLC</option>' : '') +
               (liveState.players.potplayer ? '<option value="potplayer"' + (liveState.player === 'potplayer' ? ' selected' : '') + '>PotPlayer</option>' : '') +
+              (!liveState.players.mpv && !liveState.players.vlc && !liveState.players.potplayer
+                ? '<option value="">未检测到播放器</option>' : '') +
             '</select></label>' +
-            (liveState.players.mpv || liveState.players.vlc || liveState.players.potplayer
-              ? '<button id="btnFastDecode" class="mini-btn" title="一键切到本机硬解播放器，卡顿立减；再点切回内置">⚡ ' +
-                (liveState.player !== 'builtin' ? '回内置' : '硬解加速') + '</button>'
-              : '') +
             '<button id="btnProbe" class="mini-btn" title="并发探测每条线路是否可播">🔍 检测线路</button>' +
           '</div>' +
         '</div>' +
-        '<div class="live-screen" id="liveScreen">' +
-          '<video id="liveVideo" playsinline></video>' +
-          '<div class="live-msg hidden" id="liveMsg"></div>' +
-          '<div class="live-tools">' +
-            '<button class="live-tool-btn" id="btnLivePiP" title="小窗播放（画中画）">⧉ 小窗</button>' +
-            '<button class="live-tool-btn" id="btnLiveFullscreen" title="全屏播放">⛶ 全屏</button>' +
+        '<div class="live-screen live-external" id="liveScreen">' +
+          '<video id="liveVideo" playsinline class="hidden"></video>' +
+          '<div class="live-external-panel">' +
+            '<div class="live-external-icon">▶️</div>' +
+            '<div class="live-external-title">外部播放器模式</div>' +
+            '<div class="live-external-desc" id="liveMsg">点左侧频道，即用 mpv 独立窗口硬解播放</div>' +
           '</div>' +
           '<div class="live-lines" id="liveLines"></div>' +
-          '<div class="live-center-play hidden" id="liveCenterPlay">▶</div>' +
         '</div>' +
-        '<div class="live-hint" id="liveHint">同名频道只显示一次，所有线路在画面左下角切换；超时自动跳下一条线路。</div>' +
+        '<div class="live-hint" id="liveHint">直播由 mpv 独立窗口播放（硬解、不卡顿）。同名频道的多条线路在下方切换；播放/暂停/全屏请在 mpv 窗口内操作。</div>' +
       '</section>' +
     '</div>';
   $('#liveChCount').textContent = '(' + liveState.channels.length + ')';
   renderLiveTree();
 
   $('#liveFilter').addEventListener('input', (e) => { liveState.filter = e.target.value.trim(); renderLiveTree(); });
-  $('#setTimeout').onchange = (e) => { liveState.timeoutSec = +e.target.value; saveLiveSettings(); toast('换线超时设为 ' + liveState.timeoutSec + ' 秒'); };
   $('#setDecoder').onchange = (e) => { liveState.decoder = e.target.value; saveLiveSettings(); toast('解码方式：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
-  $('#setPlayer').onchange = (e) => { liveState.player = e.target.value; saveLiveSettings(); toast('播放器：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
-  const bfd = $('#btnFastDecode');
-  if (bfd) bfd.onclick = () => {
-    // 一键硬解：优先 mpv（最轻快），其次 PotPlayer / VLC；再点切回内置
-    if (liveState.player !== 'builtin') {
-      liveState.player = 'builtin';
-      toast('已切回内置播放器');
-    } else {
-      const pick = ['mpv', 'potplayer', 'vlc'].find((k) => liveState.players[k]);
-      if (!pick) { toast('未检测到本机播放器'); return; }
-      liveState.player = pick;
-      toast('已切到 ' + pick + ' 硬解（独立窗口）');
-    }
-    saveLiveSettings();
-    renderLive();
+  $('#setPlayer').onchange = (e) => {
+    if (!e.target.value) { toast('未检测到播放器，请把 mpv 放到 D:\\MediaShellPlayers\\mpv.exe'); return; }
+    liveState.player = e.target.value; saveLiveSettings();
+    toast('播放器：' + e.target.selectedOptions[0].text);
     if (liveState.current) livePlay(liveState.lineIdx);
   };
   const bp = $('#btnProbe');
@@ -1635,6 +1623,8 @@ function livePlay(lineIdx) {
 }
 function liveStop() {
   clearTimeout(liveState.timer); liveState.timer = null;
+  // 关掉本壳启动的外部播放器窗口，避免换频道/离开直播页后 mpv 残留、多个窗口并存
+  try { if (MS.stopExternal) MS.stopExternal(); } catch (e) {}
   const v = $('#liveVideo');
   if (v) { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) {} }
   if (liveState.hls) { try { liveState.hls.destroy(); } catch (e) {} liveState.hls = null; }
@@ -1710,82 +1700,19 @@ function livePlayChannel(ch, lineIdx) {
   }
   const rawUrl = ch.urls[lineIdx];
   if (!rawUrl) { liveShowMsg('该频道无可用线路'); return; }
-  // 外部轻量播放器：交给 mpv/VLC/PotPlayer 硬件解码（直连原地址，不经代理）
-  if (liveState.player !== 'builtin') {
-    MS.playExternal(liveState.player, rawUrl, liveState.decoder).then((r) => {
-      if (r && r.error) liveShowMsg('调用失败：' + r.error + '（可切回内置播放器）');
-      else liveShowMsg('已在 ' + liveState.player + ' 中打开（硬解优先）');
-    });
+  // v1.11 起直播彻底走外部播放器（mpv/VLC/PotPlayer），不再用内置 hls.js：
+  // 内置只解 m3u8、FLV/TS 无能为力且软解卡；外部播放器独立窗口硬解、格式通吃。
+  // 选用户设定的播放器；若设定值无效（如旧存档的 builtin）则回退到本机可用播放器。
+  const pick = pickLivePlayer();
+  if (!pick) {
+    liveShowMsg('未检测到外部播放器。请把 mpv.exe 放到 D:\\MediaShellPlayers\\mpv.exe 后重启应用');
     return;
   }
-  // FLV 是内置 hls.js 的硬伤（只解 m3u8），不要再做无谓的原生尝试：
-  // 本机有外部播放器就直接接管，没有则给出明确指引。
-  if (isFlvUrl(rawUrl)) {
-    const ext = availableExternalPlayer();
-    if (ext) {
-      MS.playExternal(ext, rawUrl, liveState.decoder).then((r) => {
-        if (r && r.error) liveShowMsg('FLV 调用 ' + ext + ' 失败：' + r.error);
-        else liveShowMsg('FLV 线路已用 ' + ext + ' 硬解打开（独立窗口）');
-      });
-    } else {
-      liveShowMsg('FLV 格式内置播放器无法解码，请在「播放器」里选择 mpv/VLC，或安装 mpv 到用户目录 players 文件夹');
-    }
-    return;
-  }
-  // 内置播放器：经主进程代理取流，绕过 IPTV 源普遍缺失的 CORS 头
-  const v = $('#liveVideo'); if (!v) return;
-  const isHls = /\.m3u8?(\?|$)/i.test(rawUrl);
-  const armWatchdog = () => {
-    clearTimeout(liveState.timer);
-    liveState.timer = setTimeout(() => {
-      if (!liveState.playing && ch.urls.length > 1) {
-        liveShowMsg('线路' + (lineIdx + 1) + ' 超时，自动切换下一条…');
-        livePlayChannel(ch, (lineIdx + 1) % ch.urls.length);
-      }
-    }, liveState.timeoutSec * 1000);
-  };
-  liveState.playing = false;
-  v.onplaying = () => { liveState.playing = true; clearTimeout(liveState.timer); const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden'); };
-  v.onerror = () => { if (ch.urls.length > 1) { liveShowMsg('线路' + (lineIdx + 1) + ' 出错，切换下一条…'); livePlayChannel(ch, (lineIdx + 1) % ch.urls.length); } };
-  MS.proxyUrl(rawUrl).then((url) => {
-    if (window.Hls && window.Hls.isSupported() && isHls) {
-      const hls = new window.Hls(hlsFastConfig({
-        // 关键：把 hls.js 内部的清单/分片请求也改写到本地代理，
-        // 否则 m3u8 里的分片相对路径仍会直连远端并被 CORS 拦截
-        xhrSetup: function (xhr, u) {
-          try { xhr.open('GET', MS.localProxy(u), true); } catch (e) {}
-        },
-      }));
-      hls.loadSource(url); hls.attachMedia(v);
-      hls.on(window.Hls.Events.ERROR, (_e, data) => {
-        if (data && data.fatal && ch.urls.length > 1) {
-          liveShowMsg('线路' + (lineIdx + 1) + ' 播放失败，切换下一条…');
-          livePlayChannel(ch, (lineIdx + 1) % ch.urls.length);
-        }
-      });
-      liveState.hls = hls;
-      v.play().catch(() => {});
-    } else {
-      // 非 m3u8（无扩展名流 / mp4 / ts）：先按原生方式尝试（部分 mp4/ts 能直接放），
-      // 失败后自动交给外部硬解播放器，而不是只弹提示让用户手动折腾
-      v.src = url; v.play().catch(() => {
-        const ext = availableExternalPlayer();
-        if (ext) {
-          liveShowMsg('浏览器无法播放该流，已自动切到 ' + ext + ' 硬解…');
-          MS.playExternal(ext, rawUrl, liveState.decoder).then((r) => {
-            if (r && r.error) liveShowMsg('外部播放器调用失败：' + r.error);
-          });
-        } else {
-          liveShowMsg('浏览器无法解码该流，请在「播放器」里选择 mpv/VLC，或安装 mpv 到用户目录 players 文件夹');
-        }
-      });
-    }
-  }).catch(() => {
-    v.src = rawUrl; v.play().catch(() => {});
+  liveShowMsg('正在用 ' + pick + ' 打开：' + ch.name + '（线路' + (lineIdx + 1) + '）…');
+  MS.playExternal(pick, rawUrl, liveState.decoder).then((r) => {
+    if (r && r.error) liveShowMsg('调用 ' + pick + ' 失败：' + r.error + '（可在「播放器」里换一个）');
+    else liveShowMsg('已用 ' + pick + ' 打开：' + ch.name + ' · 线路' + (lineIdx + 1) + '（独立窗口硬解）');
   });
-  armWatchdog();
-  // 中央图标不再常驻：首帧出来前保持隐藏，播放后由 pause 事件短暂闪现
-  const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden');
 }
 
 // ---------- favorite / history ----------
@@ -2252,6 +2179,10 @@ $('#btnImportOk').onclick = async () => {
   if (state.settings.liveDecoder) liveState.decoder = state.settings.liveDecoder;
   if (state.settings.livePlayer) liveState.player = state.settings.livePlayer;
 
+  // v1.11：播放器必须在渲染直播页之前检测好。原来放在 ensureLiveData() 末尾，
+  // 导致首次进直播页时 UI 已画好但 players 还是空的 → 看不到 mpv/硬解选项。
+  try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
+
   bindPlayerControls();
 
   // 加载订阅：没有就是空壳（首次启动或已重置）
@@ -2325,6 +2256,7 @@ window.__msSelfTest = {
   loadConfig: loadConfig,
   hlsFastConfig: hlsFastConfig,
   isFlvUrl: isFlvUrl,
+  pickLivePlayer: pickLivePlayer,
   pickBestLine: pickBestLine,
   probeCandidates: probeCandidates,
   compareLineQuality: compareLineQuality,
