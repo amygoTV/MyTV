@@ -68,6 +68,13 @@ def purge(path):
         with urllib.request.urlopen(req, timeout=30) as resp:
             body = resp.read().decode("utf-8", "replace")
             if resp.status == 200 and '"status":"finished"' in body.replace(" ", ""):
+                # purge.jsdelivr.net throttles per-path; a throttled request
+                # does NOT clear that path. Report it so CI can warn.
+                if '"throttled": true' in body:
+                    import re as _re
+                    m = _re.search(r'"throttlingReset":\s*(\d+)', body)
+                    reset = m.group(1) + "s" if m else "?"
+                    return False, "throttled (reset in %s)" % reset
                 return True, "ok"
             return False, "unexpected response: " + body[:120].replace("\n", " ")
     except Exception as exc:
