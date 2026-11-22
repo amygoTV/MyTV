@@ -20,14 +20,7 @@
         "漫剧",
         "足球",
         "篮球",
-        "伦理",
         "擦边短剧",
-        "两性课堂",
-        "写真热舞",
-        "韩国伦理",
-        "西方伦理",
-        "日本伦理",
-        "港台三级",
         "动画片",
         "国产动漫",
         "日韩动漫",
@@ -89,7 +82,6 @@
         "足球",
         "篮球",
         "台球",
-        "伦理片",
         "擦边短剧",
         "中国动漫",
         "日本动漫",
@@ -120,7 +112,8 @@
         "脑洞悬疑",
         "言情总裁",
         "重生民国",
-        "韩剧"
+        "韩剧",
+        "伦理片"
       ]
     },
     {
@@ -131,13 +124,13 @@
       "categories": [
         "电影",
         "电视剧",
+        "热门",
+        "体育",
         "综艺",
         "动漫",
         "短剧",
         "纪录片",
-        "伦理片",
-        "热门",
-        "体育"
+        "伦理片"
       ]
     },
     {
@@ -169,7 +162,6 @@
         "足球",
         "篮球",
         "台球",
-        "伦理片",
         "擦边短剧",
         "中国动漫",
         "日本动漫",
@@ -200,7 +192,8 @@
         "言情总裁",
         "记录片",
         "重生民国",
-        "韩剧"
+        "韩剧",
+        "伦理片"
       ]
     },
     {
@@ -224,7 +217,6 @@
         "篮球",
         "斯诺克",
         "网球",
-        "伦理片",
         "动画片",
         "国产动漫",
         "日韩动漫",
@@ -251,7 +243,8 @@
         "科幻片",
         "记录片",
         "韩国剧",
-        "香港剧"
+        "香港剧",
+        "伦理片"
       ]
     },
     {
@@ -326,6 +319,19 @@
       }
     },
     {
+      "key": "bili",
+      "name": "B站 | Bili[jar]",
+      "type": 3,
+      "api": "csp_Bili",
+      "searchable": 1,
+      "quickSearch": 0,
+      "changeable": 0,
+      "ext": {
+        "type": "演唱会#电影#电视剧#帕梅拉#广场舞#纪录片#综艺#鬼畜#音乐#舞蹈#影视#知识#美食#风光#田园#户外#8K#徐云",
+        "cookie": ""
+      }
+    },
+    {
       "key": "看球赛事",
       "name": "⚽看球赛事｜直播",
       "type": 3,
@@ -375,6 +381,25 @@
         "type": "rect",
         "ratio": 1.597
       }
+    },
+    {
+      "key": "佛光普照",
+      "name": "🤦‍♀️🤦‍♂️佛光普照|",
+      "type": 1,
+      "api": "http://sdzyapi.com/api.php/provide/vod/",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "changeable": 1,
+      "categories": [
+        "伦理",
+        "两性课堂",
+        "写真热舞",
+        "韩国伦理",
+        "西方伦理",
+        "日本伦理",
+        "港台三级"
+      ]
     },
     {
       "key": "少儿动漫",
@@ -555,50 +580,19 @@
     {
       "name": "💣王炸直播💣(备)",
       "type": 0,
-      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.m3u",
+      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.m3u",
       "playerType": 1,
       "ua": "okhttp/3.15",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
     {
-      "name": "📺B站直播适配📺",
+      "name": "备选直播源",
       "type": 0,
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/BiliLive_v2.txt",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.m3u",
       "playerType": 1,
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-    },
-    {
-      "name": "⚽赛事直播·虎牙",
-      "type": 0,
-      "url": "https://sub.ottiptv.cc/huyayqk.m3u",
-      "playerType": 2,
-      "ua": "okHttp/Mod-1.5.0.0",
-      "timeout": 10
-    },
-    {
-      "name": "🏀赛事直播·斗鱼",
-      "type": 0,
-      "url": "https://sub.ottiptv.cc/douyuyqk.m3u",
-      "playerType": 2,
-      "ua": "okHttp/Mod-1.5.0.0",
-      "timeout": 10
-    },
-    {
-      "name": "🎮平台轮播·歪歪",
-      "type": 0,
-      "url": "https://sub.ottiptv.cc/yylunbo.m3u",
-      "playerType": 2,
-      "ua": "okHttp/Mod-1.5.0.0",
-      "timeout": 10
-    },
-    {
-        "name": "备选直播源",
-        "type": 0,
-        "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.m3u",
-        "playerType": 1,
-        "ua": "okhttp/3.15",
-        "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
+      "ua": "okhttp/3.15",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     }
   ],
   "rules": [

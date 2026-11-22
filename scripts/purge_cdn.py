@@ -30,6 +30,20 @@ REPO = "amygoTV/MyTV"
 REF = "master"
 PURGE_BASE = "https://purge.jsdelivr.net/gh/%s@%s/" % (REPO, REF)
 
+# Entry indexes reachable from the fixed @master subscription URL.
+# Used by --changed mode: whenever ANY config changed, these must be purged
+# too, otherwise subscribers keep seeing stale edge-cached content.
+# Keep in sync with DEFAULT_PATHS below.
+ENTRY_INDEXES = [
+    "zheteng.json",
+    "zheteng_v2.json",
+    "aizheteng.json",
+    "aizheteng_v2.json",
+    "YSCSites.json",
+    "YSCv3/YSCSites.json",
+    "TVBoxDesktop.json",
+]
+
 # Every path reachable from the fixed subscription URL. Purge is idempotent,
 # so clearing all of them on every run is safe.
 DEFAULT_PATHS = [
@@ -146,8 +160,14 @@ def main():
         paths = changed_files(args.base)
         # Always include the entry indexes if any config changed: they are the
         # fixed URLs subscribers actually import.
+        #
+        # IMPORTANT: this list must cover EVERY entry point reachable from the
+        # fixed @master subscription URL, otherwise the changed file keeps a
+        # stale edge cache and subscribers still see the old content.
+        # (v1.6.25: YSCSites.json was missing here -> the cdn.jsdelivr edge
+        #  kept serving the pre-edit category list for up to 12h.)
         if paths:
-            for entry in ("aizheteng.json", "zheteng.json"):
+            for entry in ENTRY_INDEXES:
                 if entry not in paths and os.path.exists(entry):
                     paths.append(entry)
         print("[purge] --changed mode: %d files from git diff" % len(paths))
