@@ -11,16 +11,16 @@
     {
       "name": "🍚饭太硬🍚",
       "urls": [
-        "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/fty/api.json",
-        "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/fty/api.json",
+        "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.4.8/fty/api.json",
+        "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.4.8/fty/api.json",
         "https://0.12yue.de5.net/tvbox/%E9%A5%AD%E5%A4%AA%E7%A1%AC.json"
       ]
     },
     {
       "name": "🐼肥猫宝贝🐼",
       "urls": [
-        "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/feimao/api.json",
-        "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/feimao/api.json",
+        "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.4.8/feimao/api.json",
+        "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.4.8/feimao/api.json",
         "https://0.12yue.de5.net/tvbox/%E8%82%A5%E7%8C%AB.json"
       ]
     },
@@ -48,8 +48,8 @@
     {
       "name": "🌾小米线路🌾",
       "urls": [
-        "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/xiaomi/api.json",
-        "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/xiaomi/api.json"
+        "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.4.8/xiaomi/api.json",
+        "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.4.8/xiaomi/api.json"
       ]
     },
     {

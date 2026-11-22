@@ -103,6 +103,8 @@ https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 > 原 Gitee 仓库 `amygotv/tv` 已被封禁（HTTP 423），因此原有固定线路改用本仓库 GitHub 内容的 `cdn.jsdelivr.net` 加速地址。
+>
+> 索引里 3 条饭太硬系子配置（饭太硬/肥猫/小米）用 `@v1.4.8` 固定版本地址而非 `@master`：规避 jsdelivr 对可变分支的缓存延迟，确保修复后的配置立即生效。后续版本升级时会同步更新这几个 tag。
 
 ### 线路说明
 
