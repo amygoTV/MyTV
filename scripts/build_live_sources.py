@@ -322,7 +322,9 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
         if u not in by[k]['urls']:
             by[k]['urls'].append(u)
 
-    lines, used = [], set()
+    # .group header is required by CI validation & client parser
+    gname = 'B站直播' if name.startswith('Bili') else '直播'
+    lines, used = ['%s,#genre#' % gname, ''], set()
     for k, it in by.items():
         urls = [u for u in it['urls'][:5] if not (u in used or used.add(u))]
         if urls:
@@ -364,7 +366,7 @@ def build_live_sports(out_dir, workers, probe_limit):
         by.setdefault(k, {'name': name, 'urls': []})
         if u not in by[k]['urls']:
             by[k]['urls'].append(u)
-    lines, used = [], set()
+    lines, used = ['赛事直播,#genre#', ''], set()
     for k, it in by.items():
         urls = [u for u in it['urls'][:5] if not (u in used or used.add(u))]
         if urls:
