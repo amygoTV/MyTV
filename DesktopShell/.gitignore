@@ -5,3 +5,5 @@ package-lock.json
 userdata/
 
 dist-exe*/
+dist-*/
+dist*/

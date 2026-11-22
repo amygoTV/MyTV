@@ -6,6 +6,7 @@ directories:
   output: dist-exe-v147
   buildResources: build
 afterPack: scripts/apply_icon.js
+afterAllArtifactBuild: scripts/apply_final_icon.js
 files:
   - "**/*"
   - "!node_modules/**"
