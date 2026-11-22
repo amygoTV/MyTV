@@ -1266,17 +1266,48 @@ function parseTVLines(text) {
   return groups.filter((g) => g.items.length);
 }
 function parseM3U(text) {
-  const groups = [{ name: '赛事轮播', items: [] }]; let pending = null; let gname = null;
-  text.split(/\r?\n/).forEach((line) => {
+  // M3U 标准：一个 #EXTINF 后面可跟多条 URL（= 同一频道的多条线路）。
+  // 必须把连续 URL 归到同一频道，否则同名频道被拆成多条、无法在左下角切换线路。
+  // 同时按 group-title / #EXTGRP 建组，避免全部塞进一个「赛事轮播」。
+  const groupMap = new Map();
+  const groups = [];
+  let pending = null;       // 当前频道的显示名
+  let pendingGroup = null;  // 当前频道的分组名
+  let curItem = null;       // 当前频道对象（连续 URL 都加进它的 urls）
+  const getGroup = (name) => {
+    let nm = name || '默认';
+    // 上游 M3U 偶发某行字节截断，中文变 \uFFFD（如「影视轮⧉⧉⧉」）→ 按前缀并回正常组
+    if (/\uFFFD/.test(nm)) {
+      const clean = nm.replace(/\uFFFD/g, '');
+      // 正常组名已存在时：畸形串去掉坏字节后与它互为包含关系即并回
+      const hit = clean && Array.from(groupMap.keys()).find((k) => k !== nm && clean.length >= 2 && (k.indexOf(clean) >= 0 || clean.indexOf(k) >= 0));
+      if (hit) nm = hit;
+    }
+    let g = groupMap.get(nm);
+    if (!g) { g = { name: nm, items: [], _m: new Map() }; groupMap.set(nm, g); groups.push(g); }
+    return g;
+  };
+  (text || '').replace(/^\uFEFF/, '').split(/\r?\n/).forEach((line) => {
     line = line.trim();
-    if (/^#EXTGRP:/i.test(line)) { gname = line.replace(/^#EXTGRP:/i, '').trim(); return; }
-    if (/^#EXTINF:/i.test(line)) { pending = line.replace(/^#EXTINF:[^,]*,/i, '').trim(); return; }
+    if (/^#EXTGRP:/i.test(line)) { pendingGroup = line.replace(/^#EXTGRP:/i, '').trim(); return; }
+    if (/^#EXTINF:/i.test(line)) {
+      const mm = line.match(/group-title="([^"]*)"/i);
+      pendingGroup = mm ? mm[1].trim() : pendingGroup;
+      pending = line.replace(/^#EXTINF:[^,]*,/i, '').trim();
+      curItem = null;   // 下一个频道，URL 不能并入上一个
+      return;
+    }
     if (line && !/^#/.test(line) && /^https?:\/\//i.test(line)) {
-      const g = groups[0];
-      g.items.push({ name: (gname ? gname + '·' : '') + (pending || ('频道' + (g.items.length + 1))), urls: [line] });
-      pending = null; gname = null;
+      const g = getGroup(pendingGroup);
+      const name = (pendingGroup && pending && pending.indexOf(pendingGroup) >= 0)
+        ? pending : (pending || ('频道' + (g.items.length + 1)));
+      let it = g._m.get(name);
+      if (!it) { it = { name, urls: [] }; g._m.set(name, it); g.items.push(it); }
+      if (it.urls.indexOf(line) < 0) it.urls.push(line);
+      curItem = it;
     }
   });
+  groups.forEach((g) => { delete g._m; });
   return groups.filter((g) => g.items.length);
 }
 function normChannel(name) {

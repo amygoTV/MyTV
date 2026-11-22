@@ -203,7 +203,31 @@ t('expandSubscription: storeHouse→urls 三级展开并选可用线路', async 
 });
 
 Promise.all(pending).then(() => {
-  console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
+  t('parseM3U: 一个 EXTINF 后多条 URL 合并为同一频道的多线路', () => {
+  const m3u = '#EXTM3U\n' +
+    '#EXTINF:-1 group-title="央视",CCTV-1\n' +
+    'http://a/1.m3u8\nhttp://a/2.m3u8\nhttp://a/3.m3u8\n' +
+    '#EXTINF:-1 group-title="央视",CCTV-2\n' +
+    'http://a/4.m3u8\n' +
+    '#EXTINF:-1 group-title="卫视",湖南卫视\n' +
+    'http://a/5.m3u8\n';
+  const g = sandbox.window.__msSelfTest.parseM3U(m3u);
+  if (g.length !== 2) throw new Error('分组数应为 2，实际 ' + g.length);
+  if (g[0].name !== '央视') throw new Error('首组应为央视，实际 ' + g[0].name);
+  const cctv1 = g[0].items.find((x) => x.name === 'CCTV-1');
+  if (!cctv1) throw new Error('未找到 CCTV-1');
+  if (cctv1.urls.length !== 3) throw new Error('CCTV-1 应有 3 条线路，实际 ' + cctv1.urls.length);
+  if (g[0].items.length !== 2) throw new Error('央视组应有 2 个频道，实际 ' + g[0].items.length);
+  if (g[1].name !== '卫视' || g[1].items.length !== 1) throw new Error('卫视组解析错误');
+});
+t('parseM3U: 同名频道跨 group 不误并', () => {
+  const m3u = '#EXTM3U\n#EXTINF:-1 group-title="央视",CCTV-1\nhttp://a/1.m3u8\n#EXTINF:-1 group-title="体育频道",CCTV-5\nhttp://a/2.m3u8\n';
+  const g = sandbox.window.__msSelfTest.parseM3U(m3u);
+  if (g.length !== 2) throw new Error('应 2 组');
+  if (g[0].items[0].urls.length !== 1 || g[1].items[0].urls.length !== 1) throw new Error('线路串组了');
+});
+
+console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
   const fail = results.filter((x) => x[0] === 'FAIL').length;
   console.log('\n通过 ' + (results.length - fail) + ' / ' + results.length);
   process.exit(fail ? 1 : 0);
