@@ -530,30 +530,116 @@ async function bindCatBar(site, cats, items, first) {
   parents.forEach(push);
   leaves.forEach(push);
 
-  const pills = [{ name: '🔥全部', id: null }].concat(ordered);
-  bar.innerHTML = pills.map((p, i) =>
-    '<div class="cat-pill' + (i === 0 ? ' on' : '') + '" data-cat="' + esc(p.name) + '" data-tid="' + esc(p.id || '') + '">' + esc(p.name) + '</div>'
-  ).join('');
-  $$('.cat-pill', bar).forEach((el) => el.onclick = async () => {
+  // 常用分类：用户点名的几类 + 配置里声明的分类，保证「全部/电影/连续剧/综艺/动漫/短剧」都在
+  const COMMON = ['全部', '电影', '连续剧', '电视剧', '综艺', '动漫', '短剧', '纪录片', '体育赛事'];
+  const common = [];
+  const pushC = (c) => { if (c && !common.some((x) => String(x.id) === String(c.id))) common.push(c); };
+  COMMON.forEach((n) => {
+    if (n === '全部') { pushC({ id: null, name: '全部' }); return; }
+    // 优先精确匹配站点真实分类名；找不到就用归组表反查（父类名一致即可）
+    const hit = real.find((c) => c.name === n);
+    if (hit) pushC(hit);
+  });
+  prefer.forEach(pushC);
+  // 再补齐其余真实分类（用户可展开查看）
+  ordered.forEach((c) => pushC(c));
+
+  const COMMON_MAX = 12;
+  const shown = common.slice(0, COMMON_MAX);
+  const rest = common.slice(COMMON_MAX);
+  state.catExpanded = false;
+
+  const pillHTML = (p, i) =>
+    '<div class="cat-pill' + (p.name === '全部' ? ' on' : '') + '" data-cat="' + esc(p.name === '全部' ? '' : p.name) +
+    '" data-tid="' + esc(p.id || '') + '"' + (p.name === '全部' ? ' data-all="1"' : '') + '>' +
+    (p.name === '全部' ? '🔥' : '') + esc(p.name) + '</div>';
+
+  bar.innerHTML = shown.map(pillHTML).join('') +
+    (rest.length ? '<div class="cat-pill more" id="catMoreToggle">更多 ' + rest.length + ' 个 ⌄</div>' : '');
+  if (rest.length) {
+    $('#catMoreToggle', bar).onclick = () => {
+      state.catExpanded = !state.catExpanded;
+      if (state.catExpanded) {
+        bar.innerHTML = common.map(pillHTML).join('') +
+          '<div class="cat-pill more" id="catMoreToggle">收起 ⌃</div>';
+      } else {
+        bar.innerHTML = shown.map(pillHTML).join('') +
+          '<div class="cat-pill more" id="catMoreToggle">更多 ' + rest.length + ' 个 ⌄</div>';
+      }
+      bindCatPills(site, cats, items, first);
+    };
+  }
+  bindCatPills(site, cats, items, first);
+}
+
+// 绑定分类标签点击（展开/收起后需要重新绑定）
+function bindCatPills(site, cats, items, first) {
+  const bar = $('#catBar'); if (!bar) return;
+  $$('.cat-pill', bar).forEach((el) => {
+    if (el.classList.contains('more')) return;   // 「更多」只负责展开/收起
+    el.onclick = async () => {
     $$('.cat-pill', bar).forEach((x) => x.classList.remove('on'));
     el.classList.add('on');
     const cat = el.dataset.cat;
-    if (!cat) { renderTVRows(site, items, first); return; }
+    if (!cat) {
+      // 「全部」：有首页数据就平铺展示；没有就直接进入完整的全部资源列表
+      if (items && items.length) { renderTVRows(site, items, first); return; }
+      openCategory('__all__');
+      return;
+    }
     const box = $('#tvRows');
     box.innerHTML = '<div class="tv-row"><div class="row-head"><span class="bar"></span><h3>' + esc(cat) + '</h3>' +
       '<span class="more" id="catMore">更多 ›</span></div><div class="hscroll"><div class="empty"><span class="spinner"></span>加载中…</div></div></div>';
     const tid = el.dataset.tid || resolveTid(site, cat);
-    if (!tid) {
-      $('.hscroll', box).innerHTML = '<div class="empty">分类「' + esc(cat) + '」在当前站点无对应 type_id，请换其它分类或使用搜索。</div>';
-      return;
-    }
     try {
-      const list = await fetchCategoryList(site, tid);
-      $('.hscroll', box).innerHTML = list.length ? list.map(posterHTML).join('') : '<div class="empty">该分类暂无数据</div>';
+      // 用按名聚合的方式取：父类自身无数据时自动展开子类（不影响原有精确匹配）
+      const list = await fetchCategoryByName(site, cat, tid);
+      if (!list.length && tid == null) {
+        $('.hscroll', box).innerHTML = '<div class="empty">分类「' + esc(cat) + '」在当前站点无对应 type_id，请换其它分类或使用搜索。</div>';
+        return;
+      }
+      $('.hscroll', box).innerHTML = list.length
+        ? list.map(posterHTML).join('')
+        : '<div class="empty">该分类暂无数据<br><span class="muted" style="font-size:12px">可试试其它站点或用搜索</span></div>';
       bindPosters($('.hscroll', box), site);
       $('#catMore').onclick = () => openCategory(cat, tid);
     } catch (e) { $('.hscroll', box).innerHTML = '<div class="empty">加载失败：' + esc(e.message) + '</div>'; }
+    };
   });
+}
+
+// ---- 父类语义归组表 ----------------------------------------------------
+// 苹果 CMS 站点的「电影/连续剧/综艺/动漫/短剧」是**父类**，用 t=<父类id> 查询
+// 自身 total 恒为 0，真实内容全在子类里。要让这几个入口有资源，必须把父类
+// 展开成一组语义相关的子类再聚合。
+// 注意：这是**叠加**机制 —— 站点若真的给父类返回数据，仍优先用父类自己的数据。
+const PARENT_GROUPS = [
+  { parent: '连续剧', kids: ['国产剧', '大陆剧', '港澳剧', '香港剧', '台剧', '台湾剧', '日剧', '韩剧', '泰剧', '欧美剧', '欧美', '古装仙侠', '仙侠', '现代都市', '都市', '穿越年代', '穿越', '言情总裁', '重生民国', '反转爽剧', '脑洞悬疑', '悬疑', '战争', '军旅', '职场', '校园', '剧情', '连续剧'] },
+  { parent: '电影', kids: ['动作片', '喜剧片', '爱情片', '科幻片', '科幻', '恐怖片', '剧情片', '战争片', '纪录片', '伦理片', '犯罪片', '悬疑片', '动画片', '国语片', '粤语片', '电影'] },
+  { parent: '综艺', kids: ['大陆综艺', '日韩综艺', '港台综艺', '欧美综艺', '综艺'] },
+  { parent: '动漫', kids: ['中国动漫', '日本动漫', '欧美动漫', '动漫电影', '国漫', '日漫', '欧美漫', '动画', '动漫'] },
+  { parent: '动漫电影', kids: ['动漫电影', '动画', '国漫', '日漫'] },
+  { parent: '短剧', kids: ['短剧', '爽文短剧', '擦边短剧', '逆袭短剧', '都市短剧', '甜宠短剧', '漫剧', 'AI漫剧', 'AI短剧'] },
+  { parent: '漫剧', kids: ['漫剧', 'AI漫剧', '动态漫', '动漫短剧'] },
+  { parent: '纪录片', kids: ['纪录片', '记录片', '纪实', '人文'] },
+  { parent: '体育赛事', kids: ['体育赛事', '足球', '篮球', '台球', '网球', '羽毛球', '其他赛事'] },
+  { parent: '预告片', kids: ['预告片'] },
+];
+
+// 把某分类名解析成「要聚合的 type_id 列表」
+function resolveCatTids(site, name, ownTid) {
+  const real = state.catList[site.key] || [];
+  const grp = PARENT_GROUPS.find((g) => g.parent === name);
+  if (!grp) return ownTid != null ? [ownTid] : [];
+  const kids = [];
+  grp.kids.forEach((k) => {
+    real.forEach((c) => {
+      if (String(c.name) === k && !kids.some((x) => String(x) === String(c.id))) kids.push(c.id);
+    });
+  });
+  // 父类自身有数据时优先用它，否则用子类聚合
+  if (ownTid != null) return [ownTid].concat(kids.filter((k) => String(k) !== String(ownTid)));
+  return kids;
 }
 
 // 取分类资源：父类(type_pid=0且有子类)本身常无数据，聚合其子类；否则直接取该 type_id
@@ -570,6 +656,40 @@ async function fetchCategoryList(site, tid, pg) {
     list = parts.reduce((a, b) => a.concat(b), []);
   }
   return list;
+}
+
+// 按分类名取资源：父类自身无数据时，自动展开成语义相关的子类并聚合。
+// 这是对「精确匹配」机制的**叠加**，不改变原有匹配规则：
+//   1) 先按站点的真实 type_id 精确查（父类自身有数据就用它）
+//   2) 查不到 → 用 resolveCatTids 展开的子类列表并发取，合并去重
+async function fetchCategoryByName(site, name, ownTid, limit) {
+  limit = limit || 60;
+  // 1) 原有精确匹配路径
+  if (ownTid != null) {
+    try {
+      const list = await fetchCategoryList(site, ownTid, 1);
+      if (list && list.length) return list.slice(0, limit);
+    } catch (e) {}
+  }
+  // 2) 父类子类聚合路径
+  const tids = resolveCatTids(site, name, ownTid);
+  if (!tids.length) return [];
+  const parts = await Promise.all(tids.slice(0, 24).map((id) =>
+    cmsGet(join(apiBase(site), { ac: 'videolist', t: id, pg: 1 }), 7000)
+      .then((x) => x.list || []).catch(() => [])
+  ));
+  const seen = new Set();
+  const out = [];
+  for (const arr of parts) {
+    for (const v of arr) {
+      const k = (v.vod_id != null ? v.vod_id : '') + '|' + (v.vod_name || '');
+      if (seen.has(k)) continue;
+      seen.add(k);
+      out.push(v);
+      if (out.length >= limit) return out;
+    }
+  }
+  return out;
 }
 
 function renderTVRows(site, items, first) {
@@ -650,8 +770,19 @@ async function openCategory(name, tidHint) {
   $('.crumb').onclick = renderHome;
   if (isAll) { await loadCategoryPage(s, undefined, title, 1); return; }
   let tid = tidHint || resolveTid(s, name);
-  if (!tid) {
+  // 父类（连续剧/综艺/动漫/短剧…）自身无数据时，展开子类聚合后再展示
+  const isParent = PARENT_GROUPS.some((g) => g.parent === name);
+  if (!tid && !isParent) {
     $('#catList').innerHTML = '<div class="empty">无法解析分类「' + esc(name) + '」的 type_id。<br>该分类在当前站点不存在或接口暂不可用。<br>可尝试顶部搜索框找片。</div>';
+    return;
+  }
+  if (isParent) {
+    const list = await fetchCategoryByName(s, name, tid, 120);
+    $('#catList').innerHTML = list.length
+      ? list.map(posterHTML).join('')
+      : '<div class="empty">该分类暂无数据<br><span class="muted" style="font-size:12px">可试试其它站点或用搜索</span></div>';
+    bindPosters($('#catList'), s);
+    $('#catPager').innerHTML = '';
     return;
   }
   await loadCategoryPage(s, tid, name, 1);

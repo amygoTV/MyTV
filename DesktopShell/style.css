@@ -92,12 +92,14 @@ body{
 .banner .bprev{left:0; border-radius:0 8px 8px 0;}
 .banner .bnext{right:0; border-radius:8px 0 0 8px;}
 
-.cat-bar{display:flex; gap:10px; overflow-x:auto; padding-bottom:12px; margin-bottom:6px; scrollbar-width:none;}
-.cat-bar::-webkit-scrollbar{display:none;}
+/* 分类栏：多行自动换行，避免后面的标签看不到也滑不动 */
+.cat-bar{display:flex; flex-wrap:wrap; gap:10px; padding-bottom:12px; margin-bottom:6px;}
 .cat-bar .cat-pill{flex:0 0 auto; padding:9px 20px; border-radius:22px; background:var(--panel2);
   border:1px solid var(--line); cursor:pointer; font-size:14px; color:var(--muted); white-space:nowrap; transition:.15s;}
 .cat-bar .cat-pill:hover{color:#fff; border-color:var(--accent2);}
 .cat-bar .cat-pill.on{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600;}
+.cat-bar .cat-pill.more{background:transparent; border:1px dashed var(--line); color:var(--muted);}
+.cat-bar .cat-pill.more:hover{color:var(--accent2); border-color:var(--accent2);}
 
 .tv-row{margin-bottom:26px;}
 .tv-row .row-head{display:flex; align-items:baseline; gap:12px; margin-bottom:12px;}
