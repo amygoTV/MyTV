@@ -72,7 +72,12 @@ const MS = {
   exportBackup: async () => ({ ok: true, file: '/tmp/bk.json' }),
   importBackup: async () => ({ ok: true }),
   resetUserData: async () => ({ ok: true, removed: [] }),
-  httpGet: async () => ({ body: '{}' }),
+  httpGet: async (u) => {
+    // 展开测试用：按 URL 返回模拟的影视仓配置
+    const mock = MS._mock || {};
+    if (mock[u]) return { status: 200, body: JSON.stringify(mock[u]) };
+    return { status: 200, body: '{}' };
+  },
   readConfig: async () => '',
   appVersion: async () => '1.9.0',
   openWithPlayer: async () => ({}),
@@ -104,9 +109,16 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8'), sandbox, { f
 
 const ST = () => sandbox.window.__msSelfTest.state;
 const results = [];
+const pending = [];
 function t(name, fn) {
-  try { fn(); results.push(['PASS', name]); }
-  catch (e) { results.push(['FAIL', name, e.message]); }
+  try {
+    const r = fn();
+    if (r && typeof r.then === 'function') {
+      pending.push(r.then(() => results.push(['PASS', name]), (e) => results.push(['FAIL', name, e && e.message])));
+    } else {
+      results.push(['PASS', name]);
+    }
+  } catch (e) { results.push(['FAIL', name, e.message]); }
 }
 
 // ---- 用例 ----
@@ -162,7 +174,37 @@ t('parseTVLines 剥离 BOM 且首行是分组', () => {
   if (!g.length || g[0].name !== '央视') throw new Error('BOM 未剥离或分组解析失败');
 });
 
-console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
-const fail = results.filter((x) => x[0] === 'FAIL').length;
-console.log('\n通过 ' + (results.length - fail) + ' / ' + results.length);
-process.exit(fail ? 1 : 0);
+t('expandSubscription: 末级 sites 配置直接用', async () => {
+  const r = await sandbox.window.__msSelfTest.expandSubscription('https://x/api.json', { sites: [{ key: 'a', api: 'https://a' }], lives: [] });
+  if (!r.sites || r.sites.length !== 1 || r.sites[0].key !== 'a') throw new Error('末级配置未直接返回');
+});
+t('expandSubscription: storeHouse 两级展开', async () => {
+  MS._mock = {
+    'https://x/aizh.json': { urls: [] },
+  };
+  // storeHouse -> 一个含 sites 的仓库
+  MS._mock['https://x/z.json'] = { storeHouse: [{ sourceUrl: 'https://x/repo.json' }] };
+  MS._mock['https://x/repo.json'] = { sites: [{ key: 's1', api: 'https://s1' }] };
+  const r = await sandbox.window.__msSelfTest.expandSubscription('https://x/z.json', MS._mock['https://x/z.json']);
+  if (!r.sites || r.sites.length !== 1 || r.sites[0].key !== 's1') throw new Error('storeHouse 未展开');
+  MS._mock = null;
+});
+t('expandSubscription: storeHouse→urls 三级展开并选可用线路', async () => {
+  MS._mock = {
+    'https://x/z.json': { storeHouse: [{ sourceUrl: 'https://x/aizh.json' }] },
+    'https://x/aizh.json': { urls: [{ url: 'https://x/dead.json', name: '坏线' }, { url: 'https://x/good.json', name: '好线' }] },
+    'https://x/dead.json': {}, // 无 sites，应被跳过
+    'https://x/good.json': { sites: [{ key: 'g', api: 'https://g' }], lives: [{ name: 'CCTV1' }] },
+  };
+  const r = await sandbox.window.__msSelfTest.expandSubscription('https://x/z.json', MS._mock['https://x/z.json']);
+  if (!r.sites || r.sites.length !== 1 || r.sites[0].key !== 'g') throw new Error('三级展开选线失败');
+  if (!r.lives || r.lives.length !== 1) throw new Error('lives 未保留');
+  MS._mock = null;
+});
+
+Promise.all(pending).then(() => {
+  console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
+  const fail = results.filter((x) => x[0] === 'FAIL').length;
+  console.log('\n通过 ' + (results.length - fail) + ' / ' + results.length);
+  process.exit(fail ? 1 : 0);
+});

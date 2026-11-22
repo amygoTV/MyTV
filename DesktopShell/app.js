@@ -1825,17 +1825,77 @@ if (bas) bas.onclick = async () => {
   finally { bas.disabled = false; bas.textContent = '⚡ 自动选站'; }
 };
 
+// ---- 影视仓多级索引展开 ----
+// 影视仓配置有三种形态，导入时统一展开成含 sites 的扁平配置：
+//   1) 站点配置: { sites:[...], lives:[...] }         —— 直接用
+//   2) 多仓索引: { storeHouse:[{sourceUrl}, ...] }    —— 逐个尝试，取第一个可达仓库
+//   3) 多线路:   { urls:[{url,name}, ...] }           —— 并发探测，取最快可用线路
+// 影视仓 App 是逐级让用户选，壳这里自动选最快的一条线路（站点数可控，不会几百站拖垮启动测速）。
+// 展开只在导入时执行一次，结果持久化；启动 loadConfig 直接读缓存，不再展开。
+const EXPAND_UA = { 'User-Agent': 'okhttp/3.15' };
+async function fetchJsonCfg(u, timeout) {
+  const r = await MS.httpGet(u, EXPAND_UA, timeout || 12000);
+  if (r.error || !r.body) return null;
+  try { return JSON.parse(r.body); } catch (e) { return null; }
+}
+async function pickBestLine(urls) {
+  const probes = await Promise.all((urls || []).map(async (ln) => {
+    const u = ln && (ln.url || ln.sourceUrl);
+    if (!u || !/^https?:\/\//i.test(u)) return null;
+    const t0 = Date.now();
+    const c = await fetchJsonCfg(u, 12000);
+    if (c && Array.isArray(c.sites) && c.sites.length) return { cfg: c, ms: Date.now() - t0, name: ln.name || '' };
+    return null;
+  }));
+  const ok = probes.filter(Boolean).sort((a, b) => a.ms - b.ms);
+  if (!ok.length) throw new Error('所有线路均不可用（配置可能已失效）');
+  return ok[0].cfg;
+}
+async function expandSubscription(url, rootCfg) {
+  let cur = rootCfg;
+  const visited = Object.create(null);
+  if (url) visited[url] = 1;
+  for (let depth = 0; depth < 5; depth++) {
+    if (!cur || typeof cur !== 'object') break;
+    if (Array.isArray(cur.sites) && cur.sites.length) return cur; // 末级站点配置
+    if (Array.isArray(cur.storeHouse) && cur.storeHouse.length) {
+      let advanced = false;
+      for (const h of cur.storeHouse) {
+        const u = h && (h.sourceUrl || h.url);
+        if (!u || visited[u] || !/^https?:\/\//i.test(u)) continue;
+        visited[u] = 1;
+        const c = await fetchJsonCfg(u, 15000);
+        if (c) { cur = c; advanced = true; break; }
+      }
+      if (!advanced) break;
+      continue;
+    }
+    if (Array.isArray(cur.urls) && cur.urls.length) {
+      cur = await pickBestLine(cur.urls);
+      continue;
+    }
+    break; // 既无 sites 也无下一级索引
+  }
+  if (cur && Array.isArray(cur.sites) && cur.sites.length) return cur;
+  throw new Error('无法从该配置展开出站点（sites）');
+}
+
 // ---- 导入订阅 ----
 $('#btnImport').onclick = () => $('#importDialog').classList.remove('hidden');
 $('#btnImportCancel').onclick = () => $('#importDialog').classList.add('hidden');
 $('#btnImportOk').onclick = async () => {
   const url = $('#importUrl').value.trim(); const msg = $('#importMsg');
   if (!/^https?:\/\//i.test(url)) { msg.textContent = '请输入有效的 http(s) 地址'; return; }
-  msg.textContent = '正在拉取…';
+  msg.textContent = '正在拉取配置…';
   try {
     const r = await MS.httpGet(url, { 'User-Agent': 'okhttp/3.15' }, 25000);
     if (r.error || !r.body) throw new Error(r.error || '空响应');
-    const cfg = JSON.parse(r.body);
+    let root;
+    try { root = JSON.parse(r.body); } catch (e) { throw new Error('配置不是合法 JSON'); }
+    // 影视仓多级索引（storeHouse / urls）需逐级展开到含 sites 的末级
+    const isIndex = !Array.isArray(root.sites) && (Array.isArray(root.storeHouse) || Array.isArray(root.urls));
+    if (isIndex) msg.textContent = '检测到多仓/多线路索引，正在展开并测速选线（约 10 秒）…';
+    const cfg = await expandSubscription(url, root);
     if (!Array.isArray(cfg.sites) || !cfg.sites.length) throw new Error('配置中没有 sites');
     await MS.saveSubscription(cfg);
     // 重置站点选择，让新配置生效
@@ -1933,6 +1993,7 @@ window.__msSelfTest = {
   isDanmakuOnFor: isDanmakuOnFor,
   setDanmakuForSource: setDanmakuForSource,
   loadConfig: loadConfig,
+  expandSubscription: expandSubscription,
   parseTVLines: parseTVLines,
   parseM3U: parseM3U,
   addHistory: addHistory,
