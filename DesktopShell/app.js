@@ -804,20 +804,27 @@ function saveLiveSettings() {
 }
 
 function parseTVLines(text) {
+  // 影视仓/TVBox 标准 TXT：分组行「组名,#genre#」+ 一行一条线路，同名频道会重复出现。
+  // 必须按频道名合并成「一个频道多条线路」，否则列表里会出现几十个重名频道。
   const groups = []; let cur = null;
-  text.split(/\r?\n/).forEach((line) => {
+  const body = (text || '').replace(/^\uFEFF/, '');
+  body.split(/\r?\n/).forEach((line) => {
     line = line.trim(); if (!line) return;
     if (/#genre#\s*$/.test(line)) {
       const name = line.replace(/,#genre#\s*$/, '').trim();
-      cur = { name, items: [] }; groups.push(cur); return;
+      cur = { name, items: [], _m: new Map() }; groups.push(cur); return;
     }
     const idx = line.indexOf(',');
     if (idx > 0 && cur) {
       const name = line.slice(0, idx).trim();
-      const urls = line.slice(idx + 1).split(',').map((u) => u.trim()).filter((u) => /^https?:\/\//i.test(u));
-      if (name && urls.length) cur.items.push({ name, urls });
+      const urls = line.slice(idx + 1).split(/[,#]/).map((u) => u.trim()).filter((u) => /^https?:\/\//i.test(u));
+      if (!name || !urls.length) return;
+      let it = cur._m.get(name);
+      if (!it) { it = { name, urls: [] }; cur._m.set(name, it); cur.items.push(it); }
+      urls.forEach((u) => { if (it.urls.indexOf(u) < 0) it.urls.push(u); });
     }
   });
+  groups.forEach((g) => { delete g._m; });
   return groups.filter((g) => g.items.length);
 }
 function parseM3U(text) {

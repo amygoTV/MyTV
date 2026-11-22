@@ -4,11 +4,17 @@
 
 ## 版本
 
-当前 **v1.4.4**（详见仓库根目录 `更新日志.md`）。
+### v1.7.0
+- 直播源改为影视仓/TVBox 标准 TXT（UTF-8 BOM + CRLF、一行一条线路、同名频道合并为多线路），本地内置 `TVLives.txt` / `BiliLive.txt` / `LiveSports.txt` 全部刷新到最新版本。
+- 站点配置切到永久固定地址链：`zheteng_v2.json`（主 cdn + 备 gcore）→ `aizheteng_v2.json` → `YSCv3/` → `TVLives_v2.m3u`。
+- 修复：`parseTVLines` 按频道名合并同名行（此前同一频道会显示成多条重名条目），并剥离 BOM、兼容 `,` 与 `#` 两种地址分隔。
+
+
+当前 **v1.7.0**（开发日志见独立仓库 [MediaShell-DevLog](https://github.com/amygoTV/MediaShell-DevLog)）。
 
 ### 单文件便携版（推荐）
 
-`dist-exe-v144/MediaShell-1.4.4-portable.exe`（约 66MB）——双击即用，自解压到本机临时目录运行，无需 bat 启动器、无需散落 dll。启动后如需持久化收藏/历史，可设置环境变量 `MSHELL_DATA` 指向固定目录（默认随解压目录）。
+发布页 `MediaShell便携版.exe`（约 66MB）——双击即用，自解压到本机临时目录运行，无需 bat 启动器、无需散落 dll。启动后如需持久化收藏/历史，可设置环境变量 `MSHELL_DATA` 指向固定目录（默认随解压目录）。
 
 ### 直播页
 
