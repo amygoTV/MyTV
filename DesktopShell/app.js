@@ -1450,8 +1450,12 @@ function renderLive() {
         '<div class="live-screen" id="liveScreen">' +
           '<video id="liveVideo" playsinline></video>' +
           '<div class="live-msg hidden" id="liveMsg"></div>' +
+          '<div class="live-tools">' +
+            '<button class="live-tool-btn" id="btnLivePiP" title="小窗播放（画中画）">⧉ 小窗</button>' +
+            '<button class="live-tool-btn" id="btnLiveFullscreen" title="全屏播放">⛶ 全屏</button>' +
+          '</div>' +
           '<div class="live-lines" id="liveLines"></div>' +
-          '<div class="live-center-play" id="liveCenterPlay">▶</div>' +
+          '<div class="live-center-play hidden" id="liveCenterPlay">▶</div>' +
         '</div>' +
         '<div class="live-hint" id="liveHint">同名频道只显示一次，所有线路在画面左下角切换；超时自动跳下一条线路。</div>' +
       '</section>' +
@@ -1474,7 +1478,7 @@ function renderLive() {
     liveState.channels.forEach((c) => c.urls.forEach((u) => { if (c.good && c.good[u]) ok++; }));
     toast('检测完成：' + ok + '/' + total + ' 条线路可播');
   };
-  $('#liveCenterPlay').onclick = () => { const v = $('#liveVideo'); if (v && v.src) { v.play().catch(() => {}); $('#liveCenterPlay').classList.add('hidden'); } };
+  bindLiveControls();
 
   (async () => {
     const box = $('#liveTree');
@@ -1588,6 +1592,56 @@ function liveStop() {
   const msg = $('#liveMsg'); if (msg) msg.classList.add('hidden');
   const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden');
 }
+// ---- 直播播放器控制（对齐点播体验：单击暂停/恢复、双击全屏、⛶全屏/⧉小窗）----
+// 中央图标不再常驻：仅暂停瞬间短暂闪现，播放中自动隐藏。
+function liveFlashIcon(paused) {
+  const cp = $('#liveCenterPlay'); if (!cp) return;
+  cp.textContent = paused ? '▶' : '⏸';
+  cp.classList.remove('hidden');
+  cp.classList.add('show');
+  clearTimeout(cp._t);
+  cp._t = setTimeout(() => { cp.classList.remove('show'); cp.classList.add('hidden'); }, paused ? 900 : 420);
+}
+function liveTogglePlay() {
+  const v = $('#liveVideo'); if (!v || !v.src) return;
+  if (v.paused) { v.play().catch(() => {}); liveFlashIcon(false); }
+  else { v.pause(); liveFlashIcon(true); }
+}
+function liveToggleFullscreen() {
+  const screen = $('#liveScreen'); if (!screen) return;
+  try {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else if (screen.requestFullscreen) screen.requestFullscreen();
+    else toast('当前环境不支持全屏');
+  } catch (e) { toast('全屏切换失败：' + (e && e.message || e)); }
+}
+async function liveTogglePiP() {
+  const v = $('#liveVideo'); if (!v) return;
+  try {
+    if (document.pictureInPictureElement) { await document.exitPictureInPicture(); return; }
+    if (!document.pictureInPictureEnabled) { toast('当前环境不支持小窗播放'); return; }
+    await v.requestPictureInPicture();
+  } catch (e) { toast('小窗播放失败：' + (e && e.message || e)); }
+}
+function bindLiveControls() {
+  const screen = $('#liveScreen'); const v = $('#liveVideo');
+  if (!screen || !v) return;
+  // 单击画面暂停/恢复（点线路条与工具栏按钮不触发）
+  screen.addEventListener('click', (e) => {
+    if (e.target.closest('.live-lines') || e.target.closest('.live-tools')) return;
+    liveTogglePlay();
+  });
+  screen.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.live-lines') || e.target.closest('.live-tools')) return;
+    liveToggleFullscreen();
+  });
+  const bf = $('#btnLiveFullscreen'); if (bf) bf.onclick = (e) => { e.stopPropagation(); liveToggleFullscreen(); };
+  const bp = $('#btnLivePiP'); if (bp) bp.onclick = (e) => { e.stopPropagation(); liveTogglePiP(); };
+  // 播放中隐藏中央图标；暂停时短暂闪现（不常驻）
+  v.addEventListener('play', () => { const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden'); });
+  v.addEventListener('pause', () => { if (liveState.playing) liveFlashIcon(true); });
+}
+
 function liveShowMsg(text) {
   const msg = $('#liveMsg'); if (!msg) return;
   msg.textContent = text; msg.classList.remove('hidden');
@@ -1666,7 +1720,8 @@ function livePlayChannel(ch, lineIdx) {
     v.src = rawUrl; v.play().catch(() => {});
   });
   armWatchdog();
-  const cp = $('#liveCenterPlay'); if (cp) cp.classList.remove('hidden');
+  // 中央图标不再常驻：首帧出来前保持隐藏，播放后由 pause 事件短暂闪现
+  const cp = $('#liveCenterPlay'); if (cp) cp.classList.add('hidden');
 }
 
 // ---------- favorite / history ----------
@@ -2188,6 +2243,10 @@ window.__msSelfTest = {
   probeAllSites: probeAllSites,
   autoPickSite: autoPickSite,
   renderLiveTree: renderLiveTree,
+  liveFlashIcon: liveFlashIcon,
+  liveTogglePlay: liveTogglePlay,
+  liveToggleFullscreen: liveToggleFullscreen,
+  liveTogglePiP: liveTogglePiP,
   openDetail: openDetail,
   cmsGet: cmsGet,
   renderShell: renderShell,

@@ -152,6 +152,23 @@ t('播放控制不抛异常（无 video 元素时安全降级）', () => {
   sandbox.window.__msSelfTest.togglePlay();
   sandbox.window.__msSelfTest.toggleFullscreen();
 });
+t('直播控件: 中央播放按钮默认隐藏且非常驻', () => {
+  const app = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
+  const css = fs.readFileSync(path.join(ROOT, 'style.css'), 'utf8');
+  if (!/live-center-play hidden/.test(app)) throw new Error('中央按钮未默认 hidden');
+  if (!/\.live-center-play\.hidden[^}]*display:none/.test(css) && !/,\.live-center-play\.hidden/.test(css)) throw new Error('hidden 规则未覆盖 live-center-play');
+  // 不再有播放开始后 remove('hidden') 让按钮常驻的旧逻辑
+  if (/cp\.classList\.remove\('hidden'\);\s*\n?\s*\}/.test(app)) throw new Error('仍存在让中央按钮常驻的逻辑');
+});
+t('直播控件: 全屏/小窗按钮与单击暂停逻辑存在', () => {
+  const app = fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8');
+  ['btnLiveFullscreen', 'btnLivePiP', 'liveTogglePlay', 'liveToggleFullscreen', 'liveTogglePiP'].forEach((k) => {
+    if (app.indexOf(k) < 0) throw new Error('缺少 ' + k);
+  });
+  // 单击画面走暂停切换、双击走全屏
+  if (!/screen\.addEventListener\('click'[\s\S]{0,200}liveTogglePlay/.test(app)) throw new Error('单击未绑暂停');
+  if (!/screen\.addEventListener\('dblclick'[\s\S]{0,200}liveToggleFullscreen/.test(app)) throw new Error('双击未绑全屏');
+});
 t('历史记录上限 60 条', () => {
   ST().history = [];
   for (let i = 0; i < 80; i++) ST().history.unshift({ name: 'm' + i, id: 'i' + i, site: 's', type: 'vod' });
