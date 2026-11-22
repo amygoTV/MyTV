@@ -11,9 +11,11 @@ Checks (fail fast, no commit on failure):
   3. zheteng.json contains exactly two entries -- the primary (cdn.jsdelivr.net)
      and backup (fastly.jsdelivr.net) aizheteng.json URLs -- and both are live.
      No extra storeHouse entries are allowed.
+  4. Every aizheteng.json entry name contains an emoji (user-required format).
 """
 import concurrent.futures
 import json
+import re
 import ssl
 import sys
 import urllib.request
@@ -36,6 +38,14 @@ def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=TIMEOUT, context=SSL_CTX) as r:
         return r.read()
+
+
+EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+
+
+def has_emoji(name):
+    """User rule: every aizheteng line name must contain an emoji."""
+    return bool(EMOJI_RE.search(name or ""))
 
 
 def strict_json(path):
@@ -85,6 +95,12 @@ def main():
         log("aizheteng.json strict parse FAILED: %s" % exc)
         return 1
     log("aizheteng.json strict parse OK (%d entries)" % len(aiz.get("urls", [])))
+    no_emoji = [x.get("name", "?") for x in aiz.get("urls", [])
+                if isinstance(x, dict) and not has_emoji(x.get("name", ""))]
+    if no_emoji:
+        bad.append("aizheteng names missing emoji: %s" % no_emoji)
+    else:
+        log("aizheteng names emoji OK (%d entries)" % len(aiz.get("urls", [])))
 
     try:
         zhet = strict_json("zheteng.json")
