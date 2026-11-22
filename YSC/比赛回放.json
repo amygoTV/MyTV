@@ -25,6 +25,15 @@
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
     {
+      "name": "💣王炸直播💣(备)",
+      "type": 0,
+      "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "playerType": 1,
+      "ua": "okhttp/3.15",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+      "logo": "https://epg.112114.xyz/logo/{name}.png"
+    },
+    {
       "name": "🎵抖音/平台直播🎵",
       "type": 0,
       "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/PlatformLive.txt",

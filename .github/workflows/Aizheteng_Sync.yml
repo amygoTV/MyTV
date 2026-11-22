@@ -55,6 +55,11 @@ jobs:
             --output aizheteng.json \
             --summary "$GITHUB_STEP_SUMMARY"
 
+      - name: Validate multi-repo indexes (strict JSON + live children + primary/backup)
+        # 关键：客户端用严格 JSON 解析，不容忍 // 注释/尾逗号；
+        # 任何子配置坏掉或主备入口缺失即判定失败，不提交。
+        run: python3 scripts/validate_multi_repo.py
+
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
