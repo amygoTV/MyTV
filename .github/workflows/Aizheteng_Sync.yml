@@ -70,9 +70,12 @@ jobs:
           else
             git commit -m "Sync aizheteng.json $(date +'%Y-%m-%d %H:%M')"
             git push
+            echo "PURGE=1" >> "$GITHUB_ENV"
           fi
 
-      # Subscribers use permanent @master URLs; purge the edge cache so the
-      # fixed address serves fresh content right after this update.
+      # Subscribers use permanent @master URLs; purge ONLY the changed file(s)
+      # after push so the fixed address serves fresh content immediately.
+      # Purging every path would trigger jsdelivr rate limiting (throttling).
       - name: Purge jsdelivr cache for fixed @master URLs
-        run: python3 scripts/purge_cdn.py
+        if: env.PURGE == '1'
+        run: python3 scripts/purge_cdn.py --changed

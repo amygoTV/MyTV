@@ -3,20 +3,27 @@
 """Purge jsdelivr edge cache for fixed @master URLs.
 
 Why: subscribers use a permanent @master URL. jsdelivr caches GitHub
-branches at the edge and may serve stale content for days. Calling the
-official purge endpoint after each CI content update makes the fixed URL
+branches at the edge (12h s-maxage) and can serve stale content. Calling
+the official purge endpoint after each CI content update makes the fixed URL
 reflect new content immediately (clears both CF and Fastly providers).
 
+IMPORTANT: purge is rate-limited. In CI use --changed to purge ONLY the files
+that actually changed in the just-pushed commit (usually 1-3 files). Purging
+all 20 paths every run triggers throttling and can leave stale caches.
+
 Usage:
-    python3 scripts/purge_cdn.py [--extra path1 path2 ...]
+    python3 scripts/purge_cdn.py --changed        # CI: only git-diff files
+    python3 scripts/purge_cdn.py                  # manual: full default list
+    python3 scripts/purge_cdn.py --extra p1 p2    # add specific paths
 
 Exit code is always 0 (purge failure only warns) so a CDN hiccup never
 fails the content workflow.
 """
 import argparse
+import os
+import subprocess
 import sys
 import urllib.request
-import urllib.error
 
 REPO = "amygoTV/MyTV"
 REF = "master"
@@ -67,15 +74,47 @@ def purge(path):
         return False, str(exc)[:120]
 
 
+def changed_files(base="HEAD~1", head="HEAD"):
+    """Return repo-relative paths changed between two refs (for CI --changed)."""
+    try:
+        out = subprocess.check_output(
+            ["git", "diff", "--name-only", base, head],
+            text=True, stderr=subprocess.DEVNULL,
+        )
+        return [ln.strip() for ln in out.splitlines() if ln.strip()]
+    except Exception:
+        return []
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--extra", nargs="*", default=[])
+    ap.add_argument("--changed", action="store_true",
+                    help="purge only files changed in the last commit (CI mode)")
+    ap.add_argument("--base", default="HEAD~1", help="git base ref for --changed")
     args = ap.parse_args()
 
-    paths = list(DEFAULT_PATHS)
+    if args.changed:
+        paths = changed_files(args.base)
+        # Always include the entry indexes if any config changed: they are the
+        # fixed URLs subscribers actually import.
+        if paths:
+            for entry in ("aizheteng.json", "zheteng.json"):
+                if entry not in paths and os.path.exists(entry):
+                    paths.append(entry)
+        print("[purge] --changed mode: %d files from git diff" % len(paths))
+    else:
+        paths = list(DEFAULT_PATHS)
+
     for p in args.extra:
         if p not in paths:
             paths.append(p)
+
+    # Only purge paths served from this repo via jsdelivr @master.
+    paths = [p for p in paths if os.path.exists(p) and not p.startswith(".github/")]
+    if not paths:
+        print("[purge] no paths to purge")
+        return 0
 
     ok = 0
     failed = []

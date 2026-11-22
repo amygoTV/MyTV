@@ -140,6 +140,7 @@ jobs:
             git commit -m "chore(live): 自动重建直播源（权威频道表保底 + 广告/错台过滤 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
             git pull --rebase origin "${GITHUB_REF_NAME}" || true
             git push origin HEAD:"${GITHUB_REF_NAME}"
+            echo "PURGE=1" >> "$GITHUB_ENV"
             echo "已提交"
           else
             echo "无变化"
@@ -147,10 +148,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Live sources are served via permanent @master URLs. Purge jsdelivr's
-      # edge cache after rebuild so the fixed address reflects new channels.
+      # Live sources are served via permanent @master URLs. Purge only the
+      # changed files after push so the fixed address reflects new channels.
       - name: Purge jsdelivr cache for fixed @master URLs
-        run: python3 scripts/purge_cdn.py
+        if: env.PURGE == '1'
+        run: python3 scripts/purge_cdn.py --changed
 
       - name: Summary
         if: always()
