@@ -16,8 +16,10 @@
 4. 广告/错台/静态录像/分组噪音过滤全部保留。
 5. 探测不足时保留上一版（防止 CI 上游抖动清空源文件）；保底频道即使单条探测失败
    也保留原始线路，确保每频道 3 条 IPv4 + 2 条 IPv6。
-6. 每条线路独占一行（频道名,单个URL），兼容影视仓/TVBox 的标准 TXT 解析；
-   BiliLive.txt / LiveSports.txt 同步改为一行一条。
+6. 输出严格遵循影视仓/TVBox 官方 TXT 规范（FongMi docs/LIVE.md）：
+   一行一个频道「频道名,URL」，同一频道的多条线路用 **#** 分隔（多线路备援），
+   不输出空行，频道名不重复。逗号多地址写法客户端只取第一栏（表现为每频道
+   只有一条线路），同名多行则会让客户端建表报错（表现为直播列表为空）。
 
 输出文件：TVLives.txt（央视/卫视/港澳台/NewTV电影/NewTV体育）、BiliLive.txt、LiveSports.txt
 
@@ -169,6 +171,31 @@ def clean_url(u):
     return u.split('#', 1)[0].strip()
 
 
+def format_txt(group_items, groups_order):
+    """影视仓/TVBox 标准 TXT 格式（FongMi docs/LIVE.md）。
+
+    - 一行一个频道，逗号只作「名称,URL」两栏分隔；
+    - 同一频道的多条线路用 `#` 分隔（官方「多线路备援」写法，播放器依序尝试）；
+    - 不输出空行（不含 `://` 的行会被客户端当成频道指令行）；
+    - 频道名不可重复，否则客户端按名建表会覆盖或报错。
+    """
+    lines = []
+    for g in groups_order:
+        items = sorted(group_items.get(g, []), key=lambda x: x['order'])
+        if not items:
+            continue
+        lines.append('%s,#genre#' % g)
+        for it in items:
+            urls = []
+            for u in it['urls']:
+                if u and u not in urls:
+                    urls.append(u)
+            if not urls:
+                continue
+            lines.append('%s,%s' % (it['name'].replace(',', '，'), '#'.join(urls)))
+    return lines
+
+
 def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, prev_content=None):
     print('\n=== 构建 TVLives.txt（权威频道表 + NewTV 分组） ===', flush=True)
     channels = plan['channels']
@@ -206,25 +233,10 @@ def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, pr
                 'order': 1000 + i,
             })
 
-    # 4) 组装：每条线路独占一行，频道名重复表示多线路
-    lines, total_urls = [], 0
-    for g in groups_order:
-        items = sorted(group_items.get(g, []), key=lambda x: x['order'])
-        if not items:
-            continue
-        lines.append('%s,#genre#' % g)
-        lines.append('')
-        for it in items:
-            urls = []
-            for u in it['urls']:
-                if u and u not in urls:
-                    urls.append(u)
-            if not urls:
-                continue
-            total_urls += len(urls)
-            for u in urls:
-                lines.append('%s,%s' % (it['name'].replace(',', '，'), u))
-                lines.append('')
+    # 4) 组装：一行一个频道，多线路用 # 分隔（影视仓标准 TXT）
+    lines = format_txt(group_items, groups_order)
+    total_urls = sum(len(u.split('#')) for ln in lines if '#genre#' not in ln
+                     for u in [ln.split(',', 1)[1] if ',' in ln else ''])
 
     path = os.path.join(out_dir, 'TVLives.txt')
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
@@ -273,19 +285,16 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
 
     # .group header is required by CI validation & client parser
     gname = 'B站直播' if name.startswith('Bili') else '直播'
-    lines, total = ['%s,#genre#' % gname, ''], 0
-    for k, it in by.items():
+    items = []
+    for idx, (k, it) in enumerate(by.items()):
         urls = []
         for u in it['urls'][:5]:
             if u not in urls:
                 urls.append(u)
-        if not urls:
-            continue
-        total += len(urls)
-        # 每条线路独占一行：频道名,单个URL
-        for u in urls:
-            lines.append('%s,%s' % (it['name'].replace(',', '，'), u))
-            lines.append('')
+        if urls:
+            items.append({'name': it['name'], 'urls': urls, 'order': idx})
+    lines = format_txt({gname: items}, [gname])
+    total = sum(len(i['urls']) for i in items)
     path = os.path.join(out_dir, name)
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines).rstrip('\n') + '\n')
@@ -322,19 +331,16 @@ def build_live_sports(out_dir, workers, probe_limit):
         by.setdefault(k, {'name': name, 'urls': []})
         if u not in by[k]['urls']:
             by[k]['urls'].append(u)
-    lines, total = ['赛事直播,#genre#', ''], 0
-    for k, it in by.items():
+    items = []
+    for idx, (k, it) in enumerate(by.items()):
         urls = []
         for u in it['urls'][:5]:
             if u not in urls:
                 urls.append(u)
-        if not urls:
-            continue
-        total += len(urls)
-        # 每条线路独占一行：频道名,单个URL
-        for u in urls:
-            lines.append('%s,%s' % (it['name'].replace(',', '，'), u))
-            lines.append('')
+        if urls:
+            items.append({'name': it['name'], 'urls': urls, 'order': idx})
+    lines = format_txt({'赛事直播': items}, ['赛事直播'])
+    total = sum(len(i['urls']) for i in items)
     path = os.path.join(out_dir, 'LiveSports.txt')
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines).rstrip('\n') + '\n')

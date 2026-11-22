@@ -2,16 +2,25 @@
 # -*- coding: utf-8 -*-
 """Validate live-source TXT files before CI commits them.
 
-Rules (user 2026-11-22):
-  * One playable URL per line: ``channel,http://...``.  Never
-    ``channel,url1,url2`` -- clients then see only a single line.
+Format rules (FongMi/影视仓 official docs/LIVE.md):
+  * One channel per line: ``频道名,URL``.  The comma separates the two
+    columns only -- extra comma-separated addresses are ignored by clients
+    (that is why "channel,url1,url2" looked like a single line).
+  * Several lines for the SAME channel are written as ONE line with the
+    addresses joined by ``#`` (``CCTV1,url1#url2``).  Repeating the channel
+    name on several lines makes clients overwrite the entry or throw while
+    building the table -- the symptom is an EMPTY live list.
+  * No blank lines: a line without ``://`` is treated as a channel command.
+  * Channel names must be unique inside a group.
+
+Additional rules:
   * TVLives.txt groups: 央视频道 / 卫视频道 / 港澳台频道 / 电影频道 / 体育频道.
   * All 71 guaranteed channels in scripts/channel_plan.json must be present,
     each with >= 3 IPv4 lines.  IPv6 coverage is reported (a few HK/TW/CGTN
     channels have no public IPv6 feed) but does not block the build.
   * 电影频道 / 体育频道 may only contain NewTV channels whose names match the
     movie / sports whitelist -- no more mis-labelled channels.
-  * BiliLive.txt / LiveSports.txt use the same one-URL-per-line format.
+  * BiliLive.txt / LiveSports.txt use the same format.
 """
 import json
 import re
@@ -41,12 +50,13 @@ def is_v6(url):
 
 
 def parse(path):
-    """-> (groups, group_order, errors)"""
+    """-> (groups, group_order, errors); groups[g][name] = [url, ...]"""
     groups, order, errors = {}, [], []
     cur = None
     for i, raw in enumerate(Path(path).read_text(encoding="utf-8-sig").splitlines(), 1):
         ln = raw.strip()
         if not ln:
+            errors.append("L%d 存在空行（不含 :// 的行会被客户端当频道指令行）" % i)
             continue
         if ln.endswith("#genre#"):
             cur = ln.split(",", 1)[0].strip()
@@ -56,17 +66,24 @@ def parse(path):
         if "," not in ln:
             errors.append("L%d 缺少逗号: %s" % (i, ln[:80]))
             continue
-        name, url = ln.split(",", 1)
         if cur is None:
             errors.append("L%d 缺少分组头" % i)
             continue
-        if not url.startswith("http"):
-            errors.append("L%d URL 非法: %s" % (i, url[:80]))
+        name, raw_urls = ln.split(",", 1)
+        urls = [u.strip() for u in raw_urls.split("#") if u.strip()]
+        if not urls:
+            errors.append("L%d 没有可播放地址: %s" % (i, ln[:80]))
             continue
-        if "," in url or " " in url:
-            errors.append("L%d 一行含多个 URL/空格: %s" % (i, url[:100]))
-            continue
-        groups[cur].setdefault(name.strip(), []).append(url.strip())
+        for u in urls:
+            if not u.startswith("http"):
+                errors.append("L%d URL 非法: %s" % (i, u[:80]))
+            if "," in u or " " in u:
+                errors.append("L%d 地址含逗号或空格: %s" % (i, u[:100]))
+        key = name.strip()
+        if key in groups[cur]:
+            errors.append("L%d 频道名重复『%s』（客户端建表会覆盖/报错，表现为直播列表为空）"
+                          % (i, key))
+        groups[cur][key] = urls
     return groups, order, errors
 
 
@@ -112,9 +129,9 @@ def main():
     else:
         log("全部保底频道均有 >= 2 条 IPv6")
 
-    # 央视组 / 港澳台组顺序（每行一条线路，需先按频道名去重）
+    # 央视组 / 港澳台组顺序（频道名在组内唯一，按出现顺序比对）
     def uniq(group):
-        return list(dict.fromkeys(groups.get(group, {}).keys()))
+        return list(groups.get(group, {}).keys())
 
     cctv_expect = [x for x in (plan["cctv_order"] + plan["paid_order"]
                                + plan["cgtn_order"] + plan["edu_order"])
