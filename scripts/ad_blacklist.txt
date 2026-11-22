@@ -20,3 +20,37 @@ m3u8\.channel\.wsrtv\.com\.cn/cms/videos/nmip-media/channellive/channel7/playlis
 192\.151\.150\.154/live/cctv2hd\.m3u8
 204\.12\.221\.218:8181/3m1080p/cctv2\.m3u8
 204\.12\.221\.218:8181/3m1080p/cctv15\.m3u8
+# 2026-11-22 第二轮全网源抽帧核验（14 个公开源池 / 596 候选 / 抽帧 88 条逐格判定）
+# 画面带常驻滚动购物热线（400-066-2600 / 400-689-3979 / 400-675-7366 / 400-913-5966 /
+# 400-788-3916 / 400-865-8955 / 400-801-3765 / 400-8755-789 / 400-8626-966）的一律判废
+38\.75\.136\.137:98/gslb/dsdqpub/
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=gswshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=gxwshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=hewshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=hawshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=jlwshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=jswshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=jxwshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=nmgws
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=qhws
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=sdwshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=sxwshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=tjwshd
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=xzws
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=xjws
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=ynwshd
+107\.150\.60\.122/live/hawshd\.m3u8
+107\.150\.60\.122/live/jlwshd\.m3u8
+107\.150\.60\.122/live/lnwshd\.m3u8
+107\.150\.60\.122/live/nmgws\.m3u8
+107\.150\.60\.122/live/szwshd\.m3u8
+120\.76\.248\.139/live/bfgd/4200000108
+192\.151\.150\.154/live/ynwshd\.m3u8
+# CGTN 英语频道错台：放的是天气信息板
+english-livebkali\.cgtn\.com/live/encgtn_0\.m3u8
+# 东方卫视专项：这些 dfwshd 路径实际播放的是 CCTV-13 / CCTV-2（错台），不是东方卫视
+bp-resource-dfl\.bestv\.cn/148/3/video\.m3u8
+bp-resource-dfl\.bestv\.cn/155/3/video\.m3u8
+198\.204\.228\.26/live/dfwshd\.m3u8
+192\.151\.150\.154/live/dfwshd\.m3u8
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=dfwshd

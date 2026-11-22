@@ -1,0 +1,130 @@
+{
+ "CCTV1": [
+  "http://204.12.221.218:8181/3m1080p/cctv1.m3u8",
+  "http://198.204.228.26/live/cctv1hd.m3u8"
+ ],
+ "CCTV2": [
+  "http://198.204.228.26/live/cctv2hd.m3u8",
+  "http://112.27.5.218:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "CCTV3": [
+  "http://112.27.5.218:9901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "CCTV4": [
+  "http://107.150.60.122/live/cctv4hd.m3u8",
+  "http://173.208.212.130:8181/1080p/cctv4.m3u8"
+ ],
+ "CCTV5": [
+  "http://112.27.5.218:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "CCTV5+": [
+  "http://120.76.248.139/live/bfgd/4200000246.m3u8"
+ ],
+ "CCTV6": [
+  "http://198.204.228.26/live/cctv6hd.m3u8",
+  "http://112.27.5.218:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "CCTV7": [
+  "http://107.150.60.122/live/cctv7hd.m3u8",
+  "http://112.27.5.218:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "CCTV9": [
+  "http://107.150.60.122/live/cctv9hd.m3u8",
+  "http://192.151.150.154/live/cctv9hd.m3u8"
+ ],
+ "CCTV10": [
+  "http://112.27.5.218:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "CCTV12": [
+  "http://107.150.60.122/live/cctv12hd.m3u8"
+ ],
+ "CCTV13": [
+  "http://120.76.248.139/live/bfgd/4200000067.m3u8",
+  "http://ali-m-l.cztv.com/channels/lantian/channel21/1080p.m3u8"
+ ],
+ "CCTV14": [
+  "http://198.204.228.26/live/cctv14hd.m3u8",
+  "http://204.12.221.218:8181/3m1080p/cctv14.m3u8"
+ ],
+ "CCTV15": [
+  "http://198.204.228.26/live/cctv15hd.m3u8",
+  "http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "中国教育3台": [
+  "http://107.150.60.122/live/cetv3.m3u8",
+  "http://198.204.228.26/live/cetv3.m3u8"
+ ],
+ "浙江卫视": [
+  "http://107.150.60.122/live/zjwshd.m3u8"
+ ],
+ "湖南卫视": [
+  "https://txmov2.a.kwimgs.com/bs3/video-hls/5199687338554291078_hlsb.m3u8",
+  "http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/dWlwPTEyNy4wLjAuMSZ1aWQ9cWluZy1jbXMmbm5fdGltZXpvbmU9OQ/0/t/2024/9/9/h8av.m3u8"
+ ],
+ "北京卫视": [
+  "http://107.150.60.122/live/bjwshd.m3u8"
+ ],
+ "湖北卫视": [
+  "http://107.150.60.122/live/hbwshd.m3u8"
+ ],
+ "黑龙江卫视": [
+  "http://107.150.60.122/live/hljwshd.m3u8"
+ ],
+ "安徽卫视": [
+  "http://107.150.60.122/live/ahwshd.m3u8"
+ ],
+ "重庆卫视": [
+  "http://107.150.60.122/live/cqwshd.m3u8"
+ ],
+ "东南卫视": [
+  "http://107.150.60.122/live/dnwshd.m3u8"
+ ],
+ "东方卫视": [
+  "http://107.150.60.122/live/dfwshd.m3u8"
+ ],
+ "广西卫视": [
+  "http://107.150.60.122/live/gxwshd.m3u8"
+ ],
+ "贵州卫视": [
+  "http://107.150.60.122/live/gzwshd.m3u8",
+  "http://204.12.221.218:8181/3m1080p/gzws.m3u8"
+ ],
+ "海南卫视": [
+  "http://120.76.248.139/live/bfgd/4200000473.m3u8",
+  "http://125.93.74.27:9002/tsfile/live/0109_1.m3u8?key=txiptv&playlive=1&authid=0"
+ ],
+ "宁夏卫视": [
+  "http://107.150.60.122/live/nxws.m3u8",
+  "http://198.204.228.26/live/nxws.m3u8"
+ ],
+ "山东卫视": [
+  "http://107.150.60.122/live/sdwshd.m3u8"
+ ],
+ "山西卫视": [
+  "http://107.150.60.122/live/sxwshd.m3u8"
+ ],
+ "陕西卫视": [
+  "http://107.150.60.122/live/snwshd.m3u8"
+ ],
+ "四川卫视": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=scwshd"
+ ],
+ "天津卫视": [
+  "http://107.150.60.122/live/tjwshd.m3u8"
+ ],
+ "西藏卫视": [
+  "http://107.150.60.122/live/xzws.m3u8"
+ ],
+ "新疆卫视": [
+  "http://107.150.60.122/live/xjws.m3u8"
+ ],
+ "凤凰资讯": [
+  "http://43.152.224.209/qctv.fengshows.cn/live/0701pin72.flv"
+ ],
+ "CGTN": [
+  "http://english-livetx.cgtn.com/hls/yypdyyctzb_hd.m3u8"
+ ],
+ "东森新闻": [
+  "https://d2jc41c1shgcol.cloudfront.net/live/EBCNews/playlist.m3u8"
+ ]
+}

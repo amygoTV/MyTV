@@ -4,3 +4,22 @@
 # 直播源构建过程中的临时下载素材与中间产物
 scripts/_newtv_*
 scripts/channel_plan_aug.json
+
+# 抽帧核验与全网源爬取的临时产物
+_audit_*/
+_dfw/
+_src/
+_pool_all.json
+_alive_pool.json
+scripts/_crawl_audit.py
+
+# 抽帧核验与全网源爬取的临时产物
+_audit_*/
+_dfw/
+_src/
+_pool_all.json
+_alive_pool.json
+scripts/_crawl_audit.py
+
+# 抽帧核验图片目录
+_audit/

@@ -7,7 +7,7 @@ TVBox / 影视仓可用的直播订阅与多仓索引仓库。
 ### 订阅地址
 
 ```text
-https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt
+https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.m3u
 ```
 
 ### 文件说明

@@ -216,14 +216,36 @@ def clean_url(u):
     return u.split('#', 1)[0].strip()
 
 
-def format_txt(group_items, groups_order):
-    """影视仓/TVBox 标准 TXT 格式（FongMi docs/LIVE.md）。
+def write_txt(path, lines):
+    """TVBox/影视仓 TXT 落盘：UTF-8 BOM + CRLF + 一行一条线路。
 
-    - 一行一个频道，逗号只作「名称,URL」两栏分隔；
-    - 同一频道的多条线路用 `#` 分隔（官方「多线路备援」写法，播放器依序尝试）；
-    - 不输出空行（不含 `://` 的行会被客户端当成频道指令行）；
-    - 频道名不可重复，否则客户端按名建表会覆盖或报错。
+    参考 TVBoxBD0130 的 TVLives.txt 规范：
+      * UTF-8 带 BOM、CRLF 换行；
+      * 一行一条线路，同名频道重复出现（客户端按名字合并为多线路）；
+      * 数据行之间不能有空行——空行不含 :// 会被当成频道指令行，
+        轻则解析中断、重则整个直播列表为空。
     """
+    data = '\r\n'.join(lines) + '\r\n'
+    with open(path, 'wb') as f:
+        f.write(b'\xef\xbb\xbf' + data.encode('utf-8'))
+
+
+def display_name(name):
+    """频道名风格对齐 TVBox 参考列表：CCTV1 -> CCTV-1，CCTV5+ -> CCTV-5+。"""
+    m = re.match(r'^(CCTV|CETV)(\d+)(\+?)$', name or '')
+    if m:
+        return '%s-%s%s' % (m.group(1), m.group(2), m.group(3))
+    return name
+
+
+def canon(name):
+    """频道名归一化键：CCTV-1 / CCTV1 / cctv-1 -> CCTV1"""
+    s = re.sub(r'[\s\-_—·・]', '', name or '').upper().replace('＋', '+')
+    return s
+
+
+def format_txt(group_items, groups_order):
+    """一行一条线路，同名频道重复出现（客户端按频道名合并为多线路）。"""
     lines = []
     for g in groups_order:
         items = sorted(group_items.get(g, []), key=lambda x: x['order'])
@@ -231,23 +253,38 @@ def format_txt(group_items, groups_order):
             continue
         lines.append('%s,#genre#' % g)
         for it in items:
+            name = it['name'].replace(',', '，')
+            for u in it['urls']:
+                if u:
+                    lines.append('%s,%s' % (name, u))
+    return lines
+
+
+def format_m3u(group_items, groups_order):
+    """标准 M3U：一个频道一条 #EXTINF，下面每条线路独占一行。
+
+    影视仓/TVBox 的 M3U 解析会把同名频道的多行合并成一个频道的多条线路，
+    这正是「每个线路单独一行」且频道不丢的格式；TXT 格式做不到
+    （TXT 一行一频道，多地址用 # 或 , 分隔都可能被客户端当成单个畸形 URL）。
+    """
+    lines = ['#EXTM3U']
+    for g in groups_order:
+        for it in sorted(group_items.get(g, []), key=lambda x: x['order']):
             urls = []
             for u in it['urls']:
                 if u and u not in urls:
                     urls.append(u)
             if not urls:
                 continue
-            lines.append('%s,%s' % (it['name'].replace(',', '，'), '#'.join(urls)))
+            name = it['name'].replace(',', '，').replace('"', '')
+            lines.append('#EXTINF:-1 group-title="%s",%s' % (g, name))
+            for u in urls:
+                lines.append(u)
     return lines
 
 
 def build_special_lives(out_dir, workers, probe_limit):
-    """影视轮播 / 体育频道分组。
-
-    公网影视轮播源（虎牙/斗鱼/YY/B站）每晚重新拉取并逐条实测，失效的自动剔除，
-    避免把死链写进订阅。NewTV 轮播因实测 IPv4 全部超时、IPv6 只在移动网络可用，
-    已于 v1.6.8 整体移除。
-    """
+    """影视轮播 / 体育频道分组：公网源每晚重新拉取并逐条实测，失效自动剔除。"""
     print('\n=== 构建 影视轮播 / 体育频道 分组 ===', flush=True)
     raw = []
     for url, ua in SPECIAL_SOURCES:
@@ -295,12 +332,15 @@ def build_special_lives(out_dir, workers, probe_limit):
     return out
 
 
-def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, prev_content=None):
-    print('\n=== 构建 TVLives.txt（权威频道表 + 影视轮播/体育分组） ===', flush=True)
+def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, prev_content=None):
+    print('\n=== 构建 TVLives.txt（保底频道 + 参考分组） ===', flush=True)
     channels = plan['channels']
-    groups_order = plan['groups_order']
 
-    # 1) 保底频道：IPv4 逐条探测；IPv6 无出口不探测，直接作为备用
+    # 分组名统一为参考文件 TVBoxBD0130 的写法
+    GROUP_MAP = {'央视频道': '央视', '卫视频道': '卫视', '港澳台频道': '港澳台'}
+    groups_order = ['央视', '卫视', '港澳台', '影视轮播', '体育频道']
+
+    # 1) 保底频道：IPv4 逐条实测；IPv6 无出口不探测，直接保留
     v4_tasks, v6_map = [], {}
     for name, meta in channels.items():
         for u in meta['ipv4']:
@@ -312,8 +352,28 @@ def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, pr
         v4_tasks = v4_tasks[:probe_limit]
     alive_urls = set(probe_many([u for _, u in v4_tasks], workers, '保底IPv4'))
 
-    # 2) 保底频道组装：存活优先，探测失败仍保留原始线路，保证 3 IPv4 + 2 IPv6
     group_items = {g: [] for g in groups_order}
+    index = {}
+
+    def add(group, name, urls):
+        if group not in group_items:
+            return
+        key = (group, canon(name))
+        disp = display_name(name)
+        if key in index:
+            item = group_items[group][index[key]]
+            for u in urls:
+                if u and u not in item['urls']:
+                    item['urls'].append(u)
+        else:
+            index[key] = len(group_items[group])
+            group_items[group].append({
+                'name': disp,
+                'urls': [u for u in urls if u],
+                'order': index[key],
+            })
+
+    # 2) 保底频道：实测存活优先，探测失败也保留原始线路
     for name, meta in channels.items():
         v4_all = [clean_url(u) for u in meta['ipv4'] if not is_ipv6(u)]
         alive = [u for u in v4_all if u in alive_urls]
@@ -321,34 +381,47 @@ def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, pr
         urls = [u for u in (alive + rest)[:3] + v6_map.get(name, [])[:2]
                 if not is_blacklisted(u)]
         if len(urls) < 3:
-            urls = [clean_url(u) for u in meta['ipv4'][:3]]
-        group_items[meta['group']].append({'name': name, 'urls': urls, 'order': meta['order']})
+            urls = [clean_url(u) for u in meta['ipv4'][:3] if not is_blacklisted(u)]
+        add(GROUP_MAP.get(meta['group'], meta['group']), name, urls)
 
-    # 3) NewTV 电影/体育分组：名称与内容严格对应，替换旧的名不副实附加组
+    # 4) 公网影视轮播 / 体育（每晚实测）
     for key, gname in (('movie', '影视轮播'), ('sports', '体育频道')):
-        for i, (name, urls) in enumerate(newtv.get(key, {}).items()):
-            group_items[gname].append({
-                'name': name,
-                'urls': [clean_url(u) for u in urls],
-                'order': 1000 + i,
-            })
+        for i, (name, urls) in enumerate((special or {}).get(key, {}).items()):
+            add(gname, name, [clean_url(u) for u in urls])
 
-    # 4) 组装：一行一个频道，多线路用 # 分隔（影视仓标准 TXT）
-    lines = format_txt(group_items, groups_order)
-    total_urls = sum(len(u.split('#')) for ln in lines if '#genre#' not in ln
-                     for u in [ln.split(',', 1)[1] if ',' in ln else ''])
+    # 5) 落盘：一行一条线路、无空行、BOM + CRLF
+    lines = []
+    for g in groups_order:
+        items = group_items.get(g, [])
+        if not items:
+            continue
+        lines.append('%s,#genre#' % g)
+        for it in sorted(items, key=lambda x: x['order']):
+            name = it['name'].replace(',', '，')
+            for u in it['urls']:
+                lines.append('%s,%s' % (name, u))
+    write_txt(os.path.join(out_dir, 'TVLives.txt'), lines)
+    write_txt(os.path.join(out_dir, 'TVLives_v2.txt'), lines)
 
-    path = os.path.join(out_dir, 'TVLives.txt')
-    with open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write('\n'.join(lines).rstrip('\n') + '\n')
-    # 同步产出 *_v2.txt：全新文件名在 CDN 无陈旧缓存，配置统一引用它
-    with open(os.path.join(out_dir, 'TVLives_v2.txt'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write('\n'.join(lines).rstrip('\n') + '\n')
+    # M3U 版本：同一频道的 #EXTINF 下多行地址，供支持 M3U 的客户端使用
+    m3u = ['#EXTM3U']
+    for g in groups_order:
+        items = sorted(group_items.get(g, []), key=lambda x: x['order'])
+        if not items:
+            continue
+        for it in items:
+            m3u.append('#EXTINF:-1 group-title="%s",%s' % (g, it['name'].replace(',', '，').replace('"', '')))
+            m3u.extend(it['urls'])
+    for fn in ('TVLives.m3u', 'TVLives_v2.m3u'):
+        with open(os.path.join(out_dir, fn), 'w', encoding='utf-8', newline='\n') as f:
+            f.write('\n'.join(m3u).rstrip('\n') + '\n')
+
     chans = sum(len(group_items.get(g, [])) for g in groups_order)
+    total = sum(len(it['urls']) for g in groups_order for it in group_items.get(g, []))
     print('  => TVLives.txt：%d 频道 / %d 组 / %d 线路 / %d bytes' % (
-        chans, len([g for g in groups_order if group_items.get(g)]), total_urls,
-        os.path.getsize(path)), flush=True)
-    return {'file': 'TVLives.txt', 'channels': chans, 'lines': total_urls}
+        chans, len([g for g in groups_order if group_items.get(g)]), total,
+        os.path.getsize(os.path.join(out_dir, 'TVLives.txt'))), flush=True)
+    return {'file': 'TVLives.txt', 'channels': chans, 'lines': total}
 
 
 def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
@@ -401,10 +474,8 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
     lines = format_txt({gname: items}, [gname])
     total = sum(len(i['urls']) for i in items)
     path = os.path.join(out_dir, name)
-    with open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write('\n'.join(lines).rstrip('\n') + '\n')
-    with open(os.path.join(out_dir, name[:-4] + '_v2.txt'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write('\n'.join(lines).rstrip('\n') + '\n')
+    write_txt(path, lines)
+    write_txt(os.path.join(out_dir, name[:-4] + '_v2.txt'), lines)
     print('  => %s：%d 频道 / %d bytes' % (name, len(by), os.path.getsize(path)), flush=True)
     return {'file': name, 'channels': len(by), 'lines': sum(len(v['urls']) for v in by.values())}
 
@@ -451,10 +522,8 @@ def build_live_sports(out_dir, workers, probe_limit):
     lines = format_txt({'赛事直播': items}, ['赛事直播'])
     total = sum(len(i['urls']) for i in items)
     path = os.path.join(out_dir, 'LiveSports.txt')
-    with open(path, 'w', encoding='utf-8', newline='\n') as f:
-        f.write('\n'.join(lines).rstrip('\n') + '\n')
-    with open(os.path.join(out_dir, 'LiveSports_v2.txt'), 'w', encoding='utf-8', newline='\n') as f:
-        f.write('\n'.join(lines).rstrip('\n') + '\n')
+    write_txt(path, lines)
+    write_txt(os.path.join(out_dir, 'LiveSports_v2.txt'), lines)
     print('  => LiveSports.txt：%d 频道 / %d bytes' % (len(by), os.path.getsize(path)), flush=True)
     return {'file': 'LiveSports.txt', 'channels': len(by), 'lines': sum(len(v['urls']) for v in by.values())}
 
@@ -473,12 +542,9 @@ def load_prev(out_dir, name):
 def restore(out_dir, name, content):
     if content is None:
         return
-    with open(os.path.join(out_dir, name), 'w', encoding='utf-8', newline='\n') as f:
-        f.write(content)
+    write_txt(os.path.join(out_dir, name), content.splitlines())
     # v2 副本必须与主文件保持一致（配置引用的是 v2）
-    v2 = os.path.join(out_dir, name[:-4] + '_v2.txt')
-    with open(v2, 'w', encoding='utf-8', newline='\n') as f:
-        f.write(content)
+    write_txt(os.path.join(out_dir, name[:-4] + '_v2.txt'), content.splitlines())
 
 
 def main():

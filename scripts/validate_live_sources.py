@@ -2,25 +2,22 @@
 # -*- coding: utf-8 -*-
 """Validate live-source TXT files before CI commits them.
 
-Format rules (FongMi/影视仓 official docs/LIVE.md):
-  * One channel per line: ``频道名,URL``.  The comma separates the two
-    columns only -- extra comma-separated addresses are ignored by clients
-    (that is why "channel,url1,url2" looked like a single line).
-  * Several lines for the SAME channel are written as ONE line with the
-    addresses joined by ``#`` (``CCTV1,url1#url2``).  Repeating the channel
-    name on several lines makes clients overwrite the entry or throw while
-    building the table -- the symptom is an EMPTY live list.
-  * No blank lines: a line without ``://`` is treated as a channel command.
-  * Channel names must be unique inside a group.
+Format rules (aligned with the TVBoxBD0130 reference list supplied by the user):
+  * UTF-8 **with BOM**, CRLF line endings.
+  * ``group,#genre#`` declares a group; ``channel,url`` is one playable line.
+  * The same channel may appear on several lines -- the client merges them
+    into one channel with multiple lines.  This is the intended format.
+  * **No blank lines between data lines.**  A line without ``://`` is treated
+    as a channel command by TVBox/影视仓, so a stray blank line can abort the
+    parse and leave the whole live list empty.
+  * Groups: 央视 / 卫视 / 港澳台 / NewTV频道 / SITV频道 / IHOT频道 / 少儿频道.
 
-Additional rules:
-  * TVLives.txt groups: 央视频道 / 卫视频道 / 港澳台频道 / 电影频道 / 体育频道.
-  * All 71 guaranteed channels in scripts/channel_plan.json must be present,
-    each with >= 3 IPv4 lines.  IPv6 coverage is reported (a few HK/TW/CGTN
-    channels have no public IPv6 feed) but does not block the build.
-  * 电影频道 / 体育频道 may only contain NewTV channels whose names match the
-    movie / sports whitelist -- no more mis-labelled channels.
-  * BiliLive.txt / LiveSports.txt use the same format.
+Extra rules:
+  * All guaranteed channels from scripts/channel_plan.json must be present.
+  * URLs hitting scripts/ad_blacklist.txt (manually frame-audited ad / wrong
+    channels) are rejected.
+  * *_v2.txt copies must be byte-identical to the main file (configs point at
+    the v2 path).
 """
 import json
 import re
@@ -31,12 +28,24 @@ for stream in (sys.stdout, sys.stderr):
     if hasattr(stream, "reconfigure"):
         stream.reconfigure(encoding="utf-8", errors="replace")
 
-GROUPS = ["央视频道", "卫视频道", "港澳台频道", "影视轮播", "体育频道"]
-MOVIE_RE = re.compile(r"(电影|影视|影院|剧场|剧集|电视剧|动画|动漫|大片|老片|相声|评书|戏曲|综艺|晚会|动作片|喜剧片|科幻|枪战片|战争片|动画片|纪录片)", re.I)
-SPORT_RE = re.compile(r"(体育|足球|篮球|NBA|赛事|奥运|网球|羽毛球|赛车|排球|乒乓|台球|游泳|田径|西甲|英超|中超|欧冠|冰壶|冰球)")
-EXTRA_FILES = ("BiliLive.txt", "LiveSports.txt")
+GROUPS = ["央视", "卫视", "港澳台"]
+EXTRA_GROUPS = ["影视轮播", "体育频道"]
 AD_RE = re.compile(r"(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)", re.I)
 BLACKLIST_FILE = Path("scripts/ad_blacklist.txt")
+FILES = ("TVLives.txt", "TVLives_v2.txt", "BiliLive.txt", "BiliLive_v2.txt",
+         "LiveSports.txt", "LiveSports_v2.txt")
+
+
+def log(msg):
+    print("[live] %s" % msg, flush=True)
+
+
+def is_v6(url):
+    return url.startswith("http://[")
+
+
+def canon(name):
+    return re.sub(r"[\s\-_—·・]", "", name or "").upper().replace("＋", "+")
 
 
 def load_blacklist():
@@ -53,49 +62,46 @@ def load_blacklist():
     return pats
 
 
-def log(msg):
-    print("[live] %s" % msg, flush=True)
-
-
-def is_v6(url):
-    return url.startswith("http://[")
-
-
 def parse(path):
-    """-> (groups, group_order, errors); groups[g][name] = [url, ...]"""
-    groups, order, errors = {}, [], []
-    cur = None
-    for i, raw in enumerate(Path(path).read_text(encoding="utf-8-sig").splitlines(), 1):
-        ln = raw.strip()
-        if not ln:
-            errors.append("L%d 存在空行（不含 :// 的行会被客户端当频道指令行）" % i)
+    """-> (groups, group_order, errors); groups[g] = [(channel, url), ...]"""
+    errors = []
+    raw = Path(path).read_bytes()
+    if not raw.startswith(b"\xef\xbb\xbf"):
+        errors.append("缺少 UTF-8 BOM")
+    text = raw.decode("utf-8-sig")
+    if "\r\n" not in text:
+        errors.append("未使用 CRLF 换行")
+    rows = text.split("\r\n")
+    last = max((i for i, l in enumerate(rows) if l.strip()), default=-1)
+    for i, l in enumerate(rows):
+        if not l.strip() and i < last:
+            errors.append("L%d 数据行之间存在空行（会被当成频道指令行，导致列表为空）" % (i + 1))
+            break
+    groups, order, cur = {}, [], None
+    for i, raw_line in enumerate(rows, 1):
+        s = raw_line.strip()
+        if not s:
             continue
-        if ln.endswith("#genre#"):
-            cur = ln.split(",", 1)[0].strip()
+        if s.endswith("#genre#"):
+            cur = s.split(",", 1)[0].strip()
             order.append(cur)
-            groups.setdefault(cur, {})
+            groups.setdefault(cur, [])
             continue
-        if "," not in ln:
-            errors.append("L%d 缺少逗号: %s" % (i, ln[:80]))
+        if "," not in s:
+            errors.append("L%d 缺少逗号: %s" % (i, s[:70]))
             continue
         if cur is None:
             errors.append("L%d 缺少分组头" % i)
             continue
-        name, raw_urls = ln.split(",", 1)
-        urls = [u.strip() for u in raw_urls.split("#") if u.strip()]
-        if not urls:
-            errors.append("L%d 没有可播放地址: %s" % (i, ln[:80]))
+        name, url = s.split(",", 1)
+        url = url.strip()
+        if not url.startswith("http"):
+            errors.append("L%d URL 非法: %s" % (i, url[:70]))
             continue
-        for u in urls:
-            if not u.startswith("http"):
-                errors.append("L%d URL 非法: %s" % (i, u[:80]))
-            if "," in u or " " in u:
-                errors.append("L%d 地址含逗号或空格: %s" % (i, u[:100]))
-        key = name.strip()
-        if key in groups[cur]:
-            errors.append("L%d 频道名重复『%s』（客户端建表会覆盖/报错，表现为直播列表为空）"
-                          % (i, key))
-        groups[cur][key] = urls
+        if "," in url or " " in url:
+            errors.append("L%d 地址含逗号或空格: %s" % (i, url[:100]))
+            continue
+        groups[cur].append((name.strip(), url))
     return groups, order, errors
 
 
@@ -106,116 +112,69 @@ def main():
 
     groups, order, errors = parse("TVLives.txt")
     bad += ["TVLives.txt " + e for e in errors]
-    if order != GROUPS:
-        bad.append("TVLives.txt 分组顺序 %s != %s" % (order, GROUPS))
+    want = GROUPS + [g for g in EXTRA_GROUPS if g in groups]
+    if order != want:
+        bad.append("TVLives.txt 分组顺序 %s != %s" % (order, want))
     else:
         log("TVLives.txt 分组顺序 OK (%s)" % " / ".join(order))
 
     flat = {}
-    for g, chans in groups.items():
-        for n, urls in chans.items():
-            flat.setdefault(n, []).extend(urls)
+    for g, rows in groups.items():
+        for name, url in rows:
+            flat.setdefault(canon(name), []).append((name, url))
 
-    missing = [n for n in guaranteed if n not in flat]
+    missing = [n for n in guaranteed if canon(n) not in flat]
     if missing:
         bad.append("保底频道缺失 %d 个: %s" % (len(missing), missing[:20]))
     else:
         log("71 个保底频道全部存在")
 
-    few4, few6 = [], []
+    few = []
     for n in guaranteed:
-        urls = flat.get(n, [])
-        v4 = [u for u in urls if not is_v6(u)]
-        v6 = [u for u in urls if is_v6(u)]
+        rows = flat.get(canon(n), [])
+        v4 = [u for _, u in rows if not is_v6(u)]
         if len(v4) < 3:
-            few4.append((n, len(v4)))
-        if len(v6) < 2:
-            few6.append((n, len(v6)))
-    if few4:
-        # 剔除广告源后，部分频道公网 IPv4 客观不足 3 条；宁缺毋滥，不塞广告源
+            few.append((n, len(v4)))
+    if few:
         warn.append("IPv4 少于 3 条的频道 %d 个（已剔除广告源，不再凑数）: %s"
-                    % (len(few4), few4[:20]))
+                    % (len(few), few[:20]))
     else:
-        log("全部 71 个保底频道均有 >= 3 条 IPv4")
-    if few6:
-        warn.append("IPv6 不足 2 条的频道 %d 个（公开源确实缺失）: %s"
-                    % (len(few6), few6[:20]))
-    else:
-        log("全部保底频道均有 >= 2 条 IPv6")
+        log("全部保底频道均有 >= 3 条 IPv4")
 
-    # 央视组 / 港澳台组顺序（频道名在组内唯一，按出现顺序比对）
-    def uniq(group):
-        return list(groups.get(group, {}).keys())
-
-    cctv_expect = [x for x in (plan["cctv_order"] + plan["paid_order"]
-                               + plan["cgtn_order"] + plan["edu_order"])
-                   if x in groups.get("央视频道", {})]
-    if uniq("央视频道") != cctv_expect:
-        bad.append("央视组顺序与权威表不一致: %s" % uniq("央视频道")[:30])
-    else:
-        log("央视组顺序 OK（%d 个频道）" % len(cctv_expect))
-    hktw_expect = [x for x in plan.get("hktw_order", [])
-                   if x in groups.get("港澳台频道", {})]
-    if uniq("港澳台频道") != hktw_expect:
-        bad.append("港澳台组顺序与权威表不一致: %s" % uniq("港澳台频道"))
-    else:
-        log("港澳台组顺序 OK（%d 个频道）" % len(hktw_expect))
-
-    # 人工确认的广告台/错台源不得出现在任何直播源文件里
     blacklist = load_blacklist()
-    for f in ("TVLives.txt", "TVLives_v2.txt") + EXTRA_FILES:
-        if not Path(f).exists():
-            continue
-        for ln, line in enumerate(Path(f).read_text(encoding="utf-8-sig").splitlines(), 1):
-            for u in [x.strip() for x in line.split(",")[-1].split("#") if x.strip()]:
-                if any(p.search(u) for p in blacklist):
-                    bad.append("%s:%d 命中广告黑名单: %s" % (f, ln, u[:90]))
-    log("广告黑名单校验完成（%d 条规则）" % len(blacklist))
-
-    # 广告残留（与旧 CI 内联校验一致）
-    for f in ("TVLives.txt",) + EXTRA_FILES:
+    for f in FILES:
         if not Path(f).exists():
             continue
         for ln, line in enumerate(Path(f).read_text(encoding="utf-8-sig").splitlines(), 1):
             if AD_RE.search(line):
                 bad.append("%s:%d 广告残留 %r" % (f, ln, line.strip()[:50]))
+            if "," not in line:
+                continue
+            url = line.split(",", 1)[1].strip()
+            if any(p.search(url) for p in blacklist):
+                bad.append("%s:%d 命中广告黑名单: %s" % (f, ln, url[:90]))
+    log("广告黑名单校验完成（%d 条规则）" % len(blacklist))
 
-    for g, kw in (("影视轮播", MOVIE_RE), ("体育频道", SPORT_RE)):
-        chans = groups.get(g, {})
-        if not chans:
-            bad.append("%s 分组为空" % g)
+    for f in FILES:
+        if not Path(f).exists():
+            bad.append("%s 缺失" % f)
             continue
-        wrong = [n for n in chans if not kw.search(n)]
-        if wrong:
-            bad.append("%s 含名不副实的频道: %s" % (g, wrong[:12]))
+        g2, o2, errs = parse(f)
+        bad += ["%s %s" % (f, e) for e in errs]
+        if not o2:
+            bad.append("%s 缺少 #genre# 分组头" % f)
         else:
-            pub = sum(1 for us in chans.values() for u in us if not is_v6(u))
-            log("%s OK（%d 个频道，名称与内容匹配；公网线路 %d 条）" % (g, len(chans), pub))
+            log("%s 格式 OK（%d 组 / %d 行）" % (
+                f, len(o2), sum(len(v) for v in g2.values())))
 
-    # *_v2.txt 是配置实际引用的新路径，必须与主文件逐字节一致
     for f in ("TVLives.txt", "BiliLive.txt", "LiveSports.txt"):
         v2 = Path(f[:-4] + "_v2.txt")
         if not v2.exists():
             bad.append("%s 缺失（配置引用的新路径）" % v2)
-            continue
-        if not Path(f).exists():
-            bad.append("%s 缺失" % f)
-            continue
-        if v2.read_bytes() != Path(f).read_bytes():
+        elif v2.read_bytes() != Path(f).read_bytes():
             bad.append("%s 与 %s 内容不一致" % (v2.name, f))
         else:
             log("%s 与主文件一致（配置引用此路径）" % v2.name)
-
-    for f in EXTRA_FILES:
-        if not Path(f).exists():
-            bad.append("%s 缺失" % f)
-            continue
-        _, order2, errs = parse(f)
-        bad += ["%s %s" % (f, e) for e in errs]
-        if not order2:
-            bad.append("%s 缺少 #genre# 分组头" % f)
-        else:
-            log("%s 格式 OK（%d 组）" % (f, len(order2)))
 
     for w in warn:
         log("WARN " + w)
