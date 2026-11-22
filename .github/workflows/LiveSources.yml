@@ -48,9 +48,9 @@ jobs:
       - name: Validate output format
         run: |
           python3 - <<'PY'
-          import os, re, sys, collections
+          import os, re, sys
           files = ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']
-          bad = []
+          bad, warn = [], []
           for f in files:
               if not os.path.exists(f):
                   bad.append(f + ': 文件缺失'); continue
@@ -69,12 +69,18 @@ jobs:
               print('%-18s %2d组 %4d频道 %4d线路' % (f, groups, chans, urls))
               if groups == 0 or chans == 0:
                   bad.append(f + ': 解析结果为空')
+              elif chans < 5:
+                  warn.append('%s: 频道数偏少(%d)' % (f, chans))
           # 广告台残留检查
           ad = re.compile(r'(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)', re.I)
           for f in files:
+              if not os.path.exists(f):
+                  continue
               for ln, line in enumerate(open(f, encoding='utf-8'), 1):
                   if ad.search(line):
                       bad.append('%s:%d 广告残留 %r' % (f, ln, line.strip()[:50]))
+          for w in warn:
+              print('  ⚠', w)
           if bad:
               print('\n校验失败:'); [print('  -', b) for b in bad]; sys.exit(1)
           print('\n校验通过')

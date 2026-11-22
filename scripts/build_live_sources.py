@@ -55,6 +55,9 @@ SOURCES = [
         ('https://peterhchina.github.io/iptv/IPTV-V4.m3u', UA_PLAYER),
     ]),
     ('BiliLive.txt', 'B站', [
+        # 实测 mursor.ottiptv.cc 在部分网络环境（如 GitHub runner）会整体不可达，
+        # 此时本文件探测结果会为 0 —— 由 main() 的「保留上一版」机制兜底，
+        # 不会把源文件清空。
         ('https://peterhchina.github.io/iptv/bililive.m3u', UA_PLAYER),
     ]),
 ]
@@ -206,7 +209,7 @@ def playable(url, timeout=8):
         return False
 
 
-def build_one(out_name, sources, backup, out_dir, probe_limit, workers):
+def build_one(out_name, sources, backup, out_dir, probe_limit, workers, prev_content=None):
     print('\n=== 构建 %s ===' % out_name, flush=True)
     raw = []
     for url, ua in sources:
@@ -367,13 +370,23 @@ def build_one(out_name, sources, backup, out_dir, probe_limit, workers):
                                     ','.join(it['urls'][:5])))
             lines.append('')
     path = os.path.join(out_dir, out_name)
+    d = os.path.dirname(path)
+    if d and not os.path.isdir(d):
+        os.makedirs(d, exist_ok=True)
+    if prev_content is None and os.path.exists(path):
+        try:
+            with open(path, encoding='utf-8', newline='') as f:
+                prev_content = f.read()
+        except Exception:
+            prev_content = None
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines))
     print('  => %s：%d 频道 / %d 组 / %d 线路 / %d bytes' % (
         out_name, len(order), len(groups),
         sum(len(v['urls']) for v in merged.values()), os.path.getsize(path)), flush=True)
     return {'file': out_name, 'channels': len(order), 'groups': len(groups),
-            'lines': sum(len(v['urls']) for v in merged.values())}
+            'lines': sum(len(v['urls']) for v in merged.values()),
+            'prev_content': prev_content}
 
 
 def main():
@@ -383,19 +396,47 @@ def main():
                     help='每个文件最多探测多少条（0=全部）；CI 快速通道用小值')
     ap.add_argument('--workers', type=int, default=16)
     ap.add_argument('--only', default='')
+    ap.add_argument('--min-channels', type=int, default=5,
+                    help='每个文件的最少频道数；不足则保留上一版（防止 CI 上游全挂把源清空）')
     args = ap.parse_args()
 
     summary = {}
+    failed = []
     for out_name, default_group, sources in SOURCES:
         if args.only and args.only not in out_name:
             continue
         # 保底线路只加到 TVLives（正规台），PlatformLive/BiliLive 不加
         backup = BACKUP_CCTV if out_name == 'TVLives.txt' else {}
-        summary[out_name] = build_one(out_name, sources, backup, args.out_dir,
-                                      args.probe_limit, args.workers)
+        out_path = os.path.join(args.out_dir, out_name)
+        prev = None
+        if os.path.exists(out_path):
+            try:
+                # newline='' 保留原始换行符，否则 CRLF→LF 会造成无意义的「每次都有变更」
+                with open(out_path, encoding='utf-8', newline='') as f:
+                    prev = f.read()
+            except Exception:
+                prev = None
+        res = build_one(out_name, sources, backup, args.out_dir,
+                        args.probe_limit, args.workers, prev_content=prev)
+        # 结果为空/过少 → 保留上一版，避免上游抖动把源文件清空
+        if res['channels'] < args.min_channels:
+            print('  ⚠ 仅 %d 个频道（低于下限 %d），保留上一版不动'
+                  % (res['channels'], args.min_channels), flush=True)
+            failed.append(out_name)
+            if prev:
+                with open(out_path, 'w', encoding='utf-8', newline='\n') as f:
+                    f.write(prev)
+                res = {'file': out_name, 'channels': 'kept-previous', 'kept': True}
+            else:
+                res = {'file': out_name, 'channels': 0, 'kept': False}
+        summary[out_name] = res
+
     print('\n=== 汇总 ===')
     for k, v in summary.items():
-        print('  %-18s %4d 频道  %4d 线路' % (k, v['channels'], v['lines']))
+        print('  %-18s %s' % (k, ('保留上一版' if v.get('kept') else
+                                    '%4d 频道  %4d 线路' % (v['channels'], v['lines']))))
+    if failed:
+        print('注意：%s 本次探测结果不足，已保留上一版' % ', '.join(failed))
     print(json.dumps(summary, ensure_ascii=False))
 
 
