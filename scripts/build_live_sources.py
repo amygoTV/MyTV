@@ -337,8 +337,9 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
     channels = plan['channels']
 
     # 分组名统一为参考文件 TVBoxBD0130 的写法
-    GROUP_MAP = {'央视频道': '央视', '卫视频道': '卫视', '港澳台频道': '港澳台'}
-    groups_order = ['央视', '卫视', '港澳台', '影视轮播', '体育频道']
+    GROUP_MAP = {'央视频道': '央视', '卫视频道': '卫视', '港澳台频道': '港澳台',
+                 '央视付费': '央视付费', '海外频道': '海外频道'}
+    groups_order = ['央视', '卫视', '港澳台', '央视付费', '海外频道', '影视轮播', '体育频道']
 
     # 1) 保底频道：IPv4 逐条实测；IPv6 无出口不探测，直接保留
     v4_tasks, v6_map = [], {}

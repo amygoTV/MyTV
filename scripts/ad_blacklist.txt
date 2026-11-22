@@ -27,7 +27,7 @@ m3u8\.channel\.wsrtv\.com\.cn/cms/videos/nmip-media/channellive/channel7/playlis
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=gswshd
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=gxwshd
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=hewshd
-63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=hawshd
+# 已解禁 2026-11-22: hawshd 抽帧台标=河南卫视(正确)
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=jlwshd
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=jswshd
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=jxwshd
@@ -39,7 +39,7 @@ m3u8\.channel\.wsrtv\.com\.cn/cms/videos/nmip-media/channellive/channel7/playlis
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=xzws
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=xjws
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=ynwshd
-107\.150\.60\.122/live/hawshd\.m3u8
+# 已解禁 2026-11-22: hawshd 抽帧台标=河南卫视(正确)
 107\.150\.60\.122/live/jlwshd\.m3u8
 107\.150\.60\.122/live/lnwshd\.m3u8
 107\.150\.60\.122/live/nmgws\.m3u8
@@ -54,3 +54,13 @@ bp-resource-dfl\.bestv\.cn/155/3/video\.m3u8
 198\.204\.228\.26/live/dfwshd\.m3u8
 192\.151\.150\.154/live/dfwshd\.m3u8
 63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=dfwshd
+
+# 2026-11-22 Livelist 源逐帧核验（按"台标正确即可加入"标准）：
+# 以下为台标错误/无台标测试卡，保持拉黑：
+# TVBS Asia 实为 ALL HEALTH 购物台（台标 ALL HEALTH，非 TVBS）
+38\.64\.72\.148(?::80)?/hls/modn/list/4005/playlist\.m3u8
+# 三立 epg.pw 为聚合导流广告画面，非电视台
+epg\.pw/stream/6b49e3faa38adda85abab446f032dc1
+# 广西/青海为无台标测试卡，非正常播出
+hlscdn\.liangtv\.cn/live/de0f97348eb84f62aa6b7d8cf0430770
+107\.150\.60\.122/live/qhws\.m3u8

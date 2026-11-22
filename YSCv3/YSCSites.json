@@ -591,6 +591,14 @@
       "playerType": 2,
       "ua": "okHttp/Mod-1.5.0.0",
       "timeout": 10
+    },
+    {
+        "name": "备选直播源",
+        "type": 0,
+        "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.m3u",
+        "playerType": 1,
+        "ua": "okhttp/3.15",
+        "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     }
   ],
   "rules": [

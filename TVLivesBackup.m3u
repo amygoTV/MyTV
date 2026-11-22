@@ -1,0 +1,638 @@
+#EXTM3U
+#EXTINF:-1 group-title="央视",CCTV-1
+http://204.12.221.218:8181/3m1080p/cctv1.m3u8
+http://198.204.228.26/live/cctv1hd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226895/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001022/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-2
+http://198.204.228.26/live/cctv2hd.m3u8
+http://112.27.5.218:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226893/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001220/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-3
+http://112.27.5.218:9901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226471/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001186/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-4
+http://107.150.60.122/live/cctv4hd.m3u8
+http://173.208.212.130:8181/1080p/cctv4.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226335/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001221/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-5
+http://112.27.5.218:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226469/1.m3u8?
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226894/1.m3u8?
+#EXTINF:-1 group-title="央视",CCTV-6
+http://198.204.228.26/live/cctv6hd.m3u8
+http://112.27.5.218:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226468/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001188/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-7
+http://107.150.60.122/live/cctv7hd.m3u8
+http://112.27.5.218:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226946/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001236/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-8
+http://107.150.60.122/live/cctv8hd.m3u8
+http://198.204.228.26/live/cctv8hd.m3u8
+http://192.151.150.154/live/cctv8hd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226485/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001189/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-9
+http://107.150.60.122/live/cctv9hd.m3u8
+http://192.151.150.154/live/cctv9hd.m3u8
+https://xykt-fix.github.io/Y77.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226944/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001237/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-10
+http://112.27.5.218:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
+http://204.12.221.218:8181/3m1080p/cctv10.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226937/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001238/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-11
+http://107.150.60.122/live/cctv11hd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226334/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001309/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-12
+http://107.150.60.122/live/cctv12hd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226942/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001239/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-13
+http://120.76.248.139/live/bfgd/4200000067.m3u8
+http://ali-m-l.cztv.com/channels/lantian/channel21/1080p.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226316/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001328/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-14
+http://198.204.228.26/live/cctv14hd.m3u8
+http://204.12.221.218:8181/3m1080p/cctv14.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226947/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001240/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-15
+http://198.204.228.26/live/cctv15hd.m3u8
+http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226333/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001338/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-16
+http://107.150.60.122/live/cctv16hd.m3u8
+http://198.204.228.26/live/cctv16hd.m3u8
+http://173.208.212.130:8181/720p/cctv16.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227002/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001248/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-17
+http://107.150.60.122/live/cctv17hd.m3u8
+http://198.204.228.26/live/cctv17hd.m3u8
+http://173.208.212.130:8181/720p/cctv17.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226318/1.m3u8?
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001241/index.m3u8
+#EXTINF:-1 group-title="央视",CCTV-5+
+http://120.76.248.139/live/bfgd/4200000246.m3u8
+http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225761/1.m3u8
+http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228277/index.m3u8
+#EXTINF:-1 group-title="央视",CGTN
+http://english-livetx.cgtn.com/hls/yypdyyctzb_hd.m3u8
+https://0472.org/hls/cgtn.m3u8
+https://english-livebkali.cgtn.com/live/encgtn.m3u8
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001058/index.m3u8
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/CGTN_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+#EXTINF:-1 group-title="央视",CGTN纪录
+https://0472.org/hls/cgtnd.m3u8
+http://39.134.66.66/PLTV/88888888/224/3221225509/index.m3u8
+http://103.108.67.142:909/猎狼TV吧/PLTV/ysp1.php?id=cgtnjl
+http://[2409:8087:1a09:df::401d]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225602/1.m3u8?icpid=88888888&from=5&hms_devid=980&online=1720054946&vqe=3
+http://[2409:8087:5e01:34::20]:6610/ZTE_CMS/00000001000000060000000000000528/index.m3u8?IAS
+#EXTINF:-1 group-title="央视",CGTN俄语
+https://0472.org/hls/cgtne.m3u8
+https://liveru.cgtn.com/1000r/prog_index.m3u8
+http://58.252.12.164:8000/udp/239.253.43.201:5146
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/ey_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/ey_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2
+#EXTINF:-1 group-title="央视",CGTN法语
+https://0472.org/hls/cgtnf.m3u8
+http://espanol-liveali.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd.m3u8
+https://livefr.cgtn.com/1000f/prog_index.m3u8
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/fy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/fy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2
+#EXTINF:-1 group-title="央视",CGTN西语
+https://0472.org/hls/cgtnx.m3u8
+https://livees.cgtn.com/1000e/prog_index.m3u8
+http://103.108.67.142:909/猎狼TV吧/PLTV/ysp1.php?id=cgtne
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/xbyy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/xbyy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2
+#EXTINF:-1 group-title="央视",CGTN阿语
+https://0472.org/hls/cgtna.m3u8
+https://livear.cgtn.com/1000a/prog_index.m3u8
+http://103.108.67.142:909/猎狼TV吧/PLTV/ysp1.php?id=cgtna
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002826/index.m3u8?virtualDomain=yinhe.live_hls.zte.com
+http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002826/index.m3u8?virtualDomain=yinhe.live_hls.zte.com&bak=2
+#EXTINF:-1 group-title="央视",中国教育1台
+http://198.204.228.26/live/cetv1hd.m3u8
+http://58.252.12.164:8000/udp/239.77.0.200:5146
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?&bak=2
+#EXTINF:-1 group-title="央视",中国教育2台
+http://107.150.60.122/live/cetv2.m3u8
+http://107.150.60.122/live/cetv2.m3u8?bak=2
+http://107.150.60.122/live/cetv2.m3u8?bak=3
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND&bak=2
+#EXTINF:-1 group-title="央视",中国教育3台
+http://107.150.60.122/live/cetv3.m3u8
+http://198.204.228.26/live/cetv3.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND&bak=2
+#EXTINF:-1 group-title="央视",中国教育4台
+http://107.150.60.122/live/cetv4.m3u8
+http://107.150.60.122/live/cetv4.m3u8?bak=2
+http://107.150.60.122/live/cetv4.m3u8?bak=3
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND&bak=2
+#EXTINF:-1 group-title="央视",CETV-1
+http://198.204.228.26/live/cetv1hd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cetv1hd
+#EXTINF:-1 group-title="卫视",湖南卫视
+https://txmov2.a.kwimgs.com/bs3/video-hls/5199687338554291078_hlsb.m3u8
+http://74.91.26.218:82/live/hnwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hnwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226509/1.m3u8?zoneoffset=480&servicetype=1&icpid=&limitflux=-1&limitdur=-1&tenantId=8601&accountinfo=%7E%7EV2.0%7EIGb_ib7rnBX9_sANRKq9sg%7EpK8OKM5JoJWWbLRyLfPcUMkwWZ90MzSI9S9PDltJsYzd0ZGcS3Tkh7syciNKJa-w60mDOdwtDyoNwCx9aRgzHNH9AUREV_qvNJtXHRPzYw0%7EExtInfo9bj61dxzlMXrsixrqcFYPg%3D%3D%3A20221022013542%2C915973%2C119.123.71.209%2C20221022013542%2C10000100000000050000000003873458%2C915973%2C-1%2C0%2C1%2C%2C%2C2%2C%2C%2C%2C2%2C%2C10000100000000060000000007253514_0%2CEND&GuardEncType=2
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001026/index.m3u8
+#EXTINF:-1 group-title="卫视",浙江卫视
+http://107.150.60.122/live/zjwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=zjwshd
+http://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226899/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ETYfTgTra_pUx2cPrgZ_BDw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001023/index.m3u8
+#EXTINF:-1 group-title="卫视",江苏卫视
+http://204.12.221.218:8181/3m1080p/jsws.m3u8
+http://107.150.60.122/live/jswshd.m3u8
+http://39.134.24.166/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226200/index.m3u8?
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226897/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0BmO6uHF7WFoTed__Xr3NQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001033/index.m3u8
+#EXTINF:-1 group-title="卫视",东方卫视
+http://107.150.60.122/live/dfwshd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226898/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0uh4lyjjBCCN7TCq21vSIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001013/index.m3u8
+#EXTINF:-1 group-title="卫视",北京卫视
+http://107.150.60.122/live/bjwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=bjwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226900/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EcYPi33WFyhvd6SjmqUKhJg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001029/index.m3u8
+#EXTINF:-1 group-title="卫视",安徽卫视
+http://107.150.60.122/live/ahwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ahwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226943/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0QmKQ_slRCwvVVUUfxPVbw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001037/index.m3u8
+#EXTINF:-1 group-title="卫视",山东卫视
+http://107.150.60.122/live/sdwshd.m3u8
+http://198.204.228.26/live/sdwshd.m3u8
+http://204.12.221.218:8181/3m1080p/sdws.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226957/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjW26v5VaHGy1jQuIA-4EbA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001028/index.m3u8
+#EXTINF:-1 group-title="卫视",广东卫视
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gdwshd
+http://111.59.63.32:9901/tsfile/live/1032_1.m3u8
+http://221.213.43.82:8888/newlive/live/hls/21/live.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226961/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E2MGyx659D_aaDPP0qt3NgA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001032/index.m3u8
+#EXTINF:-1 group-title="卫视",深圳卫视
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=szwshd
+http://39.134.24.166/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226205/index.m3u8?
+http://221.213.43.82:8888/newlive/live/hls/28/live.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226959/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGrVNEZREjuNVKiTJo2mtwg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001030/index.m3u8
+#EXTINF:-1 group-title="卫视",河南卫视
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hawshd
+http://bjlive.u.domybox.com:91/live/HeNWS-1500k/live.m3u8
+http://api3.52tb.xyz/info?id=31&token=20230227aesvnb
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001222/index.m3u8
+http://[2409:8087:2001:20:2800:0:df6e:eb17]/wh7f454c46tw1784575403_-1712002709/ott.mobaibox.com/PLTV/3/224/3221228221/index.m3u8?icpid=3&RTS=1669700385&from=40&popid=40&hms_devid=2114&prioritypopid=40&vqe=3
+#EXTINF:-1 group-title="卫视",天津卫视
+http://107.150.60.122/live/tjwshd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226954/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Eaf3wyULP1h575eM_4ByMDg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001036/index.m3u8
+#EXTINF:-1 group-title="卫视",湖北卫视
+http://107.150.60.122/live/hbwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hbwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226952/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EREB40lnZnCEwjRy7LZuhIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001027/index.m3u8
+#EXTINF:-1 group-title="卫视",江西卫视
+http://112.27.5.218:9901/tsfile/live/faacts/0138_1.m3u8?key=txiptv&playlive=1&authid=0
+http://221.213.43.82:8888/newlive/live/hls/46/live.m3u8
+http://111.59.63.32:9901/tsfile/live/1042_1.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226956/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Ei6ZIpVizXlewg-YfGvH8dA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001034/index.m3u8
+#EXTINF:-1 group-title="卫视",四川卫视
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=scwshd
+http://204.12.221.218:8181/3m1080p/scws.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226995/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EBQiz3wrGrpG0CUSRIJ-7Jg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001130/index.m3u8
+#EXTINF:-1 group-title="卫视",辽宁卫视
+http://204.12.221.218:8181/3m1080p/lnws.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=lnwshd
+http://221.213.43.82:8888/newlive/live/hls/43/live.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226966/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E6qJH8Fd-zgCGx3P-Ce86cA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001035/index.m3u8
+#EXTINF:-1 group-title="卫视",贵州卫视
+http://107.150.60.122/live/gzwshd.m3u8
+http://204.12.221.218:8181/3m1080p/gzws.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gzwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227012/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EnqBF03rFwPucF8ODtWxLQQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001184/index.m3u8
+#EXTINF:-1 group-title="卫视",黑龙江卫视
+http://107.150.60.122/live/hljwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hljwshd
+https://idclive.hljtv.com:4430/live/hljws_own.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226965/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7UiKL56-L86ihmTWaZ6csw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001031/index.m3u8
+#EXTINF:-1 group-title="卫视",吉林卫视
+http://api3.52tb.xyz/info?id=40&token=20230227aesvnb
+http://111.59.63.32:9901/tsfile/live/1043_1.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227015/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EW5-3AVdwD5KlUpuA4mz7Cg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001225/index.m3u8
+#EXTINF:-1 group-title="卫视",陕西卫视
+http://107.150.60.122/live/snwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=snwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226999/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EsGLKaSqf0wDZMbAjeQtfyw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001067/index.m3u8
+#EXTINF:-1 group-title="卫视",重庆卫视
+http://107.150.60.122/live/cqwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cqwshd
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226963/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjTXsJprEx2nE38tdvu5lhA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001129/index.m3u8
+#EXTINF:-1 group-title="卫视",东南卫视
+http://107.150.60.122/live/dnwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dnwshd
+http://live.zohi.tv/video/s10001-fztv-3/index.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226991/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EQ6F5Mjgs0tJyEArWFL3vQA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001201/index.m3u8
+#EXTINF:-1 group-title="卫视",广西卫视
+http://107.150.60.122/live/gxwshd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227010/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EkAhb-89sxdm9fz6-heXCuw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001224/index.m3u8
+#EXTINF:-1 group-title="卫视",云南卫视
+http://tvlive.ynradio.com/live/yunnanweishi/chunks.m3u8
+http://221.213.43.82:8888/newlive/live/hls/27/live.m3u8
+http://tvlive.ynradio.com/live/yunnanweishi/playlist.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227028/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGfQPqRNVeBjTMsZ48qu0SA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001223/index.m3u8
+#EXTINF:-1 group-title="卫视",山西卫视
+http://107.150.60.122/live/sxwshd.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227016/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESb5Qr3NTpE2ZugIroKoyTw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001070/index.m3u8
+#EXTINF:-1 group-title="卫视",河北卫视
+http://event.pull.hebtv.com/jishi/weishi_tingyun.m3u8
+https://event.pull.hebtv.com/live/live101.m3u8
+http://221.213.43.82:8888/newlive/live/hls/45/live.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227014/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErSGjhI3DMaaAASPrbQJYTg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001229/index.m3u8
+#EXTINF:-1 group-title="卫视",海南卫视
+http://120.76.248.139/live/bfgd/4200000473.m3u8
+http://125.93.74.27:9002/tsfile/live/0109_1.m3u8?key=txiptv&playlive=1&authid=0
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227029/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EEuBMjt2kLMD8fAO7QYER7Q%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001183/index.m3u8
+#EXTINF:-1 group-title="卫视",内蒙古卫视
+http://play1-qk.nmtv.cn/live/1769652018126032.m3u8
+http://221.213.43.82:8888/newlive/live/hls/49/live.m3u8
+http://111.59.63.32:9901/tsfile/live/1038_1.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227018/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErN_hoRDwApMKnJqiNHvn9w%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001068/index.m3u8
+#EXTINF:-1 group-title="卫视",新疆卫视
+http://107.150.60.122/live/xjws.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227011/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ExAUu61iVvo_xYbANWJhgXw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001065/index.m3u8
+#EXTINF:-1 group-title="卫视",宁夏卫视
+http://107.150.60.122/live/nxws.m3u8
+http://198.204.228.26/live/nxws.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227003/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESco1zinvdUYzleEkXYhIvA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001074/index.m3u8
+#EXTINF:-1 group-title="卫视",甘肃卫视
+http://221.213.43.82:8888/newlive/live/hls/36/live.m3u8
+http://58.252.12.164:8000/udp/239.77.0.189:5146
+http://39.134.66.66/PLTV/88888888/224/3221225584/index.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227020/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Err-CLugPnTcUinEM8JeySg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001298/index.m3u8
+#EXTINF:-1 group-title="卫视",青海卫视
+http://stream.qhbtv.com/qhws/sd/live.m3u8
+http://stream.qhbtv.com/qhws/sd/live.m3u8?_upt=f35a89681647856030
+http://stream.qhbtv.com/qhws/sd/live.m3u8?_upt=63cf437e1591689484
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227017/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EacviHy_ucMT27Ymf2iLtZA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001450/index.m3u8
+#EXTINF:-1 group-title="卫视",西藏卫视
+http://107.150.60.122/live/xzws.m3u8
+http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227033/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EdeTB7OZ9G_VNJk5C3t96fQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
+http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001072/index.m3u8
+#EXTINF:-1 group-title="卫视",厦门卫视
+http://198.204.228.26/live/xmws.m3u8
+#EXTINF:-1 group-title="卫视",安多卫视
+https://liveout.xntv.tv/a65jur/96iln2.m3u8
+#EXTINF:-1 group-title="卫视",延边卫视
+https://srs.iyb983.cn/video/CYS/index.m3u8
+https://srs.iyb983.cn:443/video/CYS/index.m3u8
+#EXTINF:-1 group-title="港澳台",凤凰香港
+http://162.19.247.76:22222/live/fenghuangxianggang/index.m3u8
+http://play-live.ifeng.com/live/06OLEGEGM4G.m3u8
+http://aktv.top/AKTV/live/aktv/null-5/AKTV.m3u8
+http://[2409:8087:2001:20:2800:0:df6e:eb1d]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8
+http://[2409:8087:2001:20:2800:0:df6e:eb1d]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8?bak=2
+#EXTINF:-1 group-title="港澳台",凤凰卫视
+http://162.19.247.76:22222/live/fenghuangweishi/index.m3u8
+http://111.59.189.40:8445/tsfile/live/1020_1.m3u8
+http://59.125.101.122:8080/live/phoenix7188.m3u8
+http://[2409:8087:2001:20:2800:0:df6e:eb24]:80/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/test1_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+#EXTINF:-1 group-title="港澳台",凤凰资讯
+http://43.152.224.209/qctv.fengshows.cn/live/0701pin72.flv
+http://[2409:8087:2001:20:2800:0:df6e:eb27]:80/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8
+http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/test2_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1
+#EXTINF:-1 group-title="港澳台",星空卫视
+http://120.84.96.55:808/hls/79/index.m3u8
+http://218.202.220.2:5000/nn_live.ts?id=STARTV
+http://xstartx.com:4000/udp/239.93.0.156:2193
+#EXTINF:-1 group-title="港澳台",东森新闻
+https://d2jc41c1shgcol.cloudfront.net/live/EBCNews/playlist.m3u8
+#EXTINF:-1 group-title="港澳台",TVBS欢乐台
+http://cloud-play.hhalloy.com/live/5e81e3b3e2d8b887db0bc2976558c7ea.m3u8
+http://198.16.64.10:8278/tvbshuanle_twn/playlist.m3u8?tid=MA9A4111409641114096&ct=19225&tsum=600f3056bba6413dec3155efd19e2d20
+http://104.192.80.69/api.auete.com/ggg.m3u8.php?id=96
+#EXTINF:-1 group-title="港澳台",Channel-V
+http://cloud-play.hhalloy.com/live/c8ade260941e368acfdb110a04811b3e.m3u8
+http://162.19.247.76:22222/live/channelv/index.m3u8
+http://xstartx.com:4000/udp/239.93.0.157:2194
+#EXTINF:-1 group-title="港澳台",华视
+http://cloud-play.hhalloy.com/live/0bdf94d7f68fe3ece32048144cbf9a23.m3u8
+http://162.19.247.76:22222/live/huashi/index.m3u8
+http://104.192.80.69/api.auete.com/ggg.m3u8.php?id=86
+#EXTINF:-1 group-title="港澳台",三立都会台
+http://cloud-play.hhalloy.com/live/4abe46a5faf4865e251ac981287a6e20.m3u8
+http://162.19.247.76:22222/live/uch6/index.m3u8
+http://cloud-play.hhalloy.com/live/4abe46a5faf4865e251ac981287a6e20.m3u8?bak=3
+#EXTINF:-1 group-title="港澳台",中天综合台
+http://cloud-play.hhalloy.com/live/64ce4daa355bd6784904e72fabb7fa3e.m3u8
+http://pull-l3-cny.douyincdn.com/live/5f26752efeee9e0c53cf6b530640ce60.m3u8
+http://23.237.10.66:16372
+#EXTINF:-1 group-title="港澳台",中天娱乐台
+http://cloud-play.hhalloy.com/live/25ea449d554a16ec584e82d039065e5f.m3u8
+http://pull-l3-cny.douyincdn.com/live/37e4951f0608d79a74ebed4ab2da462a.m3u8
+http://162.19.247.76:22222/live/ztyl/index.m3u8
+#EXTINF:-1 group-title="港澳台",Dali TV (大立電視台)
+http://www.dalitv.com.tw:4568/live/dali/index.m3u8
+#EXTINF:-1 group-title="港澳台",东森超视
+http://38.64.72.148:80/hls/modn/list/2013/chunklist1.m3u8
+#EXTINF:-1 group-title="港澳台",凤凰中文
+http://43.152.224.209/qctv.fengshows.cn/live/0701pcc72.flv
+http://31.43.191.125:8080/restream/restream/34629
+#EXTINF:-1 group-title="央视付费",兵器科技
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gfjs
+#EXTINF:-1 group-title="央视付费",央视台球
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ystq
+#EXTINF:-1 group-title="央视付费",女性时尚
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nxss
+#EXTINF:-1 group-title="央视付费",怀旧剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hjjc
+#EXTINF:-1 group-title="央视付费",文化精品
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ysjp
+#EXTINF:-1 group-title="央视付费",电视指南
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dszn
+#EXTINF:-1 group-title="央视付费",第一剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dyjc
+#EXTINF:-1 group-title="央视付费",风云剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyjc
+#EXTINF:-1 group-title="央视付费",风云音乐
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyyy
+#EXTINF:-1 group-title="海外频道",Beautiful Life TV
+https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8
+#EXTINF:-1 group-title="海外频道",CGNTV Chinese
+https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8
+#EXTINF:-1 group-title="海外频道",Taiwan Indigenous TV
+https://streamipcfapp.akamaized.net/live/_definst_/live_720/key_b1500.m3u8
+#EXTINF:-1 group-title="影视轮播",奥斯曼影院
+https://mursor.ottiptv.cc/huya/30509122
+#EXTINF:-1 group-title="影视轮播",美娜影视
+https://mursor.ottiptv.cc/huya/31388739
+#EXTINF:-1 group-title="影视轮播",小雪影视
+https://mursor.ottiptv.cc/huya/31416048
+#EXTINF:-1 group-title="影视轮播",海湾电影
+https://mursor.ottiptv.cc/huya/31371694
+#EXTINF:-1 group-title="影视轮播",科幻梦工场
+https://mursor.ottiptv.cc/douyu/9608874
+#EXTINF:-1 group-title="影视轮播",亮哥讲电影
+https://mursor.ottiptv.cc/huya/16144175
+#EXTINF:-1 group-title="影视轮播",惊奇小剧场
+https://mursor.ottiptv.cc/huya/30373013
+#EXTINF:-1 group-title="影视轮播",喜剧电影放映厅
+https://mursor.ottiptv.cc/huya/11602031
+#EXTINF:-1 group-title="影视轮播",乔我说动漫频道
+https://mursor.ottiptv.cc/huya/17941367
+#EXTINF:-1 group-title="影视轮播",经典日本动漫速看
+https://mursor.ottiptv.cc/huya/29982686
+#EXTINF:-1 group-title="影视轮播",奇幻电影放映厅
+https://mursor.ottiptv.cc/huya/26355847
+#EXTINF:-1 group-title="影视轮播",小川侃电影
+https://mursor.ottiptv.cc/huya/15870999
+#EXTINF:-1 group-title="影视轮播",动画电影放映厅
+https://mursor.ottiptv.cc/huya/11352878
+#EXTINF:-1 group-title="影视轮播",华视-动作大片
+https://mursor.ottiptv.cc/huya/23352535
+#EXTINF:-1 group-title="影视轮播",科幻是我的神
+https://mursor.ottiptv.cc/huya/30080257
+#EXTINF:-1 group-title="影视轮播",越哥说电影2
+https://mursor.ottiptv.cc/huya/29982680
+#EXTINF:-1 group-title="影视轮播",电影探长官方
+https://mursor.ottiptv.cc/huya/30277705
+#EXTINF:-1 group-title="影视轮播",大聪明和魏乐乐影院
+https://mursor.ottiptv.cc/huya/23304691
+#EXTINF:-1 group-title="影视轮播",吾聊电影
+https://mursor.ottiptv.cc/huya/16424416
+#EXTINF:-1 group-title="影视轮播",吾聊电影2
+https://mursor.ottiptv.cc/huya/29982684
+#EXTINF:-1 group-title="影视轮播",楚门聊电影
+https://mursor.ottiptv.cc/huya/16507906
+#EXTINF:-1 group-title="影视轮播",华视-警匪大片
+https://mursor.ottiptv.cc/huya/23358421
+#EXTINF:-1 group-title="影视轮播",小当家动漫社
+https://mursor.ottiptv.cc/huya/24257300
+#EXTINF:-1 group-title="影视轮播",涵哥评电影
+https://mursor.ottiptv.cc/huya/16865726
+#EXTINF:-1 group-title="影视轮播",电影旅者
+https://mursor.ottiptv.cc/huya/20969136
+#EXTINF:-1 group-title="影视轮播",只爱评书
+https://mursor.ottiptv.cc/huya/20985827
+#EXTINF:-1 group-title="影视轮播",牛叔说电影
+https://mursor.ottiptv.cc/douyu/2758565
+#EXTINF:-1 group-title="影视轮播",米尼影院
+https://mursor.ottiptv.cc/douyu/7642724
+#EXTINF:-1 group-title="影视轮播",发条张的电影最TOP
+https://mursor.ottiptv.cc/douyu/2164691
+#EXTINF:-1 group-title="影视轮播",3说电影
+https://mursor.ottiptv.cc/douyu/9643264
+#EXTINF:-1 group-title="影视轮播",电影迷小雅
+https://mursor.ottiptv.cc/douyu/9639225
+#EXTINF:-1 group-title="影视轮播",特辑电影院
+https://mursor.ottiptv.cc/douyu/3637778
+#EXTINF:-1 group-title="影视轮播",谁语说电影
+https://mursor.ottiptv.cc/douyu/8705754
+#EXTINF:-1 group-title="影视轮播",铁血影视汇
+https://mursor.ottiptv.cc/douyu/9649701
+#EXTINF:-1 group-title="影视轮播",纪录片之家字幕组
+https://mursor.ottiptv.cc/douyu/8834003
+#EXTINF:-1 group-title="影视轮播",九叔说电影v
+https://mursor.ottiptv.cc/douyu/9348282
+#EXTINF:-1 group-title="影视轮播",松轩说电影
+https://mursor.ottiptv.cc/douyu/1524969
+#EXTINF:-1 group-title="影视轮播",逗米说电影
+https://mursor.ottiptv.cc/douyu/421222
+#EXTINF:-1 group-title="影视轮播",喜剧电影笑不停
+https://mursor.ottiptv.cc/douyu/10298856
+#EXTINF:-1 group-title="影视轮播",俗哥看电影
+https://mursor.ottiptv.cc/douyu/2161818
+#EXTINF:-1 group-title="影视轮播",楚哥说电影
+https://mursor.ottiptv.cc/douyu/9375743
+#EXTINF:-1 group-title="影视轮播",独立鱼电影
+https://mursor.ottiptv.cc/douyu/2413555
+#EXTINF:-1 group-title="影视轮播",火龙果讲电影本人
+https://mursor.ottiptv.cc/douyu/2039501
+#EXTINF:-1 group-title="影视轮播",电影幕后喵
+https://mursor.ottiptv.cc/douyu/8884074
+#EXTINF:-1 group-title="影视轮播",小超讲电影
+https://mursor.ottiptv.cc/douyu/3432645
+#EXTINF:-1 group-title="影视轮播",维立方电影
+https://mursor.ottiptv.cc/douyu/8706393
+#EXTINF:-1 group-title="影视轮播",少年看电影
+https://mursor.ottiptv.cc/douyu/8762120
+#EXTINF:-1 group-title="影视轮播",Michael说大片
+https://mursor.ottiptv.cc/douyu/8841881
+#EXTINF:-1 group-title="影视轮播",享看电影
+https://mursor.ottiptv.cc/douyu/8974130
+#EXTINF:-1 group-title="影视轮播",汪哥说电影
+https://mursor.ottiptv.cc/douyu/9312685
+#EXTINF:-1 group-title="影视轮播",电影七十二变
+https://mursor.ottiptv.cc/douyu/9323164
+#EXTINF:-1 group-title="影视轮播",动画魂
+https://mursor.ottiptv.cc/douyu/9393242
+#EXTINF:-1 group-title="影视轮播",晓晓说电影
+https://mursor.ottiptv.cc/douyu/9430717
+#EXTINF:-1 group-title="影视轮播",大壮撞电影
+https://mursor.ottiptv.cc/douyu/9437349
+#EXTINF:-1 group-title="影视轮播",电影吐槽汇
+https://mursor.ottiptv.cc/douyu/9447668
+#EXTINF:-1 group-title="影视轮播",微笑影视解说
+https://mursor.ottiptv.cc/douyu/9476790
+#EXTINF:-1 group-title="影视轮播",爱星影视
+https://mursor.ottiptv.cc/douyu/9476806
+#EXTINF:-1 group-title="影视轮播",周墨看电影
+https://mursor.ottiptv.cc/douyu/9505584
+#EXTINF:-1 group-title="影视轮播",每日好电影V
+https://mursor.ottiptv.cc/douyu/9533302
+#EXTINF:-1 group-title="影视轮播",鑫酱盘动漫
+https://mursor.ottiptv.cc/douyu/9547575
+#EXTINF:-1 group-title="影视轮播",雨忆动漫
+https://mursor.ottiptv.cc/douyu/9568700
+#EXTINF:-1 group-title="影视轮播",电影笔记
+https://mursor.ottiptv.cc/douyu/9636034
+#EXTINF:-1 group-title="影视轮播",梓帆说电影
+https://mursor.ottiptv.cc/douyu/9769563
+#EXTINF:-1 group-title="影视轮播",二胖影视
+https://mursor.ottiptv.cc/douyu/10064260
+#EXTINF:-1 group-title="影视轮播",立秋动画
+https://mursor.ottiptv.cc/douyu/10351891
+#EXTINF:-1 group-title="影视轮播",阿苏电影
+https://mursor.ottiptv.cc/douyu/9037784
+#EXTINF:-1 group-title="影视轮播",说说电影故事
+https://mursor.ottiptv.cc/douyu/9444627
+#EXTINF:-1 group-title="影视轮播",真香动漫解说
+https://mursor.ottiptv.cc/douyu/9391292
+#EXTINF:-1 group-title="影视轮播",三七电影V
+https://mursor.ottiptv.cc/douyu/9457792
+#EXTINF:-1 group-title="影视轮播",奇怪电影
+https://mursor.ottiptv.cc/douyu/9440966
+#EXTINF:-1 group-title="影视轮播",崽崽撩电影
+https://mursor.ottiptv.cc/douyu/8325511
+#EXTINF:-1 group-title="影视轮播",草泥泥影院
+https://mursor.ottiptv.cc/douyu/9091049
+#EXTINF:-1 group-title="影视轮播",猫叔说电影
+https://mursor.ottiptv.cc/douyu/9820039
+#EXTINF:-1 group-title="影视轮播",天堂电影1895
+https://mursor.ottiptv.cc/douyu/9573592
+#EXTINF:-1 group-title="影视轮播",八月看大片
+https://mursor.ottiptv.cc/douyu/8816671
+#EXTINF:-1 group-title="影视轮播",不思异剧场
+https://mursor.ottiptv.cc/douyu/9297412
+#EXTINF:-1 group-title="影视轮播",有部电影儿
+https://mursor.ottiptv.cc/douyu/9736479
+#EXTINF:-1 group-title="影视轮播",动漫推荐i
+https://mursor.ottiptv.cc/douyu/5187099
+#EXTINF:-1 group-title="影视轮播",精武英雄-李连杰主演经典动作片
+https://mursor.ottiptv.cc/yy/1382736873
+#EXTINF:-1 group-title="影视轮播",夏洛特烦恼-国内电影-喜剧
+https://mursor.ottiptv.cc/yy/1354936201
+#EXTINF:-1 group-title="影视轮播",中国味道第4季-美食纪录片
+https://mursor.ottiptv.cc/yy/1382736845
+#EXTINF:-1 group-title="影视轮播",高分科幻动作片
+https://mursor.ottiptv.cc/yy/1382749948
+#EXTINF:-1 group-title="影视轮播",侏罗纪世界-国外科幻大片合集
+https://mursor.ottiptv.cc/yy/1382736851
+#EXTINF:-1 group-title="影视轮播",爆笑电影！王牌大贱谍2-3
+https://mursor.ottiptv.cc/yy/1382735556
+#EXTINF:-1 group-title="影视轮播",电影黑豹
+https://mursor.ottiptv.cc/yy/1382736816
+#EXTINF:-1 group-title="影视轮播",一代经典电影，我很快乐
+https://mursor.ottiptv.cc/yy/1354932420
+#EXTINF:-1 group-title="影视轮播",高分经典动作片
+https://mursor.ottiptv.cc/yy/1382749944
+#EXTINF:-1 group-title="影视轮播",电影百团大战
+https://mursor.ottiptv.cc/yy/1382736871
+#EXTINF:-1 group-title="影视轮播",燃爆动作片
+https://mursor.ottiptv.cc/yy/1382736801
+#EXTINF:-1 group-title="影视轮播",碟中谍系列电影
+https://mursor.ottiptv.cc/yy/1382736836
+#EXTINF:-1 group-title="影视轮播",国外高分大片
+https://mursor.ottiptv.cc/yy/1382736867
+#EXTINF:-1 group-title="影视轮播",国产动作电影
+https://mursor.ottiptv.cc/yy/1382736858
+#EXTINF:-1 group-title="影视轮播",香港院线大片-最新
+https://mursor.ottiptv.cc/yy/1354936242
+#EXTINF:-1 group-title="影视轮播",国产电影-就是闹着玩的
+https://mursor.ottiptv.cc/yy/1354931503
+#EXTINF:-1 group-title="影视轮播",精彩动作电影
+https://mursor.ottiptv.cc/yy/1382736823
+#EXTINF:-1 group-title="影视轮播",科幻片：来看神奇的地球
+https://mursor.ottiptv.cc/yy/1354930897
+#EXTINF:-1 group-title="影视轮播",外国科幻大片
+https://mursor.ottiptv.cc/yy/1382747628
+#EXTINF:-1 group-title="影视轮播",进来陪你看动漫
+https://mursor.ottiptv.cc/yy/1352866135
+#EXTINF:-1 group-title="影视轮播",动漫
+https://mursor.ottiptv.cc/yy/1354143938
+#EXTINF:-1 group-title="影视轮播",8090.电影一哥
+https://mursor.ottiptv.cc/yy/29197808
+#EXTINF:-1 group-title="影视轮播",国漫动漫
+https://mursor.ottiptv.cc/yy/1354768828
+#EXTINF:-1 group-title="影视轮播",1930年代经典电影
+https://mursor.ottiptv.cc/yy/1356363815
+#EXTINF:-1 group-title="影视轮播",这里是对口相声
+https://mursor.ottiptv.cc/bilibili/30199366
+#EXTINF:-1 group-title="体育频道",排球少年砰砰砰
+https://mursor.ottiptv.cc/huya/30080167
+#EXTINF:-1 group-title="体育频道",最篮球
+https://mursor.ottiptv.cc/huya/29982651
+#EXTINF:-1 group-title="体育频道",哈拉少足球
+https://mursor.ottiptv.cc/huya/29982619
+#EXTINF:-1 group-title="体育频道",李径看奥运
+https://mursor.ottiptv.cc/huya/30080153
+#EXTINF:-1 group-title="体育频道",亚运体育7号台
+https://mursor.ottiptv.cc/huya/136154
+#EXTINF:-1 group-title="体育频道",大头猴足球
+https://mursor.ottiptv.cc/huya/29982605
+#EXTINF:-1 group-title="体育频道",篮球过人技巧
+https://mursor.ottiptv.cc/douyu/9406897
+#EXTINF:-1 group-title="体育频道",篮球之家老李
+https://mursor.ottiptv.cc/douyu/9170147
+#EXTINF:-1 group-title="体育频道",篮球小人物
+https://mursor.ottiptv.cc/douyu/9184257
+#EXTINF:-1 group-title="体育频道",台球帝
+https://mursor.ottiptv.cc/douyu/10078171
+#EXTINF:-1 group-title="体育频道",只关于篮球的只老师
+https://mursor.ottiptv.cc/douyu/9367541
+#EXTINF:-1 group-title="体育频道",2026年天津市青少年游泳U系列比赛
+https://mursor.ottiptv.cc/bilibili/24441606
+#EXTINF:-1 group-title="体育频道",2026王者之志羽毛球赛广州站
+https://mursor.ottiptv.cc/bilibili/12028025
