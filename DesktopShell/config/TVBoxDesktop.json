@@ -633,11 +633,6 @@
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     },
     {
-      "name": "🎵抖音/平台直播🎵",
-      "type": 0,
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/PlatformLive.txt"
-    },
-    {
       "name": "📺B站直播适配📺",
       "type": 0,
       "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/BiliLive.txt"

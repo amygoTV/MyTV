@@ -553,13 +553,6 @@
       "logo": "https://epg.112114.xyz/logo/{name}.png"
     },
     {
-      "name": "🎵抖音/平台直播🎵",
-      "type": 0,
-      "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/PlatformLive.txt",
-      "playerType": 1,
-      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-    },
-    {
       "name": "📺B站直播适配📺",
       "type": 0,
       "url": "https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/BiliLive.txt",

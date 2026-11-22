@@ -1,17 +1,18 @@
 name: Live Sources Rebuild
 
-# 直播源自动重建：拉取上游 → 过滤广告/错台 → 逐条实测可播性 → 合并同名多线路 → 提交
+# 直播源自动重建（每天凌晨 02:17 北京时间跑一次）
+# 流程：权威频道表保底(CCTV1-17/31省卫视+深圳/教育台) + 上游补充 → 过滤广告/错台
+#       → 逐条实测 IPv4 可播性 → IPv6 备用保留 → 3 IPv4 + 2 IPv6 组装 → 校验 → 提交
 #
-# 为什么需要自动化（实测结论）：
-#   1. 公开直播源随时失效/域名被拍卖，必须定期重新探测
-#   2. 上游会混入广告台、错台（一条流标成多个台名）、静态录像
-#   3. 本机/服务器 IPv6 不可用，IPv6 线路必须剔除
-# 详见 scripts/build_live_sources.py 顶部说明。
+# 所有筛选逻辑都在本仓库脚本中，CI 仅负责定时触发：
+#   scripts/channel_plan.json      权威频道表（保底频道/顺序/保底源）
+#   scripts/build_live_sources.py  过滤 + 探测 + 组装
+#   本文件下方的 Validate 步骤          格式/广告/保底频道/顺序校验（失败不提交）
 
 on:
   schedule:
-    # 每 6 小时一次（避开整点高峰）
-    - cron: '17 */6 * * *'
+    # 每天北京时间 02:17（UTC 18:17）跑一次，避开整点高峰
+    - cron: '17 18 * * *'
   workflow_dispatch:
     inputs:
       probe_limit:
@@ -30,7 +31,7 @@ concurrency:
 jobs:
   rebuild:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,16 +42,17 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Rebuild live sources (probe + filter + merge)
+      - name: Rebuild live sources (plan + probe + filter + merge)
         run: |
-          python3 scripts/build_live_sources.py --out-dir . --workers 16 --probe-limit "${{ inputs.probe_limit || '0' }}"
+          python3 scripts/build_live_sources.py --out-dir . --workers 20 --probe-limit "${{ inputs.probe_limit || '0' }}"
 
-      - name: Validate output format
+      - name: Validate output (format / ad / must-have channels / order)
         run: |
           python3 - <<'PY'
-          import os, re, sys
-          files = ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']
+          import json, os, re, sys
+
           bad, warn = [], []
+          files = ['TVLives.txt', 'BiliLive.txt', 'LiveSports.txt']
           for f in files:
               if not os.path.exists(f):
                   bad.append(f + ': 文件缺失'); continue
@@ -69,9 +71,8 @@ jobs:
               print('%-18s %2d组 %4d频道 %4d线路' % (f, groups, chans, urls))
               if groups == 0 or chans == 0:
                   bad.append(f + ': 解析结果为空')
-              elif chans < 5:
-                  warn.append('%s: 频道数偏少(%d)' % (f, chans))
-          # 广告台残留检查
+
+          # 广告残留检查
           ad = re.compile(r'(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)', re.I)
           for f in files:
               if not os.path.exists(f):
@@ -79,20 +80,52 @@ jobs:
               for ln, line in enumerate(open(f, encoding='utf-8'), 1):
                   if ad.search(line):
                       bad.append('%s:%d 广告残留 %r' % (f, ln, line.strip()[:50]))
+
+          # 地方频道组不应出现
+          if os.path.exists('TVLives.txt'):
+              for line in open('TVLives.txt', encoding='utf-8'):
+                  if line.startswith('地方频道,#genre#'):
+                      bad.append('TVLives.txt: 不应包含地方频道组')
+
+          # 保底频道必须存在（来自权威频道表）
+          plan = json.load(open('scripts/channel_plan.json', encoding='utf-8'))
+          must = set(plan['channels'].keys())
+          lines = open('TVLives.txt', encoding='utf-8').read().split('\n') if os.path.exists('TVLives.txt') else []
+          present = set()
+          for line in lines:
+              i = line.find(',')
+              if i > 0 and not line.endswith('#genre#'):
+                  present.add(line[:i].strip())
+          missing = sorted(must - present)
+          if missing:
+              bad.append('TVLives.txt 缺少保底频道: ' + ', '.join(missing))
+
+          # 央视组顺序校验：只取「央视频道,#genre#」段内的频道
+          cctv, in_group = [], False
+          for l in lines:
+              if l.endswith(',#genre#'):
+                  in_group = (l == '央视频道,#genre#'); continue
+              if in_group and l.strip():
+                  cctv.append(l.split(',')[0].strip())
+          expect = [x for x in (plan['cctv_order'] + plan['paid_order'] + plan['cgtn_order'] + plan['edu_order'])
+                    if x in set(cctv)]
+          if cctv != expect:
+              bad.append('央视组顺序与权威表不一致: %s' % ', '.join(cctv[:30]))
+
           for w in warn:
               print('  ⚠', w)
           if bad:
               print('\n校验失败:'); [print('  -', b) for b in bad]; sys.exit(1)
-          print('\n校验通过')
+          print('\n校验通过：保底频道 %d 个全部存在，零广告，无地方频道' % len(must))
           PY
 
       - name: Commit if changed
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add TVLives.txt PlatformLive.txt BiliLive.txt
+          git add TVLives.txt BiliLive.txt LiveSports.txt
           if git diff --cached --name-only | grep -q .; then
-            git commit -m "chore(live): 自动重建直播源（过滤广告/错台 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
+            git commit -m "chore(live): 自动重建直播源（权威频道表保底 + 广告/错台过滤 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
             git pull --rebase origin "${GITHUB_REF_NAME}" || true
             git push origin HEAD:"${GITHUB_REF_NAME}"
             echo "已提交"
@@ -108,7 +141,7 @@ jobs:
           {
             echo "### 直播源自动重建完成"
             echo ""
-            echo "文件：TVLives.txt / PlatformLive.txt / BiliLive.txt"
+            echo "文件：TVLives.txt / BiliLive.txt / LiveSports.txt（PlatformLive 已移除）"
             echo ""
             echo '```'
             head -c 2000 TVLives.txt 2>/dev/null | head -20

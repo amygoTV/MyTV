@@ -96,7 +96,7 @@ async function runSelfTest() {
         return groups.filter((g) => g.items.length);
       };
       const byName = new Map(); const cats = [];
-      ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt'].forEach((fn) => {
+      ['TVLives.txt', 'BiliLive.txt'].forEach((fn) => {
         let text = '';
         try { text = fs.readFileSync(path.join(CONFIG_DIR, fn), 'utf8'); } catch (e) {}
         parseTV(text).forEach((g) => {
@@ -123,7 +123,7 @@ async function runSelfTest() {
     // 3) 代理可用性：挑几个源实测走代理
     try {
       const samples = [];
-      const files = ['TVLives.txt', 'PlatformLive.txt'];
+      const files = ['TVLives.txt'];
       files.forEach((fn) => {
         let text = '';
         try { text = fs.readFileSync(path.join(CONFIG_DIR, fn), 'utf8'); } catch (e) {}
@@ -321,7 +321,7 @@ function createWindow() {
             const srcDetail = {};
             Object.keys(cache).forEach(k => { srcDetail[k] = (cache[k]||[]).reduce((a,g)=>a+(g.items||[]).length,0); });
             const cfgTest = {};
-            for (const f of ['TVLives.txt','PlatformLive.txt','BiliLive.txt']) {
+            for (const f of ['TVLives.txt','BiliLive.txt']) {
               try { const tt = await window.MediaShell.readConfig(f); cfgTest[f] = 'OK:' + tt.length; }
               catch (e) { cfgTest[f] = 'ERR:' + (e && e.message || e); }
             }
@@ -364,7 +364,7 @@ app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(
 // ---- Safe local file reader (config only) --------------------------------
 const SAFE_FILES = new Set([
   'YSCSites.json', 'TVBoxDesktop.json', 'aizheteng.json', 'zheteng.json',
-  'TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt',
+  'TVLives.txt', 'BiliLive.txt', 'LiveSports.txt',
 ]);
 ipcMain.handle('read-config', async (_e, name) => {
   if (!SAFE_FILES.has(name)) throw new Error('blocked file: ' + name);

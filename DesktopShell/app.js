@@ -873,30 +873,28 @@ function buildLiveCatalog() {
 async function ensureLiveData() {
   if (liveCache) return;
   const pending = {};
-  // 第一步：只读本地源文件（毫秒级），立即可展示
-  for (const name of ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']) {
+  // 本地源文件（已内置验证过的可播线路）
+  // LiveSports.txt 由 GitHub Actions 预生成（赛事/轮播/央视频道补充），
+  // 运行时只读本地，避免每次启动拉取上千条未验证的 URL。
+  for (const name of ['TVLives.txt', 'BiliLive.txt', 'LiveSports.txt']) {
     try {
       const txt = await MS.readConfig(name);
       const g = parseTVLines(txt);
-      pending[name] = g;
-      if (!g.length) console.warn('[live] ' + name + ' 解析出 0 个分组，原始长度=' + (txt || '').length);
+      if (g.length) pending[name] = g;
+      else console.warn('[live] ' + name + ' 解析出 0 个分组，原始长度=' + (txt || '').length);
     } catch (e) {
-      console.warn('[live] 读取 ' + name + ' 失败: ' + (e && e.message || e));
-      pending[name] = [];
+      // LiveSports.txt 可能尚未生成（旧版本），忽略即可
+      if (name !== 'LiveSports.txt') console.warn('[live] 读取 ' + name + ' 失败: ' + (e && e.message || e));
     }
   }
   liveCache = pending;
   buildLiveCatalog();
   try { liveState.players = await MS.detectPlayers(); } catch (e) { liveState.players = {}; }
 
-  // 第二步：远程赛事/平台轮播 m3u 后台补充（实测 1~3.5s，不应阻塞首屏）
-  // 实测可播率：huyayqk 94% / douyuyqk 95% / yylunbo 95% / CNTV-V4 82% / IPTV-V4 85%
-  // （Live.m3u 实测 0%，咪咕系全部 403，已剔除）
+  // 远程赛事源后台补充（可选：拉取最新的 m3u，失败不影响已展示内容）
   const m3us = [
     { name: '⚽赛事直播·虎牙', url: 'https://peterhchina.github.io/iptv/huyayqk.m3u' },
     { name: '🏀赛事直播·斗鱼', url: 'https://peterhchina.github.io/iptv/douyuyqk.m3u' },
-    { name: '🎮平台轮播·歪歪', url: 'https://peterhchina.github.io/iptv/yylunbo.m3u' },
-    { name: '📺央视频道补充', url: 'https://peterhchina.github.io/iptv/CNTV-V4.m3u' },
   ];
   const remoteDone = Promise.all(m3us.map(async (m) => {
     try {

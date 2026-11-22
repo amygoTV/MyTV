@@ -13,13 +13,14 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/TVLives.txt
 ### 文件说明
 
 - `TVLives.txt`：TVBox 文本订阅，格式为 `分组,#genre#` + `频道名,URL`，每条 URL 是独立线路。
-- `scripts/validate_tvlives.py`：自动验活脚本，只保留实测可响应的直播源，删除失效源、错台源和点播 MP4。IPv6 字面量地址（运营商 IPTV 源）跳过本机探测、作为备用线路保留（排在 IPv4 之后），避免因运行环境无 IPv6 出口而误删。
-- `scripts/pinned_sources.txt`：人工复核后固定加入的补充源，每次同步会一起验活，失效会自动剔除。
-- `scripts/ad_blacklist.txt`：人工抽帧确认过的广告台 / 错台源黑名单（正则匹配），同步时先过滤再做验活。
+- `scripts/channel_plan.json`：**权威频道表**——保证 CCTV1-17、31 省级卫视 + 深圳卫视、中国教育 1-4 台等保底频道永远存在，并定义央视组顺序（CCTV1-17 → 付费 → CGTN → 教育台）与卫视按收视率排名。
+- `scripts/build_live_sources.py`：统一构建脚本——权威频道表保底 + 上游补充 → 广告/错台/静态录像过滤 → 逐条实测 IPv4 可播性 → IPv6 备用保留 → 每频道最多 3 条 IPv4 + 2 条 IPv6。探测不足时保留上一版。
 
 ### 更新机制
 
-GitHub Actions 每 6 小时从 `amygoTV/Livelist` 拉取最新候选源，与本仓库固定补充源合并、并发验活后，只把可用源写入 `TVLives.txt`。无变化不提交。每个频道若存在 IPv6 备用源，至少保留 2 条，其余按 IPv4 实测延迟优先排序。
+GitHub Actions 每天北京时间 02:17 运行一次（`.github/workflows/LiveSources.yml`）：权威频道表保底 + 上游拉取 → 广告/错台过滤 → 逐条实测可播 → 组装。校验「保底频道齐全 + 央视顺序 + 无地方频道 + 零广告」通过才提交，无变化不提交。IPv6 源（移动 IPTV）无探测出口，作为备用排 IPv4 之后。
+
+> 平台直播（抖音 / B站 / 虎牙 / 斗鱼 / Twitch）已从订阅中移除（原 `PlatformLive.txt` 上游失效，现已停止提供）。B站直播专线见 `BiliLive.txt`。
 
 ## 一之二、影视仓单仓配置 YSCSites.json
 
@@ -36,14 +37,13 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 - 兼容 **LuckyWDGS/YingShiCang 3.6.1**：该版本按 `sites[].categories` 做每站独立的分类白名单。聚合配置里每个站只声明自己的分类；若只想看某一类，可直接导入下面 `YSC/*.json` 单用途配置（每份只有一个站）。
 - 原有 CMS 7 站分类继续按 `ac=videolist&t=<type_id>&pg=1` 实测校准：大类标记在前、有数据的子分类在后。短剧 / 漫剧真正有内容的是 `AI漫剧`、`擦边短剧`、`漫剧`、`爽文短剧` 等子分类，点空壳父类可能没资源。
 - `spider` 已改为本仓库自托管 `spider/fan.txt`（MD5 `654fb7dcb0aeaaea7dba0e662395f38e`），与影视仓内置 `source-20261022.jar` 完全一致；`csp_AiDjGuard`、`csp_BiliGuard`、`csp_KanqiuGuard`、`csp_LiveGzGuard`、`csp_DoubaoGuard`、`csp_AllliveGuard`、`csp_Dm84Guard` 均可由影视仓内置插件直接加载，不必再依赖第三方 jar 地址。
-- 内置 6 条 `lives`：`TVLives.txt`（央视 / 卫视 IPTV）、`PlatformLive.txt`（抖音 / B站 / 虎牙 / 斗鱼 / Twitch 等平台直播）、`BiliLive.txt`（B站直播专线），以及赛事虎牙 / 赛事斗鱼 / 歪歪轮播三条 M3U。
+- 内置直播 `lives`：`TVLives.txt`（央视 CCTV1-17 / 31 省卫视 + 深圳 / 教育台 / 电影 / 体育）、`BiliLive.txt`（B站直播专线）与赛事轮播 M3U。
 - 采集接口来自公开采集站，可用性随时间变化；某个源失效时在影视仓内切换其它源即可。
 
-### 平台直播镜像（抖音 / B站）
+### B站直播镜像
 
-- `PlatformLive.txt`：由 `https://live.yang-1989.eu.org/Live.m3u` 转换为 TVBox TXT，含抖音（娱乐 / 游戏 / 其他）、哔哩、虎牙、斗鱼、Twitch、SOOP、歪歪等分组，上游约 30 分钟刷新。
-- `BiliLive.txt`：由 `https://sub.ottiptv.cc/bililive.m3u` 转换，纯 B站直播专线，按分区（情感杂谈 / 户外 / 疗愈助眠等）分组。
-- 转换脚本 `scripts/update_platform_live.py`；工作流 `.github/workflows/PlatformLive.yml` 每 30 分钟拉取并转换，有变化才提交。两条订阅都走 `gh-proxy.com` 加速，电视端无需直连海外域名。
+- `BiliLive.txt`：B站直播专线，按分区（情感杂谈 / 户外 / 疗愈助眠等）分组，由工作流每天重建。走 `gh-proxy.com` 加速，电视端无需直连海外域名。
+- 说明：抖音 / 虎牙 / 斗鱼 / Twitch 等平台直播订阅（原 `PlatformLive.txt`）因上游失效已移除。
 - 说明：快手自 2025 年底起对匿名访问限流，没有稳定的公开直播订阅；若必须看快手直播，需在「纯粹直播」等客户端中填入自己的快手 Cookie，TVBox 的静态订阅无法提供。
 
 ## 一之二之二、电脑桌面版（TVBox Desktop）
@@ -55,7 +55,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/TVBoxDesktop.json
 ```
 
 - 该客户端把数字 `type=3` 当苹果 CMS、`type=1` 当网页规则站，与安卓 TVBox 不同；`TVBoxDesktop.json` 已做转换：11 个 CMS 站写为 `type: "cms"`，10 个 `csp_*` Spider 站写为 `type: "spider"`（桌面端会灰显并提示无法运行）。
-- 6 条直播线路原样保留，含 TVLives / PlatformLive / BiliLive 与赛事虎牙 / 斗鱼 / 歪歪 M3U。
+- 直播线路含 TVLives / BiliLive 与赛事 M3U（原 PlatformLive 已移除）。
 - 需要完整短剧 / 赛事 / 课堂 Spider 体验时，请用安卓影视仓加载 `YSCSites.json`；桌面版主要覆盖影视点播与直播。
 
 ## 一之三、垂直分类独立采集站（YSC/*.json）
@@ -108,7 +108,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 
 - `urls`：21 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库：原有 6 条 + `💣王炸资源💣` 聚合配置 + 14 条垂直分类单用途配置；外部站点线路已移除，`scripts/aizheteng_sources.json` 也已同步清理，避免定时任务再把外部仓写回。
 - `zheteng.json` 的 `storeHouse` 同步扩展为 17 条（原有 3 条 + 14 条垂直分类配置）。
-- 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`PlatformLive.txt`、`BiliLive.txt`（均通过 `gh-proxy.com` 加速）。
+- 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`BiliLive.txt`（均通过 `gh-proxy.com` 加速）。
 
 ### 自动更新
 
