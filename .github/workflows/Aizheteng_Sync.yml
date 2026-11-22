@@ -31,7 +31,7 @@ jobs:
             https://0.12yue.de5.net \
             https://0.cdz.qzz.io \
             https://0.wdzb.eu.cc \
-            https://gh-proxy.com/raw.githubusercontent.com/lubin776/tvbox-api-backup/main \
+            https://cdn.jsdelivr.net/gh/lubin776/tvbox-api-backup@main \
             https://raw.githubusercontent.com/lubin776/tvbox-api-backup/main
           do
             if curl -fsSL --retry 2 --retry-delay 3 \

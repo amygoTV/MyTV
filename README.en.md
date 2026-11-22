@@ -17,7 +17,7 @@ GitHub Actions refreshes the playlist from `amygoTV/Livelist` every 6 hours. Not
 ## 2. Multi-warehouse index
 
 ```text
-https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
+https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 Fallback:
@@ -27,11 +27,11 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 ```
 
 The original Gitee repository `amygotv/tv` is blocked (HTTP 423), so the pinned
-entries now point to this repository through `gh-proxy.com`.
+entries now point to this repository through `cdn.jsdelivr.net`.
 
 - `pinned`: six in-repo configs (饭太硬, 肥猫, 鸟叔 4K, PG, 摸鱼儿, 小米).
 - The `lives` array of these six configs points to this repository's `TVLives.txt`
-  through `gh-proxy.com` instead of their own live lists. The original per-line
+  through `cdn.jsdelivr.net` instead of their own live lists. The original per-line
   live files have been removed.
 - `sources`: sixteen entries matched from the public mirror list (南风, 摸鱼 6 线,
   clun, 小马, 挺好, 动漫, 菜妮丝, 高天流云, 香雅情, 健康家用, 老张, 心魔, 俊宇,

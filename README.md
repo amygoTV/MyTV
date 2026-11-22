@@ -42,7 +42,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/YSCSites.json
 
 ### B站直播镜像
 
-- `BiliLive.txt`：B站直播专线，按分区（情感杂谈 / 户外 / 疗愈助眠等）分组，由工作流每天重建。走 `gh-proxy.com` 加速，电视端无需直连海外域名。
+- `BiliLive.txt`：B站直播专线，按分区（情感杂谈 / 户外 / 疗愈助眠等）分组，由工作流每天重建。走 `cdn.jsdelivr.net` 加速，电视端无需直连海外域名。
 - 说明：抖音 / 虎牙 / 斗鱼 / Twitch 等平台直播订阅（原 `PlatformLive.txt`）因上游失效已移除。
 - 说明：快手自 2025 年底起对匿名访问限流，没有稳定的公开直播订阅；若必须看快手直播，需在「纯粹直播」等客户端中填入自己的快手 Cookie，TVBox 的静态订阅无法提供。
 
@@ -63,7 +63,7 @@ https://raw.githubusercontent.com/amygoTV/MyTV/master/TVBoxDesktop.json
 每个文件都是一份可直接导入影视仓的单仓配置，只含一个站点，因此首页分类导航天然互相隔离。地址模板：
 
 ```text
-https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/<文件名>.json
+https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/YSC/<文件名>.json
 ```
 
 | 文件名 | 采集方式 | 主页分类 |
@@ -93,7 +93,7 @@ https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/YSC/<文件�
 ### 订阅地址
 
 ```text
-https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
+https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 备用：
@@ -102,13 +102,13 @@ https://gh-proxy.com/raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.jso
 https://raw.githubusercontent.com/amygoTV/MyTV/master/aizheteng.json
 ```
 
-> 原 Gitee 仓库 `amygotv/tv` 已被封禁（HTTP 423），因此原有固定线路改用本仓库 GitHub 内容的 `gh-proxy.com` 加速地址。
+> 原 Gitee 仓库 `amygotv/tv` 已被封禁（HTTP 423），因此原有固定线路改用本仓库 GitHub 内容的 `cdn.jsdelivr.net` 加速地址。
 
 ### 线路说明
 
 - `urls`：21 条线路，全部指向 `github.com/amygoTV/MyTV` 本仓库：原有 6 条 + `💣王炸资源💣` 聚合配置 + 14 条垂直分类单用途配置；外部站点线路已移除，`scripts/aizheteng_sources.json` 也已同步清理，避免定时任务再把外部仓写回。
 - `zheteng.json` 的 `storeHouse` 同步扩展为 17 条（原有 3 条 + 14 条垂直分类配置）。
-- 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`BiliLive.txt`（均通过 `gh-proxy.com` 加速）。
+- 各单仓配置内的 `lives` 统一指向本仓库的 `TVLives.txt`、`BiliLive.txt`（均通过 `cdn.jsdelivr.net` 加速）。
 
 ### 自动更新
 
