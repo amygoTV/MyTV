@@ -324,6 +324,17 @@ t('parseM3U: 同名频道跨 group 不误并', () => {
   if (g[0].items[0].urls.length !== 1 || g[1].items[0].urls.length !== 1) throw new Error('线路串组了');
 });
 
+t('hlsFastConfig: 流畅优先参数正确且 extra 可覆盖', () => {
+  const cfg = sandbox.window.__msSelfTest.hlsFastConfig();
+  if (cfg.enableWorker !== true) throw new Error('Worker 必须开启（软解尤其依赖）');
+  if (cfg.lowLatencyMode !== false) throw new Error('低延迟模式应关闭，避免缓冲过小反复卡顿');
+  if (cfg.capLevelToPlayerSize !== true) throw new Error('应按播放器尺寸限码率');
+  if (cfg.maxBufferLength < 20) throw new Error('缓冲应 ≥20s，实际 ' + cfg.maxBufferLength);
+  if (cfg.maxMaxBufferLength < 45) throw new Error('缓冲上限应 ≥45s');
+  const withXhr = sandbox.window.__msSelfTest.hlsFastConfig({ xhrSetup: 'f' });
+  if (withXhr.xhrSetup !== 'f' || withXhr.lowLatencyMode !== false) throw new Error('extra 覆盖失败');
+});
+
 chain.then(() => {
   console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
   const fail = results.filter((x) => x[0] === 'FAIL').length;

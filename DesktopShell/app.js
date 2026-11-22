@@ -934,6 +934,24 @@ function fmtTime(sec) {
   return (h ? h + ':' : '') + mm + ':' + String(s).padStart(2, '0');
 }
 
+// 统一的 hls.js「流畅优先」基础配置。IPTV / 采集站源多为普通 HLS（非 LL-HLS），
+// 低延迟模式只会把缓冲压到很小、网络一抖就反复卡顿；这里宁可多缓冲几秒换稳定播放。
+// extra 用于叠加线路特有项（如直播的本地代理 xhrSetup）。
+function hlsFastConfig(extra) {
+  const base = {
+    enableWorker: true,        // 解封装放 Worker，软解时尤其不能关（否则全压主线程）
+    lowLatencyMode: false,     // 关低延迟：换取更大缓冲、抗抖动
+    capLevelToPlayerSize: true,// 按播放器尺寸限码率，小窗不硬解高码率
+    maxBufferLength: 24,       // 目标缓冲 24s（原 12s 太短）
+    maxMaxBufferLength: 60,    // 上限 60s（原 30s）
+    backBufferLength: 30,      // 回看缓冲 30s
+    fragLoadingMaxRetry: 3,
+    levelLoadingMaxRetry: 3,
+    manifestLoadingMaxRetry: 2,
+  };
+  return Object.assign(base, extra || {});
+}
+
 function playEpisode(ep, title) {
   if (!ep || !ep.url) return;
   const video = $('#video'); const msg = $('#playerMsg');
@@ -948,7 +966,7 @@ function playEpisode(ep, title) {
   state.currentPlay.title = title;
   const isHls = /\.m3u8?(\?|$)/i.test(url);
   if (isHls && window.Hls && window.Hls.isSupported()) {
-    const hls = new window.Hls({ enableWorker: true, lowLatencyMode: false });
+    const hls = new window.Hls(hlsFastConfig());
     hls.loadSource(url); hls.attachMedia(video);
     hls.on(window.Hls.Events.ERROR, (_e, data) => {
       if (data.fatal) {
@@ -1444,6 +1462,10 @@ function renderLive() {
               (liveState.players.vlc ? '<option value="vlc"' + (liveState.player === 'vlc' ? ' selected' : '') + '>VLC</option>' : '') +
               (liveState.players.potplayer ? '<option value="potplayer"' + (liveState.player === 'potplayer' ? ' selected' : '') + '>PotPlayer</option>' : '') +
             '</select></label>' +
+            (liveState.players.mpv || liveState.players.vlc || liveState.players.potplayer
+              ? '<button id="btnFastDecode" class="mini-btn" title="一键切到本机硬解播放器，卡顿立减；再点切回内置">⚡ ' +
+                (liveState.player !== 'builtin' ? '回内置' : '硬解加速') + '</button>'
+              : '') +
             '<button id="btnProbe" class="mini-btn" title="并发探测每条线路是否可播">🔍 检测线路</button>' +
           '</div>' +
         '</div>' +
@@ -1467,6 +1489,22 @@ function renderLive() {
   $('#setTimeout').onchange = (e) => { liveState.timeoutSec = +e.target.value; saveLiveSettings(); toast('换线超时设为 ' + liveState.timeoutSec + ' 秒'); };
   $('#setDecoder').onchange = (e) => { liveState.decoder = e.target.value; saveLiveSettings(); toast('解码方式：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
   $('#setPlayer').onchange = (e) => { liveState.player = e.target.value; saveLiveSettings(); toast('播放器：' + e.target.selectedOptions[0].text); if (liveState.current) livePlay(liveState.lineIdx); };
+  const bfd = $('#btnFastDecode');
+  if (bfd) bfd.onclick = () => {
+    // 一键硬解：优先 mpv（最轻快），其次 PotPlayer / VLC；再点切回内置
+    if (liveState.player !== 'builtin') {
+      liveState.player = 'builtin';
+      toast('已切回内置播放器');
+    } else {
+      const pick = ['mpv', 'potplayer', 'vlc'].find((k) => liveState.players[k]);
+      if (!pick) { toast('未检测到本机播放器'); return; }
+      liveState.player = pick;
+      toast('已切到 ' + pick + ' 硬解（独立窗口）');
+    }
+    saveLiveSettings();
+    renderLive();
+    if (liveState.current) livePlay(liveState.lineIdx);
+  };
   const bp = $('#btnProbe');
   if (bp) bp.onclick = async () => {
     if (liveState.probing) return;
@@ -1685,21 +1723,13 @@ function livePlayChannel(ch, lineIdx) {
   v.onerror = () => { if (ch.urls.length > 1) { liveShowMsg('线路' + (lineIdx + 1) + ' 出错，切换下一条…'); livePlayChannel(ch, (lineIdx + 1) % ch.urls.length); } };
   MS.proxyUrl(rawUrl).then((url) => {
     if (window.Hls && window.Hls.isSupported() && isHls) {
-      const hls = new window.Hls({
-        enableWorker: liveState.decoder !== 'software',
-        lowLatencyMode: true,
-        backBufferLength: 20,
-        maxBufferLength: 12,
-        maxMaxBufferLength: 30,
-        manifestLoadingMaxRetry: 1,
-        levelLoadingMaxRetry: 2,
-        fragLoadingMaxRetry: 2,
+      const hls = new window.Hls(hlsFastConfig({
         // 关键：把 hls.js 内部的清单/分片请求也改写到本地代理，
         // 否则 m3u8 里的分片相对路径仍会直连远端并被 CORS 拦截
         xhrSetup: function (xhr, u) {
           try { xhr.open('GET', MS.localProxy(u), true); } catch (e) {}
         },
-      });
+      }));
       hls.loadSource(url); hls.attachMedia(v);
       hls.on(window.Hls.Events.ERROR, (_e, data) => {
         if (data && data.fatal && ch.urls.length > 1) {
@@ -2259,6 +2289,7 @@ window.__msSelfTest = {
   isDanmakuOnFor: isDanmakuOnFor,
   setDanmakuForSource: setDanmakuForSource,
   loadConfig: loadConfig,
+  hlsFastConfig: hlsFastConfig,
   pickBestLine: pickBestLine,
   probeCandidates: probeCandidates,
   compareLineQuality: compareLineQuality,
