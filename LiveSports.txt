@@ -54,7 +54,9 @@ CGTN,https://0472.org/hls/cgtn.m3u8
 
 卫视频道,#genre#
 
-东方卫视,http://bp-resource-dfl.bestv.cn/148/3/video.m3u8,https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
+东方卫视,http://bp-resource-dfl.bestv.cn/148/3/video.m3u8
+
+东方卫视,https://bp-resource-dfl.bestv.cn/148/3/video.m3u8
 
 湖南卫视,http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/Y2RuZXhfaWQ9YWxfaGxzX2xkdnQmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8
 
@@ -332,7 +334,7 @@ CGTN,https://0472.org/hls/cgtn.m3u8
 
 海宁新闻综合,https://p2hs.vzan.com/slowlive/317913155078575177/live.m3u8
 
-玛纳斯综合,http://218.84.127.245:1026/hls/main1/playlist.m3u8?zxinjd,
+玛纳斯综合,http://218.84.127.245:1026/hls/main1/playlist.m3u8?zxinjd
 
 白银综合,http://play.kankanlive.com/live/1720408089419110.m3u8
 

@@ -24,6 +24,7 @@ import os
 import subprocess
 import sys
 import urllib.request
+from urllib.parse import quote
 
 REPO = "amygoTV/MyTV"
 REF = "master"
@@ -38,6 +39,8 @@ DEFAULT_PATHS = [
     # standalone interfaces users subscribe directly
     "YSCSites.json",
     "TVBoxDesktop.json",
+    # cache-busted aggregate config used by "王炸资源" in aizheteng.json
+    "YSCv2/YSCSites.json",
     # per-site configs that aizheteng references
     "fty/api.json",
     "feimao/api.json",
@@ -45,8 +48,24 @@ DEFAULT_PATHS = [
     "PG/api.json",
     "moyuer/api.json",
     "niaoshu/tongyong.json",
+    # cache-busted copies used by the 14 vertical configs (old /YSC/ was stale on CDN)
+    "YSCv2/短剧漫剧.json",
+    "YSCv2/短剧点播.json",
+    "YSCv2/漫剧点播.json",
+    "YSCv2/看球赛事.json",
+    "YSCv2/吃瓜看球.json",
+    "YSCv2/比赛回放.json",
+    "YSCv2/赛事点播.json",
+    "YSCv2/一直播.json",
+    "YSCv2/少儿动漫.json",
+    "YSCv2/少儿动漫点播.json",
+    "YSCv2/儿童启蒙.json",
+    "YSCv2/小学课堂.json",
+    "YSCv2/初中课堂.json",
+    "YSCv2/高中课堂.json",
     # disguised spider jars (real .jar gets HTTP 403 on jsdelivr)
     "spider/fan.txt",
+    "spider/fan_v2.txt",
     "spider/fty.txt",
     "spider/feimao.txt",
     "spider/xiaomi.txt",
@@ -61,7 +80,7 @@ DEFAULT_PATHS = [
 
 
 def purge(path):
-    url = PURGE_BASE + path
+    url = PURGE_BASE + quote(path)
     try:
         req = urllib.request.Request(url, method="GET",
                                      headers={"User-Agent": "mytv-purge/1.0"})

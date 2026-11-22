@@ -10,11 +10,16 @@
    - 卫视组：31 省级卫视 + 深圳卫视，按 2024-2025 黄金时段收视率排名
    - 每个频道最多 3 条 IPv4 + 2 条 IPv6
 2. IPv4 逐条实测可播性；IPv6（移动 IPTV 2409:8087）无出口不探测，作为备用源保留。
-3. 不再生成 PlatformLive（已移除）；地方频道全部剔除。
-4. 广告/错台/静态录像/分组噪音过滤 + 跨文件 URL 去重全部保留。
-5. 探测不足时保留上一版（防止 CI 上游抖动清空源文件）。
+3. 不再生成 PlatformLive（已移除）；地方频道全部剔除。旧的「电影频道/体育频道」
+   因内容与分类不符已废弃，改由 scripts/newtv_plan.json 驱动：只放名副其实的
+   NewTV 电影轮播（超级电影/动作电影/惊悚悬疑…）与体育轮播（超级体育/精品体育…）。
+4. 广告/错台/静态录像/分组噪音过滤全部保留。
+5. 探测不足时保留上一版（防止 CI 上游抖动清空源文件）；保底频道即使单条探测失败
+   也保留原始线路，确保每频道 3 条 IPv4 + 2 条 IPv6。
+6. 每条线路独占一行（频道名,单个URL），兼容影视仓/TVBox 的标准 TXT 解析；
+   BiliLive.txt / LiveSports.txt 同步改为一行一条。
 
-输出文件：TVLives.txt（央视/卫视 + 电影/体育附加组）、BiliLive.txt、LiveSports.txt
+输出文件：TVLives.txt（央视/卫视/港澳台/NewTV电影/NewTV体育）、BiliLive.txt、LiveSports.txt
 
 用法：
     python3 scripts/build_live_sources.py                       # 全量
@@ -32,20 +37,12 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
+NEW_PLAN = os.path.join(HERE, 'newtv_plan.json')
 
 UA_PLAYER = 'okHttp/Mursor-1.4.0.0'
 
 # ---------------------------------------------------------------- 上游源
-# 电影/体育为「能找到就要」的附加组，其余正规台由权威频道表保底
-EXTRA_SOURCES = [
-    ('电影频道', [
-        ('https://peterhchina.github.io/iptv/IPTV-V4.m3u', UA_PLAYER),
-    ]),
-    ('体育频道', [
-        ('https://peterhchina.github.io/iptv/huyayqk.m3u', UA_PLAYER),
-        ('https://peterhchina.github.io/iptv/douyuyqk.m3u', UA_PLAYER),
-    ]),
-]
+# 正规台完全由权威频道表驱动；附加组已移除（内容与分类不符）
 BILI_SOURCES = [
     ('https://peterhchina.github.io/iptv/bililive.m3u', UA_PLAYER),
 ]
@@ -163,105 +160,54 @@ def clean_name(n):
     return re.sub(r'[\s]+', '', re.sub(r'[（(].*?[）)]', '', n or ''))
 
 
-def build_tvlives(plan, out_dir, workers, probe_limit, max_per_source, prev_content=None):
-    print('\n=== 构建 TVLives.txt（权威频道表驱动） ===', flush=True)
+def clean_url(u):
+    """修掉误把两条 URL 用逗号拼进同一字段，以及 # 片段后缀。"""
+    u = (u or '').strip()
+    m = re.search(r',\s*https?://', u)
+    if m:
+        u = u[:m.start()]
+    return u.split('#', 1)[0].strip()
+
+
+def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, prev_content=None):
+    print('\n=== 构建 TVLives.txt（权威频道表 + NewTV 分组） ===', flush=True)
     channels = plan['channels']
     groups_order = plan['groups_order']
 
-    # 1) 拉取上游，收集「附加组」候选（电影/体育）——正规台不依赖上游，避免上游抖动
-    upstream = []
-    src_budget = {}
-    for grp, sources in EXTRA_SOURCES:
-        for url, ua in sources:
-            try:
-                txt = fetch(url, 30, ua)
-                got = parse_m3u(txt)
-                upstream.extend((grp, n, u) for (g, n, u) in got)
-                src_budget[url] = len(got)
-                print('  拉取 %-40s %4d 条' % (url.split('/')[-1], len(got)), flush=True)
-            except Exception as e:
-                print('  拉取失败 %-40s %s' % (url.split('/')[-1], str(e)[:36]), flush=True)
-
-    # 过滤 + 分类候选到附加组
-    movie_cand, sports_cand = [], []
-    for grp, name, url in upstream:
-        if GROUP_NOISE_RE.search(grp) or AD_NAME_RE.search(name) or AD_HOST_RE.search(url):
-            continue
-        if STATIC_EXT_RE.search(url) or is_ipv6(url) or not norm_key(name):
-            continue
-        if '赛事' in grp or '体育' in grp or SPORTS_RE.search(name):
-            sports_cand.append((name, url))
-        elif '电影' in grp or MOVIE_RE.search(name):
-            movie_cand.append((name, url))
-
-    # 2) 权威表：对每个必需频道的 IPv4 探测（IPv6 不探测，直接作为备用）
+    # 1) 保底频道：IPv4 逐条探测；IPv6 无出口不探测，直接作为备用
     v4_tasks, v6_map = [], {}
     for name, meta in channels.items():
         for u in meta['ipv4']:
             if not is_ipv6(u):
-                v4_tasks.append((name, u.split('#', 1)[0]))
+                v4_tasks.append((name, clean_url(u)))
         if meta['ipv6']:
-            v6_map[name] = meta['ipv6'][:2]
-
-    # 探测预算控制
+            v6_map[name] = [clean_url(u) for u in meta['ipv6'][:2]]
     if probe_limit > 0 and len(v4_tasks) > probe_limit:
         v4_tasks = v4_tasks[:probe_limit]
-    alive_by_name = {}
-    alive_urls = probe_many([u for _, u in v4_tasks], workers, '保底IPv4')
+    alive_urls = set(probe_many([u for _, u in v4_tasks], workers, '保底IPv4'))
 
-    # 3) 附加组探测（能找到就要），按频道聚合
-    def build_extra(cands, label, limit=40):
-        by = {}
-        for name, url in cands:
-            k = clean_name(name)
-            if not k:
-                continue
-            by.setdefault(k, {'name': name, 'urls': []})
-            if url not in by[k]['urls']:
-                by[k]['urls'].append(url)
-        # 每个候选频道取前若干条探测
-        picked = []
-        for k, it in list(by.items())[:limit]:
-            for u in it['urls'][:3]:
-                picked.append((k, it['name'], u))
-        if probe_limit > 0 and len(picked) > probe_limit:
-            picked = picked[:probe_limit]
-        alive = probe_many([u for _, _, u in picked], workers, label)
-        alive_set = set(alive)
-        result = {}
-        for k, name, u in picked:
-            if u in alive_set:
-                result.setdefault(k, {'name': name, 'urls': []})
-                if u not in result[k]['urls']:
-                    result[k]['urls'].append(u)
-        return result
-
-    movie = build_extra(movie_cand, '电影频道', limit=30)
-    sports = build_extra(sports_cand, '体育频道', limit=30)
-
-    # 4) 组装输出：严格按 group_order + order 排序
+    # 2) 保底频道组装：存活优先，探测失败仍保留原始线路，保证 3 IPv4 + 2 IPv6
     group_items = {g: [] for g in groups_order}
     for name, meta in channels.items():
-        v4 = [u for u in meta['ipv4'] if not is_ipv6(u) and u.split('#', 1)[0] in alive_urls]
-        v6 = v6_map.get(name, [])
-        urls = v4[:3] + v6[:2]     # 3 IPv4 + 2 IPv6
-        if not urls:
-            # 保底频道即使全部探测失败也要出现（保留原始 IPv4 保底，CI 常无出口）
-            urls = [u.split('#', 1)[0] for u in meta['ipv4'][:3]]
-        if not urls:
-            continue
+        v4_all = [clean_url(u) for u in meta['ipv4'] if not is_ipv6(u)]
+        alive = [u for u in v4_all if u in alive_urls]
+        rest = [u for u in v4_all if u not in alive_urls]
+        urls = (alive + rest)[:3] + v6_map.get(name, [])[:2]
+        if len(urls) < 3:
+            urls = [clean_url(u) for u in meta['ipv4'][:3]]
         group_items[meta['group']].append({'name': name, 'urls': urls, 'order': meta['order']})
 
-    for k, it in movie.items():
-        if it['urls']:
-            group_items['电影频道'].append({'name': it['name'], 'urls': it['urls'][:3], 'order': 1000})
-    for k, it in sports.items():
-        if it['urls']:
-            group_items['体育频道'].append({'name': it['name'], 'urls': it['urls'][:3], 'order': 1000})
+    # 3) NewTV 电影/体育分组：名称与内容严格对应，替换旧的名不副实附加组
+    for key, gname in (('movie', '电影频道'), ('sports', '体育频道')):
+        for i, (name, urls) in enumerate(newtv.get(key, {}).items()):
+            group_items[gname].append({
+                'name': name,
+                'urls': [clean_url(u) for u in urls],
+                'order': 1000 + i,
+            })
 
-    # 组内去重 URL（同一流只归属一个频道）
-    used = set()
-    lines = []
+    # 4) 组装：每条线路独占一行，频道名重复表示多线路
+    lines, total_urls = [], 0
     for g in groups_order:
         items = sorted(group_items.get(g, []), key=lambda x: x['order'])
         if not items:
@@ -269,18 +215,21 @@ def build_tvlives(plan, out_dir, workers, probe_limit, max_per_source, prev_cont
         lines.append('%s,#genre#' % g)
         lines.append('')
         for it in items:
-            urls = [u for u in it['urls'] if not (u in used or used.add(u))]
+            urls = []
+            for u in it['urls']:
+                if u and u not in urls:
+                    urls.append(u)
             if not urls:
                 continue
-            lines.append('%s,%s' % (it['name'].replace(',', '，'), ','.join(urls)))
-            lines.append('')
+            total_urls += len(urls)
+            for u in urls:
+                lines.append('%s,%s' % (it['name'].replace(',', '，'), u))
+                lines.append('')
 
     path = os.path.join(out_dir, 'TVLives.txt')
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines).rstrip('\n') + '\n')
-
     chans = sum(len(group_items.get(g, [])) for g in groups_order)
-    total_urls = sum(len(it['urls']) for g in groups_order for it in group_items.get(g, []))
     print('  => TVLives.txt：%d 频道 / %d 组 / %d 线路 / %d bytes' % (
         chans, len([g for g in groups_order if group_items.get(g)]), total_urls,
         os.path.getsize(path)), flush=True)
@@ -324,11 +273,18 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
 
     # .group header is required by CI validation & client parser
     gname = 'B站直播' if name.startswith('Bili') else '直播'
-    lines, used = ['%s,#genre#' % gname, ''], set()
+    lines, total = ['%s,#genre#' % gname, ''], 0
     for k, it in by.items():
-        urls = [u for u in it['urls'][:5] if not (u in used or used.add(u))]
-        if urls:
-            lines.append('%s,%s' % (it['name'].replace(',', '，'), ','.join(urls)))
+        urls = []
+        for u in it['urls'][:5]:
+            if u not in urls:
+                urls.append(u)
+        if not urls:
+            continue
+        total += len(urls)
+        # 每条线路独占一行：频道名,单个URL
+        for u in urls:
+            lines.append('%s,%s' % (it['name'].replace(',', '，'), u))
             lines.append('')
     path = os.path.join(out_dir, name)
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
@@ -366,11 +322,18 @@ def build_live_sports(out_dir, workers, probe_limit):
         by.setdefault(k, {'name': name, 'urls': []})
         if u not in by[k]['urls']:
             by[k]['urls'].append(u)
-    lines, used = ['赛事直播,#genre#', ''], set()
+    lines, total = ['赛事直播,#genre#', ''], 0
     for k, it in by.items():
-        urls = [u for u in it['urls'][:5] if not (u in used or used.add(u))]
-        if urls:
-            lines.append('%s,%s' % (it['name'].replace(',', '，'), ','.join(urls)))
+        urls = []
+        for u in it['urls'][:5]:
+            if u not in urls:
+                urls.append(u)
+        if not urls:
+            continue
+        total += len(urls)
+        # 每条线路独占一行：频道名,单个URL
+        for u in urls:
+            lines.append('%s,%s' % (it['name'].replace(',', '，'), u))
             lines.append('')
     path = os.path.join(out_dir, 'LiveSports.txt')
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
@@ -408,10 +371,12 @@ def main():
 
     with open(os.path.join(HERE, 'channel_plan.json'), encoding='utf-8') as f:
         plan = json.load(f)
+    with open(NEW_PLAN, encoding='utf-8') as f:
+        newtv = json.load(f)
 
     summary, failed, built = {}, [], []
     jobs = [
-        ('TVLives.txt', lambda: build_tvlives(plan, args.out_dir, args.workers,
+        ('TVLives.txt', lambda: build_tvlives(plan, newtv, args.out_dir, args.workers,
                         args.probe_limit, args.max_per_source)),
         ('BiliLive.txt', lambda: build_simple('BiliLive.txt', BILI_SOURCES, args.out_dir,
                         args.workers, args.probe_limit, args.max_per_source)),

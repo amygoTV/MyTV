@@ -1,0 +1,58 @@
+{
+  "spider": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/spider/fan_v2.txt;md5;654fb7dcb0aeaaea7dba0e662395f38e",
+  "sites": [
+    {
+      "key": "短剧漫剧",
+      "name": "🎬短剧漫剧｜AI原生",
+      "type": 3,
+      "api": "csp_AiDjGuard",
+      "searchable": 1,
+      "quickSearch": 1,
+      "changeable": 0,
+      "ext": {
+        "type": "video",
+        "name": "短剧",
+        "danMu": false
+      },
+      "indexs": 0,
+      "style": {
+        "type": "rect",
+        "ratio": 1.597
+      }
+    }
+  ],
+  "lives": [
+    {
+      "name": "💣王炸直播💣",
+      "type": 0,
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "playerType": 1,
+      "ua": "okhttp/3.15",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+      "logo": "https://epg.112114.xyz/logo/{name}.png"
+    },
+    {
+      "name": "💣王炸直播💣(备)",
+      "type": 0,
+      "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "playerType": 1,
+      "ua": "okhttp/3.15",
+      "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
+      "logo": "https://epg.112114.xyz/logo/{name}.png"
+    },
+    {
+      "name": "🎵抖音/平台直播🎵",
+      "type": 0,
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/PlatformLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    },
+    {
+      "name": "📺B站直播适配📺",
+      "type": 0,
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/BiliLive.txt",
+      "playerType": 1,
+      "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+  ]
+}

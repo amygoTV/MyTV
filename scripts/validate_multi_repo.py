@@ -12,8 +12,15 @@ Checks (fail fast, no commit on failure):
      and backup (fastly.jsdelivr.net) aizheteng.json URLs -- and both are live.
      No extra storeHouse entries are allowed.
   4. Every aizheteng.json entry name contains an emoji (user-required format).
+  5. Every self-hosted config's spider field is an absolute jsdelivr URL with
+     a ;md5;<32hex> suffix whose md5 matches the local .txt jar. Dead hosts
+     (gh-proxy.com / raw.githubusercontent.com), relative ./spider.jar paths
+     and real .jar extensions (jsdelivr 403) are rejected outright.
+  6. The 14 vertical YSC entries in aizheteng.json must point at YSCv2/ --
+     cache-busted copies, so clients never receive the stale gh-proxy config.
 """
 import concurrent.futures
+import hashlib
 import json
 import re
 import ssl
@@ -41,6 +48,35 @@ def fetch(url):
 
 
 EMOJI_RE = re.compile("[\U0001F300-\U0001FAFF\u2600-\u27BF]")
+SPIDER_OK_RE = re.compile(
+    r"^https://cdn\.jsdelivr\.net/gh/amygoTV/MyTV@master/spider/[A-Za-z0-9_]+\.txt;md5;[0-9a-f]{32}$")
+VERTICAL_RE = re.compile(r"/YSC(?:v2)?/(?!YSCSites\.json)[^/]+\.json")
+DEAD_HOSTS = ("gh-proxy.com", "raw.githubusercontent.com")
+
+
+def check_spider(data):
+    """Reject stale/dead jar references; verify md5 against the local jar."""
+    sp = data.get("spider", "") if isinstance(data, dict) else ""
+    sites = data.get("sites") or []
+    csp = [s for s in sites if isinstance(s, dict)
+           and str(s.get("api", "")).startswith("csp_")]
+    if not sp:
+        if csp:
+            return False, "missing spider field but has %d csp_ sites" % len(csp)
+        return True, "no spider"
+    if any(h in sp for h in DEAD_HOSTS) or sp.startswith("./") or ".jar" in sp:
+        return False, "stale/dead spider host or relative jar: %s" % sp[:110]
+    if not SPIDER_OK_RE.match(sp):
+        return False, "spider must be cdn.jsdelivr.net .../spider/*.txt;md5;<32hex>: %s" % sp[:110]
+    url_part, expect = sp.split(";md5;")
+    fname = url_part.rsplit("/", 1)[-1]
+    jar = Path("spider") / fname
+    if not jar.exists():
+        return False, "spider jar missing locally: %s" % jar
+    real = hashlib.md5(jar.read_bytes()).hexdigest()
+    if real != expect:
+        return False, "spider md5 mismatch: config=%s local=%s" % (expect, real)
+    return True, "spider %s md5 OK" % fname
 
 
 def has_emoji(name):
@@ -69,7 +105,10 @@ def check_child(item):
         sites = data.get("sites") if isinstance(data, dict) else None
         if not isinstance(sites, list) or not sites:
             return name, False, "no non-empty sites array (%s)" % source
-        return name, True, "sites=%d (%s)" % (len(sites), source)
+        sp_ok, sp_detail = check_spider(data)
+        if not sp_ok:
+            return name, False, sp_detail
+        return name, True, "sites=%d, %s (%s)" % (len(sites), sp_detail, source)
     except Exception as exc:
         return name, False, str(exc)[:120]
 
@@ -95,6 +134,14 @@ def main():
         log("aizheteng.json strict parse FAILED: %s" % exc)
         return 1
     log("aizheteng.json strict parse OK (%d entries)" % len(aiz.get("urls", [])))
+    vertical = [x for x in aiz.get("urls", [])
+                if isinstance(x, dict) and VERTICAL_RE.search(x.get("url", ""))]
+    stale_vertical = [x.get("name", "?") for x in vertical
+                      if "/YSCv2/" not in x.get("url", "")]
+    if stale_vertical:
+        bad.append("vertical entries must use cache-busted YSCv2/: %s" % stale_vertical)
+    else:
+        log("vertical entries use YSCv2/ OK (%d entries)" % len(vertical))
     no_emoji = [x.get("name", "?") for x in aiz.get("urls", [])
                 if isinstance(x, dict) and not has_emoji(x.get("name", ""))]
     if no_emoji:
