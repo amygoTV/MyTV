@@ -569,6 +569,9 @@ const PLAYER_CANDIDATES = {
   mpv: [
     'C:\\Program Files\\mpv\\mpv.exe',
     'C:\\Program Files (x86)\\mpv\\mpv.exe',
+    // 固定 D 盘位置：便携版每次解压到临时目录、DATA_DIR 随之变化，
+    // 故用一个不受解压影响的绝对路径作为首选自带位置（v1.10.0）
+    'D:\\MediaShellPlayers\\mpv.exe',
     path.join(DATA_DIR, 'players', 'mpv.exe'),
   ],
   vlc: [
