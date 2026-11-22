@@ -93,18 +93,18 @@ https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/YSC/<文件名>.json
 ### 订阅地址
 
 ```text
-https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/aizheteng.json
+https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 备用：
 
 ```text
-https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/aizheteng.json
+https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/aizheteng.json
 ```
 
 > 原 Gitee 仓库 `amygotv/tv` 已被封禁（HTTP 423），因此原有固定线路改用本仓库 GitHub 内容的 `cdn.jsdelivr.net` 加速地址。
 >
-> 订阅地址与索引内 3 条饭太硬系子配置（饭太硬/肥猫/小米）均用 `@v1.5.0` 固定版本而非 `@master`：规避 jsdelivr 对可变分支的缓存延迟，确保修复后的配置立即生效。后续版本升级时会同步更新 tag 与这里的地址。
+> **这是永久固定地址，收藏一次即可，无需随版本更新更换。** 用 `@master` 而非版本 tag：内容由 GitHub Actions 每天自动更新并推送；每次更新后 Action 调用 jsdelivr 官方 purge 端点清除边缘缓存（`scripts/purge_cdn.py`），所以固定地址会立即反映最新内容，不会因 CDN 缓存而停留在旧版本。备用节点 `fastly.jsdelivr.net` 同样被清除。
 
 ### 线路说明
 

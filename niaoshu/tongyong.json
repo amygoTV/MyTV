@@ -1,5 +1,5 @@
 {
-    "spider": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/spider/Tong.txt;md5;f110f046c450fc4dd75c5762697aef57",
+    "spider": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/spider/Tong.txt;md5;f110f046c450fc4dd75c5762697aef57",
     "sites": [
         {
             "key": "py_cctv",
@@ -221,7 +221,7 @@
             "key": "聚短视频js",
             "name": "短剧",
             "type": 3,
-            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/niaoshu/libs/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/niaoshu/libs/drpy2.min.js",
             "ext": "./libs/duanjv.js",
             "searchable": 0,
             "quickSearch": 0,
@@ -231,28 +231,28 @@
             "key": "QTV",
             "name": "腾讯视频",
             "type": 3,
-            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/niaoshu/libs/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/niaoshu/libs/drpy2.min.js",
             "ext": "./libs/txvip.js"
         },
         {
             "key": "drpy_js_优酷",
             "name": "酷喵影视",
             "type": 3,
-            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/niaoshu/libs/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/niaoshu/libs/drpy2.min.js",
             "ext": "./libs/优酷.js"
         },
         {
             "key": "drpy_js_百忙无果",
             "name": "芒果TV",
             "type": 3,
-            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/niaoshu/libs/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/niaoshu/libs/drpy2.min.js",
             "ext": "./libs/百忙无果.js"
         },
         {
             "key": "爱奇异",
             "name": "爱奇艺(官)",
             "type": 3,
-            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/niaoshu/libs/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/niaoshu/libs/drpy2.min.js",
             "ext": "./libs/aiqiyi.js"
         }
     ],
@@ -302,7 +302,7 @@
         {
             "name": "TVLives",
             "type": 0,
-            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
+            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
             "playerType": 1,
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
@@ -311,7 +311,7 @@
         {
             "name": "TVLives(备)",
             "type": 0,
-            "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
+            "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
             "playerType": 1,
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",

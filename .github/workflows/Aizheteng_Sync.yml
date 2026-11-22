@@ -71,3 +71,8 @@ jobs:
             git commit -m "Sync aizheteng.json $(date +'%Y-%m-%d %H:%M')"
             git push
           fi
+
+      # Subscribers use permanent @master URLs; purge the edge cache so the
+      # fixed address serves fresh content right after this update.
+      - name: Purge jsdelivr cache for fixed @master URLs
+        run: python3 scripts/purge_cdn.py

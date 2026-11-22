@@ -147,6 +147,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Live sources are served via permanent @master URLs. Purge jsdelivr's
+      # edge cache after rebuild so the fixed address reflects new channels.
+      - name: Purge jsdelivr cache for fixed @master URLs
+        run: python3 scripts/purge_cdn.py
+
       - name: Summary
         if: always()
         run: |

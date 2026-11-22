@@ -1,5 +1,5 @@
 {
-    "spider": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/spider/xiaomi.txt;md5;be7060a567ce9e8021946b6de0ed8dae",
+    "spider": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/spider/xiaomi.txt;md5;be7060a567ce9e8021946b6de0ed8dae",
     "wallpaper": "http://饭太硬.top/深色壁纸/api.php",
     "sites": [
         {
@@ -131,7 +131,7 @@
             "quickSearch": 1,
             "changeable": 1,
             "playerType": "1",
-            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/xiaomi/api/drpy2.min.js",
+            "api":"https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/xiaomi/api/drpy2.min.js",
             "ext": "./js/751376c9824fecd9ff4f9dd8d811553e.js"
         },
         {
@@ -737,7 +737,7 @@
         {
             "name": "TVLives",
             "type": 0,
-            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
+            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
@@ -745,7 +745,7 @@
         {
             "name": "TVLives(备)",
             "type": 0,
-            "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@v1.5.1/TVLives.txt",
+            "url": "https://fastly.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
