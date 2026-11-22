@@ -113,6 +113,17 @@ jobs:
           if cctv != expect:
               bad.append('央视组顺序与权威表不一致: %s' % ', '.join(cctv[:30]))
 
+          # 港澳台组顺序校验（凤凰香港/凤凰卫视/…按权威表顺序）
+          hktw, in_group = [], False
+          for l in lines:
+              if l.endswith(',#genre#'):
+                  in_group = (l == '港澳台频道,#genre#'); continue
+              if in_group and l.strip():
+                  hktw.append(l.split(',')[0].strip())
+          hktw_expect = [x for x in plan.get('hktw_order', []) if x in set(hktw)]
+          if hktw != hktw_expect:
+              bad.append('港澳台组顺序与权威表不一致: %s' % ', '.join(hktw))
+
           for w in warn:
               print('  ⚠', w)
           if bad:
