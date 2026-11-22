@@ -4,11 +4,11 @@
 
 ## 版本
 
-当前 **v1.4.3**（详见仓库根目录 `更新日志.md`）。
+当前 **v1.4.4**（详见仓库根目录 `更新日志.md`）。
 
 ### 单文件便携版（推荐）
 
-`dist-exe-v143/MediaShell-1.4.3-portable.exe`（约 66MB）——双击即用，自解压到本机临时目录运行，无需 bat 启动器、无需散落 dll。启动后如需持久化收藏/历史，可设置环境变量 `MSHELL_DATA` 指向固定目录（默认随解压目录）。
+`dist-exe-v144/MediaShell-1.4.4-portable.exe`（约 66MB）——双击即用，自解压到本机临时目录运行，无需 bat 启动器、无需散落 dll。启动后如需持久化收藏/历史，可设置环境变量 `MSHELL_DATA` 指向固定目录（默认随解压目录）。
 
 ### 直播页
 
@@ -53,11 +53,30 @@ build.bat
 | 搜索 | 顶部搜索框回车，在当前 CMS 站按 `wd=` 搜索 |
 | 详情 | 海报、简介、主演、多播放源、选集；鼠标悬停海报即后台预取详情，点击秒开（实测 1.1s） |
 | 播放 | 内嵌 `video` + hls.js 播放 m3u8/mp4；支持「系统播放器」用 PotPlayer/VLC 打开 |
-| 直播 | 读取 `TVLives.txt` / `PlatformLive.txt` / `BiliLive.txt`（共 385 个实测可播频道）及赛事 M3U，按分组展示频道；同名频道合并多线路，经主进程流媒体代理播放 |
+| 直播 | 读取 `TVLives.txt` / `PlatformLive.txt` / `BiliLive.txt`（共 485 个实测可播频道 / 515 条线路，每 6 小时由 GitHub Actions 自动重建并验证）及赛事 M3U，按分组展示频道；同名频道合并多线路，经主进程流媒体代理播放 |
 | 自动选站 | 侧栏「⚡ 自动选站」并发测速全部 CMS 站，一键切到最快可用站 |
 | 收藏/历史 | 本地保存（localStorage，位于 D 盘 userdata） |
 | 导入订阅 | 侧栏「导入订阅」可填任意影视仓 JSON 地址覆盖当前站点配置 |
 | 重载配置 | 侧栏「重载配置」重新读取内置配置 |
+
+## 直播源自动重建
+
+`scripts/build_live_sources.py` 是直播源的统一筛选流水线，每 6 小时由 `.github/workflows/LiveSources.yml` 自动执行：
+
+1. 拉取多个上游 m3u（实测可播率：huyayqk 94% / douyuyqk 95% / yylunbo 95% / IPTV-V4 85% / CNTV-V4 82% / bililive 15%）
+2. 规则过滤广告台（频道名特征 + 广告/图床域名 + 静态录像后缀）
+3. **逐条实测可播性**（并发探测，只保留真正返回 m3u8 的线路）
+4. 修正错台（一条流被标成多个台名 → 只保留一个；同名不同 URL → 合并为多线路）
+5. 名称归一 + 同名合并，输出 `TVLives.txt` / `PlatformLive.txt` / `BiliLive.txt`
+
+跑完会自动校验格式与广告残留，不通过则不提交。上游缺失的频道（如 CCTV6）由脚本内置的「保底线路」补齐。
+
+手动执行：
+
+```bash
+python3 scripts/build_live_sources.py                    # 全量
+python3 scripts/build_live_sources.py --probe-limit 60    # 快速通道
+```
 
 ## 技术说明
 

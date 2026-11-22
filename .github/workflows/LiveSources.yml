@@ -1,0 +1,110 @@
+name: Live Sources Rebuild
+
+# 直播源自动重建：拉取上游 → 过滤广告/错台 → 逐条实测可播性 → 合并同名多线路 → 提交
+#
+# 为什么需要自动化（实测结论）：
+#   1. 公开直播源随时失效/域名被拍卖，必须定期重新探测
+#   2. 上游会混入广告台、错台（一条流标成多个台名）、静态录像
+#   3. 本机/服务器 IPv6 不可用，IPv6 线路必须剔除
+# 详见 scripts/build_live_sources.py 顶部说明。
+
+on:
+  schedule:
+    # 每 6 小时一次（避开整点高峰）
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      probe_limit:
+        description: '每个文件最多探测多少条（0=全部）'
+        required: false
+        default: '0'
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: live-sources-rebuild
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Rebuild live sources (probe + filter + merge)
+        run: |
+          python3 scripts/build_live_sources.py --out-dir . --workers 16 --probe-limit "${{ inputs.probe_limit || '0' }}"
+
+      - name: Validate output format
+        run: |
+          python3 - <<'PY'
+          import os, re, sys, collections
+          files = ['TVLives.txt', 'PlatformLive.txt', 'BiliLive.txt']
+          bad = []
+          for f in files:
+              if not os.path.exists(f):
+                  bad.append(f + ': 文件缺失'); continue
+              groups, chans, urls = 0, 0, 0
+              for line in open(f, encoding='utf-8'):
+                  line = line.strip()
+                  if not line:
+                      continue
+                  if line.endswith('#genre#'):
+                      groups += 1; continue
+                  i = line.find(',')
+                  if i <= 0:
+                      bad.append('%s: 非法行 %r' % (f, line[:40])); continue
+                  chans += 1
+                  urls += len([u for u in line[i+1:].split(',') if u.strip().startswith('http')])
+              print('%-18s %2d组 %4d频道 %4d线路' % (f, groups, chans, urls))
+              if groups == 0 or chans == 0:
+                  bad.append(f + ': 解析结果为空')
+          # 广告台残留检查
+          ad = re.compile(r'(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)', re.I)
+          for f in files:
+              for ln, line in enumerate(open(f, encoding='utf-8'), 1):
+                  if ad.search(line):
+                      bad.append('%s:%d 广告残留 %r' % (f, ln, line.strip()[:50]))
+          if bad:
+              print('\n校验失败:'); [print('  -', b) for b in bad]; sys.exit(1)
+          print('\n校验通过')
+          PY
+
+      - name: Commit if changed
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add TVLives.txt PlatformLive.txt BiliLive.txt
+          if git diff --cached --name-only | grep -q .; then
+            git commit -m "chore(live): 自动重建直播源（过滤广告/错台 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin HEAD:"${GITHUB_REF_NAME}"
+            echo "已提交"
+          else
+            echo "无变化"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### 直播源自动重建完成"
+            echo ""
+            echo "文件：TVLives.txt / PlatformLive.txt / BiliLive.txt"
+            echo ""
+            echo '```'
+            head -c 2000 TVLives.txt 2>/dev/null | head -20
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
