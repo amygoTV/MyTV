@@ -241,6 +241,9 @@ def build_tvlives(plan, newtv, out_dir, workers, probe_limit, max_per_source, pr
     path = os.path.join(out_dir, 'TVLives.txt')
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines).rstrip('\n') + '\n')
+    # 同步产出 *_v2.txt：全新文件名在 CDN 无陈旧缓存，配置统一引用它
+    with open(os.path.join(out_dir, 'TVLives_v2.txt'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write('\n'.join(lines).rstrip('\n') + '\n')
     chans = sum(len(group_items.get(g, [])) for g in groups_order)
     print('  => TVLives.txt：%d 频道 / %d 组 / %d 线路 / %d bytes' % (
         chans, len([g for g in groups_order if group_items.get(g)]), total_urls,
@@ -297,6 +300,8 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
     total = sum(len(i['urls']) for i in items)
     path = os.path.join(out_dir, name)
     with open(path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write('\n'.join(lines).rstrip('\n') + '\n')
+    with open(os.path.join(out_dir, name[:-4] + '_v2.txt'), 'w', encoding='utf-8', newline='\n') as f:
         f.write('\n'.join(lines).rstrip('\n') + '\n')
     print('  => %s：%d 频道 / %d bytes' % (name, len(by), os.path.getsize(path)), flush=True)
     return {'file': name, 'channels': len(by), 'lines': sum(len(v['urls']) for v in by.values())}

@@ -167,6 +167,20 @@ def main():
         else:
             log("%s OK（%d 个 NewTV 轮播频道，名称与内容匹配）" % (g, len(chans)))
 
+    # *_v2.txt 是配置实际引用的新路径，必须与主文件逐字节一致
+    for f in ("TVLives.txt", "BiliLive.txt", "LiveSports.txt"):
+        v2 = Path(f[:-4] + "_v2.txt")
+        if not v2.exists():
+            bad.append("%s 缺失（配置引用的新路径）" % v2)
+            continue
+        if not Path(f).exists():
+            bad.append("%s 缺失" % f)
+            continue
+        if v2.read_bytes() != Path(f).read_bytes():
+            bad.append("%s 与 %s 内容不一致" % (v2.name, f))
+        else:
+            log("%s 与主文件一致（配置引用此路径）" % v2.name)
+
     for f in EXTRA_FILES:
         if not Path(f).exists():
             bad.append("%s 缺失" % f)

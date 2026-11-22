@@ -5,7 +5,7 @@ Live TV subscriptions and multi-warehouse indexes for TVBox / 影视仓.
 ## 1. Live TV playlist
 
 ```text
-https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt
+https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt
 ```
 
 - `TVLives.txt`: TVBox text playlist (`group,#genre#` followed by `name,url`).

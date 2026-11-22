@@ -631,19 +631,19 @@
     {
       "name": "💣王炸直播💣",
       "type": 0,
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     },
     {
       "name": "💣王炸直播💣(备)",
       "type": 0,
-      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives.txt",
+      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     },
     {
       "name": "📺B站直播适配📺",
       "type": 0,
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/BiliLive.txt"
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/BiliLive_v2.txt"
     },
     {
       "name": "⚽赛事直播·虎牙",

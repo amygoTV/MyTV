@@ -72,10 +72,14 @@ DEFAULT_PATHS = [
     "spider/PG.txt",
     "spider/moyuer.txt",
     "spider/Tong.txt",
-    # live sources (rebuilt daily)
+    # live sources (rebuilt daily) -- the *_v2.txt copies are the ones
+    # referenced by the configs (fresh path => no stale edge cache)
     "TVLives.txt",
+    "TVLives_v2.txt",
     "BiliLive.txt",
+    "BiliLive_v2.txt",
     "LiveSports.txt",
+    "LiveSports_v2.txt",
 ]
 
 
