@@ -1869,17 +1869,33 @@ async function fetchJsonCfg(u, timeout) {
   if (r.error || !r.body) return null;
   try { return JSON.parse(r.body); } catch (e) { return null; }
 }
+// 选线质量标准：sites 数量为主（空壳垂直线路只有 1 站），直播源有效为辅，速度只作最后参考。
+// 实测教训：曾纯按响应速度排序，结果 sites=1 的短剧/课堂/赛事空壳线路（体积小、CDN 命中快，
+// ~180ms）总比主线路（~280ms）快而被选中 —— 表现为站点几乎为空、直播源指向失效的
+// PlatformLive.txt / 旧 TXT，用户看到「多仓解析混乱 + 直播无法播放」。
 async function pickBestLine(urls) {
   const probes = await Promise.all((urls || []).map(async (ln) => {
     const u = ln && (ln.url || ln.sourceUrl);
     if (!u || !/^https?:\/\//i.test(u)) return null;
     const t0 = Date.now();
     const c = await fetchJsonCfg(u, 12000);
-    if (c && Array.isArray(c.sites) && c.sites.length) return { cfg: c, ms: Date.now() - t0, name: ln.name || '' };
-    return null;
+    if (!c || !Array.isArray(c.sites) || !c.sites.length) return null;
+    const lives = Array.isArray(c.lives) ? c.lives : [];
+    // 有效直播源：url 指向 m3u8/m3u/txt 且不是已知失效的 PlatformLive
+    const goodLives = lives.filter((l) => {
+      const lu = l && l.url;
+      return lu && /\.(m3u8?|txt)(\?|$)/i.test(lu) && !/PlatformLive/i.test(lu);
+    }).length;
+    return { cfg: c, ms: Date.now() - t0, name: ln.name || '', sites: c.sites.length, goodLives };
   }));
-  const ok = probes.filter(Boolean).sort((a, b) => a.ms - b.ms);
+  const ok = probes.filter(Boolean);
   if (!ok.length) throw new Error('所有线路均不可用（配置可能已失效）');
+  // 质量优先：站点数降序 → 有效直播源降序 → 速度升序（影视仓「选最快可用」习惯）
+  ok.sort((a, b) => {
+    if (b.sites !== a.sites) return b.sites - a.sites;
+    if (b.goodLives !== a.goodLives) return b.goodLives - a.goodLives;
+    return a.ms - b.ms;
+  });
   return ok[0].cfg;
 }
 async function expandSubscription(url, rootCfg) {
@@ -2024,6 +2040,7 @@ window.__msSelfTest = {
   isDanmakuOnFor: isDanmakuOnFor,
   setDanmakuForSource: setDanmakuForSource,
   loadConfig: loadConfig,
+  pickBestLine: pickBestLine,
   expandSubscription: expandSubscription,
   parseTVLines: parseTVLines,
   parseM3U: parseM3U,

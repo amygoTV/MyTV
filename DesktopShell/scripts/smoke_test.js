@@ -75,6 +75,8 @@ const MS = {
   httpGet: async (u) => {
     // 展开测试用：按 URL 返回模拟的影视仓配置
     const mock = MS._mock || {};
+    const delay = (MS._delay || {})[u] || 0;
+    if (delay) await new Promise((r) => setTimeout(r, delay));
     if (mock[u]) return { status: 200, body: JSON.stringify(mock[u]) };
     return { status: 200, body: '{}' };
   },
@@ -109,16 +111,16 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, 'app.js'), 'utf8'), sandbox, { f
 
 const ST = () => sandbox.window.__msSelfTest.state;
 const results = [];
-const pending = [];
+// 串行执行：用例共享 MS._mock / MS._delay，并发会互相覆盖导致假失败
+let chain = Promise.resolve();
 function t(name, fn) {
-  try {
+  chain = chain.then(() => {
     const r = fn();
-    if (r && typeof r.then === 'function') {
-      pending.push(r.then(() => results.push(['PASS', name]), (e) => results.push(['FAIL', name, e && e.message])));
-    } else {
-      results.push(['PASS', name]);
-    }
-  } catch (e) { results.push(['FAIL', name, e.message]); }
+    return r && typeof r.then === 'function' ? r : null;
+  }).then(
+    () => results.push(['PASS', name]),
+    (e) => results.push(['FAIL', name, e && e.message])
+  );
 }
 
 // ---- 用例 ----
@@ -202,8 +204,33 @@ t('expandSubscription: storeHouse→urls 三级展开并选可用线路', async 
   MS._mock = null;
 });
 
-Promise.all(pending).then(() => {
-  t('parseM3U: 一个 EXTINF 后多条 URL 合并为同一频道的多线路', () => {
+t('pickBestLine: 空壳线路更快也选站点多的主线路', async () => {
+  MS._mock = {
+    'https://x/shell.json': { sites: [{ key: 's', api: 'https://s' }], lives: [{ name: 'x', type: 0, url: 'https://x/PlatformLive.txt' }] },
+    'https://x/main.json': { sites: Array.from({ length: 56 }, (_, i) => ({ key: 'm' + i, api: 'https://m' })), lives: [{ name: 'x', type: 0, url: 'https://x/TVLives_v2.m3u' }] },
+  };
+  MS._delay = { 'https://x/shell.json': 0, 'https://x/main.json': 60 }; // 空壳更快
+  const r = await sandbox.window.__msSelfTest.pickBestLine([
+    { url: 'https://x/shell.json', name: '空壳' },
+    { url: 'https://x/main.json', name: '主线路' },
+  ]);
+  if (!r.sites || r.sites.length !== 56) throw new Error('应选站点多的主线路，实际 ' + (r.sites || []).length + ' 站');
+  MS._mock = null; MS._delay = null;
+});
+t('pickBestLine: 站点数相同选有效直播源多的', async () => {
+  MS._mock = {
+    'https://x/a.json': { sites: [{ key: 'a', api: 'https://a' }], lives: [{ url: 'https://x/PlatformLive.txt' }] },
+    'https://x/b.json': { sites: [{ key: 'b', api: 'https://b' }], lives: [{ url: 'https://x/TVLives_v2.m3u' }, { url: 'https://x/BiliLive_v2.txt' }] },
+  };
+  MS._delay = { 'https://x/a.json': 0, 'https://x/b.json': 50 };
+  const r = await sandbox.window.__msSelfTest.pickBestLine([
+    { url: 'https://x/a.json' }, { url: 'https://x/b.json' },
+  ]);
+  if (!r.sites || r.sites[0].key !== 'b') throw new Error('应选直播源有效的线路');
+  MS._mock = null; MS._delay = null;
+});
+
+t('parseM3U: 一个 EXTINF 后多条 URL 合并为同一频道的多线路', () => {
   const m3u = '#EXTM3U\n' +
     '#EXTINF:-1 group-title="央视",CCTV-1\n' +
     'http://a/1.m3u8\nhttp://a/2.m3u8\nhttp://a/3.m3u8\n' +
@@ -227,7 +254,8 @@ t('parseM3U: 同名频道跨 group 不误并', () => {
   if (g[0].items[0].urls.length !== 1 || g[1].items[0].urls.length !== 1) throw new Error('线路串组了');
 });
 
-console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
+chain.then(() => {
+  console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
   const fail = results.filter((x) => x[0] === 'FAIL').length;
   console.log('\n通过 ' + (results.length - fail) + ' / ' + results.length);
   process.exit(fail ? 1 : 0);
