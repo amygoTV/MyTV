@@ -5,12 +5,14 @@ directories:
   app: _stage
   output: dist-exe-v147
   buildResources: build
+afterPack: scripts/apply_icon.js
 files:
   - "**/*"
   - "!node_modules/**"
 asar: true
 compression: maximum
 win:
+  icon: build/icon.ico
   target:
     - target: portable
       arch: x64

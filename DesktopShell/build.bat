@@ -12,6 +12,7 @@ for %%f in (app.js index.html main.js preload.js style.css) do copy /y "%%f" "_s
 copy /y "package.build.json" "_stage\package.json" >nul
 xcopy /e /i /y config "_stage\config" >nul
 xcopy /e /i /y vendor "_stage\vendor" >nul
+if exist "build\icon.png" copy /y "build\icon.png" "_stage\icon.png" >nul
 echo [2/3] Packing app.asar...
 call "%~dp0node_modules\.bin\asar.cmd" pack _stage "..\MediaShellApp\resources\app.asar"
 echo [3/3] Done. Output: ..\MediaShellApp\resources\app.asar

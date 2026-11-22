@@ -4,13 +4,18 @@
 
 ## 版本
 
+### v1.8.0
+- **新增应用图标**：新增 `build/icon.ico`（16/24/32/48/64/128/256 七尺寸）与 `build/icon.png`（512×512）。设计为「圆角电视屏底板 + 品牌渐变播放三角 + 直播信号弧」，配色取自界面主题（强调色 `#ff5c7a`、次强调 `#6ea8ff`、底色 `#0d0f14`）。
+- 图标由 `scripts/make_icon.py` **纯标准库生成**（不依赖 PIL/图像库），可重复构建：`python scripts/make_icon.py`。
+- `electron-builder.yml` 的 `win.icon` 指向 `build/icon.ico`；`main.js` 的 `BrowserWindow.icon` 指向 `icon.png`（随 asar 打包，任务栏/窗口标题栏均显示图标）。
+
 ### v1.7.0
 - 直播源改为影视仓/TVBox 标准 TXT（UTF-8 BOM + CRLF、一行一条线路、同名频道合并为多线路），本地内置 `TVLives.txt` / `BiliLive.txt` / `LiveSports.txt` 全部刷新到最新版本。
 - 站点配置切到永久固定地址链：`zheteng_v2.json`（主 cdn + 备 gcore）→ `aizheteng_v2.json` → `YSCv3/` → `TVLives_v2.m3u`。
 - 修复：`parseTVLines` 按频道名合并同名行（此前同一频道会显示成多条重名条目），并剥离 BOM、兼容 `,` 与 `#` 两种地址分隔。
 
 
-当前 **v1.7.0**（开发日志见独立仓库 [MediaShell-DevLog](https://github.com/amygoTV/MediaShell-DevLog)）。
+当前 **v1.8.0**（开发日志见独立仓库 [MediaShell-DevLog](https://github.com/amygoTV/MediaShell-DevLog)）。
 
 ### 单文件便携版（推荐）
 

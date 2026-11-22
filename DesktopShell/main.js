@@ -179,6 +179,7 @@ function createWindow() {
     minWidth: 980,
     minHeight: 640,
     title: '影视舱 MediaShell',
+    icon: path.join(APP_DIR, 'icon.png'),
     backgroundColor: '#0d0f14',
     show: false,
     autoHideMenuBar: true,
