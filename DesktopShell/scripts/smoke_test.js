@@ -335,6 +335,16 @@ t('hlsFastConfig: 流畅优先参数正确且 extra 可覆盖', () => {
   if (withXhr.xhrSetup !== 'f' || withXhr.lowLatencyMode !== false) throw new Error('extra 覆盖失败');
 });
 
+t('isFlvUrl: 正确识别 FLV 及其变体，不误判 m3u8', () => {
+  const f = sandbox.window.__msSelfTest.isFlvUrl;
+  if (!f('http://a/live.flv')) throw new Error('.flv 后缀应识别');
+  if (!f('http://a/live.flv?token=xx')) throw new Error('.flv 带参数应识别');
+  if (!f('http://a/stream?format=flv')) throw new Error('format=flv 参数应识别');
+  if (!f('http://a/flv/channel')) throw new Error('/flv/ 路径应识别');
+  if (f('http://a/live.m3u8')) throw new Error('m3u8 不应误判为 flv');
+  if (f('http://a/live.ts')) throw new Error('ts 不应误判为 flv');
+});
+
 chain.then(() => {
   console.log(results.map((x) => x[0] + '  ' + x[1] + (x[2] ? '  -> ' + x[2] : '')).join('\n'));
   const fail = results.filter((x) => x[0] === 'FAIL').length;

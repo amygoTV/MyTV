@@ -934,6 +934,18 @@ function fmtTime(sec) {
   return (h ? h + ':' : '') + mm + ':' + String(s).padStart(2, '0');
 }
 
+// 判断一个直播地址是否为 FLV（内置 hls.js 无法解码，必须走外部播放器）。
+// 覆盖 .flv 后缀、?format=flv 之类参数、以及 /flv/ 路径段。
+function isFlvUrl(url) {
+  const s = String(url || '').toLowerCase();
+  return /\.flv(\?|$)/.test(s) || /[?&](?:format|type|ext)=flv\b/.test(s) || /\/flv(?:\/|\?|$)/.test(s);
+}
+
+// 本机可用的外部硬解播放器（按轻快优先排序），用于 FLV 自动接管
+function availableExternalPlayer() {
+  return ['mpv', 'vlc', 'potplayer'].find((k) => liveState.players && liveState.players[k]) || null;
+}
+
 // 统一的 hls.js「流畅优先」基础配置。IPTV / 采集站源多为普通 HLS（非 LL-HLS），
 // 低延迟模式只会把缓冲压到很小、网络一抖就反复卡顿；这里宁可多缓冲几秒换稳定播放。
 // extra 用于叠加线路特有项（如直播的本地代理 xhrSetup）。
@@ -1706,6 +1718,20 @@ function livePlayChannel(ch, lineIdx) {
     });
     return;
   }
+  // FLV 是内置 hls.js 的硬伤（只解 m3u8），不要再做无谓的原生尝试：
+  // 本机有外部播放器就直接接管，没有则给出明确指引。
+  if (isFlvUrl(rawUrl)) {
+    const ext = availableExternalPlayer();
+    if (ext) {
+      MS.playExternal(ext, rawUrl, liveState.decoder).then((r) => {
+        if (r && r.error) liveShowMsg('FLV 调用 ' + ext + ' 失败：' + r.error);
+        else liveShowMsg('FLV 线路已用 ' + ext + ' 硬解打开（独立窗口）');
+      });
+    } else {
+      liveShowMsg('FLV 格式内置播放器无法解码，请在「播放器」里选择 mpv/VLC，或安装 mpv 到用户目录 players 文件夹');
+    }
+    return;
+  }
   // 内置播放器：经主进程代理取流，绕过 IPTV 源普遍缺失的 CORS 头
   const v = $('#liveVideo'); if (!v) return;
   const isHls = /\.m3u8?(\?|$)/i.test(rawUrl);
@@ -1740,10 +1766,18 @@ function livePlayChannel(ch, lineIdx) {
       liveState.hls = hls;
       v.play().catch(() => {});
     } else {
-      // 非 m3u8（flv / 无扩展名流 / mp4）：先按原生方式尝试，
-      // flv 在 Chromium 不支持，失败后交给外部播放器（mpv/VLC）处理
+      // 非 m3u8（无扩展名流 / mp4 / ts）：先按原生方式尝试（部分 mp4/ts 能直接放），
+      // 失败后自动交给外部硬解播放器，而不是只弹提示让用户手动折腾
       v.src = url; v.play().catch(() => {
-        liveShowMsg('该线路为 FLV 等格式，浏览器无法直接播放，请把「播放器」切换为 mpv/VLC');
+        const ext = availableExternalPlayer();
+        if (ext) {
+          liveShowMsg('浏览器无法播放该流，已自动切到 ' + ext + ' 硬解…');
+          MS.playExternal(ext, rawUrl, liveState.decoder).then((r) => {
+            if (r && r.error) liveShowMsg('外部播放器调用失败：' + r.error);
+          });
+        } else {
+          liveShowMsg('浏览器无法解码该流，请在「播放器」里选择 mpv/VLC，或安装 mpv 到用户目录 players 文件夹');
+        }
       });
     }
   }).catch(() => {
@@ -2290,6 +2324,7 @@ window.__msSelfTest = {
   setDanmakuForSource: setDanmakuForSource,
   loadConfig: loadConfig,
   hlsFastConfig: hlsFastConfig,
+  isFlvUrl: isFlvUrl,
   pickBestLine: pickBestLine,
   probeCandidates: probeCandidates,
   compareLineQuality: compareLineQuality,
