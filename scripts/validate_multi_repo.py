@@ -9,7 +9,7 @@ Checks (fail fast, no commit on failure):
      config with a non-empty sites array. This catches the regression where
      a self-hosted config got a leading // comment and broke parsing.
   3. zheteng.json contains exactly two entries -- the primary (cdn.jsdelivr.net)
-     and backup (fastly.jsdelivr.net) aizheteng.json URLs -- and both are live.
+     and backup (gcore.jsdelivr.net) aizheteng.json URLs -- and both are live.
      No extra storeHouse entries are allowed.
   4. Every aizheteng.json entry name contains an emoji (user-required format).
   5. Every self-hosted config's spider field is an absolute jsdelivr URL with
@@ -173,7 +173,7 @@ def main():
     if not all("aizheteng.json" in u for u in aiz_urls):
         bad.append("zheteng.json entries must all point to aizheteng.json: %s" % aiz_urls)
     elif len(aiz_urls) == 2:
-        if "cdn.jsdelivr.net" not in aiz_urls[0] or "fastly.jsdelivr.net" not in aiz_urls[1]:
+        if "cdn.jsdelivr.net" not in aiz_urls[0] or "gcore.jsdelivr.net" not in aiz_urls[1]:
             bad.append("zheteng.json primary/backup order or host mismatch: %s" % aiz_urls)
         else:
             for u in aiz_urls:

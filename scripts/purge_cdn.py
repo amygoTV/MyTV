@@ -5,7 +5,7 @@
 Why: subscribers use a permanent @master URL. jsdelivr caches GitHub
 branches at the edge (12h s-maxage) and can serve stale content. Calling
 the official purge endpoint after each CI content update makes the fixed URL
-reflect new content immediately (clears both CF and Fastly providers).
+reflect new content immediately (clears all jsdelivr edge providers (CF / Gcore / Fastly)).
 
 IMPORTANT: purge is rate-limited. In CI use --changed to purge ONLY the files
 that actually changed in the just-pushed commit (usually 1-3 files). Purging
