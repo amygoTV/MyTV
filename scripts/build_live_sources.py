@@ -13,7 +13,9 @@
 3. 不再生成 PlatformLive（已移除）；地方频道全部剔除。「影视轮播/体育频道」
    两个分组改由上游公网影视房间驱动（虎牙/斗鱼/YY/B站一起看），每晚重新拉取并
    逐条实测，失效自动剔除；NewTV 轮播因公网不可达已于 v1.6.8 移除。
-4. 广告/错台/静态录像/分组噪音过滤全部保留。
+4. 广告台名称/错台/静态录像/分组噪音过滤全部保留；台标正确的正常频道即使
+   插播广告也保留（名称规则见 scripts/live_filters.py，错台/纯广告源见
+   scripts/ad_blacklist.txt 人工确认）。
 5. 探测不足时保留上一版（防止 CI 上游抖动清空源文件）；保底频道即使单条探测失败
    也保留原始线路，确保每频道 3 条 IPv4 + 2 条 IPv6。
 6. 输出严格遵循影视仓/TVBox 官方 TXT 规范（FongMi docs/LIVE.md）：
@@ -40,6 +42,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import live_filters
 import live_groups
 REPO = os.path.dirname(HERE)
 
@@ -65,15 +68,9 @@ SPECIAL_SOURCES = [
 ]
 
 # ---------------------------------------------------------------- 过滤规则
-AD_NAME_RE = re.compile(
-    r'(支持作者|感谢|订阅|广告|推广|二维码|扫码|公众号|更多资源|获取资源|'
-    r'请\s*user|请查看最新|请访问|请到|失效|版权|声明|免责|'
-    r'列表更新时间|更新时间|维护中?|暫無|暂无主播|温馨|提示|'
-    r'答疑|教程|招聘|兼职|赚钱|赚米|卖货|厂价|厂家|优惠|团购|工厂直销|'
-    r'官方直播间|需求度|求购|招商|加盟|福利|抽奖|秒杀|特价|批发|货源|'
-    r'下单|客服|咨询|办理|开户|彩票|贷款|回收|二手|装修|培训|招生|'
-    r'年货|特卖|清仓|库存|拿货|正品|代购|微商|私信|加微信|福利彩票|'
-    r'测试|測試|test|^\d+$|^\d{4}[-/]\d{1,2})', re.I)
+# 频道名/房间名过滤规则统一放在 scripts/live_filters.py（构建侧与校验侧共用）。
+# 电视台分组只看广告/购物/测试/博彩名称；正常频道插播广告不删除。
+# 影视轮播/B站/体育房间名沿用既有垃圾过滤（避免误杀《购物狂》等片名）。
 AD_HOST_RE = re.compile(
     r'(vd\d*\.bdstatic\.com|bdstatic\.com|\.upic\.|\.kwimgs\.com|'
     r'pan\.|aliyundrive|alipan|baidupcs)', re.I)
@@ -300,7 +297,7 @@ def build_special_lives(out_dir, workers, probe_limit):
 
     cand = []
     for group, name, url in raw:
-        if GROUP_NOISE_RE.search(group) or AD_NAME_RE.search(name) or AD_HOST_RE.search(url):
+        if GROUP_NOISE_RE.search(group) or live_filters.is_spam_name(name) or AD_HOST_RE.search(url):
             continue
         if STATIC_EXT_RE.search(url) or is_ipv6(url) or not norm_key(name):
             continue
@@ -338,6 +335,14 @@ def build_special_lives(out_dir, workers, probe_limit):
 def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, prev_content=None):
     print('\n=== 构建 TVLives.txt（保底频道 + 参考分组） ===', flush=True)
     channels = plan['channels']
+
+    # 电视台分组只剔除名称本身就是广告/购物/测试/博彩的台；正常频道即使
+    # 正在插播广告也保留。若权威频道表里出现这类名称，跳过并让校验报缺失，
+    # 避免把广告台当成保底频道写进产物。
+    dropped = [n for n in channels if live_filters.is_dropped_tv_name(n)]
+    if dropped:
+        print('  跳过广告/购物/测试/博彩/提示类频道名: %s' % '、'.join(dropped), flush=True)
+        channels = {n: m for n, m in channels.items() if n not in dropped}
 
     # 分组名与顺序统一由 scripts/live_groups.py 从 channel_plan.json 推导
     # （v1.6.26：原先这里与校验脚本各写死一份，v1.6.23 加组后校验侧没跟上，
@@ -443,7 +448,7 @@ def build_simple(name, sources, out_dir, workers, probe_limit, max_per_source,
 
     kept = []
     for group, n, u in raw:
-        if GROUP_NOISE_RE.search(group) or AD_NAME_RE.search(n) or AD_HOST_RE.search(u):
+        if GROUP_NOISE_RE.search(group) or live_filters.is_spam_name(n) or AD_HOST_RE.search(u):
             continue
         if STATIC_EXT_RE.search(u) or is_ipv6(u) or not norm_key(n):
             continue
@@ -498,7 +503,7 @@ def build_live_sports(out_dir, workers, probe_limit):
             print('  拉取失败 %-30s %s' % (url.split('/')[-1], str(e)[:36]), flush=True)
     kept = []
     for group, n, u in raw:
-        if GROUP_NOISE_RE.search(group) or AD_NAME_RE.search(n) or AD_HOST_RE.search(u):
+        if GROUP_NOISE_RE.search(group) or live_filters.is_spam_name(n) or AD_HOST_RE.search(u):
             continue
         if STATIC_EXT_RE.search(u) or is_ipv6(u) or not norm_key(n):
             continue

@@ -1,13 +1,14 @@
 name: Live Sources Rebuild
 
 # 直播源自动重建（每天凌晨 02:17 北京时间跑一次）
-# 流程：权威频道表保底(CCTV1-17/31省卫视+深圳/教育台) + 上游补充 → 过滤广告/错台
-#       → 逐条实测 IPv4 可播性 → IPv6 备用保留 → 3 IPv4 + 2 IPv6 组装 → 校验 → 提交
+# 流程：权威频道表保底(CCTV1-17/31省卫视+深圳/教育台) + 上游补充 → 过滤广告台名称/错台
+#       （台标正确的正常频道即使插播广告也保留）→ 逐条实测 IPv4 可播性 → IPv6 备用保留
+#       → 3 IPv4 + 2 IPv6 组装 → 校验 → 提交
 #
 # 所有筛选逻辑都在本仓库脚本中，CI 仅负责定时触发：
 #   scripts/channel_plan.json      权威频道表（保底频道/顺序/保底源）
 #   scripts/build_live_sources.py  过滤 + 探测 + 组装
-#   scripts/validate_live_sources.py  格式/广告/保底频道/顺序/NewTV 分类校验（失败不提交）
+#   scripts/validate_live_sources.py  格式/广告台名称/黑名单/保底频道/顺序/NewTV 分类校验（失败不提交）
 
 on:
   schedule:
@@ -61,7 +62,7 @@ jobs:
           git add TVLives.txt TVLives_v2.txt TVLives.m3u TVLives_v2.m3u \
                   BiliLive.txt BiliLive_v2.txt LiveSports.txt LiveSports_v2.txt
           if git diff --cached --name-only | grep -q .; then
-            git commit -m "chore(live): 自动重建直播源（权威频道表保底 + 广告/错台过滤 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
+            git commit -m "chore(live): 自动重建直播源（权威频道表保底 + 广告台名称/错台过滤 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
             git pull --rebase origin "${GITHUB_REF_NAME}" || true
             git push origin HEAD:"${GITHUB_REF_NAME}"
             echo "PURGE=1" >> "$GITHUB_ENV"

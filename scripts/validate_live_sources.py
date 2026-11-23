@@ -25,6 +25,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import live_filters
 import live_groups
 
 for stream in (sys.stdout, sys.stderr):
@@ -33,7 +34,9 @@ for stream in (sys.stdout, sys.stderr):
 
 # 分组顺序统一由 scripts/live_groups.py 从 channel_plan.json 推导
 # （v1.6.26：原先这里硬编码 5 组，构建侧 v1.6.23 已扩到 7 组 → 校验必失败）
-AD_RE = re.compile(r"(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)", re.I)
+# 频道名过滤规则与构建侧共用 scripts/live_filters.py：
+#   * 电视台分组只剔除广告/购物/测试/博彩名称（台标正确的正常频道保留）；
+#   * 影视轮播/B站/体育房间名沿用既有垃圾过滤。
 BLACKLIST_FILE = Path("scripts/ad_blacklist.txt")
 FILES = ("TVLives.txt", "TVLives_v2.txt", "BiliLive.txt", "BiliLive_v2.txt",
          "LiveSports.txt", "LiveSports_v2.txt")
@@ -112,6 +115,10 @@ def main():
     bad, warn = [], []
     plan = json.loads(Path("scripts/channel_plan.json").read_text(encoding="utf-8"))
     guaranteed = plan["channels"]
+    # 权威频道表覆盖的「电视台」分组；其余分组（影视轮播/体育/B站/赛事）
+    # 的房间名走 live_filters.is_spam_name，避免把片名当广告台误杀。
+    tv_groups = {live_groups.to_output_name(meta.get("group", ""))
+                 for meta in guaranteed.values()}
 
     groups, order, errors = parse("TVLives.txt")
     bad += ["TVLives.txt " + e for e in errors]
@@ -149,12 +156,24 @@ def main():
     for f in FILES:
         if not Path(f).exists():
             continue
+        cur_group = None
         for ln, line in enumerate(Path(f).read_text(encoding="utf-8-sig").splitlines(), 1):
-            if AD_RE.search(line):
-                bad.append("%s:%d 广告残留 %r" % (f, ln, line.strip()[:50]))
-            if "," not in line:
+            s = line.strip()
+            if not s:
                 continue
-            url = line.split(",", 1)[1].strip()
+            if s.endswith("#genre#"):
+                cur_group = s.split(",", 1)[0].strip()
+                continue
+            if "," not in s:
+                continue
+            name, url = s.split(",", 1)
+            name, url = name.strip(), url.strip()
+            if cur_group in tv_groups:
+                if live_filters.is_dropped_tv_name(name):
+                    bad.append("%s:%d 广告/购物/测试/博彩/提示类频道名残留 %r" % (
+                        f, ln, name[:50]))
+            elif live_filters.is_spam_name(name):
+                bad.append("%s:%d 广告/垃圾频道名残留 %r" % (f, ln, name[:50]))
             if any(p.search(url) for p in blacklist):
                 bad.append("%s:%d 命中广告黑名单: %s" % (f, ln, url[:90]))
     log("广告黑名单校验完成（%d 条规则）" % len(blacklist))

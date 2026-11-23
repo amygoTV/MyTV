@@ -8,11 +8,13 @@ Live TV subscriptions and multi-warehouse indexes for TVBox / 影视仓.
 https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt
 ```
 
-- `TVLives.txt`: TVBox text playlist (`group,#genre#` followed by `name,url`).
-- `scripts/validate_tvlives.py`: concurrent validator; only responsive streams are kept.
+- `TVLives.txt` / `TVLives_v2.txt`: TVBox text playlist (`group,#genre#` followed by `name,url`). Clients read the `_v2` path.
+- `scripts/build_live_sources.py` + `scripts/validate_live_sources.py`: authoritative channel plan + upstream fill, ad-channel-name / wrong-channel / static filtering, IPv4 probing, IPv6 fallback.
+- `scripts/live_filters.py`: shared name rules. TV groups drop only obvious ad / shopping / test / gambling channel names; a correctly labelled channel is kept even while it airs commercials.
+- `scripts/ad_blacklist.txt`: manually frame-audited wrong-logo / pure-ad / test-card URLs only.
 - `scripts/pinned_sources.txt`: manually reviewed extra sources, validated on every sync.
 
-GitHub Actions refreshes the playlist from `amygoTV/Livelist` every 6 hours. Nothing is committed when there are no changes.
+GitHub Actions rebuilds the playlist daily at 02:17 Beijing time. Nothing is committed when there are no changes.
 
 ## 2. Multi-warehouse index
 

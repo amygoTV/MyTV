@@ -14,11 +14,13 @@ https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.m3u
 
 - `TVLives.txt`：TVBox 文本订阅，格式为 `分组,#genre#` + `频道名,URL`，每条 URL 是独立线路。
 - `scripts/channel_plan.json`：**权威频道表**——保证 CCTV1-17、31 省级卫视 + 深圳卫视、中国教育 1-4 台等保底频道永远存在，并定义央视组顺序（CCTV1-17 → 付费 → CGTN → 教育台）与卫视按收视率排名。
-- `scripts/build_live_sources.py`：统一构建脚本——权威频道表保底 + 上游补充 → 广告/错台/静态录像过滤 → 逐条实测 IPv4 可播性 → IPv6 备用保留 → 每频道最多 3 条 IPv4 + 2 条 IPv6。探测不足时保留上一版。
+- `scripts/build_live_sources.py`：统一构建脚本——权威频道表保底 + 上游补充 → 广告台名称/错台/静态录像过滤 → 逐条实测 IPv4 可播性 → IPv6 备用保留 → 每频道最多 3 条 IPv4 + 2 条 IPv6。探测不足时保留上一版。
+- `scripts/live_filters.py`：构建侧与校验侧共用的频道名过滤规则——电视台分组只剔除名称本身就是广告/购物/测试/博彩的台；**台标/频道名正确的正常频道即使插播广告也保留**。
+- `scripts/ad_blacklist.txt`：人工抽帧确认的错台/无台标/纯广告/测试卡源（正则匹配 URL）；正常频道插播广告不拉黑。
 
 ### 更新机制
 
-GitHub Actions 每天北京时间 02:17 运行一次（`.github/workflows/LiveSources.yml`）：权威频道表保底 + 上游拉取 → 广告/错台过滤 → 逐条实测可播 → 组装。校验「保底频道齐全 + 央视顺序 + 无地方频道 + 零广告」通过才提交，无变化不提交。IPv6 源（移动 IPTV）无探测出口，作为备用排 IPv4 之后。
+GitHub Actions 每天北京时间 02:17 运行一次（`.github/workflows/LiveSources.yml`）：权威频道表保底 + 上游拉取 → 广告台名称/错台过滤 → 逐条实测可播 → 组装。校验「保底频道齐全 + 央视顺序 + 无地方频道 + 无广告台名称/黑名单源」通过才提交，无变化不提交。IPv6 源（移动 IPTV）无探测出口，作为备用排 IPv4 之后。
 
 > 平台直播（抖音 / B站 / 虎牙 / 斗鱼 / Twitch）已从订阅中移除（原 `PlatformLive.txt` 上游失效，现已停止提供）。B站直播专线见 `BiliLive.txt`。
 
