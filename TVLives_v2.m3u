@@ -22,8 +22,8 @@ http://112.27.5.218:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226469/1.m3u8?
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226894/1.m3u8?
 #EXTINF:-1 group-title="央视",CCTV-6
-http://198.204.228.26/live/cctv6hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+http://198.204.228.26/live/cctv6hd.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226468/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001188/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-7
@@ -33,8 +33,8 @@ http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001236/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-8
 http://107.150.60.122/live/cctv8hd.m3u8
-http://198.204.228.26/live/cctv8hd.m3u8
 http://192.151.150.154/live/cctv8hd.m3u8
+http://198.204.228.26/live/cctv8hd.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226485/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001189/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-9
@@ -62,13 +62,13 @@ http://ali-m-l.cztv.com/channels/lantian/channel21/1080p.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226316/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001328/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-14
-http://198.204.228.26/live/cctv14hd.m3u8
 http://204.12.221.218:8181/3m1080p/cctv14.m3u8
+http://198.204.228.26/live/cctv14hd.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226947/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001240/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-15
-http://198.204.228.26/live/cctv15hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+http://198.204.228.26/live/cctv15hd.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226333/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001338/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-16
@@ -998,8 +998,6 @@ https://mursor.ottiptv.cc/yy/1463783198
 https://mursor.ottiptv.cc/yy/1354768828
 #EXTINF:-1 group-title="影视轮播",8090.电影一哥
 https://mursor.ottiptv.cc/yy/29197808
-#EXTINF:-1 group-title="影视轮播",恐怖电影
-https://mursor.ottiptv.cc/yy/24066336
 #EXTINF:-1 group-title="影视轮播",1930年代经典电影
 https://mursor.ottiptv.cc/yy/1356363815
 #EXTINF:-1 group-title="影视轮播",动漫《火影疾风传》

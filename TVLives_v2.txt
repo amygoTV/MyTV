@@ -16,8 +16,8 @@ CCTV-4,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001221/index.m3
 CCTV-5,http://112.27.5.218:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-5,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226469/1.m3u8?
 CCTV-5,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226894/1.m3u8?
-CCTV-6,http://198.204.228.26/live/cctv6hd.m3u8
 CCTV-6,http://112.27.5.218:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-6,http://198.204.228.26/live/cctv6hd.m3u8
 CCTV-6,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226468/1.m3u8?
 CCTV-6,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001188/index.m3u8
 CCTV-7,http://107.150.60.122/live/cctv7hd.m3u8
@@ -25,8 +25,8 @@ CCTV-7,http://112.27.5.218:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&au
 CCTV-7,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226946/1.m3u8?
 CCTV-7,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001236/index.m3u8
 CCTV-8,http://107.150.60.122/live/cctv8hd.m3u8
-CCTV-8,http://198.204.228.26/live/cctv8hd.m3u8
 CCTV-8,http://192.151.150.154/live/cctv8hd.m3u8
+CCTV-8,http://198.204.228.26/live/cctv8hd.m3u8
 CCTV-8,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226485/1.m3u8?
 CCTV-8,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001189/index.m3u8
 CCTV-9,http://107.150.60.122/live/cctv9hd.m3u8
@@ -48,12 +48,12 @@ CCTV-13,http://120.76.248.139/live/bfgd/4200000067.m3u8
 CCTV-13,http://ali-m-l.cztv.com/channels/lantian/channel21/1080p.m3u8
 CCTV-13,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226316/1.m3u8?
 CCTV-13,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001328/index.m3u8
-CCTV-14,http://198.204.228.26/live/cctv14hd.m3u8
 CCTV-14,http://204.12.221.218:8181/3m1080p/cctv14.m3u8
+CCTV-14,http://198.204.228.26/live/cctv14hd.m3u8
 CCTV-14,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226947/1.m3u8?
 CCTV-14,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001240/index.m3u8
-CCTV-15,http://198.204.228.26/live/cctv15hd.m3u8
 CCTV-15,http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-15,http://198.204.228.26/live/cctv15hd.m3u8
 CCTV-15,http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226333/1.m3u8?
 CCTV-15,http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001338/index.m3u8
 CCTV-16,http://107.150.60.122/live/cctv16hd.m3u8
@@ -618,7 +618,6 @@ JG影视解说,https://mursor.ottiptv.cc/douyu/9391277
 鬼经典老片,https://mursor.ottiptv.cc/yy/1463783198
 国漫动漫,https://mursor.ottiptv.cc/yy/1354768828
 8090.电影一哥,https://mursor.ottiptv.cc/yy/29197808
-恐怖电影,https://mursor.ottiptv.cc/yy/24066336
 1930年代经典电影,https://mursor.ottiptv.cc/yy/1356363815
 动漫《火影疾风传》,https://mursor.ottiptv.cc/yy/1459675153
 电影,https://mursor.ottiptv.cc/yy/37454459
