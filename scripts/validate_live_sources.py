@@ -199,6 +199,48 @@ def main():
         else:
             log("%s 与主文件一致（配置引用此路径）" % v2.name)
 
+    # 静态备选源：刻意不进 Action 重建范围（2026-11-23 用户决定「不动」）。
+    # 但主源重建后频道集合会变，备选源就落后了 —— 这里只做**警告级**提醒，
+    # 不阻断 CI（静态本身是设计意图，不是错误）。
+    for main_f, bak_f in (("TVLives.txt", "TVLivesBackup.txt"),
+                           ("TVLives.m3u", "TVLivesBackup.m3u")):
+        mp, bp = Path(main_f), Path(bak_f)
+        if not (mp.exists() and bp.exists()):
+            warn.append("静态备选源 %s 缺失（客户端「(备)」/「备选直播源」入口会失效）" % bak_f)
+            continue
+        def chans(p):
+            names = set()
+            try:
+                for ln in p.read_bytes().decode('utf-8', 'ignore').splitlines():
+                    s = ln.strip()
+                    if not s:
+                        continue
+                    if s.startswith('#EXTINF'):
+                        # m3u 格式：#EXTINF:-1 group-title="央视",CCTV-1
+                        if ',' in s:
+                            names.add(s.rsplit(',', 1)[1].strip())
+                        continue
+                    if s.startswith('#'):
+                        continue
+                    if ',' in s:
+                        names.add(s.split(',', 1)[0].strip())
+            except Exception:
+                pass
+            return names
+        m_c, b_c = chans(mp), chans(bp)
+        if not b_c:
+            warn.append("%s 解析不到频道名" % bak_f)
+        else:
+            miss = m_c - b_c
+            extra = b_c - m_c
+            if miss or extra:
+                warn.append(
+                    "静态备选源 %s 与 %s 频道集合不一致（主源缺于备选 %d 个 / 备选多出 %d 个）"
+                    "——备选源刻意不进 Action 重建范围，需手工同步：cp %s %s"
+                    % (bak_f, main_f, len(miss), len(extra), main_f, bak_f))
+            else:
+                log("%s 与 %s 频道集合一致（静态，不参与重建）" % (bak_f, main_f))
+
     for w in warn:
         log("WARN " + w)
     if bad:

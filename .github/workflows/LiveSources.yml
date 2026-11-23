@@ -59,6 +59,12 @@ jobs:
           # LiveSports_v2.txt / BiliLive_v2.txt（v1.6.6 起改用 v2 新路径规避
           # CDN 陈旧缓存）。此前只 add 主文件，导致 v2 永远停留在旧版本——
           # 工作区里两者一致、validate 照样通过，仓库却已不一致。
+          # ⚠️⚠️ 刻意**不要**把 TVLivesBackup.txt / TVLivesBackup.m3u 加进来：
+          #   它们是**静态备选源**，不参与每晚重建（2026-11-23 用户明确决定「不动」）。
+          #   作用：Action 重建 TVLives_v2.* 时，这批人工核验过的线路仍保留在备选源中，
+          #   供客户端「(备)」/「备选直播源」入口使用。
+          #   代价：主源新增/删除频道时备选源会落后 —— 这是接受的取舍，
+          #   需要时手工同步一次（cp TVLives_v2.txt TVLivesBackup.txt 等）。
           git add TVLives.txt TVLives_v2.txt TVLives.m3u TVLives_v2.m3u \
                   BiliLive.txt BiliLive_v2.txt LiveSports.txt LiveSports_v2.txt
           if git diff --cached --name-only | grep -q .; then
