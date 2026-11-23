@@ -81,8 +81,13 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
+          # ubuntu-latest 不带 ffmpeg（实测 2026-11-23：command -v ffmpeg 为空），
+          # 必须先从系统源装上，否则抽帧步骤空跑、artifact 只有一句话没有拼图。
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          fi
           python3 -m pip install --quiet Pillow || true
-          command -v ffmpeg >/dev/null || echo "::warning::ffmpeg 不可用，跳过抽帧审查"
+          command -v ffmpeg >/dev/null || echo "::warning::ffmpeg 仍不可用，跳过抽帧审查"
           python3 scripts/live_ad_probe.py --old HEAD --out _adprobe --max 24 --workers 6 \
             || echo "::warning::抽帧审查未产出，不影响构建"
           if [ -f _adprobe/review.md ]; then
