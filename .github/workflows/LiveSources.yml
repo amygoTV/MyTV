@@ -68,6 +68,41 @@ jobs:
           head -50 /tmp/live_report.md || true
           echo "SUMMARY=$(cat /tmp/live_summary.txt 2>/dev/null || echo '')" >> "$GITHUB_OUTPUT"
 
+      # 抽帧审查（半自动，只出图不判废）：只对「本次重建相对 HEAD 新增的线路」密集抽帧，
+      # 生成人工复核拼图 + 清单，上传为 artifact 供定期复核。
+      # ⚠️ 设计红线：
+      #   - 不自动拉黑、不改 ad_blacklist.txt、不改产物、不阻断提交（continue-on-error）。
+      #     打分只用于把最可疑的排前面，最终定案靠人看画面（三分法，见脚本头部注释）。
+      #   - 必须在 Commit 之前跑：对比基准是 HEAD（重建前版本）；commit 后 HEAD 变新版，
+      #     新增线路会被算成 0，审查恒为空。
+      #   - 跳过 UDP/RTP 组播（含 /udp/ 路径）、IPv6、非 http(s)——本机与 CI 都拉不到。
+      - name: Probe newly added lines (frames for manual review)
+        id: adprobe
+        if: always()
+        continue-on-error: true
+        run: |
+          python3 -m pip install --quiet Pillow || true
+          command -v ffmpeg >/dev/null || echo "::warning::ffmpeg 不可用，跳过抽帧审查"
+          python3 scripts/live_ad_probe.py --old HEAD --out _adprobe --max 24 --workers 6 \
+            || echo "::warning::抽帧审查未产出，不影响构建"
+          if [ -f _adprobe/review.md ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "---" >> "$GITHUB_STEP_SUMMARY"
+            cat _adprobe/review.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload ad-probe review sheet
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ad-probe-${{ github.run_number }}
+          path: |
+            _adprobe/review.md
+            _adprobe/review_queue.json
+            _adprobe/sheet_*.jpg
+          if-no-files-found: ignore
+          retention-days: 14
+
       - name: Commit if changed
         run: |
           git config --local user.name "github-actions[bot]"
