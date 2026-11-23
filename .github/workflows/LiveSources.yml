@@ -54,7 +54,12 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add TVLives.txt BiliLive.txt LiveSports.txt
+          # ⚠️ 必须连 *_v2.* 一起 add：客户端配置引用的是 TVLives_v2.txt /
+          # LiveSports_v2.txt / BiliLive_v2.txt（v1.6.6 起改用 v2 新路径规避
+          # CDN 陈旧缓存）。此前只 add 主文件，导致 v2 永远停留在旧版本——
+          # 工作区里两者一致、validate 照样通过，仓库却已不一致。
+          git add TVLives.txt TVLives_v2.txt TVLives.m3u TVLives_v2.m3u \
+                  BiliLive.txt BiliLive_v2.txt LiveSports.txt LiveSports_v2.txt
           if git diff --cached --name-only | grep -q .; then
             git commit -m "chore(live): 自动重建直播源（权威频道表保底 + 广告/错台过滤 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
             git pull --rebase origin "${GITHUB_REF_NAME}" || true
@@ -72,6 +77,21 @@ jobs:
       - name: Purge jsdelivr cache for fixed @master URLs
         if: env.PURGE == '1'
         run: python3 scripts/purge_cdn.py --changed
+
+      # 防回归：漏 add *_v2.* 时工作区照样一致、validate 照样通过，
+      # 只有比对「已提交的内容」才能发现。客户端读的就是 _v2 那份。
+      - name: Verify committed files are consistent
+        if: env.PURGE == '1'
+        run: |
+          set -e
+          for pair in "TVLives.txt TVLives_v2.txt" "LiveSports.txt LiveSports_v2.txt" "BiliLive.txt BiliLive_v2.txt"; do
+            set -- $pair
+            if ! git show "HEAD:$1" | cmp -s - <(git show "HEAD:$2"); then
+              echo "::error::已提交的 $1 与 $2 内容不一致（漏提交？），客户端读的是 $2"
+              exit 1
+            fi
+          done
+          echo "已提交内容一致性校验通过"
 
       - name: Summary
         if: always()
