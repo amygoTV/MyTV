@@ -94,15 +94,53 @@ jobs:
           done
           echo "已提交内容一致性校验通过"
 
+      # 防回归：jsdelivr 的 purge **只覆盖 CF+FY，不覆盖 Gcore 边缘**。
+      #   而 TVLives_v2.* / BiliLive_v2.* / LiveSports_v2.* 每天由本工作流重建 →
+      #   一旦有配置把它们指向 gcore，该入口就永远是旧版（v1.6.30 实测：gcore 上
+      #   的 TVLives_v2.txt 仍是含广告污染源的旧内容，主 cdn 已是新版）。
+      #   规则：**每天会变的文件只走 cdn；gcore 只放静态不变的 TVLivesBackup.m3u**。
+      - name: Verify no mutable file is served from gcore
+        run: |
+          set -e
+          bad=0
+          while IFS= read -r f; do
+            hits=$(grep -n "gcore\..*master/TVLives_v2\|gcore\..*master/BiliLive_v2\|gcore\..*master/LiveSports_v2" "$f" || true)
+            if [ -n "$hits" ]; then
+              echo "::error::$f 把每天重建的源指向 gcore（purge 不覆盖 Gcore → 永远陈旧）: $hits"
+              bad=1
+            fi
+          done < <(find . -name '*.json' -not -path './node_modules/*' -not -path './.git/*')
+          if [ "$bad" -ne 0 ]; then exit 1; fi
+          echo "gcore 入口只指向静态文件，校验通过"
+
+      # 防回归：已删除的 PlatformLive.txt 不应再被任何配置引用（v1.4.5 移除 → 404 死链）
+      - name: Verify no dangling PlatformLive reference
+        run: |
+          set -e
+          bad=0
+          while IFS= read -r f; do
+            if grep -q "PlatformLive" "$f"; then
+              echo "::error::$f 仍引用已删除的 PlatformLive.txt（404 死链）"
+              bad=1
+            fi
+          done < <(find . -name '*.json' -not -path './node_modules/*' -not -path './.git/*')
+          if [ "$bad" -ne 0 ]; then exit 1; fi
+          echo "无 PlatformLive 死链，校验通过"
+
       - name: Summary
         if: always()
         run: |
           {
             echo "### 直播源自动重建完成"
             echo ""
-            echo "文件：TVLives.txt / BiliLive.txt / LiveSports.txt（PlatformLive 已移除）"
+            echo "产物文件（**主文件 + v2 一起提交**，客户端订阅的是 _v2 那份）："
+            echo "- TVLives.txt / **TVLives_v2.txt** / TVLives.m3u / **TVLives_v2.m3u**"
+            echo "- BiliLive.txt / **BiliLive_v2.txt**"
+            echo "- LiveSports.txt / **LiveSports_v2.txt**"
+            echo ""
+            echo "静态备选源 TVLivesBackup.txt / TVLivesBackup.m3u **不在重建范围**（抗每晚覆盖，需手工同步）"
             echo ""
             echo '```'
-            head -c 2000 TVLives.txt 2>/dev/null | head -20
+            head -c 2000 TVLives_v2.txt 2>/dev/null | head -20
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
