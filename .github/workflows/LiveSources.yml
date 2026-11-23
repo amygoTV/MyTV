@@ -51,6 +51,23 @@ jobs:
       - name: Validate output (format / ad / must-have / order / NewTV groups)
         run: python3 scripts/validate_live_sources.py
 
+      # ⚠️ 必须在 Commit 之前跑：此时 HEAD 还是「重建前」的版本，
+      #    与工作区的新产物对比才能算出真实差异。放在 commit 之后 HEAD 已是新版，
+      #    diff 会恒为空。
+      - name: Generate live sources change report
+        id: report
+        if: always()
+        run: |
+          python3 scripts/live_diff_report.py --old HEAD --new . \
+            --summary-file /tmp/live_summary.txt > /tmp/live_report.md || true
+          {
+            echo ""
+            cat /tmp/live_report.md
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "---- 变更报告（节选）----"
+          head -50 /tmp/live_report.md || true
+          echo "SUMMARY=$(cat /tmp/live_summary.txt 2>/dev/null || echo '')" >> "$GITHUB_OUTPUT"
+
       - name: Commit if changed
         run: |
           git config --local user.name "github-actions[bot]"
@@ -68,7 +85,15 @@ jobs:
           git add TVLives.txt TVLives_v2.txt TVLives.m3u TVLives_v2.m3u \
                   BiliLive.txt BiliLive_v2.txt LiveSports.txt LiveSports_v2.txt
           if git diff --cached --name-only | grep -q .; then
-            git commit -m "chore(live): 自动重建直播源（权威频道表保底 + 广告台名称/错台过滤 + 实测可播） $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
+            # 简短统计来自上一步的变更报告（step id: report），
+            # 写进 commit message → git log 一眼看出这次改了啥
+            # 用 -F 从文件读，避免多行 message 在 YAML 里被误解析
+            {
+              echo "chore(live): 自动重建直播源（权威频道表保底 + 广告台名称/错台过滤 + 实测可播） ${{ steps.report.outputs.SUMMARY }}"
+              echo ""
+              echo "$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M') CST"
+            } > /tmp/commit_msg.txt
+            git commit -F /tmp/commit_msg.txt
             git pull --rebase origin "${GITHUB_REF_NAME}" || true
             git push origin HEAD:"${GITHUB_REF_NAME}"
             echo "PURGE=1" >> "$GITHUB_ENV"
