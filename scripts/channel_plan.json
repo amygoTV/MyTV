@@ -82,9 +82,8 @@
       "group": "央视频道",
       "order": 0,
       "ipv4": [
-        "http://204.12.221.218:8181/3m1080p/cctv1.m3u8",
         "http://198.204.228.26/live/cctv1hd.m3u8"
-      ],
+               ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226895/1.m3u8?",
         "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001022/index.m3u8"
@@ -562,7 +561,9 @@
       "group": "卫视频道",
       "order": 10,
       "ipv4": [
-        "http://107.150.60.122/live/tjwshd.m3u8"
+        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=tjwshd",
+        "http://192.151.150.154/live/tjwshd.m3u8",
+        "http://204.12.221.218:8181/3m1080p/tjws.m3u8"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226954/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Eaf3wyULP1h575eM_4ByMDg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
@@ -585,9 +586,7 @@
       "group": "卫视频道",
       "order": 12,
       "ipv4": [
-        "http://112.27.5.218:9901/tsfile/live/faacts/0138_1.m3u8?key=txiptv&playlive=1&authid=0",
-        "http://221.213.43.82:8888/newlive/live/hls/46/live.m3u8",
-        "http://111.59.63.32:9901/tsfile/live/1042_1.m3u8"
+        "http://112.27.5.218:9901/tsfile/live/faacts/0138_1.m3u8?key=txiptv&playlive=1&authid=0"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226956/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Ei6ZIpVizXlewg-YfGvH8dA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
@@ -735,11 +734,9 @@
       "group": "卫视频道",
       "order": 24,
       "ipv4": [
-        "http://221.213.43.82:8888/newlive/live/hls/45/live.m3u8",
+        "https://event.pull.hebtv.com/live/live101.m3u8",
         "http://58.252.12.164:8000/udp/239.77.1.214:5146",
-        "http://58.252.12.164:8000/udp/239.77.0.148:5146",
-        "http://event.pull.hebtv.com/jishi/weishi_tingyun.m3u8",
-        "https://event.pull.hebtv.com/live/live101.m3u8"
+        "http://58.252.12.164:8000/udp/239.77.0.148:5146"
       ],
       "ipv6": [
         "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227014/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErSGjhI3DMaaAASPrbQJYTg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
@@ -878,14 +875,6 @@
       ],
       "ipv6": []
     },
-    "东森新闻": {
-      "group": "港澳台频道",
-      "order": 4,
-      "ipv4": [
-        "https://d2jc41c1shgcol.cloudfront.net/live/EBCNews/playlist.m3u8"
-      ],
-      "ipv6": []
-    },
     "TVBS欢乐台": {
       "group": "港澳台频道",
       "order": 5,
@@ -997,14 +986,6 @@
       ],
       "ipv6": []
     },
-    "Dali TV (大立電視台)": {
-      "group": "港澳台频道",
-      "order": 11,
-      "ipv4": [
-        "http://www.dalitv.com.tw:4568/live/dali/index.m3u8"
-      ],
-      "ipv6": []
-    },
     "Taiwan Indigenous TV": {
       "group": "海外频道",
       "order": 3,
@@ -1017,7 +998,8 @@
       "group": "港澳台频道",
       "order": 12,
       "ipv4": [
-        "http://38.64.72.148:80/hls/modn/list/2013/chunklist1.m3u8"
+        "http://38.64.72.148:80/hls/modn/list/2012/chunklist1.m3u8",
+        "http://38.64.72.148:80/hls/modn/list/2014/chunklist1.m3u8"
       ],
       "ipv6": []
     },
