@@ -24,12 +24,15 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import live_groups
+
 for stream in (sys.stdout, sys.stderr):
     if hasattr(stream, "reconfigure"):
         stream.reconfigure(encoding="utf-8", errors="replace")
 
-GROUPS = ["央视", "卫视", "港澳台"]
-EXTRA_GROUPS = ["影视轮播", "体育频道"]
+# 分组顺序统一由 scripts/live_groups.py 从 channel_plan.json 推导
+# （v1.6.26：原先这里硬编码 5 组，构建侧 v1.6.23 已扩到 7 组 → 校验必失败）
 AD_RE = re.compile(r"(支持作者|请\s*user|扫码|公众号|列表更新时间|广告|维护中?)", re.I)
 BLACKLIST_FILE = Path("scripts/ad_blacklist.txt")
 FILES = ("TVLives.txt", "TVLives_v2.txt", "BiliLive.txt", "BiliLive_v2.txt",
@@ -112,9 +115,10 @@ def main():
 
     groups, order, errors = parse("TVLives.txt")
     bad += ["TVLives.txt " + e for e in errors]
-    want = GROUPS + [g for g in EXTRA_GROUPS if g in groups]
-    if order != want:
-        bad.append("TVLives.txt 分组顺序 %s != %s" % (order, want))
+    order_errs, want = live_groups.check_order(order, plan)
+    if order_errs:
+        bad += ["TVLives.txt " + e for e in order_errs]
+        bad.append("TVLives.txt 实际分组顺序 %s（计划 %s）" % (order, want))
     else:
         log("TVLives.txt 分组顺序 OK (%s)" % " / ".join(order))
 

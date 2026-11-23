@@ -34,10 +34,13 @@ import html
 import json
 import os
 import re
+import sys
 import time
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+import live_groups
 REPO = os.path.dirname(HERE)
 
 UA_PLAYER = 'okHttp/Mursor-1.4.0.0'
@@ -336,10 +339,11 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
     print('\n=== 构建 TVLives.txt（保底频道 + 参考分组） ===', flush=True)
     channels = plan['channels']
 
-    # 分组名统一为参考文件 TVBoxBD0130 的写法
-    GROUP_MAP = {'央视频道': '央视', '卫视频道': '卫视', '港澳台频道': '港澳台',
-                 '央视付费': '央视付费', '海外频道': '海外频道'}
-    groups_order = ['央视', '卫视', '港澳台', '央视付费', '海外频道', '影视轮播', '体育频道']
+    # 分组名与顺序统一由 scripts/live_groups.py 从 channel_plan.json 推导
+    # （v1.6.26：原先这里与校验脚本各写死一份，v1.6.23 加组后校验侧没跟上，
+    #   导致 CI 每次 build 完就在 validate 步骤失败）
+    GROUP_MAP = live_groups.GROUP_MAP
+    groups_order = live_groups.groups_order(plan)
 
     # 1) 保底频道：IPv4 逐条实测；IPv6 无出口不探测，直接保留
     v4_tasks, v6_map = [], {}
