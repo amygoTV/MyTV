@@ -86,3 +86,73 @@ def check_order(observed, plan=None, base_dir=None):
         if g not in observed:
             errors.append('缺少必需分组 %r' % g)
     return errors, want
+
+
+# ---------------------------------------------------------------------------
+# v1.6.35：频道顺序的**单一数据源**
+#
+# 背景：产物的频道顺序原先完全依赖 channel_plan.json 里 channels 字典的
+# **插入顺序**（build 侧 for name, meta in channels.items()），而每个频道
+# 自带的 order 字段被完全忽略；cctv_order / satellite_order / hktw_order
+# 这些「权威顺序清单」虽然写进了计划文件，却从未被任何代码读取。
+# 后果：CCTV5+ 在 channels 字典里排到了末尾（第 17 位），
+#       产物里就出现在 CCTV-17 之后，而不是紧跟 CCTV-5 —— 用户反馈「说好的
+#       CCTV5+ 插到 CCTV5 下面呢」就是这个原因。
+#
+# 现在：顺序以计划文件里的 *_order 清单为权威，channels 的 order 字段为兜底。
+# ---------------------------------------------------------------------------
+
+# 计划里的顺序清单 → 所属分组（用于把清单映射到产物分组）
+ORDER_LISTS = (
+    'cctv_order',      # 央视频道：央视 + CGTN + 教育 + CETV
+    'cgtn_order',      # CGTN 各语种（cctv_order 未覆盖时补充）
+    'edu_order',       # 中国教育 1~4 台
+    'satellite_order',  # 卫视频道
+    'hktw_order',      # 港澳台频道
+    'paid_order',      # 央视付费
+)
+
+
+def channel_order(plan=None, base_dir=None):
+    """返回 {频道名: 排序序号}，权威来源是计划文件的 *_order 清单。
+
+    * 清单里出现的频道，按清单次序排序；
+    * 清单没覆盖的频道，用 channels[name]['order'] 兜底；
+    * 两者都没有的，排到最后（保持相对次序）。
+    """
+    try:
+        plan = plan if plan is not None else load_plan(base_dir)
+    except Exception:
+        return {}
+    ch = plan.get('channels') or {}
+
+    order = {}
+    seq = 0
+    for key in ORDER_LISTS:
+        for name in (plan.get(key) or []):
+            if name in ch and name not in order:
+                order[name] = seq
+                seq += 1
+
+    # 兜底：channels 里的 order 字段
+    fallback = []
+    for name, meta in ch.items():
+        if name in order:
+            continue
+        o = meta.get('order')
+        fallback.append((o if isinstance(o, int) else 10 ** 6, name))
+    fallback.sort()
+    for _, name in fallback:
+        order[name] = seq
+        seq += 1
+    return order
+
+
+def sorted_channels(channels, plan=None, base_dir=None):
+    """按权威顺序返回频道名列表。
+
+    channels 可以是 dict（channel_plan.json 的 channels 段）。
+    """
+    order = channel_order(plan, base_dir)
+    names = list(channels.keys())
+    return sorted(names, key=lambda n: (order.get(n, 10 ** 6), names.index(n)))

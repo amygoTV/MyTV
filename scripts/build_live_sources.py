@@ -213,7 +213,11 @@ def clean_url(u):
     m = re.search(r',\s*https?://', u)
     if m:
         u = u[:m.start()]
-    return u.split('#', 1)[0].strip()
+    u = u.split('#', 1)[0].strip()
+    # v1.6.36：部分源池 m3u 里 URL 尾部带逗号/空白（如 ?zxinjd,），
+    # 直接落盘会被校验脚本判为「地址含逗号或空格」。
+    u = u.rstrip(',').strip()
+    return u
 
 
 def write_txt(path, lines):
@@ -384,14 +388,21 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
             })
 
     # 2) 保底频道：实测存活优先，探测失败也保留原始线路
-    for name, meta in channels.items():
+    # v1.6.35：按权威顺序（cctv_order / satellite_order / hktw_order）遍历，
+    # 不再依赖 channels 字典的插入顺序 —— 否则 CCTV5+ 会跑到 CCTV17 后面。
+    for name in live_groups.sorted_channels(channels, plan):
+        meta = channels[name]
         v4_all = [clean_url(u) for u in meta['ipv4'] if not is_ipv6(u)]
         alive = [u for u in v4_all if u in alive_urls]
         rest = [u for u in v4_all if u not in alive_urls]
         urls = [u for u in (alive + rest)[:3] + v6_map.get(name, [])[:2]
                 if not is_blacklisted(u)]
         if len(urls) < 3:
-            urls = [clean_url(u) for u in meta['ipv4'][:3] if not is_blacklisted(u)]
+            # v1.6.36：原写法用 meta['ipv4'][:3] 直接覆盖 urls，会把已保留的 IPv6
+            # 一起冲掉；当 IPv4 全被广告黑名单剔除时 urls 变空 → 整个频道从产物里
+            # 消失（保底校验报「保底频道缺失」）。改为「补充」而非「覆盖」。
+            extra = [clean_url(u) for u in meta['ipv4'] if not is_blacklisted(u)]
+            urls = extra + [u for u in urls if u not in extra]
         add(GROUP_MAP.get(meta['group'], meta['group']), name, urls)
 
     # 4) 公网影视轮播 / 体育（每晚实测）
@@ -509,7 +520,7 @@ def build_live_sports(out_dir, workers, probe_limit):
             continue
         if is_blacklisted(u):
             continue
-        kept.append((clean_name(n), n, u))
+        kept.append((clean_name(n), n, clean_url(u)))
     if probe_limit > 0 and len(kept) > probe_limit:
         kept = kept[:probe_limit]
     alive = probe_many([u for _, _, u in kept], workers, '赛事')
