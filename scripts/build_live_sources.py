@@ -48,6 +48,37 @@ REPO = os.path.dirname(HERE)
 
 UA_PLAYER = 'okHttp/Mursor-1.4.0.0'
 
+# ---------------------------------------------------------------- 分辨率质量排序（v1.6.37）
+# 用户要求「高清源前面、标清台放后面」。判定依据是 scripts/resolution_map.json
+# 里 ffprobe 实测的真实分辨率（scripts/probe_resolution.py 生成），不猜 URL 的
+# hd/sd 字样——实测发现 438 条线路里 345 条 URL 无分辨率标识，且 0001_1.m3u8
+# 是 1080p 而 0002_1.m3u8 是 720x576，光看 URL 完全分不出来。
+# 排序只作用于**同一频道内部的线路**，频道之间的顺序仍由 cctv_order 等权威清单决定。
+RESOLUTION_MAP_FILE = os.path.join(HERE, 'resolution_map.json')
+_TIER_SCORE = {'4K': 4, 'FHD': 3, 'HD': 2, 'SD': 1, 'UNKNOWN': 0}
+
+
+def load_resolution_map():
+    try:
+        with open(RESOLUTION_MAP_FILE, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def sort_by_quality(urls, res_map):
+    """同一频道内：已知分辨率按档位降序（4K>FHD>HD>SD），UNKNOWN/IPv6 沉底。
+
+    稳定排序：同档位保持传入顺序（探测存活的仍排在探测失败的前面）。
+    IPv6 一律沉底——它是无出口环境的备用线路，且本机实测不到分辨率。
+    """
+    def key(u):
+        if is_ipv6(u):
+            return (-1, 0)
+        info = res_map.get(u) or {}
+        return (_TIER_SCORE.get(info.get('tier', 'UNKNOWN'), 0), 0)
+    return sorted(urls, key=key, reverse=True)
+
 # ---------------------------------------------------------------- 上游源
 # 正规台完全由权威频道表驱动；附加组已移除（内容与分类不符）
 BILI_SOURCES = [
@@ -339,6 +370,8 @@ def build_special_lives(out_dir, workers, probe_limit):
 def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, prev_content=None):
     print('\n=== 构建 TVLives.txt（保底频道 + 参考分组） ===', flush=True)
     channels = plan['channels']
+    res_map = load_resolution_map()
+    print('  分辨率质量表：%d 条实测记录' % len(res_map), flush=True)
 
     # 电视台分组只剔除名称本身就是广告/购物/测试/博彩的台；正常频道即使
     # 正在插播广告也保留。若权威频道表里出现这类名称，跳过并让校验报缺失，
@@ -403,6 +436,9 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
             # 消失（保底校验报「保底频道缺失」）。改为「补充」而非「覆盖」。
             extra = [clean_url(u) for u in meta['ipv4'] if not is_blacklisted(u)]
             urls = extra + [u for u in urls if u not in extra]
+        # v1.6.37：同一频道内线路按实测分辨率排序（高清在前、标清/未测沉底）。
+        # 频道间顺序由上面的 sorted_channels(channels, plan) 决定，不受影响。
+        urls = sort_by_quality(urls, res_map)
         add(GROUP_MAP.get(meta['group'], meta['group']), name, urls)
 
     # 4) 公网影视轮播 / 体育（每晚实测）
@@ -575,22 +611,44 @@ def main():
     ap.add_argument('--workers', type=int, default=16)
     ap.add_argument('--max-per-source', type=int, default=400)
     ap.add_argument('--min-channels', type=int, default=25)
+    ap.add_argument('--only-tvlives', action='store_true',
+                    help='只重建 TVLives（保底频道+质量排序），跳过公网源拉取（易卡死）')
     args = ap.parse_args()
 
     with open(os.path.join(HERE, 'channel_plan.json'), encoding='utf-8') as f:
         plan = json.load(f)
 
-    # 影视轮播 / 体育：每晚重新拉取并实测（公网源易失效）
-    special = build_special_lives(args.out_dir, args.workers, args.probe_limit)
+    if args.only_tvlives:
+        # 公网源（peterhchina.github.io）无代理时每源 3×30s 重试、串行约 14 分钟，
+        # 只调线路顺序时无需重拉。影视轮播/体育频道从上一版产物回填。
+        special = {'movie': {}, 'sports': {}}
+        prev = os.path.join(args.out_dir, 'TVLives.txt')
+        if os.path.exists(prev):
+            cur_g = None
+            for line in open(prev, encoding='utf-8-sig'):
+                s = line.strip()
+                if s.endswith('#genre#'):
+                    cur_g = s.split(',', 1)[0]
+                    continue
+                if ',' in s and cur_g in ('影视轮播', '体育频道'):
+                    name, url = s.split(',', 1)
+                    key = 'movie' if cur_g == '影视轮播' else 'sports'
+                    special[key].setdefault(name.strip(), []).append(url.strip())
+            print('[only-tvlives] 从上一版回填 影视轮播 %d 台 / 体育频道 %d 台' % (
+                len(special['movie']), len(special['sports'])), flush=True)
+    else:
+        # 影视轮播 / 体育：每晚重新拉取并实测（公网源易失效）
+        special = build_special_lives(args.out_dir, args.workers, args.probe_limit)
 
     summary, failed, built = {}, [], []
-    jobs = [
-        ('TVLives.txt', lambda: build_tvlives(plan, special, args.out_dir, args.workers,
-                        args.probe_limit, args.max_per_source)),
-        ('BiliLive.txt', lambda: build_simple('BiliLive.txt', BILI_SOURCES, args.out_dir,
-                        args.workers, args.probe_limit, args.max_per_source)),
-        ('LiveSports.txt', lambda: build_live_sports(args.out_dir, args.workers, args.probe_limit)),
-    ]
+    jobs = [('TVLives.txt', lambda: build_tvlives(plan, special, args.out_dir, args.workers,
+                    args.probe_limit, args.max_per_source))]
+    if not args.only_tvlives:
+        jobs += [
+            ('BiliLive.txt', lambda: build_simple('BiliLive.txt', BILI_SOURCES, args.out_dir,
+                            args.workers, args.probe_limit, args.max_per_source)),
+            ('LiveSports.txt', lambda: build_live_sports(args.out_dir, args.workers, args.probe_limit)),
+        ]
     for name, fn in jobs:
         prev = load_prev(args.out_dir, name)
         res = fn()

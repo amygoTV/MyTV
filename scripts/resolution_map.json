@@ -1,0 +1,2630 @@
+{
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226894/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226335/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001022/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226895/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228277/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001221/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001220/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226468/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001188/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226471/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001186/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225761/1.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226893/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226469/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cctv1hd.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226946/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001236/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cctv4hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/cctv6hd.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226485/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001189/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://38.75.136.137:98/gslb/dsdqpub/cctv5hd.m3u8?auth=testpub": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/cctv8hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226944/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001237/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226937/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001238/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226334/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001309/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226942/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001239/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226316/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001328/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://120.76.248.139/live/bfgd/4200000246.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cctv10hd.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226947/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001240/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cctv12hd.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/cctv9hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226333/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001338/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://192.151.150.154/live/cctv11hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227002/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001248/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cctv14hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226318/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001241/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cctv15hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://192.151.150.154/live/cctv17hd.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001058/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/CGTN_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://173.208.212.130:8181/720p/cctv17.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://english-livebkali.cgtn.com/live/encgtn.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:1a09:df::401d]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225602/1.m3u8?icpid=88888888&from=5&hms_devid=980&online=1720054946&vqe=3": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:5e01:34::20]:6610/ZTE_CMS/00000001000000060000000000000528/index.m3u8?IAS": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://0472.org/hls/cgtnd.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://0472.org/hls/cgtne.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/ey_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/ey_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "https://0472.org/hls/cgtnf.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/fy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/fy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://russian-liveali.cgtn.com/hls/LSvexABhNipibK5KRuUkvHZ7220802LSTeze9o8tdFXMHsb1VosgoT220802cd/playlist.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://0472.org/hls/cgtnx.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/xbyy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/xbyy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://francais-liveali.cgtn.com/hls/LSvev95OuFZtKLc6CeKEFYXj220802LSTeV6PO0Ut9r71Uq3k5goCA220802cd/playlist.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://0472.org/hls/cgtna.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002826/index.m3u8?virtualDomain=yinhe.live_hls.zte.com": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002826/index.m3u8?virtualDomain=yinhe.live_hls.zte.com&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://espanol-liveali.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND&bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "https://arabic-liveali.cgtn.com/hls/LSveq57bErWLinBnxosqjisZ220802LSTefTAS9zc9mpU08y3np9TH220802cd/playlist.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226509/1.m3u8?zoneoffset=480&servicetype=1&icpid=&limitflux=-1&limitdur=-1&tenantId=8601&accountinfo=%7E%7EV2.0%7EIGb_ib7rnBX9_sANRKq9sg%7EpK8OKM5JoJWWbLRyLfPcUMkwWZ90MzSI9S9PDltJsYzd0ZGcS3Tkh7syciNKJa-w60mDOdwtDyoNwCx9aRgzHNH9AUREV_qvNJtXHRPzYw0%7EExtInfo9bj61dxzlMXrsixrqcFYPg%3D%3D%3A20221022013542%2C915973%2C119.123.71.209%2C20221022013542%2C10000100000000050000000003873458%2C915973%2C-1%2C0%2C1%2C%2C%2C2%2C%2C%2C%2C2%2C%2C10000100000000060000000007253514_0%2CEND&GuardEncType=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001026/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/Y2RuZXhfaWQ9YWxfaGxzX2xkdnQmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8": {
+  "w": 3840,
+  "h": 2160,
+  "tier": "4K",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226899/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ETYfTgTra_pUx2cPrgZ_BDw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001023/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/cctv16hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226897/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0BmO6uHF7WFoTed__Xr3NQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001033/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://198.204.228.26/live/cetv1hd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226898/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0uh4lyjjBCCN7TCq21vSIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001013/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://74.91.26.218:82/live/hnwshd.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://hlspackager.akamaized.net/live/DB/CGTN_ENGLISH/HLS/CGTN_ENGLISH.m3u8": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226900/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EcYPi33WFyhvd6SjmqUKhJg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001029/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hnwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://hlspackager.akamaized.net/live/DB/CGTN_DOCUMENTARY/HLS/CGTN_DOCUMENTARY.m3u8": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226943/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0QmKQ_slRCwvVVUUfxPVbw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001037/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://204.12.221.218:8181/3m1080p/jsws.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8": {
+  "w": 640,
+  "h": 360,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226957/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjW26v5VaHGy1jQuIA-4EbA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001028/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/dfwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "https://amg00405-rakutentv-cgtndocumentary-rakuten-0ql8j.amagi.tv/master.m3u8": {
+  "w": 640,
+  "h": 360,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226961/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E2MGyx659D_aaDPP0qt3NgA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001032/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=bjwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0127_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226959/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGrVNEZREjuNVKiTJo2mtwg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001030/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/ahwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001222/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:2001:20:2800:0:df6e:eb17]/wh7f454c46tw1784575403_-1712002709/ott.mobaibox.com/PLTV/3/224/3221228221/index.m3u8?icpid=3&RTS=1669700385&from=40&popid=40&hms_devid=2114&prioritypopid=40&vqe=3": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ahwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gdwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226954/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Eaf3wyULP1h575eM_4ByMDg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001036/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/hawshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/gdwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226952/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EREB40lnZnCEwjRy7LZuhIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001027/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hawshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://204.12.221.218:8181/3m1080p/tjws.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226956/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Ei6ZIpVizXlewg-YfGvH8dA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001034/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://204.12.221.218:8181/3m1080p/szws.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=szwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226995/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EBQiz3wrGrpG0CUSRIJ-7Jg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001130/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0113_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/hbwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226966/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E6qJH8Fd-zgCGx3P-Ce86cA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001035/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=scwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://192.151.150.154/live/tjwshd.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0131_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227012/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EnqBF03rFwPucF8ODtWxLQQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001184/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/jxwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=lnwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226965/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7UiKL56-L86ihmTWaZ6csw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001031/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227015/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EW5-3AVdwD5KlUpuA4mz7Cg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001225/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://204.12.221.218:8181/3m1080p/scws.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=tjwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226999/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EsGLKaSqf0wDZMbAjeQtfyw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001067/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://204.12.221.218:8181/3m1080p/lnws.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226963/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjTXsJprEx2nE38tdvu5lhA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001129/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/hljwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/gzwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226991/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EQ6F5Mjgs0tJyEArWFL3vQA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001201/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gzwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227010/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EkAhb-89sxdm9fz6-heXCuw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001224/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hljwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227028/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGfQPqRNVeBjTMsZ48qu0SA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001223/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0120_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227016/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESb5Qr3NTpE2ZugIroKoyTw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001070/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/cqwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227014/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErSGjhI3DMaaAASPrbQJYTg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001229/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=snwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/dnwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/ynwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227029/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EEuBMjt2kLMD8fAO7QYER7Q%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001183/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cqwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227018/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErN_hoRDwApMKnJqiNHvn9w%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001068/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dnwshd": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/hainws.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227011/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ExAUu61iVvo_xYbANWJhgXw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001065/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://st-video.xjmty.com/fs/livedit/e55abfa37af26e19/8ce9971c2177b3dd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://125.93.74.27:9002/tsfile/live/0109_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227003/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESco1zinvdUYzleEkXYhIvA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001074/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/gxwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://120.70.60.179:9901/tsfile/live/1006_1.m3u8?authid=0&key=txiptv&playlive=1": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227020/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Err-CLugPnTcUinEM8JeySg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001298/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0117_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nxwshd": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227017/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EacviHy_ucMT27Ymf2iLtZA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001450/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/nxws.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227033/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EdeTB7OZ9G_VNJk5C3t96fQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001072/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://198.204.228.26/live/sxwshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/hewshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0142_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0114_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/gswshd.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://107.150.60.122/live/adws.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://192.151.150.154/live/qhws.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://play-live.ifeng.com/live/06OLEGEGM4G.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://srs.iyb983.cn/video/CYS/index.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:2001:20:2800:0:df6e:eb1d]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2409:8087:2001:20:2800:0:df6e:eb1d]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8?bak=2": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0139_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://[2409:8087:2001:20:2800:0:df6e:eb24]:80/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/test1_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://srs.iyb983.cn:443/video/CYS/index.m3u8": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://[2409:8087:2001:20:2800:0:df6e:eb27]:80/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/test2_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0119_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://112.27.5.218:9901/tsfile/live/0115_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=adws": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://107.150.60.122/live/xmws.m3u8": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://43.152.224.209/qctv.fengshows.cn/live/0701pin72.flv": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://112.27.5.218:9901/tsfile/live/0140_1.m3u8?key=txiptv&playlive=1&authid=0": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=xmws": {
+  "w": 720,
+  "h": 576,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://aktv.top/AKTV/live/aktv/null-5/AKTV.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://59.125.101.122:8080/live/phoenix7188.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://pull-l3-cny.douyincdn.com/live/5f26752efeee9e0c53cf6b530640ce60.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://cloud-play.hhalloy.com/live/4abe46a5faf4865e251ac981287a6e20.m3u8?bak=3": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://pull-l3-cny.douyincdn.com/live/37e4951f0608d79a74ebed4ab2da462a.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://218.202.220.2:5000/nn_live.ts?id=STARTV": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://xstartx.com:4000/udp/239.93.0.156:2193": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://198.16.64.10:8278/tvbshuanle_twn/playlist.m3u8?tid=MA9A4111409641114096&ct=19225&tsum=600f3056bba6413dec3155efd19e2d20": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://120.76.248.139/live/bfgd/4200000473.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://104.192.80.69/api.auete.com/ggg.m3u8.php?id=96": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://38.64.72.148:80/hls/modn/list/2012/chunklist1.m3u8": {
+  "w": 544,
+  "h": 480,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://31.43.191.125:8080/restream/restream/34629": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://162.19.247.76:22222/live/channelv/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://xstartx.com:4000/udp/239.93.0.157:2194": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://38.64.72.148:80/hls/modn/list/2014/chunklist1.m3u8": {
+  "w": 720,
+  "h": 480,
+  "tier": "SD",
+  "ok": true
+ },
+ "http://162.19.247.76:22222/live/huashi/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://104.192.80.69/api.auete.com/ggg.m3u8.php?id=86": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://162.19.247.76:22222/live/uch6/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://23.237.10.66:16372": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://162.19.247.76:22222/live/ztyl/index.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ystq": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dszn": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hjjc": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dyjc": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nxss": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ysjp": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gfjs": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyyy": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyjc": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/31371694": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "http://43.152.224.209/qctv.fengshows.cn/live/0701pcc72.flv": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30712558": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://streamipcfapp.akamaized.net/live/_definst_/live_720/key_b1500.m3u8": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30569079": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/31274232": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30569910": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30611864": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30986994": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/31416048": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/31027196": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/30649359": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29863394": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29982611": {
+  "w": 1280,
+  "h": 688,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/16028551": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/31121607": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/16857432": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9608874": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/24720260": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/26355847": {
+  "w": 1280,
+  "h": 680,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/29982676": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/11774959": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/28806637": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/21059622": {
+  "w": 720,
+  "h": 480,
+  "tier": "SD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/10871113": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/11352878": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/15870999": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/18715610": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/15894162": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29982641": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/29868594": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29982684": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/20380270": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/21059566": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/23903142": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/21059623": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/29982680": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/23352525": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30539411": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/16507906": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/23865072": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29982678": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/23358431": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9559158": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/3508304": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/24396474": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/30539264": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/7642724": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/1274132": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9837291": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8317926": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/2164691": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9639225": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9075333": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8915074": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9348282": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9222870": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9527700": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8415464": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9375743": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9285904": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/2161818": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/2039501": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9396672": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9647834": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/10240495": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/1524969": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/4058285": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/7212528": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/3718888": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9562616": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/3715426": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/7532080": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8475821": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8896723": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8706393": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9312685": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8726221": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9368265": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9431125": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9390955": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9437283": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9437349": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9339251": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9446117": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9368016": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9547575": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9476806": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9720498": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/10064260": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/5067952": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9931766": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/10329310": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9338867": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9445244": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9444320": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9445279": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8778280": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9167273": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9666219": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8774345": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8884164": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9533302": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9457792": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/5424258": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9297412": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/3714736": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9476790": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/10348735": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8706350": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8325511": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9091049": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8651489": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9371407": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/10329300": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8762120": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/1842621": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8362978": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9447668": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1354926655": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382735577": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/8413908": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8912038": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/5187099": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382736816": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382736911": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1354932395": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382745083": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382736873": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382736836": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1354889019": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382736858": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382736871": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1354930936": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382735568": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382736815": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382736806": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1354143938": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1354932426": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382736840": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382736867": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1354932431": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1354930897": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/136154": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/30080153": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/38670875": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/huya/29982605": {
+  "w": 1280,
+  "h": 720,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1356363815": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1382737886": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/30080166": {
+  "w": 1918,
+  "h": 802,
+  "tier": "HD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1354768828": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/1463783198": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29588938": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/huya/29982616": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/bilibili/26145297": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/yy/24066336": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/9367541": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/10078171": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/yy/1382745169": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ },
+ "https://mursor.ottiptv.cc/douyu/8434598": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9170147": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9406897": {
+  "w": 1920,
+  "h": 1080,
+  "tier": "FHD",
+  "ok": true
+ },
+ "https://mursor.ottiptv.cc/douyu/9401305": {
+  "w": 0,
+  "h": 0,
+  "tier": "UNKNOWN",
+  "ok": false
+ }
+}
