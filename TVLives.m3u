@@ -268,8 +268,8 @@ http://112.27.5.218:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227018/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErN_hoRDwApMKnJqiNHvn9w%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001068/index.m3u8
 #EXTINF:-1 group-title="卫视",新疆卫视
-http://120.70.60.179:9901/tsfile/live/1006_1.m3u8?authid=0&key=txiptv&playlive=1
 https://st-video.xjmty.com/fs/livedit/e55abfa37af26e19/8ce9971c2177b3dd.m3u8
+http://120.70.60.179:9901/tsfile/live/1006_1.m3u8?authid=0&key=txiptv&playlive=1
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227011/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ExAUu61iVvo_xYbANWJhgXw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001065/index.m3u8
 #EXTINF:-1 group-title="卫视",宁夏卫视
@@ -297,9 +297,9 @@ http://63.141.230.178:82/gslb/zbdq5.m3u8?id=xmws
 http://107.150.60.122/live/xmws.m3u8
 http://112.27.5.218:9901/tsfile/live/0115_1.m3u8?key=txiptv&playlive=1&authid=0
 #EXTINF:-1 group-title="卫视",安多卫视
-http://107.150.60.122/live/adws.m3u8
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=adws
 http://112.27.5.218:9901/tsfile/live/0115_1.m3u8?key=txiptv&playlive=1&authid=0
+http://107.150.60.122/live/adws.m3u8
 #EXTINF:-1 group-title="卫视",延边卫视
 https://srs.iyb983.cn/video/CYS/index.m3u8
 https://srs.iyb983.cn:443/video/CYS/index.m3u8
@@ -361,166 +361,163 @@ http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dyjc
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyjc
 #EXTINF:-1 group-title="央视付费",风云音乐
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyyy
+#EXTINF:-1 group-title="影视轮播",花花影院
+https://mursor.ottiptv.cc/huya/29863394
+#EXTINF:-1 group-title="影视轮播",爽儿影视
+https://mursor.ottiptv.cc/huya/31275822
+#EXTINF:-1 group-title="影视轮播",小猫影视
+https://mursor.ottiptv.cc/huya/30569079
 #EXTINF:-1 group-title="影视轮播",悠悠爱电影
 https://mursor.ottiptv.cc/huya/30611864
-#EXTINF:-1 group-title="影视轮播",齐鲁影视
-https://mursor.ottiptv.cc/huya/29807061
-#EXTINF:-1 group-title="影视轮播",鹿儿影视
-https://mursor.ottiptv.cc/huya/30986994
-#EXTINF:-1 group-title="影视轮播",娇娇影视
-https://mursor.ottiptv.cc/huya/31027196
-#EXTINF:-1 group-title="影视轮播",阳阳影视
-https://mursor.ottiptv.cc/huya/29805872
 #EXTINF:-1 group-title="影视轮播",美娜影视
 https://mursor.ottiptv.cc/huya/31388739
+#EXTINF:-1 group-title="影视轮播",齐鲁影视
+https://mursor.ottiptv.cc/huya/29807061
+#EXTINF:-1 group-title="影视轮播",阳阳影视
+https://mursor.ottiptv.cc/huya/29805872
+#EXTINF:-1 group-title="影视轮播",海湾电影
+https://mursor.ottiptv.cc/huya/31371694
+#EXTINF:-1 group-title="影视轮播",甜甜影院
+https://mursor.ottiptv.cc/huya/31093836
 #EXTINF:-1 group-title="影视轮播",小雪影视
 https://mursor.ottiptv.cc/huya/31416048
+#EXTINF:-1 group-title="影视轮播",静静影视
+https://mursor.ottiptv.cc/huya/30712558
 #EXTINF:-1 group-title="影视轮播",露露影视
 https://mursor.ottiptv.cc/huya/31248455
 #EXTINF:-1 group-title="影视轮播",飞飞看电影
 https://mursor.ottiptv.cc/huya/10216267
-#EXTINF:-1 group-title="影视轮播",飞燕剧场
-https://mursor.ottiptv.cc/huya/30705109
-#EXTINF:-1 group-title="影视轮播",奥斯曼影院
-https://mursor.ottiptv.cc/huya/30509122
+#EXTINF:-1 group-title="影视轮播",扁豆看电影
+https://mursor.ottiptv.cc/huya/16028551
 #EXTINF:-1 group-title="影视轮播",九思剧场
 https://mursor.ottiptv.cc/huya/30569910
 #EXTINF:-1 group-title="影视轮播",止戈电影
 https://mursor.ottiptv.cc/huya/19863777
-#EXTINF:-1 group-title="影视轮播",虎牙电影陪看
-https://mursor.ottiptv.cc/huya/23177366
-#EXTINF:-1 group-title="影视轮播",浅浅爱电影
-https://mursor.ottiptv.cc/huya/31274232
-#EXTINF:-1 group-title="影视轮播",亮哥讲电影
-https://mursor.ottiptv.cc/huya/16144175
 #EXTINF:-1 group-title="影视轮播",阿光影视
 https://mursor.ottiptv.cc/huya/30292086
+#EXTINF:-1 group-title="影视轮播",入梦影视
+https://mursor.ottiptv.cc/huya/31121607
 #EXTINF:-1 group-title="影视轮播",电影最TOP
 https://mursor.ottiptv.cc/huya/11774959
-#EXTINF:-1 group-title="影视轮播",扁豆看电影
-https://mursor.ottiptv.cc/huya/16028551
 #EXTINF:-1 group-title="影视轮播",科幻梦工场
 https://mursor.ottiptv.cc/huya/15152155
 https://mursor.ottiptv.cc/douyu/9608874
+#EXTINF:-1 group-title="影视轮播",亮哥讲电影
+https://mursor.ottiptv.cc/huya/16144175
 #EXTINF:-1 group-title="影视轮播",S哥影视
 https://mursor.ottiptv.cc/huya/24720260
-#EXTINF:-1 group-title="影视轮播",虎牙影院
-https://mursor.ottiptv.cc/huya/11601968
-#EXTINF:-1 group-title="影视轮播",杰克动漫
-https://mursor.ottiptv.cc/huya/19757963
-#EXTINF:-1 group-title="影视轮播",蒲公英电影
-https://mursor.ottiptv.cc/huya/28806637
 #EXTINF:-1 group-title="影视轮播",小丑讲电影
 https://mursor.ottiptv.cc/huya/16857432
+#EXTINF:-1 group-title="影视轮播",虎牙影院
+https://mursor.ottiptv.cc/huya/11601968
 #EXTINF:-1 group-title="影视轮播",惊奇小剧场
 https://mursor.ottiptv.cc/huya/30373013
 #EXTINF:-1 group-title="影视轮播",辟哥影视
 https://mursor.ottiptv.cc/huya/27653235
-#EXTINF:-1 group-title="影视轮播",动作大片放映厅
-https://mursor.ottiptv.cc/huya/10871113
-#EXTINF:-1 group-title="影视轮播",乔我说动漫频道
-https://mursor.ottiptv.cc/huya/17941367
-#EXTINF:-1 group-title="影视轮播",越哥说电影
-https://mursor.ottiptv.cc/huya/15894162
 #EXTINF:-1 group-title="影视轮播",武侠电影放映厅
 https://mursor.ottiptv.cc/huya/29982611
-#EXTINF:-1 group-title="影视轮播",喜剧电影放映厅
-https://mursor.ottiptv.cc/huya/11602031
-#EXTINF:-1 group-title="影视轮播",楚门聊电影
-https://mursor.ottiptv.cc/huya/16507906
+#EXTINF:-1 group-title="影视轮播",动作大片放映厅
+https://mursor.ottiptv.cc/huya/10871113
+#EXTINF:-1 group-title="影视轮播",越哥说电影
+https://mursor.ottiptv.cc/huya/15894162
+#EXTINF:-1 group-title="影视轮播",蒲公英电影
+https://mursor.ottiptv.cc/huya/28806637
 #EXTINF:-1 group-title="影视轮播",小若影视
 https://mursor.ottiptv.cc/huya/29868594
-#EXTINF:-1 group-title="影视轮播",大潘影视
-https://mursor.ottiptv.cc/huya/30439834
-#EXTINF:-1 group-title="影视轮播",鑫鑫影视
-https://mursor.ottiptv.cc/huya/30439676
-#EXTINF:-1 group-title="影视轮播",粤语电影放映厅
-https://mursor.ottiptv.cc/huya/21059572
+#EXTINF:-1 group-title="影视轮播",喜剧电影放映厅
+https://mursor.ottiptv.cc/huya/11602031
+#EXTINF:-1 group-title="影视轮播",杰克动漫
+https://mursor.ottiptv.cc/huya/19757963
+#EXTINF:-1 group-title="影视轮播",老P仔动漫
+https://mursor.ottiptv.cc/huya/26510802
 #EXTINF:-1 group-title="影视轮播",战争电影放映厅
 https://mursor.ottiptv.cc/huya/21059618
-#EXTINF:-1 group-title="影视轮播",青年电影馆
-https://mursor.ottiptv.cc/huya/21388479
-#EXTINF:-1 group-title="影视轮播",吾聊电影
-https://mursor.ottiptv.cc/huya/16424416
+#EXTINF:-1 group-title="影视轮播",驴子爱影视
+https://mursor.ottiptv.cc/huya/20380270
 #EXTINF:-1 group-title="影视轮播",动画电影放映厅
 https://mursor.ottiptv.cc/huya/11352878
-#EXTINF:-1 group-title="影视轮播",华视-动作大片
-https://mursor.ottiptv.cc/huya/23352535
+#EXTINF:-1 group-title="影视轮播",鱼丸说电影
+https://mursor.ottiptv.cc/huya/16615910
 #EXTINF:-1 group-title="影视轮播",小川侃电影
 https://mursor.ottiptv.cc/huya/15870999
-#EXTINF:-1 group-title="影视轮播",拾光剧场
-https://mursor.ottiptv.cc/huya/30539264
+#EXTINF:-1 group-title="影视轮播",华视-动作大片
+https://mursor.ottiptv.cc/huya/23352535
+#EXTINF:-1 group-title="影视轮播",粤语电影放映厅
+https://mursor.ottiptv.cc/huya/21059572
+#EXTINF:-1 group-title="影视轮播",冒险电影放映厅
+https://mursor.ottiptv.cc/huya/21059566
 #EXTINF:-1 group-title="影视轮播",经典日本动漫速看
 https://mursor.ottiptv.cc/huya/29982686
 #EXTINF:-1 group-title="影视轮播",科幻是我的神
 https://mursor.ottiptv.cc/huya/30080257
-#EXTINF:-1 group-title="影视轮播",熊妹撩电影
-https://mursor.ottiptv.cc/huya/15966357
-#EXTINF:-1 group-title="影视轮播",悬疑电影放映厅
-https://mursor.ottiptv.cc/huya/29982641
-#EXTINF:-1 group-title="影视轮播",电影狂人A
-https://mursor.ottiptv.cc/huya/18715610
-#EXTINF:-1 group-title="影视轮播",冒险电影放映厅
-https://mursor.ottiptv.cc/huya/21059566
-#EXTINF:-1 group-title="影视轮播",驴子爱影视
-https://mursor.ottiptv.cc/huya/20380270
 #EXTINF:-1 group-title="影视轮播",动作片天花板
 https://mursor.ottiptv.cc/huya/23865152
-#EXTINF:-1 group-title="影视轮播",电影最TOP2
-https://mursor.ottiptv.cc/huya/29982676
-#EXTINF:-1 group-title="影视轮播",亮哥讲电影2
-https://mursor.ottiptv.cc/huya/21059622
-https://mursor.ottiptv.cc/huya/29982687
-#EXTINF:-1 group-title="影视轮播",越哥说电影2
-https://mursor.ottiptv.cc/huya/29982680
-#EXTINF:-1 group-title="影视轮播",涵哥评电影
-https://mursor.ottiptv.cc/huya/16865726
+#EXTINF:-1 group-title="影视轮播",悬疑电影放映厅
+https://mursor.ottiptv.cc/huya/29982641
+#EXTINF:-1 group-title="影视轮播",青年电影馆
+https://mursor.ottiptv.cc/huya/21388479
 #EXTINF:-1 group-title="影视轮播",大神影视
 https://mursor.ottiptv.cc/huya/30297011
-#EXTINF:-1 group-title="影视轮播",电影探长官方
-https://mursor.ottiptv.cc/huya/30277705
-#EXTINF:-1 group-title="影视轮播",奇幻电影放映厅
-https://mursor.ottiptv.cc/huya/26355847
-#EXTINF:-1 group-title="影视轮播",爱情电影放映厅
-https://mursor.ottiptv.cc/huya/29982639
+#EXTINF:-1 group-title="影视轮播",熊妹撩电影
+https://mursor.ottiptv.cc/huya/15966357
 #EXTINF:-1 group-title="影视轮播",大聪明和魏乐乐影院
 https://mursor.ottiptv.cc/huya/23304691
-#EXTINF:-1 group-title="影视轮播",短剧电影院
-https://mursor.ottiptv.cc/huya/31002899
+#EXTINF:-1 group-title="影视轮播",越哥说电影2
+https://mursor.ottiptv.cc/huya/29982680
+#EXTINF:-1 group-title="影视轮播",电影最TOP2
+https://mursor.ottiptv.cc/huya/29982676
 #EXTINF:-1 group-title="影视轮播",阿涛影视
 https://mursor.ottiptv.cc/huya/30292047
-#EXTINF:-1 group-title="影视轮播",华视-警匪大片
-https://mursor.ottiptv.cc/huya/23358421
-#EXTINF:-1 group-title="影视轮播",爆裂电影2
-https://mursor.ottiptv.cc/huya/29982678
+#EXTINF:-1 group-title="影视轮播",涵哥评电影
+https://mursor.ottiptv.cc/huya/16865726
+#EXTINF:-1 group-title="影视轮播",电影探长官方
+https://mursor.ottiptv.cc/huya/30277705
+#EXTINF:-1 group-title="影视轮播",亮哥讲电影2
+https://mursor.ottiptv.cc/huya/29982687
+#EXTINF:-1 group-title="影视轮播",爱情电影放映厅
+https://mursor.ottiptv.cc/huya/29982639
 #EXTINF:-1 group-title="影视轮播",惊悚电影放映厅
 https://mursor.ottiptv.cc/huya/26355795
-#EXTINF:-1 group-title="影视轮播",吾聊电影2
-https://mursor.ottiptv.cc/huya/29982684
-#EXTINF:-1 group-title="影视轮播",鱼丸说电影
-https://mursor.ottiptv.cc/huya/16615910
-#EXTINF:-1 group-title="影视轮播",扁豆看电影2
-https://mursor.ottiptv.cc/huya/21059623
-#EXTINF:-1 group-title="影视轮播",小当家动漫社
-https://mursor.ottiptv.cc/huya/24257300
-#EXTINF:-1 group-title="影视轮播",华视-爱情大片
-https://mursor.ottiptv.cc/huya/23358431
+#EXTINF:-1 group-title="影视轮播",华视-警匪大片
+https://mursor.ottiptv.cc/huya/23358421
+#EXTINF:-1 group-title="影视轮播",电影旅者
+https://mursor.ottiptv.cc/huya/20969136
 #EXTINF:-1 group-title="影视轮播",TVB悬疑大片
 https://mursor.ottiptv.cc/huya/23865072
+#EXTINF:-1 group-title="影视轮播",乔我说动漫频道
+https://mursor.ottiptv.cc/huya/17941367
+#EXTINF:-1 group-title="影视轮播",扁豆看电影2
+https://mursor.ottiptv.cc/huya/21059623
+#EXTINF:-1 group-title="影视轮播",爆裂电影2
+https://mursor.ottiptv.cc/huya/29982678
+#EXTINF:-1 group-title="影视轮播",电影狂人A
+https://mursor.ottiptv.cc/huya/18715610
+#EXTINF:-1 group-title="影视轮播",港剧影视汇
+https://mursor.ottiptv.cc/huya/23903142
+#EXTINF:-1 group-title="影视轮播",吾聊电影2
+https://mursor.ottiptv.cc/huya/29982684
+#EXTINF:-1 group-title="影视轮播",吾聊电影
+https://mursor.ottiptv.cc/huya/16424416
+#EXTINF:-1 group-title="影视轮播",大潘影视
+https://mursor.ottiptv.cc/huya/30439834
+#EXTINF:-1 group-title="影视轮播",短剧电影院
+https://mursor.ottiptv.cc/huya/31002899
 #EXTINF:-1 group-title="影视轮播",大墨电影
 https://mursor.ottiptv.cc/huya/29458834
 #EXTINF:-1 group-title="影视轮播",酱婶儿电影
 https://mursor.ottiptv.cc/huya/24396474
-#EXTINF:-1 group-title="影视轮播",正经纪录片
-https://mursor.ottiptv.cc/huya/23860049
+#EXTINF:-1 group-title="影视轮播",鑫鑫影视
+https://mursor.ottiptv.cc/huya/30439676
+#EXTINF:-1 group-title="影视轮播",小当家动漫社
+https://mursor.ottiptv.cc/huya/24257300
 #EXTINF:-1 group-title="影视轮播",只爱评书
 https://mursor.ottiptv.cc/huya/20985827
-#EXTINF:-1 group-title="影视轮播",电影旅者
-https://mursor.ottiptv.cc/huya/20969136
+#EXTINF:-1 group-title="影视轮播",正经纪录片
+https://mursor.ottiptv.cc/huya/23860049
 #EXTINF:-1 group-title="影视轮播",华视-喜剧大片
 https://mursor.ottiptv.cc/huya/23352525
-#EXTINF:-1 group-title="影视轮播",港剧影视汇
-https://mursor.ottiptv.cc/huya/23903142
+#EXTINF:-1 group-title="影视轮播",华视-爱情大片
+https://mursor.ottiptv.cc/huya/23358431
 #EXTINF:-1 group-title="影视轮播",粤语电影丶
 https://mursor.ottiptv.cc/douyu/1226741
 #EXTINF:-1 group-title="影视轮播",牛叔说电影
@@ -533,10 +530,10 @@ https://mursor.ottiptv.cc/douyu/7642724
 https://mursor.ottiptv.cc/douyu/1274132
 #EXTINF:-1 group-title="影视轮播",小片片说大片
 https://mursor.ottiptv.cc/douyu/4258555
-#EXTINF:-1 group-title="影视轮播",牛叔说电影二台
-https://mursor.ottiptv.cc/douyu/10010651
 #EXTINF:-1 group-title="影视轮播",网神影厅
 https://mursor.ottiptv.cc/douyu/508118
+#EXTINF:-1 group-title="影视轮播",牛叔说电影二台
+https://mursor.ottiptv.cc/douyu/10010651
 #EXTINF:-1 group-title="影视轮播",开心锤锤动漫
 https://mursor.ottiptv.cc/douyu/9018297
 #EXTINF:-1 group-title="影视轮播",科幻Fans布玛
@@ -551,10 +548,10 @@ https://mursor.ottiptv.cc/douyu/8014467
 https://mursor.ottiptv.cc/douyu/2164691
 #EXTINF:-1 group-title="影视轮播",虫哥说电影
 https://mursor.ottiptv.cc/douyu/8915074
-#EXTINF:-1 group-title="影视轮播",怪兽马提尼电影
-https://mursor.ottiptv.cc/douyu/9075333
 #EXTINF:-1 group-title="影视轮播",3说电影
 https://mursor.ottiptv.cc/douyu/9643264
+#EXTINF:-1 group-title="影视轮播",怪兽马提尼电影
+https://mursor.ottiptv.cc/douyu/9075333
 #EXTINF:-1 group-title="影视轮播",电影迷小雅
 https://mursor.ottiptv.cc/douyu/9639225
 #EXTINF:-1 group-title="影视轮播",特辑电影院
@@ -565,126 +562,162 @@ https://mursor.ottiptv.cc/douyu/8705754
 https://mursor.ottiptv.cc/douyu/9285904
 #EXTINF:-1 group-title="影视轮播",刘哔电影
 https://mursor.ottiptv.cc/douyu/2632223
-#EXTINF:-1 group-title="影视轮播",3030相声小品
-https://mursor.ottiptv.cc/douyu/9286868
+#EXTINF:-1 group-title="影视轮播",铁血影视汇
+https://mursor.ottiptv.cc/douyu/9649701
+#EXTINF:-1 group-title="影视轮播",洛克电影
+https://mursor.ottiptv.cc/douyu/9414884
 #EXTINF:-1 group-title="影视轮播",小涛讲电影V
 https://mursor.ottiptv.cc/douyu/8415464
-#EXTINF:-1 group-title="影视轮播",逗米说电影
-https://mursor.ottiptv.cc/douyu/421222
+#EXTINF:-1 group-title="影视轮播",3030相声小品
+https://mursor.ottiptv.cc/douyu/9286868
 #EXTINF:-1 group-title="影视轮播",松轩说电影
 https://mursor.ottiptv.cc/douyu/1524969
 #EXTINF:-1 group-title="影视轮播",指缝里看电影
 https://mursor.ottiptv.cc/douyu/9647834
 #EXTINF:-1 group-title="影视轮播",纪录片之家字幕组
 https://mursor.ottiptv.cc/douyu/8834003
-#EXTINF:-1 group-title="影视轮播",小片片说大片二台
-https://mursor.ottiptv.cc/douyu/10011547
-#EXTINF:-1 group-title="影视轮播",看电影了没V
-https://mursor.ottiptv.cc/douyu/9562616
-#EXTINF:-1 group-title="影视轮播",铁血影视汇
-https://mursor.ottiptv.cc/douyu/9649701
 #EXTINF:-1 group-title="影视轮播",老邪说电影
 https://mursor.ottiptv.cc/douyu/9222870
-#EXTINF:-1 group-title="影视轮播",科幻战舰
-https://mursor.ottiptv.cc/douyu/8772060
-#EXTINF:-1 group-title="影视轮播",洛克电影
-https://mursor.ottiptv.cc/douyu/9414884
-#EXTINF:-1 group-title="影视轮播",钱小元说电影
-https://mursor.ottiptv.cc/douyu/9368265
-#EXTINF:-1 group-title="影视轮播",伯乐说电影V
-https://mursor.ottiptv.cc/douyu/9386057
+#EXTINF:-1 group-title="影视轮播",小片片说大片二台
+https://mursor.ottiptv.cc/douyu/10011547
 #EXTINF:-1 group-title="影视轮播",九叔说电影v
 https://mursor.ottiptv.cc/douyu/9348282
-#EXTINF:-1 group-title="影视轮播",喜剧电影笑不停
-https://mursor.ottiptv.cc/douyu/10298856
-#EXTINF:-1 group-title="影视轮播",电影漩涡
-https://mursor.ottiptv.cc/douyu/8706350
 #EXTINF:-1 group-title="影视轮播",圈踢动漫
 https://mursor.ottiptv.cc/douyu/1952680
-#EXTINF:-1 group-title="影视轮播",俗哥看电影
-https://mursor.ottiptv.cc/douyu/2161818
+#EXTINF:-1 group-title="影视轮播",伯乐说电影V
+https://mursor.ottiptv.cc/douyu/9386057
+#EXTINF:-1 group-title="影视轮播",喜剧电影笑不停
+https://mursor.ottiptv.cc/douyu/10298856
 #EXTINF:-1 group-title="影视轮播",小陶气说动漫
 https://mursor.ottiptv.cc/douyu/9527700
-#EXTINF:-1 group-title="影视轮播",贝爷求生影视
-https://mursor.ottiptv.cc/douyu/9661369
-#EXTINF:-1 group-title="影视轮播",楚哥说电影
-https://mursor.ottiptv.cc/douyu/9375743
+#EXTINF:-1 group-title="影视轮播",看电影了没V
+https://mursor.ottiptv.cc/douyu/9562616
 #EXTINF:-1 group-title="影视轮播",神羊说电影
 https://mursor.ottiptv.cc/douyu/9443552
-#EXTINF:-1 group-title="影视轮播",快哥说老片
-https://mursor.ottiptv.cc/douyu/10411518
-#EXTINF:-1 group-title="影视轮播",小马哥说电影
-https://mursor.ottiptv.cc/douyu/9396672
+#EXTINF:-1 group-title="影视轮播",我是吃泡面看电影
+https://mursor.ottiptv.cc/douyu/8851063
+#EXTINF:-1 group-title="影视轮播",贝爷求生影视
+https://mursor.ottiptv.cc/douyu/9661369
 #EXTINF:-1 group-title="影视轮播",火龙果讲电影本人
 https://mursor.ottiptv.cc/douyu/2039501
-#EXTINF:-1 group-title="影视轮播",胶片看电影
-https://mursor.ottiptv.cc/douyu/3715426
-#EXTINF:-1 group-title="影视轮播",鸡哥聊电影
-https://mursor.ottiptv.cc/douyu/5067952
-#EXTINF:-1 group-title="影视轮播",阿苏电影
-https://mursor.ottiptv.cc/douyu/9037784
+#EXTINF:-1 group-title="影视轮播",小马哥说电影
+https://mursor.ottiptv.cc/douyu/9396672
+#EXTINF:-1 group-title="影视轮播",快哥说老片
+https://mursor.ottiptv.cc/douyu/10411518
 #EXTINF:-1 group-title="影视轮播",独立鱼电影
 https://mursor.ottiptv.cc/douyu/2413555
-#EXTINF:-1 group-title="影视轮播",贰哥电影
-https://mursor.ottiptv.cc/douyu/9338867
-#EXTINF:-1 group-title="影视轮播",28岁电影
-https://mursor.ottiptv.cc/douyu/8884164
+#EXTINF:-1 group-title="影视轮播",博然讲电影
+https://mursor.ottiptv.cc/douyu/9561992
+#EXTINF:-1 group-title="影视轮播",胶片看电影
+https://mursor.ottiptv.cc/douyu/3715426
+#EXTINF:-1 group-title="影视轮播",晓麦讲电影
+https://mursor.ottiptv.cc/douyu/453963
 #EXTINF:-1 group-title="影视轮播",小超讲电影
 https://mursor.ottiptv.cc/douyu/3432645
-#EXTINF:-1 group-title="影视轮播",老王的夜电影院
-https://mursor.ottiptv.cc/douyu/3498219
 #EXTINF:-1 group-title="影视轮播",熊猫电影
 https://mursor.ottiptv.cc/douyu/3506483
 #EXTINF:-1 group-title="影视轮播",珞珞说电影
 https://mursor.ottiptv.cc/douyu/3718888
+#EXTINF:-1 group-title="影视轮播",逐梦电影
+https://mursor.ottiptv.cc/douyu/4058285
+#EXTINF:-1 group-title="影视轮播",西施撩电影
+https://mursor.ottiptv.cc/douyu/7532080
 #EXTINF:-1 group-title="影视轮播",哈利影视
 https://mursor.ottiptv.cc/douyu/8475821
+#EXTINF:-1 group-title="影视轮播",电影漩涡
+https://mursor.ottiptv.cc/douyu/8706350
 #EXTINF:-1 group-title="影视轮播",维立方电影
 https://mursor.ottiptv.cc/douyu/8706393
 #EXTINF:-1 group-title="影视轮播",少年看电影
 https://mursor.ottiptv.cc/douyu/8762120
+#EXTINF:-1 group-title="影视轮播",Michael说大片
+https://mursor.ottiptv.cc/douyu/8841881
 #EXTINF:-1 group-title="影视轮播",皮皮动漫星球
 https://mursor.ottiptv.cc/douyu/8841920
+#EXTINF:-1 group-title="影视轮播",噬元兽影视
+https://mursor.ottiptv.cc/douyu/8896723
 #EXTINF:-1 group-title="影视轮播",享看电影
 https://mursor.ottiptv.cc/douyu/8974130
+#EXTINF:-1 group-title="影视轮播",汪哥说电影
+https://mursor.ottiptv.cc/douyu/9312685
+#EXTINF:-1 group-title="影视轮播",电影七十二变
+https://mursor.ottiptv.cc/douyu/9323164
+#EXTINF:-1 group-title="影视轮播",撩电影8
+https://mursor.ottiptv.cc/douyu/9351043
 #EXTINF:-1 group-title="影视轮播",伦帝电影说
 https://mursor.ottiptv.cc/douyu/9368091
+#EXTINF:-1 group-title="影视轮播",小岛讲电影
+https://mursor.ottiptv.cc/douyu/9390955
 #EXTINF:-1 group-title="影视轮播",动画魂
 https://mursor.ottiptv.cc/douyu/9393242
+#EXTINF:-1 group-title="影视轮播",怪味爆米花电影
+https://mursor.ottiptv.cc/douyu/9422144
+#EXTINF:-1 group-title="影视轮播",晓晓说电影
+https://mursor.ottiptv.cc/douyu/9430717
+#EXTINF:-1 group-title="影视轮播",丽姐说电影
+https://mursor.ottiptv.cc/douyu/9437283
+#EXTINF:-1 group-title="影视轮播",大壮撞电影
+https://mursor.ottiptv.cc/douyu/9437349
+#EXTINF:-1 group-title="影视轮播",奇怪电影
+https://mursor.ottiptv.cc/douyu/9440966
 #EXTINF:-1 group-title="影视轮播",说说电影故事
 https://mursor.ottiptv.cc/douyu/9444627
 #EXTINF:-1 group-title="影视轮播",四叶草影视
 https://mursor.ottiptv.cc/douyu/9446117
+#EXTINF:-1 group-title="影视轮播",微笑影视解说
+https://mursor.ottiptv.cc/douyu/9476790
+#EXTINF:-1 group-title="影视轮播",爱星影视
+https://mursor.ottiptv.cc/douyu/9476806
+#EXTINF:-1 group-title="影视轮播",幕撩电影
+https://mursor.ottiptv.cc/douyu/9486015
+#EXTINF:-1 group-title="影视轮播",香兰爱影视
+https://mursor.ottiptv.cc/douyu/9487090
+#EXTINF:-1 group-title="影视轮播",周墨看电影
+https://mursor.ottiptv.cc/douyu/9505584
+#EXTINF:-1 group-title="影视轮播",雨忆动漫
+https://mursor.ottiptv.cc/douyu/9568700
 #EXTINF:-1 group-title="影视轮播",童乐说电影
 https://mursor.ottiptv.cc/douyu/9660704
+#EXTINF:-1 group-title="影视轮播",小浅说电影
+https://mursor.ottiptv.cc/douyu/9665834
+#EXTINF:-1 group-title="影视轮播",无际电影
+https://mursor.ottiptv.cc/douyu/9720498
 #EXTINF:-1 group-title="影视轮播",动画大师姐
 https://mursor.ottiptv.cc/douyu/9742136
 #EXTINF:-1 group-title="影视轮播",17号说动漫
 https://mursor.ottiptv.cc/douyu/9822277
+#EXTINF:-1 group-title="影视轮播",二胖影视
+https://mursor.ottiptv.cc/douyu/10064260
 #EXTINF:-1 group-title="影视轮播",同同电影
 https://mursor.ottiptv.cc/douyu/10155359
+#EXTINF:-1 group-title="影视轮播",喜人电影
+https://mursor.ottiptv.cc/douyu/10348735
 #EXTINF:-1 group-title="影视轮播",漫尼动画
 https://mursor.ottiptv.cc/douyu/10364790
-#EXTINF:-1 group-title="影视轮播",鹏友说电影
-https://mursor.ottiptv.cc/douyu/9445244
-#EXTINF:-1 group-title="影视轮播",博然讲电影
-https://mursor.ottiptv.cc/douyu/9561992
+#EXTINF:-1 group-title="影视轮播",易说影视
+https://mursor.ottiptv.cc/douyu/10859591
+#EXTINF:-1 group-title="影视轮播",崽崽撩电影
+https://mursor.ottiptv.cc/douyu/8325511
+#EXTINF:-1 group-title="影视轮播",贰哥电影
+https://mursor.ottiptv.cc/douyu/9338867
+#EXTINF:-1 group-title="影视轮播",鸡哥聊电影
+https://mursor.ottiptv.cc/douyu/5067952
 #EXTINF:-1 group-title="影视轮播",真香动漫解说
 https://mursor.ottiptv.cc/douyu/9391292
 #EXTINF:-1 group-title="影视轮播",77说电影
 https://mursor.ottiptv.cc/douyu/9444320
+#EXTINF:-1 group-title="影视轮播",电影冷知识
+https://mursor.ottiptv.cc/douyu/9660835
 #EXTINF:-1 group-title="影视轮播",大荒电影
 https://mursor.ottiptv.cc/douyu/3508538
 #EXTINF:-1 group-title="影视轮播",影视集装箱
 https://mursor.ottiptv.cc/douyu/8651489
-#EXTINF:-1 group-title="影视轮播",不思异剧场
-https://mursor.ottiptv.cc/douyu/9297412
-#EXTINF:-1 group-title="影视轮播",三七电影V
-https://mursor.ottiptv.cc/douyu/9457792
+#EXTINF:-1 group-title="影视轮播",科幻战舰
+https://mursor.ottiptv.cc/douyu/8772060
 #EXTINF:-1 group-title="影视轮播",搞笑动漫大本营
 https://mursor.ottiptv.cc/douyu/9650181
-#EXTINF:-1 group-title="影视轮播",崽崽撩电影
-https://mursor.ottiptv.cc/douyu/8325511
+#EXTINF:-1 group-title="影视轮播",鹏友说电影
+https://mursor.ottiptv.cc/douyu/9445244
 #EXTINF:-1 group-title="影视轮播",菠萝说电影
 https://mursor.ottiptv.cc/douyu/3714736
 #EXTINF:-1 group-title="影视轮播",电影刘油果
@@ -693,12 +726,10 @@ https://mursor.ottiptv.cc/douyu/3985805
 https://mursor.ottiptv.cc/douyu/8443438
 #EXTINF:-1 group-title="影视轮播",米粒儿动漫
 https://mursor.ottiptv.cc/douyu/9445279
-#EXTINF:-1 group-title="影视轮播",天堂电影1895
-https://mursor.ottiptv.cc/douyu/9573592
+#EXTINF:-1 group-title="影视轮播",莱纳电影
+https://mursor.ottiptv.cc/douyu/9356937
 #EXTINF:-1 group-title="影视轮播",唐司令说电影
 https://mursor.ottiptv.cc/douyu/8774345
-#EXTINF:-1 group-title="影视轮播",八月看大片
-https://mursor.ottiptv.cc/douyu/8816671
 #EXTINF:-1 group-title="影视轮播",安小闫说电影x
 https://mursor.ottiptv.cc/douyu/1842621
 #EXTINF:-1 group-title="影视轮播",老电影故事
@@ -707,112 +738,72 @@ https://mursor.ottiptv.cc/douyu/9167273
 https://mursor.ottiptv.cc/douyu/8362978
 #EXTINF:-1 group-title="影视轮播",腹黑电影
 https://mursor.ottiptv.cc/douyu/8867878
-#EXTINF:-1 group-title="影视轮播",有部电影儿
-https://mursor.ottiptv.cc/douyu/9736479
-#EXTINF:-1 group-title="影视轮播",电影吐槽汇
-https://mursor.ottiptv.cc/douyu/9447668
 #EXTINF:-1 group-title="影视轮播",冷君聊大片
 https://mursor.ottiptv.cc/douyu/9666219
-#EXTINF:-1 group-title="影视轮播",鲨说电影
-https://mursor.ottiptv.cc/douyu/9544628
 #EXTINF:-1 group-title="影视轮播",宇哥讲电影
 https://mursor.ottiptv.cc/douyu/2104744
-#EXTINF:-1 group-title="影视轮播",猫叔说电影
-https://mursor.ottiptv.cc/douyu/9820039
-#EXTINF:-1 group-title="影视轮播",大笑影院
-https://mursor.ottiptv.cc/douyu/10329300
-#EXTINF:-1 group-title="影视轮播",逐梦电影
-https://mursor.ottiptv.cc/douyu/4058285
-#EXTINF:-1 group-title="影视轮播",电影冷知识
-https://mursor.ottiptv.cc/douyu/9660835
+#EXTINF:-1 group-title="影视轮播",三七电影V
+https://mursor.ottiptv.cc/douyu/9457792
+#EXTINF:-1 group-title="影视轮播",钱小元说电影
+https://mursor.ottiptv.cc/douyu/9368265
+#EXTINF:-1 group-title="影视轮播",阿苏电影
+https://mursor.ottiptv.cc/douyu/9037784
 #EXTINF:-1 group-title="影视轮播",电影幕后喵
 https://mursor.ottiptv.cc/douyu/8884074
 #EXTINF:-1 group-title="影视轮播",狗毛电影
 https://mursor.ottiptv.cc/douyu/9356637
+#EXTINF:-1 group-title="影视轮播",猫叔说电影
+https://mursor.ottiptv.cc/douyu/9820039
 #EXTINF:-1 group-title="影视轮播",电影小班长
 https://mursor.ottiptv.cc/douyu/549693
-#EXTINF:-1 group-title="影视轮播",动漫推荐i
-https://mursor.ottiptv.cc/douyu/5187099
 #EXTINF:-1 group-title="影视轮播",浩贤说电影
 https://mursor.ottiptv.cc/douyu/10535867
 #EXTINF:-1 group-title="影视轮播",二哈讲电影
 https://mursor.ottiptv.cc/douyu/8778280
+#EXTINF:-1 group-title="影视轮播",28岁电影
+https://mursor.ottiptv.cc/douyu/8884164
 #EXTINF:-1 group-title="影视轮播",王坑坑聊电影
 https://mursor.ottiptv.cc/douyu/9402110
 #EXTINF:-1 group-title="影视轮播",林九影视
 https://mursor.ottiptv.cc/douyu/7212528
-#EXTINF:-1 group-title="影视轮播",微笑影视解说
-https://mursor.ottiptv.cc/douyu/9476790
-#EXTINF:-1 group-title="影视轮播",周墨看电影
-https://mursor.ottiptv.cc/douyu/9505584
-#EXTINF:-1 group-title="影视轮播",Michael说大片
-https://mursor.ottiptv.cc/douyu/8841881
-#EXTINF:-1 group-title="影视轮播",撩电影8
-https://mursor.ottiptv.cc/douyu/9351043
-#EXTINF:-1 group-title="影视轮播",奇怪电影
-https://mursor.ottiptv.cc/douyu/9440966
-#EXTINF:-1 group-title="影视轮播",幕撩电影
-https://mursor.ottiptv.cc/douyu/9486015
 #EXTINF:-1 group-title="影视轮播",电影先锋V
 https://mursor.ottiptv.cc/douyu/8711212
 #EXTINF:-1 group-title="影视轮播",末日说电影
 https://mursor.ottiptv.cc/douyu/9431125
-#EXTINF:-1 group-title="影视轮播",丽姐说电影
-https://mursor.ottiptv.cc/douyu/9437283
 #EXTINF:-1 group-title="影视轮播",蛋黄讲动漫
 https://mursor.ottiptv.cc/douyu/9542834
-#EXTINF:-1 group-title="影视轮播",电影七十二变
-https://mursor.ottiptv.cc/douyu/9323164
+#EXTINF:-1 group-title="影视轮播",不思异剧场
+https://mursor.ottiptv.cc/douyu/9297412
 #EXTINF:-1 group-title="影视轮播",影视梗大叔
 https://mursor.ottiptv.cc/douyu/9480648
-#EXTINF:-1 group-title="影视轮播",香兰爱影视
-https://mursor.ottiptv.cc/douyu/9487090
-#EXTINF:-1 group-title="影视轮播",汪哥说电影
-https://mursor.ottiptv.cc/douyu/9312685
+#EXTINF:-1 group-title="影视轮播",有部电影儿
+https://mursor.ottiptv.cc/douyu/9736479
 #EXTINF:-1 group-title="影视轮播",辰哥说电影
 https://mursor.ottiptv.cc/douyu/9371407
-#EXTINF:-1 group-title="影视轮播",怪味爆米花电影
-https://mursor.ottiptv.cc/douyu/9422144
-#EXTINF:-1 group-title="影视轮播",大壮撞电影
-https://mursor.ottiptv.cc/douyu/9437349
-#EXTINF:-1 group-title="影视轮播",雨忆动漫
-https://mursor.ottiptv.cc/douyu/9568700
-#EXTINF:-1 group-title="影视轮播",涛浪浪电影
-https://mursor.ottiptv.cc/douyu/5424258
 #EXTINF:-1 group-title="影视轮播",大米饭影视
 https://mursor.ottiptv.cc/douyu/9824094
-#EXTINF:-1 group-title="影视轮播",二胖影视
-https://mursor.ottiptv.cc/douyu/10064260
 #EXTINF:-1 group-title="影视轮播",三新动漫
 https://mursor.ottiptv.cc/douyu/9548279
-#EXTINF:-1 group-title="影视轮播",莱纳电影
-https://mursor.ottiptv.cc/douyu/9356937
-#EXTINF:-1 group-title="影视轮播",梓帆说电影
-https://mursor.ottiptv.cc/douyu/9769563
+#EXTINF:-1 group-title="影视轮播",龙哥盘电影
+https://mursor.ottiptv.cc/douyu/9736161
+#EXTINF:-1 group-title="影视轮播",八月看大片
+https://mursor.ottiptv.cc/douyu/8816671
 #EXTINF:-1 group-title="影视轮播",喵妹说电影
 https://mursor.ottiptv.cc/douyu/9312432
-#EXTINF:-1 group-title="影视轮播",小浅说电影
-https://mursor.ottiptv.cc/douyu/9665834
 #EXTINF:-1 group-title="影视轮播",大趴电影院
 https://mursor.ottiptv.cc/douyu/8747638
 #EXTINF:-1 group-title="影视轮播",玖月影视
 https://mursor.ottiptv.cc/douyu/9339251
 #EXTINF:-1 group-title="影视轮播",JG影视解说
 https://mursor.ottiptv.cc/douyu/9391277
-#EXTINF:-1 group-title="影视轮播",小岛讲电影
-https://mursor.ottiptv.cc/douyu/9390955
-#EXTINF:-1 group-title="影视轮播",龙哥盘电影
-https://mursor.ottiptv.cc/douyu/9736161
+#EXTINF:-1 group-title="影视轮播",天堂电影1895
+https://mursor.ottiptv.cc/douyu/9573592
 #EXTINF:-1 group-title="影视轮播",野格影视
 https://mursor.ottiptv.cc/douyu/9931766
 #EXTINF:-1 group-title="影视轮播",电影黑匣子
 https://mursor.ottiptv.cc/douyu/8706652
 #EXTINF:-1 group-title="影视轮播",草泥泥影院
 https://mursor.ottiptv.cc/douyu/9091049
-#EXTINF:-1 group-title="影视轮播",爱星影视
-https://mursor.ottiptv.cc/douyu/9476806
-#EXTINF:-1 group-title="影视轮播",晓麦讲电影
-https://mursor.ottiptv.cc/douyu/453963
 #EXTINF:-1 group-title="影视轮播",猫眼电影
 https://mursor.ottiptv.cc/douyu/8726221
 #EXTINF:-1 group-title="影视轮播",女汉子说电影
@@ -821,24 +812,14 @@ https://mursor.ottiptv.cc/douyu/9395966
 https://mursor.ottiptv.cc/douyu/9533302
 #EXTINF:-1 group-title="影视轮播",鑫酱盘动漫
 https://mursor.ottiptv.cc/douyu/9547575
-#EXTINF:-1 group-title="影视轮播",无际电影
-https://mursor.ottiptv.cc/douyu/9720498
-#EXTINF:-1 group-title="影视轮播",噬元兽影视
-https://mursor.ottiptv.cc/douyu/8896723
 #EXTINF:-1 group-title="影视轮播",小丽说电影
 https://mursor.ottiptv.cc/douyu/9368016
-#EXTINF:-1 group-title="影视轮播",晓晓说电影
-https://mursor.ottiptv.cc/douyu/9430717
-#EXTINF:-1 group-title="影视轮播",易说影视
-https://mursor.ottiptv.cc/douyu/10859591
+#EXTINF:-1 group-title="影视轮播",大笑影院
+https://mursor.ottiptv.cc/douyu/10329300
 #EXTINF:-1 group-title="影视轮播",小乔讲电影
 https://mursor.ottiptv.cc/douyu/8413908
-#EXTINF:-1 group-title="影视轮播",我是吃泡面看电影
-https://mursor.ottiptv.cc/douyu/8851063
 #EXTINF:-1 group-title="影视轮播",开心逛剧场
 https://mursor.ottiptv.cc/douyu/10329310
-#EXTINF:-1 group-title="影视轮播",喜人电影
-https://mursor.ottiptv.cc/douyu/10348735
 #EXTINF:-1 group-title="影视轮播",佛曰影视
 https://mursor.ottiptv.cc/douyu/9671758
 #EXTINF:-1 group-title="影视轮播",立秋动画
@@ -847,18 +828,22 @@ https://mursor.ottiptv.cc/douyu/10351891
 https://mursor.ottiptv.cc/douyu/9329242
 #EXTINF:-1 group-title="影视轮播",电影笔记
 https://mursor.ottiptv.cc/douyu/9636034
-#EXTINF:-1 group-title="影视轮播",西施撩电影
-https://mursor.ottiptv.cc/douyu/7532080
-#EXTINF:-1 group-title="影视轮播",国产电影-就是闹着玩的
-https://mursor.ottiptv.cc/yy/1354931503
-#EXTINF:-1 group-title="影视轮播",超精彩！系列动作电影
-https://mursor.ottiptv.cc/yy/1382745096
+#EXTINF:-1 group-title="影视轮播",动漫推荐i
+https://mursor.ottiptv.cc/douyu/5187099
+#EXTINF:-1 group-title="影视轮播",电影吐槽汇
+https://mursor.ottiptv.cc/douyu/9447668
+#EXTINF:-1 group-title="影视轮播",精武英雄-李连杰主演经典动作片
+https://mursor.ottiptv.cc/yy/1382736873
 #EXTINF:-1 group-title="影视轮播",夏洛特烦恼-国内电影-喜剧
 https://mursor.ottiptv.cc/yy/1354936201
-#EXTINF:-1 group-title="影视轮播",大进军全集：红色系列电影
-https://mursor.ottiptv.cc/yy/1382745083
+#EXTINF:-1 group-title="影视轮播",速度与激情系列！-精彩大片
+https://mursor.ottiptv.cc/yy/1382736911
+#EXTINF:-1 group-title="影视轮播",岳云鹏宋小宝也来演电影了？
+https://mursor.ottiptv.cc/yy/1354926612
 #EXTINF:-1 group-title="影视轮播",经典大片合集
 https://mursor.ottiptv.cc/yy/1382749895
+#EXTINF:-1 group-title="影视轮播",大进军全集：红色系列电影
+https://mursor.ottiptv.cc/yy/1382745083
 #EXTINF:-1 group-title="影视轮播",粟裕大将-影视
 https://mursor.ottiptv.cc/yy/1354926542
 #EXTINF:-1 group-title="影视轮播",野山鹰-影视剧
@@ -867,42 +852,40 @@ https://mursor.ottiptv.cc/yy/1354932395
 https://mursor.ottiptv.cc/yy/1382736809
 #EXTINF:-1 group-title="影视轮播",史诗级科幻电影-阿凡达
 https://mursor.ottiptv.cc/yy/1382735577
-#EXTINF:-1 group-title="影视轮播",高分科幻动作片
-https://mursor.ottiptv.cc/yy/1382749948
 #EXTINF:-1 group-title="影视轮播",侏罗纪世界-国外科幻大片合集
 https://mursor.ottiptv.cc/yy/1382736851
+#EXTINF:-1 group-title="影视轮播",高分科幻动作片
+https://mursor.ottiptv.cc/yy/1382749948
 #EXTINF:-1 group-title="影视轮播",动作大片
 https://mursor.ottiptv.cc/yy/1354888739
-#EXTINF:-1 group-title="影视轮播",中国味道第4季-美食纪录片
-https://mursor.ottiptv.cc/yy/1382736845
 #EXTINF:-1 group-title="影视轮播",爆笑电影！王牌大贱谍2-3
 https://mursor.ottiptv.cc/yy/1382735556
 #EXTINF:-1 group-title="影视轮播",电影黑豹
 https://mursor.ottiptv.cc/yy/1382736816
+#EXTINF:-1 group-title="影视轮播",中国味道第4季-美食纪录片
+https://mursor.ottiptv.cc/yy/1382736845
 #EXTINF:-1 group-title="影视轮播",一代经典电影，我很快乐
 https://mursor.ottiptv.cc/yy/1354932420
 #EXTINF:-1 group-title="影视轮播",国产大片电影
 https://mursor.ottiptv.cc/yy/1354926655
 #EXTINF:-1 group-title="影视轮播",珍珠港-电影
 https://mursor.ottiptv.cc/yy/1354936234
-#EXTINF:-1 group-title="影视轮播",震撼！国内功夫大片
-https://mursor.ottiptv.cc/yy/1382736902
 #EXTINF:-1 group-title="影视轮播",国外科幻
 https://mursor.ottiptv.cc/yy/1382736800
 #EXTINF:-1 group-title="影视轮播",国外黑色喜剧：冷幽默小剧场
 https://mursor.ottiptv.cc/yy/1382745175
-#EXTINF:-1 group-title="影视轮播",精武英雄-李连杰主演经典动作片
-https://mursor.ottiptv.cc/yy/1382736873
-#EXTINF:-1 group-title="影视轮播",速度与激情系列！-精彩大片
-https://mursor.ottiptv.cc/yy/1382736911
 #EXTINF:-1 group-title="影视轮播",高分经典动作片
 https://mursor.ottiptv.cc/yy/1382749944
 #EXTINF:-1 group-title="影视轮播",远去的飞鹰-影视剧
 https://mursor.ottiptv.cc/yy/1354930912
 #EXTINF:-1 group-title="影视轮播",科幻电影
 https://mursor.ottiptv.cc/yy/1354930209
+#EXTINF:-1 group-title="影视轮播",震撼！国内功夫大片
+https://mursor.ottiptv.cc/yy/1382736902
 #EXTINF:-1 group-title="影视轮播",电影百团大战
 https://mursor.ottiptv.cc/yy/1382736871
+#EXTINF:-1 group-title="影视轮播",国产电影-就是闹着玩的
+https://mursor.ottiptv.cc/yy/1354931503
 #EXTINF:-1 group-title="影视轮播",燃爆动作片
 https://mursor.ottiptv.cc/yy/1382736801
 #EXTINF:-1 group-title="影视轮播",院线动作大片
@@ -911,6 +894,8 @@ https://mursor.ottiptv.cc/yy/1382736900
 https://mursor.ottiptv.cc/yy/1382735568
 #EXTINF:-1 group-title="影视轮播",银河护卫队-国外科幻巨作
 https://mursor.ottiptv.cc/yy/1382736815
+#EXTINF:-1 group-title="影视轮播",超精彩！系列动作电影
+https://mursor.ottiptv.cc/yy/1382745096
 #EXTINF:-1 group-title="影视轮播",碟中谍系列电影
 https://mursor.ottiptv.cc/yy/1382736836
 #EXTINF:-1 group-title="影视轮播",国外高分大片
@@ -921,8 +906,6 @@ https://mursor.ottiptv.cc/yy/1382736858
 https://mursor.ottiptv.cc/yy/1354930936
 #EXTINF:-1 group-title="影视轮播",香港院线大片-最新
 https://mursor.ottiptv.cc/yy/1354936242
-#EXTINF:-1 group-title="影视轮播",岳云鹏宋小宝也来演电影了？
-https://mursor.ottiptv.cc/yy/1354926612
 #EXTINF:-1 group-title="影视轮播",老广的味道第3季-美食纪录片
 https://mursor.ottiptv.cc/yy/1382735565
 #EXTINF:-1 group-title="影视轮播",大江大河-高分影视推荐
@@ -933,8 +916,6 @@ https://mursor.ottiptv.cc/yy/1382736835
 https://mursor.ottiptv.cc/yy/1382736823
 #EXTINF:-1 group-title="影视轮播",国产搞笑喜剧片
 https://mursor.ottiptv.cc/yy/1354932431
-#EXTINF:-1 group-title="影视轮播",科幻片：来看神奇的地球
-https://mursor.ottiptv.cc/yy/1354930897
 #EXTINF:-1 group-title="影视轮播",高分动作大片-热血出击
 https://mursor.ottiptv.cc/yy/1382736909
 #EXTINF:-1 group-title="影视轮播",海王-院线大片
@@ -951,46 +932,44 @@ https://mursor.ottiptv.cc/yy/1354930821
 https://mursor.ottiptv.cc/yy/1382737886
 #EXTINF:-1 group-title="影视轮播",外国科幻大片
 https://mursor.ottiptv.cc/yy/1382747628
-#EXTINF:-1 group-title="影视轮播",进来陪你看动漫
-https://mursor.ottiptv.cc/yy/1352866135
 #EXTINF:-1 group-title="影视轮播",林正英-经典电影
 https://mursor.ottiptv.cc/yy/34229877
-#EXTINF:-1 group-title="影视轮播",动漫
-https://mursor.ottiptv.cc/yy/1354143938
 #EXTINF:-1 group-title="影视轮播",国漫动漫
 https://mursor.ottiptv.cc/yy/1354768828
-#EXTINF:-1 group-title="影视轮播",鬼经典老片
-https://mursor.ottiptv.cc/yy/1463783198
-#EXTINF:-1 group-title="影视轮播",动漫《火影疾风传》
-https://mursor.ottiptv.cc/yy/1459675153
 #EXTINF:-1 group-title="影视轮播",恐怖电影
 https://mursor.ottiptv.cc/yy/24066336
+#EXTINF:-1 group-title="影视轮播",鬼经典老片
+https://mursor.ottiptv.cc/yy/1463783198
+#EXTINF:-1 group-title="影视轮播",动漫
+https://mursor.ottiptv.cc/yy/1354143938
 #EXTINF:-1 group-title="影视轮播",1930年代经典电影
 https://mursor.ottiptv.cc/yy/1356363815
+#EXTINF:-1 group-title="影视轮播",动漫《火影疾风传》
+https://mursor.ottiptv.cc/yy/1459675153
 #EXTINF:-1 group-title="影视轮播",喜剧，动作，港澳，科幻，
 https://mursor.ottiptv.cc/yy/55516383
-#EXTINF:-1 group-title="影视轮播",经典影视剧
-https://mursor.ottiptv.cc/yy/1353454489
-#EXTINF:-1 group-title="影视轮播",对口相声，今天就眯这吧
-https://mursor.ottiptv.cc/bilibili/1878514367
-#EXTINF:-1 group-title="影视轮播",街坊剧场
-https://mursor.ottiptv.cc/bilibili/22832960
+#EXTINF:-1 group-title="影视轮播",科幻片：来看神奇的地球
+https://mursor.ottiptv.cc/yy/1354930897
+#EXTINF:-1 group-title="体育频道",虎牙中式台球比赛
+https://mursor.ottiptv.cc/huya/29588938
+#EXTINF:-1 group-title="体育频道",摇滚足球本
+https://mursor.ottiptv.cc/huya/29982616
 #EXTINF:-1 group-title="体育频道",排球少年砰砰砰
 https://mursor.ottiptv.cc/huya/30080167
-#EXTINF:-1 group-title="体育频道",最篮球
-https://mursor.ottiptv.cc/huya/29982651
-#EXTINF:-1 group-title="体育频道",亚运体育7号台
-https://mursor.ottiptv.cc/huya/136154
 #EXTINF:-1 group-title="体育频道",排球太燃了
 https://mursor.ottiptv.cc/huya/30080166
+#EXTINF:-1 group-title="体育频道",亚运体育7号台
+https://mursor.ottiptv.cc/huya/136154
 #EXTINF:-1 group-title="体育频道",大头猴足球
 https://mursor.ottiptv.cc/huya/29982605
-#EXTINF:-1 group-title="体育频道",哈拉少足球
-https://mursor.ottiptv.cc/huya/29982619
 #EXTINF:-1 group-title="体育频道",李径看奥运
 https://mursor.ottiptv.cc/huya/30080153
+#EXTINF:-1 group-title="体育频道",哈拉少足球
+https://mursor.ottiptv.cc/huya/29982619
 #EXTINF:-1 group-title="体育频道",雨燕体育直播
 https://mursor.ottiptv.cc/huya/29982618
+#EXTINF:-1 group-title="体育频道",最篮球
+https://mursor.ottiptv.cc/huya/29982651
 #EXTINF:-1 group-title="体育频道",篮球人物
 https://mursor.ottiptv.cc/douyu/8434598
 #EXTINF:-1 group-title="体育频道",绘说篮球C
@@ -999,21 +978,15 @@ https://mursor.ottiptv.cc/douyu/9401305
 https://mursor.ottiptv.cc/douyu/9406897
 #EXTINF:-1 group-title="体育频道",只关于篮球的只老师
 https://mursor.ottiptv.cc/douyu/9367541
+#EXTINF:-1 group-title="体育频道",梦觉教游泳
+https://mursor.ottiptv.cc/douyu/4531679
 #EXTINF:-1 group-title="体育频道",篮球小人物
 https://mursor.ottiptv.cc/douyu/9184257
 #EXTINF:-1 group-title="体育频道",篮球长镜头
 https://mursor.ottiptv.cc/douyu/9399887
-#EXTINF:-1 group-title="体育频道",屿风体育
-https://mursor.ottiptv.cc/douyu/10329889
 #EXTINF:-1 group-title="体育频道",台球帝
 https://mursor.ottiptv.cc/douyu/10078171
-#EXTINF:-1 group-title="体育频道",梦觉教游泳
-https://mursor.ottiptv.cc/douyu/4531679
 #EXTINF:-1 group-title="体育频道",篮球之家老李
 https://mursor.ottiptv.cc/douyu/9170147
 #EXTINF:-1 group-title="体育频道",我的体育老师
 https://mursor.ottiptv.cc/yy/1382745169
-#EXTINF:-1 group-title="体育频道",欧冠里斯本VS曼联拜仁巴黎马竞罗马
-https://mursor.ottiptv.cc/bilibili/1918665374
-#EXTINF:-1 group-title="体育频道",〖欧冠模拟〗葡萄牙体育vs曼彻斯特联
-https://mursor.ottiptv.cc/bilibili/1815450421
