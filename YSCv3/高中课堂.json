@@ -52,7 +52,7 @@
     {
       "name": "💣王炸直播💣",
       "type": 0,
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v3.txt",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v4.txt",
       "playerType": 1,
       "ua": "okhttp/3.15",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
@@ -61,7 +61,7 @@
     {
       "name": "💣王炸直播💣(备)",
       "type": 0,
-      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v2.txt",
+      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v3.txt",
       "playerType": 1,
       "ua": "okhttp/3.15",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
@@ -77,7 +77,7 @@
     {
         "name": "备选直播源",
         "type": 0,
-        "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v2.txt",
+        "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v3.txt",
         "playerType": 1,
         "ua": "okhttp/3.15",
         "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
