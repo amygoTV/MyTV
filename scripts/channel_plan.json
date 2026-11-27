@@ -3,7 +3,6 @@
     "央视频道",
     "卫视频道",
     "港澳台频道",
-    "央视付费",
     "影视轮播",
     "体育频道"
   ],
@@ -28,20 +27,6 @@
     "CCTV17"
   ],
   "paid_order": [],
-  "cgtn_order": [
-    "CGTN",
-    "CGTN纪录",
-    "CGTN俄语",
-    "CGTN法语",
-    "CGTN西语",
-    "CGTN阿语"
-  ],
-  "edu_order": [
-    "中国教育1台",
-    "中国教育2台",
-    "中国教育3台",
-    "中国教育4台"
-  ],
   "satellite_order": [
     "湖南卫视",
     "浙江卫视",
@@ -95,6 +80,8 @@
       "group": "央视频道",
       "order": 1,
       "ipv4": [
+        "http://221.226.51.220:50081/newlive/live/hls/2/live.m3u8",
+        "http://60.187.246.195:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.123.243.37:50085/tsfile/live/0002_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/cctv2hd.m3u8?auth=test20251009",
@@ -123,6 +110,7 @@
       "group": "央视频道",
       "order": 3,
       "ipv4": [
+        "http://173.208.212.130:8181/1080p/cctv4.m3u8",
         "http://112.123.243.37:50085/tsfile/live/0004_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/cctv4hd.m3u8?auth=test20251009",
@@ -165,6 +153,7 @@
       "group": "央视频道",
       "order": 7,
       "ipv4": [
+        "http://60.187.246.195:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://120.70.60.179:9901/tsfile/live/1016_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/cctv7hd.m3u8?auth=test20251009",
@@ -207,6 +196,7 @@
       "group": "央视频道",
       "order": 10,
       "ipv4": [
+        "http://60.187.246.195:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.123.243.37:50085/tsfile/live/0011_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/cctv10hd.m3u8?auth=test20251009",
@@ -235,6 +225,7 @@
       "group": "央视频道",
       "order": 12,
       "ipv4": [
+        "http://124.165.251.82:85/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.123.243.37:50085/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/cctv12hd.m3u8?auth=test20251009",
@@ -305,6 +296,7 @@
       "group": "央视频道",
       "order": 17,
       "ipv4": [
+        "http://173.208.212.130:8181/1080p/cctv17.m3u8",
         "http://120.238.84.45:9901/tsfile/live/1048_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/cctv17hd.m3u8?auth=test20251009",
         "http://192.151.150.154/live/cctv17hd.m3u8",
@@ -327,81 +319,6 @@
       "ipv6": [
         "http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225761/1.m3u8",
         "http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228277/index.m3u8"
-      ]
-    },
-    "CGTN": {
-      "group": "央视频道",
-      "order": 18,
-      "ipv4": [
-        "https://english-livebkali.cgtn.com/live/encgtn.m3u8",
-        "https://hlspackager.akamaized.net/live/DB/CGTN_ENGLISH/HLS/CGTN_ENGLISH.m3u8",
-        "https://0472.org/hls/cgtn.m3u8",
-        "https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8"
-      ],
-      "ipv6": [
-        "http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001058/index.m3u8",
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/CGTN_4000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1"
-      ]
-    },
-    "CGTN纪录": {
-      "group": "央视频道",
-      "order": 19,
-      "ipv4": [
-        "https://hlspackager.akamaized.net/live/DB/CGTN_DOCUMENTARY/HLS/CGTN_DOCUMENTARY.m3u8",
-        "https://0472.org/hls/cgtnd.m3u8",
-        "https://amg00405-rakutentv-cgtndocumentary-rakuten-0ql8j.amagi.tv/master.m3u8"
-      ],
-      "ipv6": [
-        "http://[2409:8087:1a09:df::401d]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225602/1.m3u8?icpid=88888888&from=5&hms_devid=980&online=1720054946&vqe=3",
-        "http://[2409:8087:5e01:34::20]:6610/ZTE_CMS/00000001000000060000000000000528/index.m3u8?IAS"
-      ]
-    },
-    "CGTN俄语": {
-      "group": "央视频道",
-      "order": 20,
-      "ipv4": [
-        "https://russian-liveali.cgtn.com/hls/LSvexABhNipibK5KRuUkvHZ7220802LSTeze9o8tdFXMHsb1VosgoT220802cd/playlist.m3u8",
-        "https://0472.org/hls/cgtne.m3u8"
-      ],
-      "ipv6": [
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/ey_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1",
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/ey_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2"
-      ]
-    },
-    "CGTN法语": {
-      "group": "央视频道",
-      "order": 21,
-      "ipv4": [
-        "https://francais-liveali.cgtn.com/hls/LSvev95OuFZtKLc6CeKEFYXj220802LSTeV6PO0Ut9r71Uq3k5goCA220802cd/playlist.m3u8",
-        "https://0472.org/hls/cgtnf.m3u8"
-      ],
-      "ipv6": [
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/fy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1",
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/fy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2"
-      ]
-    },
-    "CGTN西语": {
-      "group": "央视频道",
-      "order": 22,
-      "ipv4": [
-        "https://espanol-liveali.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8",
-        "https://0472.org/hls/cgtnx.m3u8"
-      ],
-      "ipv6": [
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/xbyy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1",
-        "http://[2408:8710:1020:17:1::7]/live2.rxip.sc96655.com/live/xbyy_2000.m3u8?E=1&U=1&A=1&K=1&P=1&S=1&bak=2"
-      ]
-    },
-    "CGTN阿语": {
-      "group": "央视频道",
-      "order": 23,
-      "ipv4": [
-        "https://arabic-liveali.cgtn.com/hls/LSveq57bErWLinBnxosqjisZ220802LSTefTAS9zc9mpU08y3np9TH220802cd/playlist.m3u8",
-        "https://0472.org/hls/cgtna.m3u8"
-      ],
-      "ipv6": [
-        "http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002826/index.m3u8?virtualDomain=yinhe.live_hls.zte.com",
-        "http://[2409:8087:7000:20:1000::22]:6060/yinhe/2/ch00000090990000002826/index.m3u8?virtualDomain=yinhe.live_hls.zte.com&bak=2"
       ]
     },
     "中国教育1台": {
@@ -460,6 +377,8 @@
       "group": "卫视频道",
       "order": 0,
       "ipv4": [
+        "http://173.208.212.130:8181/1080p/hnws.m3u8",
+        "http://173.208.212.130:8181/720p/hnws.m3u8",
         "http://112.123.243.37:50085/tsfile/live/1002_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1140_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/Y2RuZXhfaWQ9YWxfaGxzX2xkdnQmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8",
@@ -476,6 +395,8 @@
       "group": "卫视频道",
       "order": 1,
       "ipv4": [
+        "http://60.187.246.195:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=1&authid=0",
+        "http://ali-m-l.cztv.com:80/channels/lantian/channel001/1080p.m3u8",
         "http://111.4.59.41:60901/tsfile/live/1028_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1127_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=1&authid=0",
@@ -491,6 +412,7 @@
       "group": "卫视频道",
       "order": 2,
       "ipv4": [
+        "http://173.208.212.130:8181/720p/jsws.m3u8",
         "http://120.238.84.45:9901/tsfile/live/1045_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1129_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0127_1.m3u8?key=txiptv&playlive=1&authid=0",
@@ -536,6 +458,7 @@
       "group": "卫视频道",
       "order": 5,
       "ipv4": [
+        "http://218.13.139.26:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.123.243.37:50085/tsfile/live/0130_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1134_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/ahwshd.m3u8?auth=test20251009",
@@ -551,6 +474,7 @@
       "group": "卫视频道",
       "order": 6,
       "ipv4": [
+        "http://60.187.246.195:9901/tsfile/live/0131_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://120.238.84.45:9901/tsfile/live/1052_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1133_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0113_1.m3u8?key=txiptv&playlive=1&authid=0",
@@ -566,6 +490,7 @@
       "group": "卫视频道",
       "order": 7,
       "ipv4": [
+        "http://173.208.212.130:8181/720p/gdws.m3u8",
         "http://120.238.84.45:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1131_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0",
@@ -610,6 +535,9 @@
       "group": "卫视频道",
       "order": 10,
       "ipv4": [
+        "http://112.123.243.37:50085/tsfile/live/0128_1.m3u8?key=txiptv&playlive=0&authid=0",
+        "http://173.208.212.130:8181/720p/tjws.m3u8",
+        "http://60.187.246.195:9901/tsfile/live/0135_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://120.238.84.45:9901/tsfile/live/1051_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://204.12.221.218:8181/3m1080p/tjws.m3u8",
         "http://192.151.150.154/live/tjwshd.m3u8",
@@ -624,6 +552,8 @@
       "group": "卫视频道",
       "order": 11,
       "ipv4": [
+        "http://112.123.243.37:50085/tsfile/live/1001_1.m3u8?key=txiptv&playlive=0&authid=0",
+        "http://218.13.139.26:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://111.4.59.41:60901/tsfile/live/1016_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://39.165.39.49:19901/tsfile/live/1143_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0",
@@ -639,6 +569,7 @@
       "group": "卫视频道",
       "order": 12,
       "ipv4": [
+        "http://60.187.246.195:9901/tsfile/live/0138_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://120.238.84.45:9901/tsfile/live/1053_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://107.150.60.122/live/jxwshd.m3u8",
@@ -653,6 +584,7 @@
       "group": "卫视频道",
       "order": 13,
       "ipv4": [
+        "http://218.13.139.26:9901/tsfile/live/0123_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://120.238.84.45:9901/tsfile/live/1058_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://204.12.221.218:8181/3m1080p/scws.m3u8",
@@ -681,6 +613,7 @@
       "group": "卫视频道",
       "order": 15,
       "ipv4": [
+        "http://112.123.243.37:50085/tsfile/live/0130_2.m3u8?key=txiptv&playlive=0&authid=0",
         "http://112.27.5.218:9901/tsfile/live/0120_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://107.150.60.122/live/gzwshd.m3u8",
         "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gzwshd"
@@ -722,6 +655,7 @@
       "group": "卫视频道",
       "order": 18,
       "ipv4": [
+        "http://218.13.139.26:9901/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://116.76.254.170:44330/tsfile/live/0136_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=snwshd",
         "http://107.150.60.122/live/snwshd.m3u8",
@@ -792,6 +726,7 @@
       "group": "卫视频道",
       "order": 23,
       "ipv4": [
+        "http://119.39.9.8:9901/tsfile/live/0118_1.m3u8",
         "http://198.204.228.26/live/sxwshd.m3u8",
         "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=sxwshd",
         "http://107.150.60.122/live/sxwshd.m3u8"
@@ -805,6 +740,7 @@
       "group": "卫视频道",
       "order": 24,
       "ipv4": [
+        "http://218.13.139.26:9901/tsfile/live/0117_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://120.238.84.45:9901/tsfile/live/1064_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://38.75.136.137:98/gslb/dsdqbv/hewshd.m3u8?auth=test20251009",
         "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hewshd",
@@ -832,6 +768,7 @@
       "group": "卫视频道",
       "order": 26,
       "ipv4": [
+        "http://222.71.55.147:9901/tsfile/live/0109_1.m3u8?key=txiptv&playlive=0&authid=0",
         "http://107.150.60.122/live/nmgws.m3u8",
         "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nmgws",
         "http://112.27.5.218:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=1&authid=0"
@@ -934,6 +871,7 @@
       "group": "港澳台频道",
       "order": 2,
       "ipv4": [
+        "http://221.7.175.154:8445/tsfile/live/1021_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://43.152.224.209/qctv.fengshows.cn/live/0701pin72.flv"
       ],
       "ipv6": [
@@ -1057,80 +995,9 @@
       "group": "港澳台频道",
       "order": 13,
       "ipv4": [
+        "http://221.7.175.154:8445/tsfile/live/1020_1.m3u8?key=txiptv&playlive=1&authid=0",
         "http://43.152.224.209/qctv.fengshows.cn/live/0701pcc72.flv",
         "http://31.43.191.125:8080/restream/restream/34629"
-      ],
-      "ipv6": []
-    },
-    "兵器科技": {
-      "group": "央视付费",
-      "order": 1,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gfjs"
-      ],
-      "ipv6": []
-    },
-    "央视台球": {
-      "group": "央视付费",
-      "order": 2,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ystq"
-      ],
-      "ipv6": []
-    },
-    "女性时尚": {
-      "group": "央视付费",
-      "order": 3,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nxss"
-      ],
-      "ipv6": []
-    },
-    "怀旧剧场": {
-      "group": "央视付费",
-      "order": 4,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hjjc"
-      ],
-      "ipv6": []
-    },
-    "文化精品": {
-      "group": "央视付费",
-      "order": 5,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ysjp"
-      ],
-      "ipv6": []
-    },
-    "电视指南": {
-      "group": "央视付费",
-      "order": 6,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dszn"
-      ],
-      "ipv6": []
-    },
-    "第一剧场": {
-      "group": "央视付费",
-      "order": 7,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dyjc"
-      ],
-      "ipv6": []
-    },
-    "风云剧场": {
-      "group": "央视付费",
-      "order": 8,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyjc"
-      ],
-      "ipv6": []
-    },
-    "风云音乐": {
-      "group": "央视付费",
-      "order": 9,
-      "ipv4": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyyy"
       ],
       "ipv6": []
     }

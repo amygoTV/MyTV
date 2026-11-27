@@ -82,10 +82,15 @@ def collect_urls():
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--urls-file", help="从文件读取待测 URL 列表（每行一条）")
+    ap.add_argument("--merge", action="store_true", help="并入已有结果")
     ap.add_argument("--workers", type=int, default=12)
     a = ap.parse_args()
 
-    urls = collect_urls()
+    if a.urls_file:
+        urls = [l.strip() for l in Path(a.urls_file).read_text(encoding="utf-8").splitlines() if l.strip()]
+    else:
+        urls = collect_urls()
     print("[probe] 待实测 %d 条线路（IPv6 跳过）" % len(urls), flush=True)
     result = {}
     done = 0
@@ -98,6 +103,10 @@ def main():
             if done % 50 == 0:
                 print("[probe] 进度 %d/%d" % (done, len(urls)), flush=True)
 
+    if a.merge and OUT.exists():
+        old = json.loads(OUT.read_text(encoding="utf-8"))
+        old.update(result)
+        result = old
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8")
     from collections import Counter
     c = Counter(v["tier"] for v in result.values())

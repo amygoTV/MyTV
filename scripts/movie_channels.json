@@ -1,11 +1,16 @@
 {
  "CHC动作电影": [
+  "http://120.198.86.186:9901/tsfile/live/1047_1.m3u8?key=txiptv&playlive=1&authid=0",
+  "http://120.238.94.82:9901/tsfile/live/1052_1.m3u8",
+  "http://dassby.qqff.top:99/live/CHC动作电影/index.m3u8",
   "http://120.238.84.45:9901/tsfile/live/1094_1.m3u8?key=txiptv&playlive=1&authid=0",
   "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=chcdz",
   "http://107.150.60.122/live/chcdz.m3u8",
   "http://192.151.150.154/live/chcdz.m3u8"
  ],
  "CHC家庭影院": [
+  "http://61.162.52.6:8088/newlive/live/hls/60/live.m3u8",
+  "http://dassby.qqff.top:99/live/CHC家庭影院/index.m3u8",
   "http://120.238.84.45:9901/tsfile/live/1093_1.m3u8?key=txiptv&playlive=1&authid=0",
   "http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub",
   "http://107.150.60.122/live/chcjt.m3u8",
@@ -13,6 +18,7 @@
   "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=chcjt"
  ],
  "怀旧剧场": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hjjc",
   "http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub"
  ],
  "欢笑剧场": [
@@ -28,8 +34,26 @@
   "http://38.75.136.137:98/gslb/dsdqpub/dsjchd.m3u8?auth=testpub"
  ],
  "风云剧场": [
+  "http://38.75.136.137:98/gslb/dsdqpub/fyjc.m3u8?auth=testpub",
   "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyjc",
-  "http://173.208.212.130:8181/720p/fyjc.m3u8",
-  "http://38.75.136.137:98/gslb/dsdqpub/fyjc.m3u8?auth=testpub"
+  "http://173.208.212.130:8181/720p/fyjc.m3u8"
+ ],
+ "兵器科技": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gfjs"
+ ],
+ "央视台球": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ystq"
+ ],
+ "女性时尚": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nxss"
+ ],
+ "文化精品": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ysjp"
+ ],
+ "电视指南": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dszn"
+ ],
+ "风云音乐": [
+  "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyyy"
  ]
 }

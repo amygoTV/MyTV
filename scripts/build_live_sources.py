@@ -57,6 +57,17 @@ UA_PLAYER = 'okHttp/Mursor-1.4.0.0'
 RESOLUTION_MAP_FILE = os.path.join(HERE, 'resolution_map.json')
 _TIER_SCORE = {'4K': 4, 'FHD': 3, 'HD': 2, 'SD': 1, 'UNKNOWN': 0}
 
+# ---------------------------------------------------------------- 响应速度表（v1.6.44）
+# 用户要求：同一电视台的多条线路按「响应速度 > 分辨率 > IPv6」排列，
+# 且线路数量不做硬性上限（只要可用即可）。
+# 速度数据来自 scripts/probe_speed.py 的实测（TTFB 首字节时间 + 首个分片首字节），
+# 不靠 URL 字样猜——同一条线路不同时间测出的速度能差好几倍。
+SPEED_MAP_FILE = os.path.join(HERE, 'speed_map.json')
+# 速度分档：<300ms 很快 / <800ms 较快 / <2000ms 一般 / 之后慢 / 未测
+_SPEED_FAST = 300.0
+_SPEED_MED = 800.0
+_SPEED_SLOW = 2000.0
+
 
 def load_resolution_map():
     try:
@@ -66,17 +77,53 @@ def load_resolution_map():
         return {}
 
 
-def sort_by_quality(urls, res_map):
-    """同一频道内：已知分辨率按档位降序（4K>FHD>HD>SD），UNKNOWN/IPv6 沉底。
+def load_speed_map():
+    try:
+        with open(SPEED_MAP_FILE, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return {}
 
-    稳定排序：同档位保持传入顺序（探测存活的仍排在探测失败的前面）。
-    IPv6 一律沉底——它是无出口环境的备用线路，且本机实测不到分辨率。
+
+def _speed_score(info):
+    """响应速度档位分值（越大越快）。未测速返回 0（沉底但仍在 IPv6 之上）。"""
+    if not info:
+        return 0
+    v = info.get('ttfb_ms')
+    if v is None:
+        return 0
+    if v < _SPEED_FAST:
+        return 4
+    if v < _SPEED_MED:
+        return 3
+    if v < _SPEED_SLOW:
+        return 2
+    return 1
+
+
+def sort_by_quality(urls, res_map, speed_map=None):
+    """同一频道内排序：**响应速度 > 分辨率 > IPv6 沉底**。
+
+    v1.6.44：原先只按分辨率排（4K>FHD>HD>SD），用户要求把响应速度提到
+    第一优先级——实际使用中「点开 1 秒出画面」比「标称 1080P 但卡顿」更重要。
+
+    分档策略（避免毫秒级抖动把顺序冲得忽快忽慢）：
+      1. 速度档位（很快/较快/一般/慢/未测）
+      2. 同档内按分辨率档位（4K>FHD>HD>SD>UNKNOWN）
+      3. 同档同分辨率保持传入顺序（稳定排序）
+    IPv6 无出口环境实测不到速度与分辨率，一律沉底。
     """
+    speed_map = speed_map or {}
+
     def key(u):
         if is_ipv6(u):
-            return (-1, 0)
-        info = res_map.get(u) or {}
-        return (_TIER_SCORE.get(info.get('tier', 'UNKNOWN'), 0), 0)
+            # IPv6 沉底：速度 0 + 分辨率 0 + 显式标记排在所有 IPv4 之后
+            return (-1, -1, 0)
+        sp = _speed_score(speed_map.get(u))
+        rs = _TIER_SCORE.get((res_map.get(u) or {}).get('tier', 'UNKNOWN'), 0)
+        return (sp, rs, 0)
+
+    # 降序：速度档 → 分辨率档；IPv6 的 -1 保证永远垫底
     return sorted(urls, key=key, reverse=True)
 
 # ---------------------------------------------------------------- 上游源
@@ -338,6 +385,7 @@ def build_special_lives(out_dir, workers, probe_limit):
         movie = {}
 
     res_map = load_resolution_map()
+    speed_map = load_speed_map()
     out = {'movie': {}, 'sports': {}}
     for name, urls in movie.items():
         # 线路已在抽帧核验阶段实测可播，且污染源已进黑名单；不再重复探测
@@ -345,8 +393,8 @@ def build_special_lives(out_dir, workers, probe_limit):
         clean = [clean_url(u) for u in urls if not is_blacklisted(u)]
         if not clean:
             continue
-        ordered = sort_by_quality(clean, res_map)
-        out['movie'].setdefault(name, []).extend(ordered[:5])
+        ordered = sort_by_quality(clean, res_map, speed_map)
+        out['movie'].setdefault(name, []).extend(ordered)
     print('  => 影视轮播 %d 频道 / 体育 %d 频道（权威表 %d 频道）' % (
         len(out['movie']), len(out['sports']), len(movie)), flush=True)
     return out
@@ -356,7 +404,9 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
     print('\n=== 构建 TVLives.txt（保底频道 + 参考分组） ===', flush=True)
     channels = plan['channels']
     res_map = load_resolution_map()
+    speed_map = load_speed_map()
     print('  分辨率质量表：%d 条实测记录' % len(res_map), flush=True)
+    print('  响应速度表：%d 条实测记录' % len(speed_map), flush=True)
 
     # 电视台分组只剔除名称本身就是广告/购物/测试/博彩的台；正常频道即使
     # 正在插播广告也保留。若权威频道表里出现这类名称，跳过并让校验报缺失，
@@ -379,7 +429,9 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
             if not is_ipv6(u):
                 v4_tasks.append((name, clean_url(u)))
         if meta['ipv6']:
-            v6_map[name] = [clean_url(u) for u in meta['ipv6'][:2]]
+            # v1.6.44：不再截断 IPv6 数量（用户「源的个数不是强制要求」），
+            # IPv6 一律沉底排在同频道 IPv4 之后。
+            v6_map[name] = [clean_url(u) for u in meta['ipv6']]
     if probe_limit > 0 and len(v4_tasks) > probe_limit:
         v4_tasks = v4_tasks[:probe_limit]
     alive_urls = set(probe_many([u for _, u in v4_tasks], workers, '保底IPv4'))
@@ -397,33 +449,34 @@ def build_tvlives(plan, special, out_dir, workers, probe_limit, max_per_source, 
             for u in urls:
                 if u and u not in item['urls']:
                     item['urls'].append(u)
+            # v1.6.44：同一频道的线路可能来自多次 add（保底 + 影视组补充），
+            # 合并后必须重新按「速度 > 分辨率 > IPv6」整体排序，否则会出现
+            # 「慢—一般—慢」的乱序（风云剧场曾因此不满足单调）。
+            item['urls'] = sort_by_quality(item['urls'], res_map, speed_map)
         else:
             index[key] = len(group_items[group])
             group_items[group].append({
                 'name': disp,
-                'urls': [u for u in urls if u],
+                'urls': sort_by_quality([u for u in urls if u], res_map, speed_map),
                 'order': index[key],
             })
 
     # 2) 保底频道：实测存活优先，探测失败也保留原始线路
     # v1.6.35：按权威顺序（cctv_order / satellite_order / hktw_order）遍历，
     # 不再依赖 channels 字典的插入顺序 —— 否则 CCTV5+ 会跑到 CCTV17 后面。
+    # v1.6.44：取消「每频道只留 3 条」的硬截断 —— 用户明确「源的个数不是强制
+    # 要求，只要可用就行」。保留全部非黑名单线路，按速度/分辨率排序后自然分层，
+    # 快且清晰的在前、慢的在后作为备援，客户端可自行取第一条可播的。
     for name in live_groups.sorted_channels(channels, plan):
         meta = channels[name]
         v4_all = [clean_url(u) for u in meta['ipv4'] if not is_ipv6(u)]
         alive = [u for u in v4_all if u in alive_urls]
         rest = [u for u in v4_all if u not in alive_urls]
-        urls = [u for u in (alive + rest)[:3] + v6_map.get(name, [])[:2]
+        urls = [u for u in alive + rest + v6_map.get(name, [])
                 if not is_blacklisted(u)]
-        if len(urls) < 3:
-            # v1.6.36：原写法用 meta['ipv4'][:3] 直接覆盖 urls，会把已保留的 IPv6
-            # 一起冲掉；当 IPv4 全被广告黑名单剔除时 urls 变空 → 整个频道从产物里
-            # 消失（保底校验报「保底频道缺失」）。改为「补充」而非「覆盖」。
-            extra = [clean_url(u) for u in meta['ipv4'] if not is_blacklisted(u)]
-            urls = extra + [u for u in urls if u not in extra]
-        # v1.6.37：同一频道内线路按实测分辨率排序（高清在前、标清/未测沉底）。
+        # v1.6.44：同一频道内线路按「响应速度 > 分辨率 > IPv6 沉底」排序。
         # 频道间顺序由上面的 sorted_channels(channels, plan) 决定，不受影响。
-        urls = sort_by_quality(urls, res_map)
+        urls = sort_by_quality(urls, res_map, speed_map)
         add(GROUP_MAP.get(meta['group'], meta['group']), name, urls)
 
     # 4) 公网影视轮播 / 体育（每晚实测）

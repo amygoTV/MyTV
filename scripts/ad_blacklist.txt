@@ -249,3 +249,36 @@ live\.shaoxing\.com\.cn/video/s10001-sxtv3
 120\.238\.84\.45:9901/tsfile/live/1050_1\.m3u8
 # 怀旧剧场 1091_1：台标为 CCTV-8 电视剧频道，名称与内容不符，错台。
 120\.238\.84\.45:9901/tsfile/live/1091_1\.m3u8
+
+# 2026-11-27 live_20261127.m3u 新源实测：8 条污染源精确拉黑
+# 只精确匹配该条完整 URL 路径，不按整 IP 拉黑（同 IP 其他频道号是不同台）。
+# 东南卫视 0137_1：全程 400-807-7478 购物热线角标
+http://60\.187\.246\.195:9901/tsfile/live/0137_1\.m3u8\?key=txiptv\&playlive=1\&authid=0
+# 东南卫视 zohi：画面为「由于播出安排暂停播出」提示卡，不可播
+http://live\.zohi\.tv(:80)?/video/s10001\-fztv\-3/index\.m3u8
+# 广东卫视 7788/608831231：全程 400-838-6660 购物热线
+http://116\.237\.170\.51:7788/608831231
+# 江苏卫视 0127_1：全程购物节目（YZS大药房等），污染源
+http://60\.187\.246\.195:9901/tsfile/live/0127_1\.m3u8\?key=txiptv\&playlive=1\&authid=0
+# 江西卫视 faacts/0138_1：老年参乡珍购扫地机器人购物广告
+http://112\.27\.5\.218:9901/tsfile/live/faacts/0138_1\.m3u8\?key=txiptv\&playlive=1\&authid=0
+# 西藏卫视 0111_1：全程 Advertisement 广告画面
+http://222\.71\.55\.147:85/tsfile/live/0111_1\.m3u8\?key=txiptv\&playlive=0\&authid=0
+# 怀旧剧场 qqff.top：台标为 CCTV-1，错台
+http://dassby\.qqff\.top:99/live/怀旧剧场/index\.m3u8
+# CCTV12 0012_1：全程 400-876-7668 购物热线
+http://60\.187\.246\.195:9901/tsfile/live/0012_1\.m3u8\?key=txiptv\&playlive=1\&authid=0
+
+# 2026-11-27 新源台标终判：错台线路精确拉黑（台标与频道名不符）
+# 云南卫视 标注但台标为广东卫视，错台
+http://120\.198\.95\.220:9901/tsfile/live/1007_1\.m3u8\?key=txiptv
+# 吉林卫视 标注但台标为兵团卫视（32帧终判确认），错台
+http://221\.7\.175\.154:8445/tsfile/live/1014_1\.m3u8\?key=txiptv\&playlive=1\&authid=0
+
+# 2026-11-27 新源台标逐条核验（放大台标读字）：3 条错台精确拉黑
+# 台标湖南卫视，标注东方卫视，错台
+http://173\.208\.212\.130:8181/720p/dfws\.m3u8
+# 台标湖南卫视，标注厦门卫视，错台
+http://183\.250\.156\.180:9999/newlive/live/hls/28/live\.m3u8
+# 台标河南卫视，标注深圳卫视，错台
+http://221\.226\.51\.220:50081/newlive/live/hls/37/live\.m3u8
