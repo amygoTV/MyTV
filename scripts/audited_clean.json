@@ -50,10 +50,6 @@
   "http://198.204.228.26/live/cctv15hd.m3u8",
   "http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0"
  ],
- "中国教育3台": [
-  "http://107.150.60.122/live/cetv3.m3u8",
-  "http://198.204.228.26/live/cetv3.m3u8"
- ],
  "浙江卫视": [
   "http://107.150.60.122/live/zjwshd.m3u8"
  ],

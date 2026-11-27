@@ -24,7 +24,8 @@
     "CCTV14",
     "CCTV15",
     "CCTV16",
-    "CCTV17"
+    "CCTV17",
+    "CETV1"
   ],
   "paid_order": [],
   "satellite_order": [
@@ -319,58 +320,6 @@
       "ipv6": [
         "http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225761/1.m3u8",
         "http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228277/index.m3u8"
-      ]
-    },
-    "中国教育1台": {
-      "group": "央视频道",
-      "order": 24,
-      "ipv4": [
-        "http://38.75.136.137:98/gslb/dsdqbv/cetv1hd.m3u8?auth=test20251009",
-        "http://198.204.228.26/live/cetv1hd.m3u8",
-        "http://107.150.60.122/live/cetv1hd.m3u8"
-      ],
-      "ipv6": [
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?",
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?&bak=2"
-      ]
-    },
-    "中国教育2台": {
-      "group": "央视频道",
-      "order": 25,
-      "ipv4": [
-        "http://107.150.60.122/live/cetv2.m3u8",
-        "http://38.75.136.137:98/gslb/dsdqbv/cetv2.m3u8?auth=test20251009",
-        "http://38.75.136.137:98/gslb/dsdqpub/cetv2.m3u8?auth=testpub"
-      ],
-      "ipv6": [
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND",
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND&bak=2"
-      ]
-    },
-    "中国教育3台": {
-      "group": "央视频道",
-      "order": 26,
-      "ipv4": [
-        "http://107.150.60.122/live/cetv3.m3u8",
-        "http://38.75.136.137:98/gslb/dsdqbv/cetv3.m3u8?auth=test20251009",
-        "http://38.75.136.137:98/gslb/dsdqpub/cetv3.m3u8?auth=testpub"
-      ],
-      "ipv6": [
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND",
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND&bak=2"
-      ]
-    },
-    "中国教育4台": {
-      "group": "央视频道",
-      "order": 27,
-      "ipv4": [
-        "http://107.150.60.122/live/cetv4.m3u8",
-        "http://38.75.136.137:98/gslb/dsdqbv/cetv4.m3u8?auth=test20251009",
-        "http://38.75.136.137:98/gslb/dsdqpub/cetv4.m3u8?auth=testpub"
-      ],
-      "ipv6": [
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
-        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND&bak=2"
       ]
     },
     "湖南卫视": {
@@ -951,7 +900,10 @@
         "http://198.204.228.26/live/cetv1hd.m3u8",
         "http://107.150.60.122/live/cetv1hd.m3u8"
       ],
-      "ipv6": []
+      "ipv6": [
+        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?",
+        "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?&bak=2"
+      ]
     },
     "厦门卫视": {
       "group": "卫视频道",

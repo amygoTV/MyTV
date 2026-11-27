@@ -13,7 +13,7 @@ https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.m3u
 ### 文件说明
 
 - `TVLives.txt`：TVBox 文本订阅，格式为 `分组,#genre#` + `频道名,URL`，每条 URL 是独立线路。
-- `scripts/channel_plan.json`：**权威频道表**——保证 CCTV1-17、31 省级卫视 + 深圳卫视、中国教育 1-4 台等保底频道永远存在，并定义央视组顺序（CCTV1-17 → 付费 → CGTN → 教育台）与卫视按收视率排名。
+- `scripts/channel_plan.json`：**权威频道表**——保证 CCTV1-17、31 省级卫视 + 深圳卫视、CETV-1 等保底频道永远存在，并定义央视组顺序（CCTV1-17 → CETV-1）与卫视按收视率排名。
 - `scripts/build_live_sources.py`：统一构建脚本——权威频道表保底 + 上游补充 → 广告台名称/错台/静态录像过滤 → 逐条实测 IPv4 可播性 → IPv6 备用保留 → 每频道最多 3 条 IPv4 + 2 条 IPv6。探测不足时保留上一版。
 - `scripts/live_filters.py`：构建侧与校验侧共用的频道名过滤规则——电视台分组只剔除名称本身就是广告/购物/测试/博彩的台；**台标/频道名正确的正常频道即使插播广告也保留**。
 - `scripts/ad_blacklist.txt`：人工抽帧确认的错台/无台标/纯广告/测试卡源（正则匹配 URL）；正常频道插播广告不拉黑。
@@ -39,7 +39,7 @@ https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/YSCSites.json
 - 兼容 **LuckyWDGS/YingShiCang 3.6.1**：该版本按 `sites[].categories` 做每站独立的分类白名单。聚合配置里每个站只声明自己的分类；若只想看某一类，可直接导入下面 `YSC/*.json` 单用途配置（每份只有一个站）。
 - 原有 CMS 7 站分类继续按 `ac=videolist&t=<type_id>&pg=1` 实测校准：大类标记在前、有数据的子分类在后。短剧 / 漫剧真正有内容的是 `AI漫剧`、`擦边短剧`、`漫剧`、`爽文短剧` 等子分类，点空壳父类可能没资源。
 - `spider` 已改为本仓库自托管 `spider/fan.txt`（MD5 `654fb7dcb0aeaaea7dba0e662395f38e`），与影视仓内置 `source-20261022.jar` 完全一致；`csp_AiDjGuard`、`csp_BiliGuard`、`csp_KanqiuGuard`、`csp_LiveGzGuard`、`csp_DoubaoGuard`、`csp_AllliveGuard`、`csp_Dm84Guard` 均可由影视仓内置插件直接加载，不必再依赖第三方 jar 地址。
-- 内置直播 `lives`：`TVLives.txt`（央视 CCTV1-17 / 31 省卫视 + 深圳 / 教育台 / 电影 / 体育）、`BiliLive.txt`（B站直播专线）与赛事轮播 M3U。
+- 内置直播 `lives`：`TVLives_v2.txt`（央视 CCTV1-17 / CETV-1 / 31 省卫视 + 深圳 / 影视轮播）、`BiliLive_v2.txt`（B站直播专线）与赛事轮播源。
 - 采集接口来自公开采集站，可用性随时间变化；某个源失效时在影视仓内切换其它源即可。
 
 ### B站直播镜像

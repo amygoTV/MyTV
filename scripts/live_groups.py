@@ -104,8 +104,7 @@ def check_order(observed, plan=None, base_dir=None):
 
 # 计划里的顺序清单 → 所属分组（用于把清单映射到产物分组）
 ORDER_LISTS = (
-    'cctv_order',      # 央视频道：央视 + 教育 + CETV
-    'edu_order',       # 中国教育 1~4 台
+    'cctv_order',      # 央视频道：央视 + CETV
     'satellite_order',  # 卫视频道
     'hktw_order',      # 港澳台频道
     'paid_order',      # 央视付费
