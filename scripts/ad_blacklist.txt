@@ -222,3 +222,20 @@ www\.dalitv\.com\.tw:4568/live/dali/index\.m3u8
 38\.75\.136\.137:98/gslb/dsdqbv/tjwshd\.m3u8
 38\.75\.136\.137:98/gslb/dsdqbv/gzwshd\.m3u8
 38\.75\.136\.137:98/gslb/dsdqbv/gdwshd\.m3u8
+
+# ============================================================================
+# 2026-11-27 影视轮播频道逐源抽帧核验（ffmpeg 26s/fps=1/6 + 人工逐格看台标）
+# 用户要求把影视轮播组换成 CHC/剧场类专业影视台，逐条抽帧后精确拉黑污染源。
+# 注意：dsdqpub 池不是整池都坏——chcjt/hjjc/dyjc/dsjchd/fyjc 正常，仅 chcdz 是购物广告。
+# CHC动作电影（dsdqpub 池 = 明慕金丹 400-788-3916 购物广告）
+38\.75\.136\.137:98/gslb/dsdqpub/chcdz\.m3u8
+# CHC动作电影（198.204.228.26 池 = 同样购物广告）
+198\.204\.228\.26/live/chcdz\.m3u8
+# CHC家庭影院（198.204.228.26 池 = 400-1106-678 药品购物广告）
+198\.204\.228\.26/live/chcjt\.m3u8
+# 怀旧剧场（63.141.230.178 zbdq5 = 400-788-3916 白内障购物广告）
+63\.141\.230\.178:82/gslb/zbdq5\.m3u8\?id=hjjc
+# 浙江教科影视（cztv = 手表/鉴宝购物广告）
+ali-m-l\.cztv\.com/channels/lantian/channel004
+# 绍兴影视（全程 400-8575-2200 购物广告）
+live\.shaoxing\.com\.cn/video/s10001-sxtv3

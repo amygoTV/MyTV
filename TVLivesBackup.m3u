@@ -1,87 +1,93 @@
 #EXTM3U
 #EXTINF:-1 group-title="央视",CCTV-1
 http://112.27.5.218:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
-http://107.150.60.122/live/cctv1hd.m3u8
+http://112.123.243.37:50085/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226895/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001022/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-2
 http://112.27.5.218:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0002_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226893/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001220/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-3
 http://112.27.5.218:9901/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0003_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226471/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001186/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-4
-http://107.150.60.122/live/cctv4hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0004_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226335/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001221/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-5
 http://38.75.136.137:98/gslb/dsdqpub/cctv5hd.m3u8?auth=testpub
+http://112.123.243.37:50085/tsfile/live/0005_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226469/1.m3u8?
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226894/1.m3u8?
 #EXTINF:-1 group-title="央视",CCTV-5+
 http://112.27.5.218:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.238.84.45:9901/tsfile/live/1023_1.m3u8?key=txiptv&playlive=1&authid=0
 http://120.76.248.139/live/bfgd/4200000246.m3u8
 http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221225761/1.m3u8
 http://[2409:8087:2001:20:2800:0:df6e:eb26]/ott.mobaibox.com/PLTV/1/224/3221228277/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-6
-http://107.150.60.122/live/cctv6hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.70.60.179:9901/tsfile/live/1009_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226468/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001188/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-7
 http://112.27.5.218:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.70.60.179:9901/tsfile/live/1016_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226946/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001236/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-8
-http://107.150.60.122/live/cctv8hd.m3u8
+http://112.123.243.37:50085/tsfile/live/0009_1.m3u8?key=txiptv&playlive=0&authid=0
 http://112.27.5.218:9901/tsfile/live/0008_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226485/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001189/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-9
-http://107.150.60.122/live/cctv9hd.m3u8
+http://112.123.243.37:50085/tsfile/live/0010_1.m3u8?key=txiptv&playlive=0&authid=0
 http://112.27.5.218:9901/tsfile/live/0009_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226944/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001237/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-10
-http://107.150.60.122/live/cctv10hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0011_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226937/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001238/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-11
-http://192.151.150.154/live/cctv11hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0011_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0012_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226334/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001309/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-12
-http://107.150.60.122/live/cctv12hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0012_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226942/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001239/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-13
 http://112.27.5.218:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
+http://111.4.59.41:60901/tsfile/live/1012_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226316/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001328/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-14
-http://107.150.60.122/live/cctv14hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0015_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226947/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001240/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-15
-http://107.150.60.122/live/cctv15hd.m3u8
 http://112.27.5.218:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0
+http://112.123.243.37:50085/tsfile/live/0016_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226333/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001338/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-16
 http://112.27.5.218:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
-http://107.150.60.122/live/cctv16hd.m3u8
+http://219.159.91.10:8801/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227002/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001248/index.m3u8
 #EXTINF:-1 group-title="央视",CCTV-17
-http://173.208.212.130:8181/720p/cctv17.m3u8
 http://192.151.150.154/live/cctv17hd.m3u8
+http://120.238.84.45:9901/tsfile/live/1048_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226318/1.m3u8?
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001241/index.m3u8
 #EXTINF:-1 group-title="央视",CGTN
@@ -132,117 +138,128 @@ http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221
 #EXTINF:-1 group-title="央视",CETV-1
 http://198.204.228.26/live/cetv1hd.m3u8
 #EXTINF:-1 group-title="卫视",湖南卫视
-http://hlsal-ldvt.qing.mgtv.com/nn_live/nn_x64/Y2RuZXhfaWQ9YWxfaGxzX2xkdnQmZT02OTE0NjA0JnY9MSZpZD1ITldTWkdTVCZzPTcwN2RiYTc2YzJjNmJmMTQ4MmUyZGYzOWU2NWM3YWFi/HNWSZGST.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hnwshd
 http://74.91.26.218:82/live/hnwshd.m3u8
+http://112.123.243.37:50085/tsfile/live/1002_1.m3u8?key=txiptv&playlive=0&authid=0
+http://39.165.39.49:19901/tsfile/live/1140_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226509/1.m3u8?zoneoffset=480&servicetype=1&icpid=&limitflux=-1&limitdur=-1&tenantId=8601&accountinfo=%7E%7EV2.0%7EIGb_ib7rnBX9_sANRKq9sg%7EpK8OKM5JoJWWbLRyLfPcUMkwWZ90MzSI9S9PDltJsYzd0ZGcS3Tkh7syciNKJa-w60mDOdwtDyoNwCx9aRgzHNH9AUREV_qvNJtXHRPzYw0%7EExtInfo9bj61dxzlMXrsixrqcFYPg%3D%3D%3A20221022013542%2C915973%2C119.123.71.209%2C20221022013542%2C10000100000000050000000003873458%2C915973%2C-1%2C0%2C1%2C%2C%2C2%2C%2C%2C%2C2%2C%2C10000100000000060000000007253514_0%2CEND&GuardEncType=2
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001026/index.m3u8
 #EXTINF:-1 group-title="卫视",浙江卫视
-http://ali-m-l.cztv.com/channels/lantian/channel001/1080p.m3u8
 http://112.27.5.218:9901/tsfile/live/0124_1.m3u8?key=txiptv&playlive=1&authid=0
+http://111.4.59.41:60901/tsfile/live/1028_1.m3u8?key=txiptv&playlive=0&authid=0
+http://39.165.39.49:19901/tsfile/live/1127_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226899/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ETYfTgTra_pUx2cPrgZ_BDw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001023/index.m3u8
 #EXTINF:-1 group-title="卫视",江苏卫视
 http://112.27.5.218:9901/tsfile/live/0127_1.m3u8?key=txiptv&playlive=1&authid=0
-http://204.12.221.218:8181/3m1080p/jsws.m3u8
+http://120.238.84.45:9901/tsfile/live/1045_1.m3u8?key=txiptv&playlive=1&authid=0
+http://39.165.39.49:19901/tsfile/live/1129_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226897/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0BmO6uHF7WFoTed__Xr3NQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001033/index.m3u8
 #EXTINF:-1 group-title="卫视",东方卫视
 http://112.27.5.218:9901/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0
-http://107.150.60.122/live/dfwshd.m3u8
+http://120.238.84.45:9901/tsfile/live/1046_1.m3u8?key=txiptv&playlive=1&authid=0
+http://39.165.39.49:19901/tsfile/live/1128_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226898/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0uh4lyjjBCCN7TCq21vSIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001013/index.m3u8
 #EXTINF:-1 group-title="卫视",北京卫视
 http://112.27.5.218:9901/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=bjwshd
+http://111.4.59.41:60901/tsfile/live/1027_1.m3u8?key=txiptv&playlive=0&authid=0
+http://39.165.39.49:19901/tsfile/live/1130_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226900/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EcYPi33WFyhvd6SjmqUKhJg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001029/index.m3u8
 #EXTINF:-1 group-title="卫视",安徽卫视
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ahwshd
-http://107.150.60.122/live/ahwshd.m3u8
+http://112.123.243.37:50085/tsfile/live/0130_1.m3u8?key=txiptv&playlive=0&authid=0
+http://39.165.39.49:19901/tsfile/live/1134_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226943/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0QmKQ_slRCwvVVUUfxPVbw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001037/index.m3u8
 #EXTINF:-1 group-title="卫视",山东卫视
-http://112.27.5.218:9901/tsfile/live/0131_1.m3u8?key=txiptv&playlive=1&authid=0
 http://112.27.5.218:9901/tsfile/live/0113_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.238.84.45:9901/tsfile/live/1052_1.m3u8?key=txiptv&playlive=1&authid=0
+http://39.165.39.49:19901/tsfile/live/1133_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226957/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjW26v5VaHGy1jQuIA-4EbA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001028/index.m3u8
 #EXTINF:-1 group-title="卫视",广东卫视
 http://112.27.5.218:9901/tsfile/live/0130_1.m3u8?key=txiptv&playlive=1&authid=0
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gdwshd
-http://107.150.60.122/live/gdwshd.m3u8
+http://120.238.84.45:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&authid=0
+http://39.165.39.49:19901/tsfile/live/1131_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226961/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E2MGyx659D_aaDPP0qt3NgA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001032/index.m3u8
 #EXTINF:-1 group-title="卫视",深圳卫视
 http://204.12.221.218:8181/3m1080p/szws.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=szwshd
+http://111.4.59.41:60901/tsfile/live/1040_1.m3u8?key=txiptv&playlive=0&authid=0
+http://39.165.39.49:19901/tsfile/live/1141_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226959/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGrVNEZREjuNVKiTJo2mtwg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001030/index.m3u8
 #EXTINF:-1 group-title="卫视",河南卫视
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hawshd
 http://107.150.60.122/live/hawshd.m3u8
+http://39.165.39.49:19901/tsfile/live/1105_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001222/index.m3u8
 http://[2409:8087:2001:20:2800:0:df6e:eb17]/wh7f454c46tw1784575403_-1712002709/ott.mobaibox.com/PLTV/3/224/3221228221/index.m3u8?icpid=3&RTS=1669700385&from=40&popid=40&hms_devid=2114&prioritypopid=40&vqe=3
 #EXTINF:-1 group-title="卫视",天津卫视
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=tjwshd
 http://204.12.221.218:8181/3m1080p/tjws.m3u8
+http://120.238.84.45:9901/tsfile/live/1051_1.m3u8?key=txiptv&playlive=1&authid=0
 http://192.151.150.154/live/tjwshd.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226954/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Eaf3wyULP1h575eM_4ByMDg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001036/index.m3u8
 #EXTINF:-1 group-title="卫视",湖北卫视
-http://107.150.60.122/live/hbwshd.m3u8
 http://112.27.5.218:9901/tsfile/live/0132_1.m3u8?key=txiptv&playlive=1&authid=0
+http://111.4.59.41:60901/tsfile/live/1016_1.m3u8?key=txiptv&playlive=0&authid=0
+http://39.165.39.49:19901/tsfile/live/1143_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226952/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EREB40lnZnCEwjRy7LZuhIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001027/index.m3u8
 #EXTINF:-1 group-title="卫视",江西卫视
 http://107.150.60.122/live/jxwshd.m3u8
 http://112.27.5.218:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.238.84.45:9901/tsfile/live/1053_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226956/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Ei6ZIpVizXlewg-YfGvH8dA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001034/index.m3u8
 #EXTINF:-1 group-title="卫视",四川卫视
 http://112.27.5.218:9901/tsfile/live/0125_1.m3u8?key=txiptv&playlive=1&authid=0
 http://204.12.221.218:8181/3m1080p/scws.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=scwshd
+http://120.238.84.45:9901/tsfile/live/1058_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226995/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EBQiz3wrGrpG0CUSRIJ-7Jg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001130/index.m3u8
 #EXTINF:-1 group-title="卫视",辽宁卫视
 http://204.12.221.218:8181/3m1080p/lnws.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=lnwshd
+http://120.238.84.45:9901/tsfile/live/1056_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226966/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E6qJH8Fd-zgCGx3P-Ce86cA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001035/index.m3u8
 #EXTINF:-1 group-title="卫视",贵州卫视
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gzwshd
 http://107.150.60.122/live/gzwshd.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=gzwshd
 http://112.27.5.218:9901/tsfile/live/0120_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227012/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EnqBF03rFwPucF8ODtWxLQQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001184/index.m3u8
 #EXTINF:-1 group-title="卫视",黑龙江卫视
 http://107.150.60.122/live/hljwshd.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hljwshd
+http://120.238.84.45:9901/tsfile/live/1049_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226965/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7UiKL56-L86ihmTWaZ6csw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001031/index.m3u8
 #EXTINF:-1 group-title="卫视",吉林卫视
+http://120.238.84.45:9901/tsfile/live/1066_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227015/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EW5-3AVdwD5KlUpuA4mz7Cg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001225/index.m3u8
 #EXTINF:-1 group-title="卫视",陕西卫视
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=snwshd
-http://112.27.5.218:9901/tsfile/live/0117_1.m3u8?key=txiptv&playlive=1&authid=0
+http://116.76.254.170:44330/tsfile/live/0136_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226999/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EsGLKaSqf0wDZMbAjeQtfyw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001067/index.m3u8
 #EXTINF:-1 group-title="卫视",重庆卫视
 http://107.150.60.122/live/cqwshd.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cqwshd
+http://111.4.59.41:60901/tsfile/live/1041_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226963/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjTXsJprEx2nE38tdvu5lhA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001129/index.m3u8
 #EXTINF:-1 group-title="卫视",东南卫视
 http://107.150.60.122/live/dnwshd.m3u8
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dnwshd
-http://112.27.5.218:9901/tsfile/live/0142_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.238.84.45:9901/tsfile/live/1065_1.m3u8?key=txiptv&playlive=1&authid=0
+http://39.165.39.49:19901/tsfile/live/1149_1.m3u8?key=txiptv&playlive=0&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226991/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EQ6F5Mjgs0tJyEArWFL3vQA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001201/index.m3u8
 #EXTINF:-1 group-title="卫视",广西卫视
 http://107.150.60.122/live/gxwshd.m3u8
 http://112.27.5.218:9901/tsfile/live/0139_1.m3u8?key=txiptv&playlive=1&authid=0
+http://120.238.84.45:9901/tsfile/live/1067_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227010/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EkAhb-89sxdm9fz6-heXCuw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001224/index.m3u8
 #EXTINF:-1 group-title="卫视",云南卫视
@@ -254,7 +271,7 @@ http://198.204.228.26/live/sxwshd.m3u8
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227016/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESb5Qr3NTpE2ZugIroKoyTw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001070/index.m3u8
 #EXTINF:-1 group-title="卫视",河北卫视
-http://107.150.60.122/live/hewshd.m3u8
+http://120.238.84.45:9901/tsfile/live/1064_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227014/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErSGjhI3DMaaAASPrbQJYTg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001229/index.m3u8
 #EXTINF:-1 group-title="卫视",海南卫视
@@ -280,7 +297,7 @@ http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001074/index.m3u8
 #EXTINF:-1 group-title="卫视",甘肃卫视
 http://107.150.60.122/live/gswshd.m3u8
-http://112.27.5.218:9901/tsfile/live/0114_1.m3u8?key=txiptv&playlive=1&authid=0
+http://101.23.150.94:9901/tsfile/live/0141_1.m3u8?key=txiptv&playlive=1&authid=0
 http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227020/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Err-CLugPnTcUinEM8JeySg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND
 http://[2409:8087:1e03:21::2]:6060/cms001/ch00000090990000001298/index.m3u8
 #EXTINF:-1 group-title="卫视",青海卫视
@@ -350,7 +367,6 @@ http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ystq
 #EXTINF:-1 group-title="央视付费",女性时尚
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=nxss
 #EXTINF:-1 group-title="央视付费",怀旧剧场
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hjjc
 #EXTINF:-1 group-title="央视付费",文化精品
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ysjp
 #EXTINF:-1 group-title="央视付费",电视指南
@@ -367,325 +383,28 @@ https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8
 https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8
 #EXTINF:-1 group-title="海外频道",Taiwan Indigenous TV
 https://streamipcfapp.akamaized.net/live/_definst_/live_720/key_b1500.m3u8
-#EXTINF:-1 group-title="影视轮播",悠悠爱电影
-https://mursor.ottiptv.cc/huya/30611864
-#EXTINF:-1 group-title="影视轮播",花花影院
-https://mursor.ottiptv.cc/huya/29863394
-#EXTINF:-1 group-title="影视轮播",锤子动画
-https://mursor.ottiptv.cc/huya/30649359
-#EXTINF:-1 group-title="影视轮播",静静影视
-https://mursor.ottiptv.cc/huya/30712558
-#EXTINF:-1 group-title="影视轮播",娇娇影视
-https://mursor.ottiptv.cc/huya/31027196
-#EXTINF:-1 group-title="影视轮播",小猫影视
-https://mursor.ottiptv.cc/huya/30569079
-#EXTINF:-1 group-title="影视轮播",海湾电影
-https://mursor.ottiptv.cc/huya/31371694
-#EXTINF:-1 group-title="影视轮播",小雪影视
-https://mursor.ottiptv.cc/huya/31416048
-#EXTINF:-1 group-title="影视轮播",鹿儿影视
-https://mursor.ottiptv.cc/huya/30986994
-#EXTINF:-1 group-title="影视轮播",浅浅爱电影
-https://mursor.ottiptv.cc/huya/31274232
-#EXTINF:-1 group-title="影视轮播",扁豆看电影
-https://mursor.ottiptv.cc/huya/16028551
-#EXTINF:-1 group-title="影视轮播",入梦影视
-https://mursor.ottiptv.cc/huya/31121607
-#EXTINF:-1 group-title="影视轮播",九思剧场
-https://mursor.ottiptv.cc/huya/30569910
-#EXTINF:-1 group-title="影视轮播",电影最TOP
-https://mursor.ottiptv.cc/huya/11774959
-#EXTINF:-1 group-title="影视轮播",科幻梦工场
-https://mursor.ottiptv.cc/douyu/9608874
-#EXTINF:-1 group-title="影视轮播",小丑讲电影
-https://mursor.ottiptv.cc/huya/16857432
-#EXTINF:-1 group-title="影视轮播",S哥影视
-https://mursor.ottiptv.cc/huya/24720260
-#EXTINF:-1 group-title="影视轮播",动作大片放映厅
-https://mursor.ottiptv.cc/huya/10871113
-#EXTINF:-1 group-title="影视轮播",武侠电影放映厅
-https://mursor.ottiptv.cc/huya/29982611
-#EXTINF:-1 group-title="影视轮播",越哥说电影
-https://mursor.ottiptv.cc/huya/15894162
-#EXTINF:-1 group-title="影视轮播",蒲公英电影
-https://mursor.ottiptv.cc/huya/28806637
-#EXTINF:-1 group-title="影视轮播",小若影视
-https://mursor.ottiptv.cc/huya/29868594
-#EXTINF:-1 group-title="影视轮播",动画电影放映厅
-https://mursor.ottiptv.cc/huya/11352878
-#EXTINF:-1 group-title="影视轮播",奇幻电影放映厅
-https://mursor.ottiptv.cc/huya/26355847
-#EXTINF:-1 group-title="影视轮播",冒险电影放映厅
-https://mursor.ottiptv.cc/huya/21059566
-#EXTINF:-1 group-title="影视轮播",驴子爱影视
-https://mursor.ottiptv.cc/huya/20380270
-#EXTINF:-1 group-title="影视轮播",亮哥讲电影2
-https://mursor.ottiptv.cc/huya/21059622
-#EXTINF:-1 group-title="影视轮播",电影最TOP2
-https://mursor.ottiptv.cc/huya/29982676
-#EXTINF:-1 group-title="影视轮播",楚门聊电影
-https://mursor.ottiptv.cc/huya/16507906
-#EXTINF:-1 group-title="影视轮播",悬疑电影放映厅
-https://mursor.ottiptv.cc/huya/29982641
-#EXTINF:-1 group-title="影视轮播",小川侃电影
-https://mursor.ottiptv.cc/huya/15870999
-#EXTINF:-1 group-title="影视轮播",电影狂人A
-https://mursor.ottiptv.cc/huya/18715610
-#EXTINF:-1 group-title="影视轮播",华视-爱情大片
-https://mursor.ottiptv.cc/huya/23358431
-#EXTINF:-1 group-title="影视轮播",扁豆看电影2
-https://mursor.ottiptv.cc/huya/21059623
-#EXTINF:-1 group-title="影视轮播",吾聊电影2
-https://mursor.ottiptv.cc/huya/29982684
-#EXTINF:-1 group-title="影视轮播",越哥说电影2
-https://mursor.ottiptv.cc/huya/29982680
-#EXTINF:-1 group-title="影视轮播",爆裂电影2
-https://mursor.ottiptv.cc/huya/29982678
-#EXTINF:-1 group-title="影视轮播",TVB悬疑大片
-https://mursor.ottiptv.cc/huya/23865072
-#EXTINF:-1 group-title="影视轮播",酱婶儿电影
-https://mursor.ottiptv.cc/huya/24396474
-#EXTINF:-1 group-title="影视轮播",港剧影视汇
-https://mursor.ottiptv.cc/huya/23903142
-#EXTINF:-1 group-title="影视轮播",华视-喜剧大片
-https://mursor.ottiptv.cc/huya/23352525
-#EXTINF:-1 group-title="影视轮播",拾光剧场
-https://mursor.ottiptv.cc/huya/30539264
-#EXTINF:-1 group-title="影视轮播",惜春剧场
-https://mursor.ottiptv.cc/huya/30539411
-#EXTINF:-1 group-title="影视轮播",火龙果说电影
-https://mursor.ottiptv.cc/douyu/9559158
-#EXTINF:-1 group-title="影视轮播",米尼影院
-https://mursor.ottiptv.cc/douyu/7642724
-#EXTINF:-1 group-title="影视轮播",铁甲影院
-https://mursor.ottiptv.cc/douyu/1274132
-#EXTINF:-1 group-title="影视轮播",科幻Fans布玛
-https://mursor.ottiptv.cc/douyu/3508304
-#EXTINF:-1 group-title="影视轮播",PP看动漫
-https://mursor.ottiptv.cc/douyu/9837291
-#EXTINF:-1 group-title="影视轮播",刘老师说电影
-https://mursor.ottiptv.cc/douyu/8317926
-#EXTINF:-1 group-title="影视轮播",发条张的电影最TOP
-https://mursor.ottiptv.cc/douyu/2164691
-#EXTINF:-1 group-title="影视轮播",虫哥说电影
-https://mursor.ottiptv.cc/douyu/8915074
-#EXTINF:-1 group-title="影视轮播",怪兽马提尼电影
-https://mursor.ottiptv.cc/douyu/9075333
-#EXTINF:-1 group-title="影视轮播",电影迷小雅
-https://mursor.ottiptv.cc/douyu/9639225
-#EXTINF:-1 group-title="影视轮播",武侠剧场
-https://mursor.ottiptv.cc/douyu/9285904
-#EXTINF:-1 group-title="影视轮播",九叔说电影v
-https://mursor.ottiptv.cc/douyu/9348282
-#EXTINF:-1 group-title="影视轮播",小涛讲电影V
-https://mursor.ottiptv.cc/douyu/8415464
-#EXTINF:-1 group-title="影视轮播",老邪说电影
-https://mursor.ottiptv.cc/douyu/9222870
-#EXTINF:-1 group-title="影视轮播",小陶气说动漫
-https://mursor.ottiptv.cc/douyu/9527700
-#EXTINF:-1 group-title="影视轮播",楚哥说电影
-https://mursor.ottiptv.cc/douyu/9375743
-#EXTINF:-1 group-title="影视轮播",俗哥看电影
-https://mursor.ottiptv.cc/douyu/2161818
-#EXTINF:-1 group-title="影视轮播",指缝里看电影
-https://mursor.ottiptv.cc/douyu/9647834
-#EXTINF:-1 group-title="影视轮播",松轩说电影
-https://mursor.ottiptv.cc/douyu/1524969
-#EXTINF:-1 group-title="影视轮播",小马哥说电影
-https://mursor.ottiptv.cc/douyu/9396672
-#EXTINF:-1 group-title="影视轮播",火龙果讲电影本人
-https://mursor.ottiptv.cc/douyu/2039501
-#EXTINF:-1 group-title="影视轮播",影视英雄汇
-https://mursor.ottiptv.cc/douyu/10240495
-#EXTINF:-1 group-title="影视轮播",胶片看电影
-https://mursor.ottiptv.cc/douyu/3715426
-#EXTINF:-1 group-title="影视轮播",看电影了没V
-https://mursor.ottiptv.cc/douyu/9562616
-#EXTINF:-1 group-title="影视轮播",珞珞说电影
-https://mursor.ottiptv.cc/douyu/3718888
-#EXTINF:-1 group-title="影视轮播",逐梦电影
-https://mursor.ottiptv.cc/douyu/4058285
-#EXTINF:-1 group-title="影视轮播",林九影视
-https://mursor.ottiptv.cc/douyu/7212528
-#EXTINF:-1 group-title="影视轮播",西施撩电影
-https://mursor.ottiptv.cc/douyu/7532080
-#EXTINF:-1 group-title="影视轮播",哈利影视
-https://mursor.ottiptv.cc/douyu/8475821
-#EXTINF:-1 group-title="影视轮播",维立方电影
-https://mursor.ottiptv.cc/douyu/8706393
-#EXTINF:-1 group-title="影视轮播",猫眼电影
-https://mursor.ottiptv.cc/douyu/8726221
-#EXTINF:-1 group-title="影视轮播",噬元兽影视
-https://mursor.ottiptv.cc/douyu/8896723
-#EXTINF:-1 group-title="影视轮播",汪哥说电影
-https://mursor.ottiptv.cc/douyu/9312685
-#EXTINF:-1 group-title="影视轮播",玖月影视
-https://mursor.ottiptv.cc/douyu/9339251
-#EXTINF:-1 group-title="影视轮播",小丽说电影
-https://mursor.ottiptv.cc/douyu/9368016
-#EXTINF:-1 group-title="影视轮播",钱小元说电影
-https://mursor.ottiptv.cc/douyu/9368265
-#EXTINF:-1 group-title="影视轮播",小岛讲电影
-https://mursor.ottiptv.cc/douyu/9390955
-#EXTINF:-1 group-title="影视轮播",末日说电影
-https://mursor.ottiptv.cc/douyu/9431125
-#EXTINF:-1 group-title="影视轮播",丽姐说电影
-https://mursor.ottiptv.cc/douyu/9437283
-#EXTINF:-1 group-title="影视轮播",大壮撞电影
-https://mursor.ottiptv.cc/douyu/9437349
-#EXTINF:-1 group-title="影视轮播",四叶草影视
-https://mursor.ottiptv.cc/douyu/9446117
-#EXTINF:-1 group-title="影视轮播",爱星影视
-https://mursor.ottiptv.cc/douyu/9476806
-#EXTINF:-1 group-title="影视轮播",鑫酱盘动漫
-https://mursor.ottiptv.cc/douyu/9547575
-#EXTINF:-1 group-title="影视轮播",无际电影
-https://mursor.ottiptv.cc/douyu/9720498
-#EXTINF:-1 group-title="影视轮播",野格影视
-https://mursor.ottiptv.cc/douyu/9931766
-#EXTINF:-1 group-title="影视轮播",二胖影视
-https://mursor.ottiptv.cc/douyu/10064260
-#EXTINF:-1 group-title="影视轮播",开心逛剧场
-https://mursor.ottiptv.cc/douyu/10329310
-#EXTINF:-1 group-title="影视轮播",鸡哥聊电影
-https://mursor.ottiptv.cc/douyu/5067952
-#EXTINF:-1 group-title="影视轮播",贰哥电影
-https://mursor.ottiptv.cc/douyu/9338867
-#EXTINF:-1 group-title="影视轮播",77说电影
-https://mursor.ottiptv.cc/douyu/9444320
-#EXTINF:-1 group-title="影视轮播",鹏友说电影
-https://mursor.ottiptv.cc/douyu/9445244
-#EXTINF:-1 group-title="影视轮播",米粒儿动漫
-https://mursor.ottiptv.cc/douyu/9445279
-#EXTINF:-1 group-title="影视轮播",老电影故事
-https://mursor.ottiptv.cc/douyu/9167273
-#EXTINF:-1 group-title="影视轮播",唐司令说电影
-https://mursor.ottiptv.cc/douyu/8774345
-#EXTINF:-1 group-title="影视轮播",二哈讲电影
-https://mursor.ottiptv.cc/douyu/8778280
-#EXTINF:-1 group-title="影视轮播",冷君聊大片
-https://mursor.ottiptv.cc/douyu/9666219
-#EXTINF:-1 group-title="影视轮播",三七电影V
-https://mursor.ottiptv.cc/douyu/9457792
-#EXTINF:-1 group-title="影视轮播",28岁电影
-https://mursor.ottiptv.cc/douyu/8884164
-#EXTINF:-1 group-title="影视轮播",涛浪浪电影
-https://mursor.ottiptv.cc/douyu/5424258
-#EXTINF:-1 group-title="影视轮播",每日好电影V
-https://mursor.ottiptv.cc/douyu/9533302
-#EXTINF:-1 group-title="影视轮播",不思异剧场
-https://mursor.ottiptv.cc/douyu/9297412
-#EXTINF:-1 group-title="影视轮播",喜人电影
-https://mursor.ottiptv.cc/douyu/10348735
-#EXTINF:-1 group-title="影视轮播",电影漩涡
-https://mursor.ottiptv.cc/douyu/8706350
-#EXTINF:-1 group-title="影视轮播",菠萝说电影
-https://mursor.ottiptv.cc/douyu/3714736
-#EXTINF:-1 group-title="影视轮播",微笑影视解说
-https://mursor.ottiptv.cc/douyu/9476790
-#EXTINF:-1 group-title="影视轮播",崽崽撩电影
-https://mursor.ottiptv.cc/douyu/8325511
-#EXTINF:-1 group-title="影视轮播",影视集装箱
-https://mursor.ottiptv.cc/douyu/8651489
-#EXTINF:-1 group-title="影视轮播",草泥泥影院
-https://mursor.ottiptv.cc/douyu/9091049
-#EXTINF:-1 group-title="影视轮播",辰哥说电影
-https://mursor.ottiptv.cc/douyu/9371407
-#EXTINF:-1 group-title="影视轮播",少年看电影
-https://mursor.ottiptv.cc/douyu/8762120
-#EXTINF:-1 group-title="影视轮播",大笑影院
-https://mursor.ottiptv.cc/douyu/10329300
-#EXTINF:-1 group-title="影视轮播",小乔讲电影
-https://mursor.ottiptv.cc/douyu/8413908
-#EXTINF:-1 group-title="影视轮播",安小闫说电影x
-https://mursor.ottiptv.cc/douyu/1842621
-#EXTINF:-1 group-title="影视轮播",小儛电影嘚啵嘚
-https://mursor.ottiptv.cc/douyu/8362978
-#EXTINF:-1 group-title="影视轮播",动漫推荐i
-https://mursor.ottiptv.cc/douyu/5187099
-#EXTINF:-1 group-title="影视轮播",电影吐槽汇
-https://mursor.ottiptv.cc/douyu/9447668
-#EXTINF:-1 group-title="影视轮播",动漫唯美風
-https://mursor.ottiptv.cc/douyu/8912038
-#EXTINF:-1 group-title="影视轮播",野山鹰-影视剧
-https://mursor.ottiptv.cc/yy/1354932395
-#EXTINF:-1 group-title="影视轮播",速度与激情系列！-精彩大片
-https://mursor.ottiptv.cc/yy/1382736911
-#EXTINF:-1 group-title="影视轮播",精武英雄-李连杰主演经典动作片
-https://mursor.ottiptv.cc/yy/1382736873
-#EXTINF:-1 group-title="影视轮播",大进军全集：红色系列电影
-https://mursor.ottiptv.cc/yy/1382745083
-#EXTINF:-1 group-title="影视轮播",史诗级科幻电影-阿凡达
-https://mursor.ottiptv.cc/yy/1382735577
-#EXTINF:-1 group-title="影视轮播",电影黑豹
-https://mursor.ottiptv.cc/yy/1382736816
-#EXTINF:-1 group-title="影视轮播",国产大片电影
-https://mursor.ottiptv.cc/yy/1354926655
-#EXTINF:-1 group-title="影视轮播",电影百团大战
-https://mursor.ottiptv.cc/yy/1382736871
-#EXTINF:-1 group-title="影视轮播",高分动作片——创可贴
-https://mursor.ottiptv.cc/yy/1382735568
-#EXTINF:-1 group-title="影视轮播",银河护卫队-国外科幻巨作
-https://mursor.ottiptv.cc/yy/1382736815
-#EXTINF:-1 group-title="影视轮播",碟中谍系列电影
-https://mursor.ottiptv.cc/yy/1382736836
-#EXTINF:-1 group-title="影视轮播",国外高分大片
-https://mursor.ottiptv.cc/yy/1382736867
-#EXTINF:-1 group-title="影视轮播",国产动作电影
-https://mursor.ottiptv.cc/yy/1382736858
-#EXTINF:-1 group-title="影视轮播",黑衣人1、2—动作喜剧大片
-https://mursor.ottiptv.cc/yy/1354930936
-#EXTINF:-1 group-title="影视轮播",大江大河-高分影视推荐
-https://mursor.ottiptv.cc/yy/1382736806
-#EXTINF:-1 group-title="影视轮播",国产搞笑喜剧片
-https://mursor.ottiptv.cc/yy/1354932431
-#EXTINF:-1 group-title="影视轮播",科幻片：来看神奇的地球
-https://mursor.ottiptv.cc/yy/1354930897
-#EXTINF:-1 group-title="影视轮播",超炫科幻大片
-https://mursor.ottiptv.cc/yy/1382736840
-#EXTINF:-1 group-title="影视轮播",末日系列-外国电影合集
-https://mursor.ottiptv.cc/yy/1354889019
-#EXTINF:-1 group-title="影视轮播",疯狂电影人2带你解锁无厘头拍戏
-https://mursor.ottiptv.cc/yy/1354932426
-#EXTINF:-1 group-title="影视轮播",影视小艺
-https://mursor.ottiptv.cc/yy/1382737886
-#EXTINF:-1 group-title="影视轮播",国漫动漫
-https://mursor.ottiptv.cc/yy/1354768828
-#EXTINF:-1 group-title="影视轮播",动漫
-https://mursor.ottiptv.cc/yy/1354143938
-#EXTINF:-1 group-title="影视轮播",恐怖电影
-https://mursor.ottiptv.cc/yy/24066336
-#EXTINF:-1 group-title="影视轮播",鬼经典老片
-https://mursor.ottiptv.cc/yy/1463783198
-#EXTINF:-1 group-title="影视轮播",1930年代经典电影
-https://mursor.ottiptv.cc/yy/1356363815
-#EXTINF:-1 group-title="影视轮播",【周星驰】搞笑电影
-https://mursor.ottiptv.cc/yy/38670875
-#EXTINF:-1 group-title="影视轮播",来听相声
-https://mursor.ottiptv.cc/bilibili/26145297
-#EXTINF:-1 group-title="体育频道",虎牙中式台球比赛
-https://mursor.ottiptv.cc/huya/29588938
-#EXTINF:-1 group-title="体育频道",摇滚足球本
-https://mursor.ottiptv.cc/huya/29982616
-#EXTINF:-1 group-title="体育频道",亚运体育7号台
-https://mursor.ottiptv.cc/huya/136154
-#EXTINF:-1 group-title="体育频道",大头猴足球
-https://mursor.ottiptv.cc/huya/29982605
-#EXTINF:-1 group-title="体育频道",李径看奥运
-https://mursor.ottiptv.cc/huya/30080153
-#EXTINF:-1 group-title="体育频道",排球太燃了
-https://mursor.ottiptv.cc/huya/30080166
-#EXTINF:-1 group-title="体育频道",篮球人物
-https://mursor.ottiptv.cc/douyu/8434598
-#EXTINF:-1 group-title="体育频道",绘说篮球C
-https://mursor.ottiptv.cc/douyu/9401305
-#EXTINF:-1 group-title="体育频道",篮球过人技巧
-https://mursor.ottiptv.cc/douyu/9406897
-#EXTINF:-1 group-title="体育频道",篮球之家老李
-https://mursor.ottiptv.cc/douyu/9170147
-#EXTINF:-1 group-title="体育频道",台球帝
-https://mursor.ottiptv.cc/douyu/10078171
-#EXTINF:-1 group-title="体育频道",只关于篮球的只老师
-https://mursor.ottiptv.cc/douyu/9367541
-#EXTINF:-1 group-title="体育频道",我的体育老师
-https://mursor.ottiptv.cc/yy/1382745169
+#EXTINF:-1 group-title="影视轮播",CHC动作电影
+http://120.238.84.45:9901/tsfile/live/1094_1.m3u8?key=txiptv&playlive=1&authid=0
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=chcdz
+http://107.150.60.122/live/chcdz.m3u8
+http://192.151.150.154/live/chcdz.m3u8
+#EXTINF:-1 group-title="影视轮播",CHC家庭影院
+http://120.238.84.45:9901/tsfile/live/1093_1.m3u8?key=txiptv&playlive=1&authid=0
+http://38.75.136.137:98/gslb/dsdqpub/chcjt.m3u8?auth=testpub
+http://107.150.60.122/live/chcjt.m3u8
+http://192.151.150.154/live/chcjt.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=chcjt
+#EXTINF:-1 group-title="影视轮播",怀旧剧场
+http://38.75.136.137:98/gslb/dsdqpub/hjjc.m3u8?auth=testpub
+#EXTINF:-1 group-title="影视轮播",欢笑剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hxjchd
+http://38.75.136.137:98/gslb/dsdqpub/hxjchd.m3u8?auth=testpub
+#EXTINF:-1 group-title="影视轮播",第一剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dyjc
+http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub
+#EXTINF:-1 group-title="影视轮播",都市剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=dsjchd
+http://38.75.136.137:98/gslb/dsdqpub/dsjchd.m3u8?auth=testpub
+#EXTINF:-1 group-title="影视轮播",风云剧场
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=fyjc
+http://38.75.136.137:98/gslb/dsdqpub/fyjc.m3u8?auth=testpub

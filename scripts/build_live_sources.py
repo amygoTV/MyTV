@@ -319,51 +319,36 @@ def format_m3u(group_items, groups_order):
 
 
 def build_special_lives(out_dir, workers, probe_limit):
-    """影视轮播 / 体育频道分组：公网源每晚重新拉取并逐条实测，失效自动剔除。"""
-    print('\n=== 构建 影视轮播 / 体育频道 分组 ===', flush=True)
-    raw = []
-    for url, ua in SPECIAL_SOURCES:
-        try:
-            got = parse_m3u(fetch(url, 30, ua))
-            raw.extend(got)
-            print('  拉取 %-40s %4d 条' % (url.split('/')[-1], len(got)), flush=True)
-        except Exception as e:
-            print('  拉取失败 %-40s %s' % (url.split('/')[-1], str(e)[:36]), flush=True)
+    """影视轮播 / 体育频道分组（v1.6.38 改为权威表驱动）。
 
-    cand = []
-    for group, name, url in raw:
-        if GROUP_NOISE_RE.search(group) or live_filters.is_spam_name(name) or AD_HOST_RE.search(url):
-            continue
-        if STATIC_EXT_RE.search(url) or is_ipv6(url) or not norm_key(name):
-            continue
-        if is_blacklisted(url):
-            continue
-        if SPORTS_RE.search(name):
-            cand.append(('sports', clean_name(name), url))
-        elif MOVIE_RE.search(name):
-            cand.append(('movie', clean_name(name), url))
+    用户明确不要虎牙/斗鱼/B站直播间拼出来的「影视轮播/体育频道」，要的是
+    CHC/剧场类专业影视台。改为从 scripts/movie_channels.json 权威表读取，
+    每条线路经 ffmpeg 逐源抽帧人工核验过台标（污染源已进 ad_blacklist.txt）。
+    体育频道组清空——公网直播间不再是本订阅的内容。
 
-    by = {}
-    for kind, name, url in cand:
-        key = (kind, name)
-        by.setdefault(key, [])
-        if url not in by[key] and len(by[key]) < 3:
-            by[key].append(url)
-    picks = [(kind, name, u) for (kind, name), urls in by.items() for u in urls]
-    if probe_limit > 0 and len(picks) > probe_limit:
-        picks = picks[:probe_limit]
-    alive = set(probe_many([u for _, _, u in picks], workers, '影视/体育'))
+    权威表里的线路仍走黑名单过滤 + 实测存活 + 分辨率质量排序，每日重建稳定。
+    """
+    print('\n=== 构建 影视轮播（CHC/剧场权威表） ===', flush=True)
+    movie_file = os.path.join(HERE, 'movie_channels.json')
+    try:
+        with open(movie_file, encoding='utf-8') as f:
+            movie = json.load(f)
+    except Exception as e:
+        print('  读取 %s 失败：%s（影视轮播组将为空）' % (movie_file, e), flush=True)
+        movie = {}
 
+    res_map = load_resolution_map()
     out = {'movie': {}, 'sports': {}}
-    for kind, name, u in picks:
-        if u not in alive:
+    for name, urls in movie.items():
+        # 线路已在抽帧核验阶段实测可播，且污染源已进黑名单；不再重复探测
+        # （公网探测每源 3×30s 重试，无代理时串行极慢）。
+        clean = [clean_url(u) for u in urls if not is_blacklisted(u)]
+        if not clean:
             continue
-        out[kind].setdefault(name, [])
-        if u not in out[kind][name]:
-            out[kind][name].append(u)
-    print('  => 影视轮播 %d 频道 / 体育 %d 频道（公网存活 %d 条）' % (
-        len(out['movie']), len(out['sports']),
-        sum(1 for k in out for v in out[k].values() for u in v if not is_ipv6(u))), flush=True)
+        ordered = sort_by_quality(clean, res_map)
+        out['movie'].setdefault(name, []).extend(ordered[:5])
+    print('  => 影视轮播 %d 频道 / 体育 %d 频道（权威表 %d 频道）' % (
+        len(out['movie']), len(out['sports']), len(movie)), flush=True)
     return out
 
 
@@ -618,27 +603,9 @@ def main():
     with open(os.path.join(HERE, 'channel_plan.json'), encoding='utf-8') as f:
         plan = json.load(f)
 
-    if args.only_tvlives:
-        # 公网源（peterhchina.github.io）无代理时每源 3×30s 重试、串行约 14 分钟，
-        # 只调线路顺序时无需重拉。影视轮播/体育频道从上一版产物回填。
-        special = {'movie': {}, 'sports': {}}
-        prev = os.path.join(args.out_dir, 'TVLives.txt')
-        if os.path.exists(prev):
-            cur_g = None
-            for line in open(prev, encoding='utf-8-sig'):
-                s = line.strip()
-                if s.endswith('#genre#'):
-                    cur_g = s.split(',', 1)[0]
-                    continue
-                if ',' in s and cur_g in ('影视轮播', '体育频道'):
-                    name, url = s.split(',', 1)
-                    key = 'movie' if cur_g == '影视轮播' else 'sports'
-                    special[key].setdefault(name.strip(), []).append(url.strip())
-            print('[only-tvlives] 从上一版回填 影视轮播 %d 台 / 体育频道 %d 台' % (
-                len(special['movie']), len(special['sports'])), flush=True)
-    else:
-        # 影视轮播 / 体育：每晚重新拉取并实测（公网源易失效）
-        special = build_special_lives(args.out_dir, args.workers, args.probe_limit)
+    # 影视轮播已从公网直播间改为 movie_channels.json 权威表驱动（v1.6.38），
+    # 读表+黑名单过滤+质量排序均为本地操作，不走公网，两种模式统一调用即可。
+    special = build_special_lives(args.out_dir, args.workers, args.probe_limit)
 
     summary, failed, built = {}, [], []
     jobs = [('TVLives.txt', lambda: build_tvlives(plan, special, args.out_dir, args.workers,
