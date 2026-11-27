@@ -1,0 +1,7 @@
+# 直播源 TXT 必须以 CRLF + UTF-8 BOM 落盘（影视仓/TVBox 官方 LIVE.md 规范）。
+#
+# 用 `-text`（不做任何换行转换）而不是 `text eol=crlf`：
+#   - `text eol=crlf` = 入库转 LF、检出转 CRLF → 仓库里存的是 LF，
+#     CDN 拿到的就是 LF 版本，客户端按 \r\n 解析会只读到 1 行（2026-11-28 踩过）。
+#   - `-text` = 原样存取，仓库里存的就是 CRLF，CDN 拿到的也是 CRLF。
+*.txt -text
