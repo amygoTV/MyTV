@@ -737,7 +737,7 @@
         {
             "name": "TVLives",
             "type": 0,
-            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v4.txt",
+            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
@@ -745,7 +745,7 @@
         {
             "name": "TVLives(备)",
             "type": 0,
-            "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v3.txt",
+            "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}",
             "logo": "https://epg.112114.xyz/logo/{name}.png"
@@ -753,7 +753,7 @@
         {
             "name": "备选直播源",
             "type": 0,
-            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v3.txt",
+            "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.txt",
             "ua": "okhttp/3.15",
             "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
         }

@@ -38,12 +38,7 @@ for stream in (sys.stdout, sys.stderr):
 #   * 电视台分组只剔除广告/购物/测试/博彩名称（台标正确的正常频道保留）；
 #   * 影视轮播/B站/体育房间名沿用既有垃圾过滤。
 BLACKLIST_FILE = Path("scripts/ad_blacklist.txt")
-# v1.6.47：客户端改用带版本号的新入口。jsdelivr 的 @master 可变引用在边缘节点
-# 缓存长期不刷新，同路径改内容必然踩旧缓存 → 每次内容更新都换新文件名。
-# 这里把新旧入口都纳入校验，避免只改了文件名的那份被改坏而没人发现。
-FILES = ("TVLives.txt", "TVLives_v2.txt", "TVLives_v3.txt", "TVLives_v4.txt",
-         "TVLivesBackup.txt", "TVLivesBackup_v2.txt", "TVLivesBackup_v3.txt",
-         "BiliLive.txt", "BiliLive_v2.txt",
+FILES = ("TVLives.txt", "TVLives_v2.txt", "BiliLive.txt", "BiliLive_v2.txt",
          "LiveSports.txt", "LiveSports_v2.txt")
 
 

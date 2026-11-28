@@ -631,13 +631,13 @@
     {
       "name": "💣王炸直播💣",
       "type": 0,
-      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v4.txt",
+      "url": "https://cdn.jsdelivr.net/gh/amygoTV/MyTV@master/TVLives_v2.txt",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     },
     {
       "name": "💣王炸直播💣(备)",
       "type": 0,
-      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup_v3.txt",
+      "url": "https://gcore.jsdelivr.net/gh/amygoTV/MyTV@master/TVLivesBackup.txt",
       "epg": "http://epg.112114.xyz/?ch={name}&date={date}"
     },
     {
